@@ -1,6 +1,6 @@
 # Savings Dilemma
 
-This post introduces the concept of the o11y/observability weekly and the series that will come about using efficient solutions and/or scale effective one.
+This post introduces the concept of the o11y/observability weekly and a serie that will come about using efficient solutions and/or scale effective one.
 
 To me, making savings is part of our IT business in search of <font size="5">Efficiency</font>.
 
@@ -31,7 +31,7 @@ I had recently a discussion with a friend experienced about making business and 
 > "You do not scale your business by making savings but by finding fund and investors!"
 </font>
 
-> This is a fairly good point! I have to admit that scaling effective solution just works! If costs are not a problem, then there is no need to be efficient since, it can be hard and costly.
+> This is a fairly good point! I have to admit that scaling effective solution just works! If costs are not a problem, then there is no need to be efficient since, it can be hard and expensive.
 
 This is why making platform cost savings (cloud / observability) is an unpopular/critized topic for big companies or simply company that can scale cost easily.
 
@@ -46,11 +46,11 @@ The platform should scale easily: scaling from 5 to 50 servers should reduce res
 
 Lets imagine that the platform is using 100% 5 servers but not using the 45. Well, there is a scalability issue where the load/data cannot spread easily.
 
-So having effective solutions cannot really help to scale and finding hotspot is really important.
+So having effective solutions cannot really helps to scale and finding hotspot is really important.
 
 So lets scale the effective solution!
 
-That is why in big companies, they focus on stability and effectiveness over effiency but the thruth is that efficient solutions are better because they scale really easily and at lower cost.
+That is why in big companies, they focus on stability and effectiveness over efficiency, but, the thruth is that efficient solutions are better because they scale really easily and at lower cost.
 
 ## Conclusion
 So my suggestion for observability in big companies is to focus first on scalable effective solution by secretly using efficient one if you are experienced in and does not impact timing/costs.
