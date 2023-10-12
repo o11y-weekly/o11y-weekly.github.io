@@ -16,11 +16,11 @@ The power of <font size="5">efficiency</font> is the next level of <font size="5
 
 It is important to tackle first effectiveness before having efficient tools/solutions.
 
-I worked on start-up / scale-up / little and big companies including Snapchat where scalability / stability is really important.
+I worked on start-up / scale-up / small and big companies including Snapchat where scalability / stability is really important.
 
 A good general rule is to make it effective then efficient to scale at lower cost and reduce for instance the cost per user when you are working on a free social network.
 
-In social network, you measure important KPIs like <font size="5">[DAU](https://amplitude.com/glossary/terms/daily-active-users-dau) DNU </font>(Daily New Users) <font size="5">MAU</font> (Monthly Active Users), then to support <font size="5">high growth</font> you need to have efficient solution to make the cost per user stable and lower.
+In social network, you measure important KPIs like <font size="5">DAU</font> [Daily Active Users](https://amplitude.com/glossary/terms/daily-active-users-dau) <font size="5">DNU</font> (Daily New Users) <font size="5">MAU</font> (Monthly Active Users), then to support <font size="5">high growth</font> you need to have efficient solution to make the cost per user stable and lower.
 
 In such companies where the value is the density and cost of the network to make money later, it is very important to keep costs low per user and that is why <font size="5">Efficiency</font> is really important.
 
