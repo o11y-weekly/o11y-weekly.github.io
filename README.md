@@ -10,6 +10,7 @@ A friend suggested me to write blog posts about my own experiments, hands-on but
 
 This week, for the very first post, lets talk about controversal savings dilemma in Observability I was facing.
 
+# Recent Posts
 [2023-10-11: Savings dilemma](./2023-10-11_Savings_dilemma/README.md)
 
 ## Archives
