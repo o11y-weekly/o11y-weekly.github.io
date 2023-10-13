@@ -1,4 +1,4 @@
-# Savings Dilemma
+# 2023-10-11: Savings Dilemma
 
 This post introduces the concept of the o11y/observability weekly and a serie that will come about using efficient solutions and/or scale effective one.
 
