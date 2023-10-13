@@ -1,16 +1,4 @@
-# 202310XX - News and What is not an observability solutions ?
-
-## News
-
-### Grafana Sessions Paris (aka Obs sessions)
-
-#### Multitenancy
-
-#### You Build it, you run it (YBIYRI), you pay for it
-
-#### Piroscope
-
-#### Strategy
+# 202310XX - News and What is not an observability solution ?
 
 ## What is not an observability solutions
 
