@@ -11,8 +11,6 @@ Putting a QoS in the transport (OTLP), in the collector (OTLP client libraries) 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/rZ3ETK7-ZM8?si=DtdEOm7lkF3aaiiT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-[![Shapes the wrong way](./Shapes_the_wrong_way.png)](https://www.youtube.com/watch?v=rZ3ETK7-ZM8)
-
 ## What is not an observability solutions
 
 In my experience, in hotel industry and social network I was facing multiple times with limitations from the tooling, databases, ...etc.
