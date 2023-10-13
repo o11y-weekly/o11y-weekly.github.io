@@ -4,7 +4,7 @@ Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
 
-I wanted to share my experiment since I am using observability tools for more than a decade! I started with graphite in 2013 thank to [Arnaud Porterie](https://www.linkedin.com/in/aporterie/?originalSubdomain=nl) (IIRC, he were leaving France to join Docker in the docker engine team).
+I wanted to share my experiment since I am using observability tools for more than a decade! I started with graphite in 2013 thank to [Arnaud Porterie](https://www.linkedin.com/in/aporterie/?originalSubdomain=nl) (IIRC, he was leaving France to join Docker in the docker engine team).
 
 A friend suggested me to write blog posts about my own experiments, hands-on but also news in the observability.
 
