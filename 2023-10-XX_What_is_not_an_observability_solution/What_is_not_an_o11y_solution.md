@@ -20,14 +20,16 @@ Each tools / databases have their own limitations because they are optimized wit
 Here is a list of challenges I tackled in the past which was at first glance "observability" but not:
 
 ## Logs: Indexing large payload for a long term
-- Indexing and storing HTTP request and response with large body (>20MB) for a long term (> 3 years) and searcheable.
+Indexing and storing HTTP request and response with large body (>20MB) for a long term (> 3 years) and searcheable.
+
 ## Metrics: Audit user activity at scale
-- Auditing user activity for more than 70 millions users.
+Auditing user activity for more than 70 millions users.
+
 ## Logs: Audit OTP / SMS toll fraud 
-- Log OTP SMS based authentication to investigate toll fraud
+Log OTP SMS based authentication to investigate toll fraud
 
 ## Tracing: Trace 100% of the prod volume
-- Tail processor sampling
+Tail processor sampling
 
 ### QoS
 https://en.wikipedia.org/wiki/Quality_of_service
