@@ -24,7 +24,7 @@ In social network, you measure important KPIs like <font size="5">DAU</font> [Da
 
 In such companies where the value is the density and cost of the network to make money later, it is very important to keep costs low per user and that is why <font size="5">Efficiency</font> is really important.
 
-In my experience, I worked for social network and independant hotel industries where such properties are really important to make business.
+In my experience, I worked for a social network company and independant hotel industries where such properties are really important to make business.
 
 I had recently a discussion with a friend experienced about making business and stated:
 <font size="5">
@@ -55,9 +55,8 @@ That is why in big companies, they focus on stability and effectiveness over eff
 ## Conclusion
 So my suggestion for observability in big companies is to focus first on scalable effective solution by secretly using efficient one if you are experienced in and does not impact timing/costs.
 
-
 ## What next ?
-Lets start a series of posts and hands-on about scalable effective and/or efficient solutions.
+Lets start a serie of posts and hands-on about scalable effective and/or efficient solutions.
 
 Next planned week topics : 
 - What is not an o11y/observability solutions (QoS/SLA) ?
