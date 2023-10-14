@@ -2,7 +2,7 @@
 
 Observability without proper trade-offs and QoS is like using shapes the wrong way.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/rZ3ETK7-ZM8?si=DtdEOm7lkF3aaiiT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/rZ3ETK7-ZM8?si=DtdEOm7lkF3aaiiT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## TL;DR
 In terms of load, each request done by an application to observe will send at least 1 or more signals depending the verbosity of the instrumentation.
