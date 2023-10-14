@@ -2,7 +2,7 @@
 
 Observability without proper trade-offs and QoS is like using shapes the wrong way.
 
-<iframe width="200%" src="https://www.youtube.com/embed/rZ3ETK7-ZM8?si=DtdEOm7lkF3aaiiT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/rZ3ETK7-ZM8?si=DtdEOm7lkF3aaiiT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## TL;DR
 In terms of load, each request done by an application to observe will send at least 1 or more signals depending the verbosity of the instrumentation.
@@ -21,7 +21,9 @@ Putting QoS and trade-offs in the collector (ie: OTLP protocol, agents [vector m
 ### Trade-offs
 
 #### In transport
-> OTLP example where QoS is part of the protocol (no streaming) and in the client lib (max size)
+The [otlp protocol](https://github.com/open-telemetry/opentelemetry-proto/tree/main/opentelemetry/proto) itself is well documented. Official client library are compiled (gRPC) with embedded trade-offs (max size for AnyValue, ...)
+
+HTTP and structured body like HTTP/json are not really documented anywhere while defining collector configuration is very important since there is not standard client library for deserializing with a proper QoS on the transport and max size per doc or line.
 
 #### At collector level
 libraries and agent
