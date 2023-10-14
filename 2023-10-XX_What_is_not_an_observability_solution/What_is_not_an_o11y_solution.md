@@ -2,14 +2,14 @@
 
 Observability without proper trade-offs and QoS is like using shapes the wrong way.
 
-<iframe src="https://www.youtube.com/embed/rZ3ETK7-ZM8?si=DtdEOm7lkF3aaiiT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="200%" src="https://www.youtube.com/embed/rZ3ETK7-ZM8?si=DtdEOm7lkF3aaiiT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## TL;DR
 In terms of load, each request done by an application to observe will send at least 1 or more signals depending the verbosity of the instrumentation.
 
-It is easy to understand that in terms of load, the observability backend can become spof.
+It is easy to understand that in terms of load, the observability backend can become a spof.
 
-It can be invisible it if it is not used in the critical path but this is rarely the case since metrics / alerting and associated triggers can be impacted.
+It can be invisible if it is not used in the critical path but this is rarely the case since metrics / alerting and associated triggers can be impacted.
 
 Observability is all about trade-offs and hard / soft limitations to ensure the health and valid usage of the solution AND the health of the SRE team.
 
@@ -35,6 +35,15 @@ https://en.wikipedia.org/wiki/Quality_of_service
 ## Well known traps
 
 ### All you need is logs
+Old and legacy application uses logs only without any metrics.
+
+Teams building dashboards tend to compute metrics over logs which highly impact the backend.
+
+The more the panel are added, the more the backend will suffer.
+
+Computing logs is IO and cpu intensive and this part can be precomputed for metrics dashboards.
+
+To do it, collectors and agent can be use to transform logs to metrics.
 
 ### Metrics and high cardinality
 Do not worry, this is not anymore hard limits but you will pay a lot to support it.
