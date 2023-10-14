@@ -5,6 +5,11 @@ Observability without proper trade-offs and QoS is like using shapes the wrong w
 <iframe src="https://www.youtube.com/embed/rZ3ETK7-ZM8?si=DtdEOm7lkF3aaiiT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## TL;DR
+
+Reference: [QoS in cloud computing](https://jisajournal.springeropen.com/articles/10.1186/s13174-014-0011-3)
+
+> "Quality-of-Service (QoS) management, [..] is the problem of allocating resources to the application to guarantee a service level along dimensions such as performance, availability and reliability."
+
 In terms of load, each request done by an application to observe will send at least 1 or more signals depending the verbosity of the instrumentation.
 
 It is easy to understand that in terms of load, the observability backend can become a spof.
