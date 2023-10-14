@@ -21,9 +21,9 @@ Putting QoS and trade-offs in the collector (ie: OTLP protocol, agents [vector m
 ### Trade-offs
 
 #### In transport
-The [otlp protocol](https://github.com/open-telemetry/opentelemetry-proto/tree/main/opentelemetry/proto) itself is well documented. Official client library are compiled (gRPC) with embedded trade-offs (max size for AnyValue, ...)
+The [otlp protocol](https://github.com/open-telemetry/opentelemetry-proto/tree/main/opentelemetry/proto) itself is well documented. Official client libraries are compiled (gRPC) with embedded trade-offs (max size for AnyValue, ...)
 
-HTTP and structured body like HTTP/json are not really documented anywhere while defining collector configuration is very important since there is not standard client library for deserializing with a proper QoS on the transport and max size per doc or line.
+HTTP and structured body like HTTP/json are not really documented anywhere while defining collector configuration is very important since there is no standard client libraries for deserializing with a proper QoS on the transport and max size per doc or line.
 
 #### At collector level
 libraries and agent
@@ -37,9 +37,9 @@ https://en.wikipedia.org/wiki/Quality_of_service
 ## Well known traps
 
 ### All you need is logs
-Old and legacy application uses logs only without any metrics.
+Old and legacy applications use logs only without any metrics.
 
-Teams building dashboards tend to compute metrics over logs which highly impact the backend.
+Teams building dashboards tend to visualize metrics over logs which highly impact the backend.
 
 The more the panel are added, the more the backend will suffer.
 
