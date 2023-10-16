@@ -38,7 +38,7 @@ The [otlp protocol](https://github.com/open-telemetry/opentelemetry-proto/tree/m
 HTTP and structured body like HTTP/json are not really documented anywhere while defining collector configuration is very important since there is no standard client libraries for deserializing with a proper QoS on the transport and max size per doc or line.
 
 #### At collector level
-Agent and libraries used should be properply configured like retrying, rates, batch mode, dead letter queue and good defaults.
+Agent and libraries used should be properly configured like retrying, rates, batch mode, dead letter queue and good defaults.
 
 The collector part will push in a decentralized way all the telemetry data. Without [aggregator](https://vector.dev/docs/setup/going-to-prod/arch/aggregator/), [gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) or backend protections (rate limiting, max payload size) those components are critical since it can be the root cause of performance and "unfair usage" issue.
 
