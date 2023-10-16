@@ -18,7 +18,7 @@ It can be invisible when it is not used in the critical path but this is rarely 
 
 Observability is all about trade-offs and hard / soft limitations to ensure the health and valid usage of the solution AND the health of the SRE team.
 
-Putting QoS and trade-offs in the collector (ie: OTLP protocol, agents [vector max line bytes](https://vector.dev/docs/reference/configuration/sources/file/#max_line_bytes) and on the backend part can help to avoid a SRE nightmare.
+Putting QoS and trade-offs in the collector (ie: OTLP protocol, agents [vector max line bytes](https://vector.dev/docs/reference/configuration/sources/file/#max_line_bytes)) and on the backend part can help to avoid a SRE nightmare.
 
 A decentralized responsibility model really helps to find acceptable trade-offs quickly since the SRE are the developers or in the same team. 
 As opposed to decentralized model, finding trade-offs in a Federeated or Centralized model can be harder since it is easy to just push the telemetry data without caring of the observability platform health and impact then become the worst SRE's nightmare.
