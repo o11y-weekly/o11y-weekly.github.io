@@ -81,7 +81,7 @@ Do not worry, this is not anymore a hard limit but you will pay a lot to support
 
 This was the nightmare of SRE using prometheus. Converting logs to metrics without caring about the number of timeseries can become a nightmare.
 
-You do not want to have a counter per client user but for the all app. In case of errors, it should be easy to look for logs and so on.
+You do not want to have a counter per client user but for the whole app. In case of errors, it should be easy to correlate and to look for logs and so on.
 
 As usual, pushing telemetry without wondering of how to view it can quickly become ineffective.
 
