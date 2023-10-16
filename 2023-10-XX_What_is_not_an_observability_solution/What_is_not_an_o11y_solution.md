@@ -9,7 +9,6 @@ Observability without proper trade-offs and QoS is like using shapes the wrong w
 Quote: 
 >"Simplicity is prerequisite for reliability" Edsger Dijkstra.
 
-
 Reference: [QoS in cloud computing](https://jisajournal.springeropen.com/articles/10.1186/s13174-014-0011-3)
 
 > "Quality-of-Service (QoS) management, [..] is the problem of allocating resources to the application to guarantee a service level along dimensions such as performance, availability and reliability."
