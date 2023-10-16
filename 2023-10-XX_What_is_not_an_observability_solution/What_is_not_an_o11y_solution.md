@@ -6,6 +6,10 @@ Observability without proper trade-offs and QoS is like using shapes the wrong w
 
 ## TL;DR
 
+Quote: 
+>"Simplicity is prerequisite for reliability" Edsger Dijkstra.
+
+
 Reference: [QoS in cloud computing](https://jisajournal.springeropen.com/articles/10.1186/s13174-014-0011-3)
 
 > "Quality-of-Service (QoS) management, [..] is the problem of allocating resources to the application to guarantee a service level along dimensions such as performance, availability and reliability."
@@ -59,7 +63,6 @@ Reference :
 - [QoS in Cloud Computing](https://jisajournal.springeropen.com/articles/10.1186/s13174-014-0011-3)
 
 > "Quality-of-Service (QoS) management, [..] is the problem of allocating resources to the application to guarantee a service level along dimensions such as performance, availability and reliability."
-
 
 ## Well known traps
 
@@ -154,3 +157,6 @@ The value of the filtering feature was not clear : since the code was really old
 A test has been made with the business by measuring an existing KPI by temporary removing the filtering feature to measure the benefits and value. It became clear that the filtering feature was useless and removing it simply removed the spof.
 
 In the end we were able to trace 100% of high latencies and errors in the system.
+
+## What next ?
+Next week, I will introduce trade-offs and QoS examples and a matrix to quickly identify non observability or unreasonable solutions.
