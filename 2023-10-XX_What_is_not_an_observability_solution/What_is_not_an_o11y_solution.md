@@ -158,4 +158,4 @@ A test has been made with the business by measuring an existing KPI by temporary
 In the end we were able to trace 100% of high latencies and errors in the system.
 
 ## What next ?
-Next week, I will introduce trade-offs and QoS examples and a matrix to quickly identify non observability or unreasonable solutions.
+Next week, I will introduce trade-offs and QoS examples with a matrix to quickly identify non observability or unreasonable solutions.
