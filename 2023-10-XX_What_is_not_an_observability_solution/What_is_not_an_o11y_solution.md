@@ -122,7 +122,7 @@ References:
 - Indexing: [Parser combinator in real life](https://cboudereau.github.io/fsharp,/parser/combinator/2017/08/09/why-parser.html)
 - Broker : [zmqdemo](https://github.com/cboudereau/zmqdemo)
 - Deep dive: [Why we use fsharp data in prod?](https://cboudereau.github.io/fsharp/data/prod/2017/08/18/why-we-use-fsharp-data-in-prod.html)
-- Deep dive:[How to parse a proto3 message with fparsec?](https://cboudereau.github.io/fsharp/parser/combinator/fparsec/proto3/2017/08/10/proto3-parser.html)
+- Deep dive: [How to parse a proto3 message with fparsec?](https://cboudereau.github.io/fsharp/parser/combinator/fparsec/proto3/2017/08/10/proto3-parser.html)
 - Hands-on: [NCrafts conference](https://twitter.com/ncraftsConf/status/983306821984190464)
 
 ## Metrics: Audit user activity at scale
