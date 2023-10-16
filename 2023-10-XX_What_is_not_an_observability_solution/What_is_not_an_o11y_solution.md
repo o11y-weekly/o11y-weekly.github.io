@@ -101,7 +101,7 @@ Sending a large payload + bad default agent configuration with auto retry withou
 
 ---
 
-## What is not an observability solutions
+## What is not an observability solutions ?
 
 In my experience, in hotel industry and social network I was facing multiple times with limitations from the tooling, databases, ...etc and obviously observability tools.
 
