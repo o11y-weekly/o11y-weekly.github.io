@@ -23,7 +23,7 @@ Putting QoS and trade-offs in the collector (ie: OTLP protocol, agents [vector m
 A decentralized responsibility model really helps to find acceptable trade-offs quickly since the SRE are the developers or in the same team. 
 As opposed to decentralized model, finding trade-offs in a Federeated or Centralized model can be harder since it is easy to just push the telemetry data without caring of the observability platform health and impact then become the worst SRE's nightmare.
 
-If the observability platform complexity is higher than the business you are monitoring should raise that usage and use cases aren't really defined.
+If the observability platform complexity is higher than the business you are monitoring, then it should raise that usage and use cases aren't really defined and might be out of control.
 
 This is why trade-offs and QoS should be defined early.
 
