@@ -45,7 +45,7 @@ The collector part will push in a decentralized way all the telemetry data. With
 Tons of legacy started with logs only where dashboards and alerting use metrics for. Connecting logs to alerting should be splitted to avoid high usage for a small need. Converting logs to metrics can help to reduce IO and CPU usage and also rate to simply reduce the backend pressure and complexity.
 
 #### At backend level
-The lack of backend protections can lead to undesirable downtime for all the company. It is important in Federated and Centralized models that the backend should be well configured for the sake of the platform health, availibility, fairness.
+The lack of backend protections can lead to undesirable downtime for the whole platform. It is important in Federated and Centralized models that the backend should be well configured for the sake of the platform health, availibility, fairness.
 
 "One team abusing of logs or any telemetry should not impact others or the entire platform".
 
