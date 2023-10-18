@@ -98,7 +98,7 @@ How about instrumenting at 100% and then extract metrics and logs ?
 
 Tracing is the most verbose mode in the observability 3 pillars (lets talk later about a more verbose one : profiles and flamegraph).
 
-Tracing instrumentations can also impact the observed applications (tracing 100% of the production) and collecting metrics by using tracing is inefficient and can be an ineffective way to get usefull metrics.
+Tracing instrumentations can also impact the observed applications (tracing 100% of the production) and collecting metrics by using tracing is inefficient and can be an ineffective way to get useful metrics.
 
 Instead of relying to one backend to get metrics, the SRE team should maintain traces and metrics with the highest SLAs where tracing can offer lower SLA than metrics as a good trade-offs.
 
