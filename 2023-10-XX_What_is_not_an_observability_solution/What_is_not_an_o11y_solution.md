@@ -56,6 +56,10 @@ Monitoring the observability platform should be in place day 1.
 
 The [USE method](https://www.brendangregg.com/usemethod.html) oriented dashboard can really help to find out the problem.
 
+When the backend is a cloud solution, there is 2 trade-offs : 
+- CPU and ingested rate billing: It scales while you have money for write / read (api calls) purpose. The read rates can be low and quite close to bigquery / cloudwatch logs latencies
+- Ingested rate only billing: You pay only ingested logs but you can read it under a "fair usage policy".
+
 ### QoS in observability
 Reference : 
 - [QoS in Computer Network](https://en.wikipedia.org/wiki/Quality_of_service)
