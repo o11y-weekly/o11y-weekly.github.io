@@ -10,5 +10,5 @@ This week, for [the second post](./2023-10-18_What_is_not_an_observability_solut
 [2023-10-18 #2 News and Post (What is not o11y solution ?)](./2023-10-18_What_is_not_an_observability_solution/README.md)
 
 ## Archives
-[2023-10-18 #2 News and Post (What is not o11y solution ?)](./2023-10-18_What_is_not_an_observability_solution/README.md)
-[2023-10-11: #1 Savings dilemma](./2023-10-11_Savings_dilemma/README.md)
+- [2023-10-18 #2 News and Post (What is not o11y solution ?)](./2023-10-18_What_is_not_an_observability_solution/README.md)
+- [2023-10-11: #1 Savings dilemma](./2023-10-11_Savings_dilemma/README.md)

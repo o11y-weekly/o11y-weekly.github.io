@@ -1,4 +1,4 @@
-# 2023-10-XX: What is not an observability solution ?
+# 2023-10-18: What is not an observability solution ?
 
 Observability without proper trade-offs and QoS is like using shapes the wrong way.
 

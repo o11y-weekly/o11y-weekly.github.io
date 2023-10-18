@@ -1,4 +1,4 @@
-## 2023-10-XX What's new in o11y ?
+## 2023-10-18 What's new in o11y ?
 
 The last week, I went to Grafana Paris Sessions.
 
