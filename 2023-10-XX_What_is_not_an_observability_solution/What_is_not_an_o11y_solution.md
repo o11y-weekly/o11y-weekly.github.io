@@ -91,6 +91,8 @@ You do not want to have a counter per client user but for the whole app. In case
 
 As usual, pushing telemetry without wondering of how to view it can quickly become ineffective.
 
+Remember that if your problem is too big, it seems it should not fit in an observability platform but datascience or datalake and pipeline based solution (see below examples in the end of the post).
+
 ### Tracing all the way down
 How about instrumenting at 100% and then extract metrics and logs ?
 
