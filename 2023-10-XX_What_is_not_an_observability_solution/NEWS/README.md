@@ -28,7 +28,7 @@ Do you want to maintain lots of grafana instances ?
 If you have such problem, the Federated and Centralized models should be considered
 
 ##### Federated
-The model is centralized but the software is not spread anymore.
+The model is centralized but the software is not spred anymore.
 This mode requires defined roles because shared responsability on the same perimeter / role does not really work.
 
 "Nobody care when the responsability is shared"
