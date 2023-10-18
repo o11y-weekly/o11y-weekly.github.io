@@ -83,7 +83,7 @@ To do it, collectors and agent can be use to transform logs to metrics.
 Converting logs to metrics reduces CPU, IO usage but also rate (DPM : datapoint per minute). You can easily reduce 100K DPM to 5 DPM (5 metrics like max, min, p99, median, average per minute).
 
 ### Metrics and high cardinality
-Do not worry, this is not anymore a hard limit but you will pay a lot to support it.
+Do not worry, this is not anymore a hard limit (graphite, prometheus) but you will pay a lot to support it (victoria metrics / grafana mimir, ...).
 
 This was the nightmare of SRE using prometheus. Converting logs to metrics without caring about the number of timeseries can become a nightmare.
 
