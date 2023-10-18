@@ -4,7 +4,7 @@ The last week, I went to Grafana Paris Sessions.
 
 ### Grafana Sessions Paris (aka Obs sessions)
 
-There was 3 companies feedback including SNCF and organizational / scalling guide of observability product in a company where the topic was Grafana but those principles apply for cloud and observability product in general.
+There were 3 companies feedback including SNCF and organizational / scalling guide of observability product in a company where the topic was Grafana but those principles apply for cloud and observability product in general.
 
 [Abdelkrim Hadjidj](https://grafana.com/author/abdelkrim_hadjidj/) uses a chess metaphor to explain how to scale observability solution in a company.
 
