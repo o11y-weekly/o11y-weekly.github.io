@@ -1,5 +1,3 @@
-# o11y-weekly
-
 Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
