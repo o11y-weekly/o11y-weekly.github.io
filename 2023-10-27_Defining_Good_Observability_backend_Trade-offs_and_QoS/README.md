@@ -55,7 +55,7 @@ Simply just replacing fulltext search by 1 dimensions reduces the complexity.
 
 At least once delivery does not fit with collector and instrumentation/logs libraries. In case of a failure, messages are allocated somewhere with a finite capacity and __always drop__ new messages in case of errors. 
 
-A message-oriented middleware should be in place on the observability backend side instead of logging libraries to support such properties. As example, ZMQ ["high water mark"](https://zguide.zeromq.org/docs/chapter2/#Missing-Message-Problem-Solver) is a very well documented 0 broker which can support such guarantee but by __blocking__ in worst case. Combined with a queueing system, it can be really easy to support those guarantees.
+A message-oriented middleware should be in place on the observability backend side instead of logging libraries to support such properties. As example, ZMQ ["high water mark"](https://zguide.zeromq.org/docs/chapter2/#High-Water-Marks) is a very well documented 0 broker which can support such guarantee but by __blocking__ in worst case. Combined with a queueing system, it can be really easy to support those guarantees.
 
 While integrating more complex datasource to support corner cases, it is still possible to use observability backends or to support datasource apis like in Grafana to vizualise datapoints.
 
