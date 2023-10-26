@@ -57,7 +57,7 @@ At least once delivery does not fit with collector and instrumentation/logs libr
 
 A message-oriented middleware should be in place on the observability backend side instead of logging libraries to support such properties. As example, ZMQ ["high water mark"](https://zguide.zeromq.org/docs/chapter2/#High-Water-Marks) is a very well documented 0 broker which can support such guarantee but by __blocking__ in worst case. Combined with a queueing system, it can be really easy to support those guarantees.
 
-While integrating more complex datasource to support corner cases, it is still possible to use observability backends or to support datasource apis like in Grafana to vizualise datapoints.
+While integrating more complex datasource to support corner cases, it is still possible to use observability backends or to support datasource apis like in Grafana to visualize datapoints.
 
 [Five whys](https://en.wikipedia.org/wiki/Five_whys) 
 - Why Is it required? The support team need it.
