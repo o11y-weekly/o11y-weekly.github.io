@@ -1,6 +1,8 @@
-# 2023-10-27 #3 Defining Good Trade-offs and QoS
+# 2023-10-27 #3 Defining Good Observability backend Trade-offs and QoS
 
-This week in o11y, the third post about Trade-offs and QoS management in observability.
+This week in o11y, the third post about Trade-offs and QoS management in observability backend.
+
+The previous post introduced high level QoS and trade-offs. This post focuses on defining QoS and trade-offs for the observability backend side only.
 
 ## Trade-offs and QoS
 
