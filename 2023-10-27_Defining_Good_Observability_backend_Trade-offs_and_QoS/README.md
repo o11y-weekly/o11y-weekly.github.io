@@ -21,7 +21,7 @@ For each signal, those properties are very important to know when using SAAS pro
 
 The motto is to keep it stupid simple and if the use case is too much high, it just means that it is not a __full__ observability solution.
 
-## Non Functional Requirements
+## Non Functional Requirements (NFRs)
 
 Using observability solutions to cover a risky business can be challenging and those Non Functional Requirements should be defined day 1 to avoid a complete SLA mess.
 
@@ -29,9 +29,9 @@ Is it a good thing to measure business SLAs on an observability stack which does
 
 How about finding reasonable trade-offs instead of supporting higher SLAs than required. Is it required to support / pay a complex observability stack with higher SLAs than required ?
 
-According to Edsger Dijkstra, "Simplicity is prerequisite for reliability" and this is why defining those NFR is important to reduce the complexity to support high SLA. 
+According to Edsger Dijkstra, "Simplicity is prerequisite for reliability" and this is why __defining those NFRs is important to reduce the complexity to support high SLA.__
 
-Creating a POC to analyze output is a good idea by using an agent and a file output. By using opentelemetry collector contrib with matching input sources (prometheus? graphite? file log ? tracing ?) and otlp file output, it is really easy to estimate telemetry required capacity.
+Creating a POC to analyze output is a good idea by using an agent and a file output. By using opentelemetry collector contrib with matching input sources (prometheus / graphite / file log / tracing / receivers which fit with the telemetry app) and otlp file output, it is really easy __to estimate required telemetry capacity.__
 
 - __Retention__: in GB per day. Throughput and signal size are important to define the total retention. Asking about archiving or deleting signals after the retention period should be defined. In general, after the 30 days period, signals are deleted. 
 
@@ -39,13 +39,13 @@ Creating a POC to analyze output is a good idea by using an agent and a file out
 
 - __Rate__: at which signal / datapoint per minute signals will be sent (min/max/avg/p99).
 
-- __Risk to cover__: define the SLA of the solution (equal/less/higher than monitored app). Is the observability solution used from a support team with external client ? Is it only from developpers or production ops / support team / care team ?
+- __Risk to cover__: define the SLA of the solution (equal/less/higher than monitored app). Is the observability solution used from a support team with external client ? Is it only used by developpers or production ops / support team / care team ?
 
-- __Precision__: Reducing the precision can help to reduce the complexity like using metrics instead of logs or traces. Does aggregating/rounding/sampling impact the expected result ? Like converting logs to metrics which can result of an approximated rates instead of a real count.
+- __Precision__: Reducing the precision can help to reduce the complexity like using metrics instead of logs or traces. Does aggregating/rounding/sampling impact the expected result ? Like converting logs to metrics which can result of an approximated rates instead of a real count. How about reducing the precision over the time ?
 
 - __Delivery__: Usually best effort in collectors and libraries. What if the log is lost at collector/transport/backend level ? At least once delivery + idempotency offer the best delivery but at which cost ?
 
-- __Query__: 1 dimension (time range + 1 dimension) to Fulltext. Having fulltext by default is not a good idea and increase highly the complexity. 
+- __Query__: 1 dimension (time range + 1 dimension) to Fulltext. Having fulltext by default is not a good idea and highly increase the complexity. 
 
 Combining fulltext search + at least once delivery + high precision at high rates and large document for a high risk to cover is just too much high!
 
@@ -55,9 +55,16 @@ Simply just replacing fulltext search by 1 dimensions reduces the complexity.
 
 At least once delivery does not fit with collector and instrumentation/logs libraries. In case of a failure, messages are allocated somewhere with a finite capacity and __always drop__ new messages in case of errors. 
 
-A message-oriented middleware should be in place instead of logging libraries to support such properties. As example, ZMQ ["high water mark"](https://hyperledger-indy.readthedocs.io/projects/plenum/en/latest/misc/zeromq_features.html#do-not-rely-on-zeromq-high-watermark) is a very well documented 0 broker which can support such guarantee but by __blocking__ in worst case.
+A message-oriented middleware should be in place on the observability backend side instead of logging libraries to support such properties. As example, ZMQ ["high water mark"](https://hyperledger-indy.readthedocs.io/projects/plenum/en/latest/misc/zeromq_features.html#do-not-rely-on-zeromq-high-watermark) is a very well documented 0 broker which can support such guarantee but by __blocking__ in worst case. Combined with a queueing system, it can be really easy to support those guarantees.
 
-It is still possible to use observability backends or to support datasource apis like in Grafana to vizualise datapoints.
+While integrating more complex datasource to support corner cases, it is still possible to use observability backends or to support datasource apis like in Grafana to vizualise datapoints.
+
+[Five whys](https://en.wikipedia.org/wiki/Five_whys) 
+- Why Is it required? The support team need it.
+- Why the support team needs those logs ? To investigate over bookings?
+- Why trade-offs can't apply ? The actual solution drops logs every 30 days while over bookings can be higher than 30 days and up to 3 years.
+- Why the support team need observability tools for such scenario ? To correlate telemetry easily when the issue is recent.
+- Why the observability backend has been used to support this incompatible use case ? It was easy at the beginning when the total volume was low but due to high growth, it becomes incompatible.
 
 ## Make it simple
 - __Too much logs__: How about keeping info/errors only ? It is still possible to activate debug logs temporary for a specific app. Configuration can be done at gateway / agent or app configuration.
