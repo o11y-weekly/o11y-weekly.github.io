@@ -87,3 +87,4 @@ OTLP supports both cumulative and delta model and is pushed first but still can 
 Reference: 
 - [OTLP protocol / Aggregation Temporality](https://github.com/open-telemetry/opentelemetry-proto/blob/main/opentelemetry/proto/metrics/v1/metrics.proto#L252)
 - [OTLP / Timeseries Model](https://opentelemetry.io/docs/specs/otel/metrics/data-model/#timeseries-model)
+- [Opentelemetry collector contrib file exporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/fileexporter)
