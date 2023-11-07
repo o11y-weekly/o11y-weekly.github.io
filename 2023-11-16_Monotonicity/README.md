@@ -40,7 +40,6 @@ Viewing a 1mn range of the metrics is better but the counter looks weird due to 
 
 ### Range Vector rate
 The metric is close to the expected 0.1rps but still rounded due to the number of restart.
-
 ![Range Vector rate](./demo/prometheus_rate.png)
 
 ## Cumulative vs Delta
