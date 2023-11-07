@@ -15,7 +15,7 @@ This demo emphasises the restart and state management issue on pull + cumulative
 ./run.sh
 ```
 
-The prometheus graphs which include instant vector
+The prometheus graphs which includes instant vector
 
 open in a brower [prometheus graphs](http://localhost:9090/graph?g0.expr=tokio_hyper_example_requests_total&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=5m&g1.expr=increase(tokio_hyper_example_requests_total%5B1m%5D)&g1.tab=0&g1.stacked=0&g1.show_exemplars=0&g1.range_input=5m&g2.expr=rate(tokio_hyper_example_requests_total%5B1m%5D)&g2.tab=0&g2.stacked=0&g2.show_exemplars=0&g2.range_input=5m)
 
