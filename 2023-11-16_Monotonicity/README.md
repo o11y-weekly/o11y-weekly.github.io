@@ -24,7 +24,6 @@ Prometheus documents this really well in the intro :
 The good news is that [OTLP metrics supports delta/cumulative](https://opentelemetry.io/docs/specs/otel/metrics/data-model/#timeseries-model)
 
 ## Prometheus Demo
-
 [Run the Demo](./demo/README.md)
 
 Using rates is the best way to properly view metrics on cumulative/pull based metrics model and avoid resets trap.
@@ -45,7 +44,6 @@ The metric is close to the expected 0.1rps but still rounded due to the number o
 ![Range Vector rate](./demo/prometheus_rate.png)
 
 ## Cumulative vs Delta
-
 Prometheus is cumulative, the counter increases on the app side locally and pulled later by prometheus.
 
 As opposed to StatsD / Graphite where the delta is pushed to StatsD, aggregated every 10s/1m and pushed to graphite.
@@ -62,7 +60,6 @@ The Delta model can support easily eventual consistency, is associative and comu
 The cumulative and pull model are tolerant to observability backend issues, the counter state is stored directly in the app memory. As soon as the app restarts, the counter down to 0 and monotonicity is impacted. Rates can still be used though.
 
 ## Pull vs Push
-
 Pull model is relialable in case of outage, the data is not lost but the backend part should deal with reset.
 
 Push model is less relialable in case of outage and metrics should be packed together and lost together to be still approximated relialable.
