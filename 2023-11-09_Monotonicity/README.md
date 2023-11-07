@@ -1,4 +1,4 @@
-# 2023-11-16 #4 Monotonicity
+# 2023-11-09 #4 Monotonicity
 
 This week, a [prometheus demo](./demo/README.md) has been made to illustrate this post. 
 

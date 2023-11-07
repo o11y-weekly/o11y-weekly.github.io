@@ -2,10 +2,10 @@ Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
 
-This week, a boring topic, [monotonicity post](./2023-11-16_Monotonicity/README.md) with a prometheus demo to make it fun to introduce monotonicity which is an important topic on OTLP metrics but also graphite, prometheus, victoriametrics, mimir, ...
+This week, a boring topic, [monotonicity post](./2023-11-09_Monotonicity/README.md) with a prometheus demo to make it fun to introduce monotonicity which is an important topic on OTLP metrics but also graphite, prometheus, victoriametrics, mimir, ...
 
 # Last Post
-[2023-11-16 #4 Monotonicity](./2023-11-16_Monotonicity/README.md)
+[2023-11-09 #4 Monotonicity](./2023-11-09_Monotonicity/README.md)
 
 ## Archives
 - [2023-10-27 #3 Defining Good Observability backend Trade-offs and QoS](./2023-10-27_Defining_Good_Observability_backend_Trade-offs_and_QoS/README.md)
