@@ -69,7 +69,7 @@ Push model is less relialable in case of outage and metrics should be packed tog
 
 A gateway/aggregator which can support push and pull can help to mitigate this problem.
 
-If the data should not be loss in case of outage, a stream/message oriented middleware like kafka should be in place with higher SLA than the monitored system which impact the simplicity.
+If the data should not be lost in case of outage, a stream/message oriented middleware like kafka should be in place with higher SLA than the monitored system which impact the simplicity.
 
 ## Losing data
 When data is lost, it is important to understand how they are used.
