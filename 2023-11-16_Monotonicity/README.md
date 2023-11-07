@@ -1,6 +1,6 @@
 # 2023-11-16 #4 Monotonicity
 
-This week, a [prometheus demo](./demo/README.md) 
+This week, a [prometheus demo](./demo/README.md) has been made to illustrate this post. 
 
 ## TL;DR
 It is recommended to use rates / gauge for cumulative metrics and it fits really well with system monitoring while delta metrics is good at best effort long lived monotonic counters with potential data loss.  
