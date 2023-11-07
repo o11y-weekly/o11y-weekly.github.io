@@ -21,7 +21,7 @@ Prometheus documents this really well in the intro :
 
 "Prometheus values reliability. You can always view what statistics are available about your system, even under failure conditions. If you need 100% accuracy, such as for per-request billing, Prometheus is not a good choice as the collected data will likely not be detailed and complete enough. In such a case you would be best off using some other system to collect and analyze the data for billing, and Prometheus for the rest of your monitoring."
 
-The good news is that [OTLP metrics support delta/cumulative](https://opentelemetry.io/docs/specs/otel/metrics/data-model/#timeseries-model)
+The good news is that [OTLP metrics supports delta/cumulative](https://opentelemetry.io/docs/specs/otel/metrics/data-model/#timeseries-model)
 
 ## Prometheus Demo
 
