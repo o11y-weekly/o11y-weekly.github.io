@@ -1,0 +1,11 @@
+services:
+  app:
+    build: ./app
+    ports:
+      - 8001:8001
+  prometheus:
+    image: prom/prometheus:v2.47.2
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - 9090:9090
