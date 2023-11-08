@@ -1,0 +1,6 @@
+apiVersion: 1
+
+datasources:
+  - name: Graphite
+    type: graphite
+    url: http://graphite:80

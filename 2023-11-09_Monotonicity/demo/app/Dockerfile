@@ -1,4 +1,4 @@
-FROM rust:alpine as builder
+FROM rust:1.73.0-alpine3.18 as builder
 RUN apk add --no-cache musl-dev pkgconfig openssl-dev
 COPY . /app 
 WORKDIR /app

@@ -6,7 +6,7 @@ use prometheus_client::{encoding::text::encode, metrics::counter::Counter, regis
 use std::{
     future::Future,
     io,
-    net::{IpAddr, Ipv4Addr, SocketAddr},
+    net::{IpAddr, Ipv4Addr, SocketAddr, UdpSocket},
     pin::Pin,
     sync::Arc,
 };
@@ -14,9 +14,10 @@ use tokio::signal;
 
 #[tokio::main]
 async fn main() {
+    let socket = UdpSocket::bind("0.0.0.0:0").unwrap();
     let request_counter: Counter<u64> = Default::default();
 
-    let mut registry = <Registry>::with_prefix("tokio_hyper_example");
+    let mut registry = <Registry>::with_prefix("foo");
 
     registry.register(
         "requests",
@@ -26,7 +27,7 @@ async fn main() {
 
     // Spawn a server to serve the OpenMetrics endpoint.
     let metrics_addr = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(0, 0, 0, 0)), 8001);
-    start_metrics_server(metrics_addr, registry, request_counter).await
+    start_metrics_server(metrics_addr, registry, request_counter, Arc::new(socket)).await
 }
 
 /// Start a HTTP server to report metrics.
@@ -34,6 +35,7 @@ pub async fn start_metrics_server(
     metrics_addr: SocketAddr,
     registry: Registry,
     counter: Counter<u64>,
+    socket: Arc<UdpSocket>,
 ) {
     eprintln!("Starting metrics server on {metrics_addr}");
 
@@ -42,8 +44,9 @@ pub async fn start_metrics_server(
         .serve(make_service_fn(move |_conn| {
             let registry = registry.clone();
             let counter = counter.clone();
+            let socket = socket.clone();
             async move {
-                let handler = make_handler(registry, counter);
+                let handler = make_handler(registry, counter, socket);
                 Ok::<_, io::Error>(service_fn(handler))
             }
         }))
@@ -64,10 +67,13 @@ pub async fn start_metrics_server(
 pub fn make_handler(
     registry: Arc<Registry>,
     counter: Counter<u64>,
+    socket: Arc<UdpSocket>,
 ) -> impl Fn(Request<Body>) -> Pin<Box<dyn Future<Output = io::Result<Response<Body>>> + Send>> {
     // This closure accepts a request and responds with the OpenMetrics encoding of our metrics.
     move |_req: Request<Body>| {
         counter.inc();
+        socket.send_to(b"foo:1|c", "graphite:8125").unwrap();
+
         let reg = registry.clone();
         Box::pin(async move {
             let mut buf = String::new();

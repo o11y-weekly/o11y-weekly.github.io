@@ -1,11 +1,38 @@
 services:
   app:
     build: ./app
+    networks:
+      - bridge
     ports:
       - 8001:8001
   prometheus:
     image: prom/prometheus:v2.47.2
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - bridge
     ports:
       - 9090:9090
+  graphite:
+    image: graphiteapp/graphite-statsd:1.1.10-5
+    volumes:
+      - ./graphite/statsd/udp.js:/opt/statsd/config/udp.js:ro
+    networks:
+      - bridge
+    ports:
+      - 8080:80
+      - 8125:8125/udp
+  grafana:
+    image: grafana/grafana-oss:10.2.0
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    ports:
+      - 3000:3000
+    networks:
+      - bridge
+    volumes:
+      - ./grafana/provisioning/:/etc/grafana/provisioning/:ro
+
+networks:
+  bridge:

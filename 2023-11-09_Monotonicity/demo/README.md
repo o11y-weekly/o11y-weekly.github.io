@@ -17,9 +17,9 @@ This demo emphasises the restart and state management issue on pull + cumulative
 
 The prometheus graphs which includes instant vector
 
-open in a brower [prometheus graphs](http://localhost:9090/graph?g0.expr=tokio_hyper_example_requests_total&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=5m&g1.expr=increase(tokio_hyper_example_requests_total%5B1m%5D)&g1.tab=0&g1.stacked=0&g1.show_exemplars=0&g1.range_input=5m&g2.expr=rate(tokio_hyper_example_requests_total%5B1m%5D)&g2.tab=0&g2.stacked=0&g2.show_exemplars=0&g2.range_input=5m)
+open in a brower [grafana graphs](http://localhost:3000/d/f121c72d-d858-44bc-9a1e-adf869509b38/monotonicity?orgId=1)
 
-## Queries
+## Prometheus Queries
 
 Using rates is the best way to properly view metrics on cumulative/pull based metrics model.
 
@@ -34,3 +34,9 @@ Viewing a 1mn range of the metrics is better but the counter looks weird
 ### Range Vector rate
 The metrics is close to the expected 0.1rps but still rounded due to the number of restart
 ![Range Vector rate](./prometheus_rate.png)
+
+## Grafana queries
+
+long term integral can be used as opposed to prometheus which is [not solved](https://github.com/prometheus/prometheus/issues/1335) and not the right tool to do it, it is perfectly documented on [prometheus](https://prometheus.io/docs/introduction/comparison/#summary) which is a good sign of maturity and trade-offs
+
+TODO victoria metrics and MetricsQL (integrate) + Mimir

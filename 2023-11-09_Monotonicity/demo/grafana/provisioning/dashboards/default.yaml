@@ -1,0 +1,9 @@
+# grafana/provisioning/dashboards/dashboard.yml
+apiVersion: 1
+ 
+providers:
+  - name: 'dashboards'
+    type: file
+    options:
+      path: /etc/grafana/provisioning/dashboards
+      foldersFromFilesStructure: true
