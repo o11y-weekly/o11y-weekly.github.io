@@ -1,6 +1,6 @@
 # 2023-11-09 #4 Monotonicity
 
-This week, a [prometheus demo](./demo/README.md) has been made to illustrate this post. 
+This week, a [prometheus/graphite demo](./demo/README.md) has been made to illustrate this post. 
 
 ## TL;DR
 It is recommended to use rates / gauge for cumulative metrics and it fits really well with system monitoring while delta metrics is good at best effort long lived monotonic counters with potential data loss.  
@@ -58,6 +58,8 @@ The Delta model can support easily eventual consistency, is associative and comu
 
 The cumulative and pull model are tolerant to observability backend issues, the counter state is stored directly in the app memory. As soon as the app restarts, the counter down to 0 and monotonicity is impacted. Rates can still be used though.
 
+[Grafana Labs recently published a post about this trade-offs](https://grafana.com/blog/2023/09/26/opentelemetry-metrics-a-guide-to-delta-vs.-cumulative-temporality-trade-offs/)
+
 ## Pull vs Push
 Pull model is relialable in case of outage, the data is not lost but the backend part should deal with reset.
 
@@ -80,7 +82,11 @@ In such case, sum and count should be located inside the same udp paket so that 
 
 OTLP supports both cumulative and delta model and is pushed first but still can be used with OTLP/json to flush to disk and pull later. 
 
+Delta : data loss may occur.
+Cumulative : No data loss but resolution can be impacted. Converting cumulative to delta with a reset trade-off detection might help to enhance data reliability during an outage.
+
 Reference: 
 - [OTLP protocol / Aggregation Temporality](https://github.com/open-telemetry/opentelemetry-proto/blob/main/opentelemetry/proto/metrics/v1/metrics.proto#L252)
+- [OpenTelemetry Aggregation Temporality](https://opentelemetry.io/docs/specs/otel/metrics/supplementary-guidelines/#aggregation-temporality)
 - [OTLP / Timeseries Model](https://opentelemetry.io/docs/specs/otel/metrics/data-model/#timeseries-model)
 - [Opentelemetry collector contrib file exporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/fileexporter)
