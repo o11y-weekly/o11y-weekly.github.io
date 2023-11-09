@@ -696,7 +696,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "sum_over_time(foo[$__range])",
+          "expr": "increase(foo[$__range])",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "__auto",
@@ -793,7 +793,7 @@
             "uid": "prometheus"
           },
           "disableTextWrap": false,
-          "editorMode": "builder",
+          "editorMode": "code",
           "expr": "increase(foo_requests_total[$__range])",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
