@@ -18,6 +18,9 @@ exporters:
   debug:
     verbosity: detailed
 
+processors:
+    cumulativetodelta:
+
 service:
   pipelines:
     traces:
@@ -25,6 +28,7 @@ service:
       exporters: [debug]
     metrics:
       receivers: [otlp]
+      # processors: [cumulativetodelta]
       exporters: [debug, otlphttp/mimir, otlphttp/victoriametrics]
     logs:
       receivers: [otlp]

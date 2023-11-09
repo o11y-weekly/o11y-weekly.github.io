@@ -26,7 +26,7 @@ use opentelemetry_sdk::metrics as sdkmetrics;
 fn init_otlp_metrics(endpoint: &str) -> metrics::Result<sdkmetrics::MeterProvider> {
     let export_config = opentelemetry_otlp::ExportConfig {
         endpoint: endpoint.to_owned(),
-        protocol: opentelemetry_otlp::Protocol::HttpBinary,
+        protocol: opentelemetry_otlp::Protocol::Grpc,
         timeout: Duration::from_secs(30),
     };
     opentelemetry_otlp::new_pipeline()
@@ -42,7 +42,7 @@ fn init_otlp_metrics(endpoint: &str) -> metrics::Result<sdkmetrics::MeterProvide
 
 #[tokio::main]
 async fn main() {
-    let _ = init_otlp_metrics("http://otelcollector:4317").unwrap();
+    let _ = init_otlp_metrics("http://otel-collector:4317").unwrap();
     let name = "requests";
     let description = "How many requests the application has received";
     let meter = global::meter(name);
