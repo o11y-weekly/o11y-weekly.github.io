@@ -2,7 +2,7 @@ Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
 
-This week, a boring topic, [monotonicity post](./2023-11-09_Monotonicity/README.md) with a prometheus demo to make it fun to introduce monotonicity which is an important topic on OTLP metrics but also graphite, prometheus, victoriametrics, mimir, ...
+This week, a boring topic, [monotonicity post](./2023-11-09_Monotonicity/README.md) with a prometheus/graphite demo to make it fun to introduce monotonicity which is an important topic on OTLP metrics but also graphite, prometheus, victoriametrics, mimir, ...
 
 # Last Post
 [2023-11-09 #4 Monotonicity](./2023-11-09_Monotonicity/README.md)

@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   
   app:
@@ -6,7 +7,20 @@ services:
       - bridge
     ports:
       - 8001:8001
-  
+    depends_on:
+      - otelcollector
+
+  otelcollector:
+    image: otel/opentelemetry-collector:0.88.0
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    networks:
+      - bridge
+    depends_on:
+      - mimir
+      - victoriametrics
+
   prometheus:
     image: prom/prometheus:v2.47.2
     volumes:
@@ -15,6 +29,8 @@ services:
       - bridge
     ports:
       - 9090:9090
+    depends_on:
+      - app
   
   graphite:
     image: graphiteapp/graphite-statsd:1.1.10-5
@@ -22,9 +38,9 @@ services:
       - ./graphite/statsd/udp.js:/opt/statsd/config/udp.js:ro
     networks:
       - bridge
-    ports:
-      - 8080:80
-      - 8125:8125/udp
+    # ports:
+    #   - 8080:80
+    #   - 8125:8125/udp
   
   victoriametrics:
     image: victoriametrics/victoria-metrics:v1.93.7
@@ -54,8 +70,8 @@ services:
     depends_on:
       - prometheus
       - graphite
-      - victoriametrics
       - mimir
+      - victoriametrics
 
 networks:
   bridge:
