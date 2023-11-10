@@ -34,7 +34,7 @@ The demo expects a rate between 0 to 0.1rps with resets.
 
 [Prometheus graph](http://localhost:9090/graph?g0.expr=foo_requests_total&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=5m&g1.expr=increase(foo_requests_total%5B1m%5D)&g1.tab=0&g1.stacked=0&g1.show_exemplars=0&g1.range_input=5m&g2.expr=rate(foo_requests_total%5B1m%5D)&g2.tab=0&g2.stacked=0&g2.show_exemplars=0&g2.range_input=5m)
 
-Other grafana graphs with graphite, VictoriaMetrics are available in the demo. Grafana range, interval variable help a lot to mitigate the monotonicity issue.
+Other grafana graphs with graphite, VictoriaMetrics are available in the demo. Grafana range and interval variable help a lot to mitigate the monotonicity issue.
 
 ### Instant Vector
 As soon as the app restarts, the counter is no more monotonic on reset.
