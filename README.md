@@ -2,7 +2,7 @@ Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
 
-This week, a boring topic, [monotonicity post](./2023-11-09_Monotonicity/README.md) with a prometheus/graphite-statsd/victoriametrics/mimir and opentelemetry collector agent demo with docker compose to make it fun and to introduce monotonicity which is an important topic on OTLP metrics but also graphite/statsd, prometheus, victoriametrics, mimir, ...
+This week, [monotonicity post](./2023-11-09_Monotonicity/README.md) with a prometheus/graphite-statsd/victoriametrics/mimir and opentelemetry collector agent demo with docker compose to make it fun and to introduce monotonicity which is an important topic on OTLP metrics but also graphite/statsd, prometheus, victoriametrics, mimir, ...
 
 In the meantime of writing this post, the Grafana team did a good job at writing a post about cumulative vs delta models (with DataDog and other tools): [OpenTelemetry metrics: A guide to Delta vs. Cumulative temporality trade-offs](https://grafana.com/blog/2023/09/26/opentelemetry-metrics-a-guide-to-delta-vs.-cumulative-temporality-trade-offs/)
 
