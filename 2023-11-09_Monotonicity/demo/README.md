@@ -51,7 +51,7 @@ Viewing a 1mn range of the metrics is better but the counter looks weird due to 
 The metric is close to the expected 0.1rps but still rounded due to the number of restart.
 ![Range Vector rate](./prometheus_rate.png)
 
-## Graph visualization comparison
+## Datapoints visualization comparison
 ### Default Queries
 Those graphs show raw metric.
 ![default queries](./default_queries.png)
