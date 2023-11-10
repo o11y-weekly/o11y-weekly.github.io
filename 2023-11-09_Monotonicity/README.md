@@ -83,4 +83,5 @@ Reference:
 - [OTLP protocol / Aggregation Temporality](https://github.com/open-telemetry/opentelemetry-proto/blob/main/opentelemetry/proto/metrics/v1/metrics.proto#L252)
 - [OpenTelemetry Aggregation Temporality](https://opentelemetry.io/docs/specs/otel/metrics/supplementary-guidelines/#aggregation-temporality)
 - [OTLP / Timeseries Model](https://opentelemetry.io/docs/specs/otel/metrics/data-model/#timeseries-model)
-- [Opentelemetry collector contrib file exporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/fileexporter)
+- [OpenTelemetry collector contrib file exporter to avoid data loss](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/fileexporter)
+- [OpenTelemetry collector contrib cumulative to delta processor](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/cumulativetodeltaprocessor)
