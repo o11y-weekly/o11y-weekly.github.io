@@ -34,6 +34,8 @@ This demo emphasises the restart and reset/state management issue on pull + cumu
 - Cumulative backends : VictoriaMetrics (with prometheus datasource), Prometheus, Mimir.
 - Delta backends : graphite.
 
+To properly see differences between graphite/prometheus/victoriametrics/mirmir, [Grafana](http://localhost:3000/d/f121c72d-d858-44bc-9a1e-adf869509b38/monotonicity?orgId=1) is used to visualize datapoints.
+
 ![architecture](./docker-compose.png)
 
 ## Graph visualization comparison
