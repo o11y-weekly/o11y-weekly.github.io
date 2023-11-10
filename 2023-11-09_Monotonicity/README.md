@@ -36,18 +36,6 @@ The demo expects a rate between 0 to 0.1rps with resets.
 
 Other grafana graphs with graphite, VictoriaMetrics are available in the demo. Grafana range and interval variable help a lot to mitigate the monotonicity issue.
 
-### Instant Vector
-As soon as the app restarts, the counter is no more monotonic on reset.
-![Instant Vector](./demo/prometheus.png)
-
-### Range Vector increase
-Viewing a 1mn range of the metrics is better but the counter looks weird due to resets.
-![Range Vector increase](./demo/prometheus_rate.png)
-
-### Range Vector rate
-The metric is close to the expected 0.1rps but still rounded due to the number of restart.
-![Range Vector rate](./demo/prometheus_rate.png)
-
 ## Cumulative vs Delta
 Prometheus is cumulative, the counter increases on the app side locally and pulled later by prometheus.
 
