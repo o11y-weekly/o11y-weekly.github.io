@@ -89,7 +89,7 @@ For observability, rates are really important but it is important to understand 
 
 Using rates is the best way to properly view metrics on cumulative/pull based metrics model.
 
-Grafana helps to have an approximated integral (non monotonic) by using : `increase(foo[$__range])` `increase` over a range vector of `$__range`.
+Grafana helps to have an approximated integral (non monotonic) by using : `increase(foo[$__range])` `increase` over a range vector of [`$__range`](https://grafana.com/docs/grafana/latest/dashboards/variables/add-template-variables/#__range).
 
 To continue with the [main post conlusion](../README.md#demo)
 
