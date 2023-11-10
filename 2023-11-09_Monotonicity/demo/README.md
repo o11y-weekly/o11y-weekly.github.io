@@ -69,6 +69,6 @@ Using rates is the best way to properly view metrics on cumulative/pull based me
 
 Grafana helps to have an approximated integral (non monotonic) by using : `increase(foo[$__range])` `increase` over a range vector of `$__range`.
 
-Come back to the [post conlusion](../README.md#demo)
+To continue with the [main post conlusion](../README.md#demo)
 
 ![non monotonic increase](./non_monotonic_increase.png)
