@@ -2,9 +2,9 @@
 
 This week, a [prometheus/graphite/victoriametrics/mimir and opentelemetry collector and rust demo](./demo/README.md) has been made to illustrate this post.
 
-[monotonic](https://en.wikipedia.org/wiki/Monotonic_function) : always increasing and never decrease which is a property of a cumulative metric.
-
 ## TL;DR
+[monotonic function definition](https://en.wikipedia.org/wiki/Monotonic_function) : always increasing and never decreasing which is a property of a cumulative metric.
+
 It is recommended to use rates / gauge for cumulative metrics and it fits really well with system monitoring while delta metrics is good at best effort long lived monotonic counters with potential data loss.  
 
 Observability tools come with trade-offs, it is difficult to combine simplicity, low overhead / precision / availability and perfect reliability.
