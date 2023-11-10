@@ -48,7 +48,7 @@ An observability outage occurs at T52 on network.
 | Cumulative | 0 | 1 | 2 | 50 | 1 | X | 1 | 1 |
 | Delta | 1 | 1 | 1 | 50 | 1 | X | 51 | 0.9 |
 
-The Delta model can support easily eventual consistency, is associative and comutative, the total is simply the sum of the datapoint which forms a monoid. In this mode, the counter can still be approximated and partial due to potential data loss during observability backend issues.
+The Delta model can support easily eventual consistency, is associative and comutative, the total is simply the sum of the datapoints which forms a monoid. In this mode, the counter can still be approximated and partial due to potential data loss during observability backend issues.
 
 The cumulative and pull model are tolerant to observability backend issues, the counter state is stored directly in the app memory. As soon as the app restarts, the counter down to 0 and monotonicity is impacted. Rates can still be used though.
 
