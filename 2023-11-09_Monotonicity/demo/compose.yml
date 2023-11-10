@@ -1,0 +1,78 @@
+version: '3.8'
+services:
+  
+  app:
+    build: ./app
+    networks:
+      - bridge
+    ports:
+      - 8001:8001
+    depends_on:
+      - otel-collector
+      - graphite
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.88.0
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    networks:
+      - bridge
+    depends_on:
+      - mimir
+      - victoriametrics
+
+  prometheus:
+    image: prom/prometheus:v2.47.2
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - bridge
+    ports:
+      - 9090:9090
+    depends_on:
+      - app
+  
+  graphite:
+    image: graphiteapp/graphite-statsd:1.1.10-5
+    volumes:
+      - ./graphite/statsd/udp.js:/opt/statsd/config/udp.js:ro
+    networks:
+      - bridge
+    # ports:
+    #   - 8080:80
+    #   - 8125:8125/udp
+  
+  victoriametrics:
+    image: victoriametrics/victoria-metrics:v1.93.7
+    networks:
+      - bridge
+  
+  mimir:
+    image: grafana/mimir:2.10.3
+    volumes:
+      - ./mimir/mimir.yaml:/etc/mimir.yaml
+    command: --config.file=/etc/mimir.yaml
+    networks:
+      - bridge
+  
+  grafana:
+    image: grafana/grafana-oss:10.2.0
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    ports:
+      - 3000:3000
+    networks:
+      - bridge
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./grafana/provisioning/:/etc/grafana/provisioning/:ro
+    depends_on:
+      - prometheus
+      - graphite
+      - mimir
+      - victoriametrics
+
+networks:
+  bridge:
