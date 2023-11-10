@@ -41,12 +41,13 @@ Prometheus is cumulative, the counter increases on the app side locally and pull
 
 As opposed to StatsD / Graphite where the delta is pushed to StatsD, aggregated every 10s/1m and pushed to graphite.
 
+A restart occurs at T51
 An observability outage occurs at T52 on network.
 
 | | T0 | T1 | T2 | T50 | T51 | T52 | Total | Rate
 |-|-|-|-|-|-|-|-|-|
 | Cumulative | 0 | 1 | 2 | 50 | 1 | X | 1 | 1 |
-| Delta | 1 | 1 | 1 | 50 | 1 | X | 51 | 0.9 |
+| Delta | 1 | 1 | 1 | 1 | 1 | X | 51 | 0.9 |
 
 The Delta model can support easily eventual consistency, is associative and comutative, the total is simply the sum of the datapoints which forms a monoid. In this mode, the counter can still be approximated and partial due to potential data loss during observability backend issues.
 
