@@ -1,6 +1,6 @@
 # 2023-11-09 #4 Monotonicity
 
-This week, a [prometheus/graphite/victoriametrics/mimir and opentelemetry collector and rust demo](./demo/README.md) has been made to illustrate this post.
+This week, a prometheus/graphite/victoriametrics/mimir and opentelemetry collector and rust demo has been made to illustrate this post.
 
 ## TL;DR
 [monotonic function definition](https://en.wikipedia.org/wiki/Monotonic_function) : always increasing and never decreasing which is a property of a cumulative metric.
