@@ -41,15 +41,15 @@ To properly see differences between graphite/prometheus/victoriametrics/mirmir, 
 ## Prometheus datapoint visualization
 ### Instant Vector
 As soon as the app restarts, the counter is no more monotonic on reset.
-![Instant Vector](./demo/prometheus.png)
+![Instant Vector](./prometheus.png)
 
 ### Range Vector increase
 Viewing a 1mn range of the metrics is better but the counter looks weird due to resets.
-![Range Vector increase](./demo/prometheus_rate.png)
+![Range Vector increase](./prometheus_rate.png)
 
 ### Range Vector rate
 The metric is close to the expected 0.1rps but still rounded due to the number of restart.
-![Range Vector rate](./demo/prometheus_rate.png)
+![Range Vector rate](./prometheus_rate.png)
 
 ## Graph visualization comparison
 ### Default Queries
