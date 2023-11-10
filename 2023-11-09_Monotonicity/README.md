@@ -41,8 +41,8 @@ Prometheus is cumulative, the counter increases on the app side locally and pull
 
 As opposed to StatsD / Graphite where the delta is pushed to StatsD, aggregated every 10s/1m and pushed to graphite.
 
-A restart occurs at T51
-An observability outage occurs at T52 on network.
+- A restart occurs at T51
+- An observability outage occurs at T52 on network.
 
 | | T0 | T1 | T2 | T50 | T51 | T52 | Total | Rate
 |-|-|-|-|-|-|-|-|-|
