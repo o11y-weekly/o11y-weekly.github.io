@@ -1,4 +1,4 @@
-# prometheus client example
+# prometheus/statsd/otlp client example
 
 This is a lightweight demo, this code is not production ready.
 Pay close attention that the graceful shutdown is not properly implemented.
