@@ -20,11 +20,14 @@ The counter increases by 3 per minute which is (30s / 10s) and the rate should b
 
 This demo emphasises the restart and reset/state management issue on pull + cumulative based metrics.
 
-1/ Run docker compose
+1/ Clone the repo
+https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2023-11-09_Monotonicity/demo
+
+2/ Run docker compose
 ```bash
 ./run.sh
 ```
-2/ Open in a brower the [grafana graphs](http://localhost:3000/d/f121c72d-d858-44bc-9a1e-adf869509b38/monotonicity?orgId=1)
+3/ Open in a brower the [grafana graphs](http://localhost:3000/d/f121c72d-d858-44bc-9a1e-adf869509b38/monotonicity?orgId=1)
 
 ## Architecture
 - app : a rust app which sends metrics with statsd / prometheus and otlp specs. A webserver serves prometheus metrics.
