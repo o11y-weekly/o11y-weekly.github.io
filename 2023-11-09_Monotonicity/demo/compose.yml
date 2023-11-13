@@ -57,7 +57,7 @@ services:
       - bridge
   
   grafana:
-    image: grafana/grafana-oss:10.2.0
+    image: grafana/grafana-oss:10.1.5
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
