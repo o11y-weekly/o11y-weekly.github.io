@@ -1,5 +1,14 @@
 version: '3.8'
 services:
+  app:
+    image: alpine:3.18.4
+    volumes:
+      - ./fakeapp:/app:ro
+      - logs:/applog/
+    environment:
+      - LOG=/applog/
+    working_dir: /app
+    command: ./run.sh
   mimir:
     image: grafana/mimir:2.10.3
     volumes:
@@ -24,7 +33,6 @@ services:
     networks:
       - bridge
     volumes:
-      - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
       - ./grafana/provisioning/:/etc/grafana/provisioning/:ro
     depends_on:
       - mimir
@@ -32,3 +40,7 @@ services:
 
 networks:
   bridge:
+
+volumes:
+  logs:
+
