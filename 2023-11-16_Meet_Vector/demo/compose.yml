@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  mimir:
+    image: grafana/mimir:2.10.3
+    volumes:
+      - ./mimir/mimir.yaml:/etc/mimir.yaml
+    command: --config.file=/etc/mimir.yaml
+    networks:
+      - bridge
+  loki:
+    image: grafana/loki:2.9.2
+    command: -config.file=/etc/loki/local-config.yaml -validation.reject-old-samples=false -query-scheduler.max-outstanding-requests-per-tenant=2048 -querier.max-outstanding-requests-per-tenant=2048
+    volumes:
+      - ./loki/:/etc/loki/:ro
+    networks:
+      - bridge
+  grafana:
+    image: grafana/grafana-oss:10.1.5
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    ports:
+      - 3000:3000
+    networks:
+      - bridge
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./grafana/provisioning/:/etc/grafana/provisioning/:ro
+    depends_on:
+      - mimir
+      - loki
+
+networks:
+  bridge:
