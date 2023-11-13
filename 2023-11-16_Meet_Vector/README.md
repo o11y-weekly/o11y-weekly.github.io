@@ -34,6 +34,7 @@ Organize files
 ### Strength
 
 + Safe error handling
++ Documentation
 
 ### Weekness
 
