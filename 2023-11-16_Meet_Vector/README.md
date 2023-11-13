@@ -1,5 +1,7 @@
 # 2023-11-16 #5 Meet Vector
 
+This week, [Vector.dev](https://vector.dev/) from DataDog will be deeply analyzed.
+
 ## History
 
 ### Timeberio
@@ -7,6 +9,9 @@
 ### DataDog
 
 ### License
+
+### When to use it ?
+https://vector.dev/docs/setup/going-to-prod/architecting/#choosing-agents
 
 ## Hands-on
 
