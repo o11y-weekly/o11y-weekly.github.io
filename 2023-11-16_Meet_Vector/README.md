@@ -33,4 +33,9 @@ Organize files
 
 ### Strength
 
++ Safe error handling
+
 ### Weekness
+
+- OTLP support
+- Datadog vendor locking : https://github.com/vectordotdev/vector/issues/1444#issuecomment-1704040812
