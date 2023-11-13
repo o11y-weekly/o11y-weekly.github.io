@@ -12,3 +12,7 @@ This week, meet [Vector](https://vector.dev/) from DataDog as an agent with hand
 - [2023-10-27 #3 Defining Good Observability backend Trade-offs and QoS](./2023-10-27_Defining_Good_Observability_backend_Trade-offs_and_QoS/README.md)
 - [2023-10-18 #2 News and Post (What is not o11y solution ?)](./2023-10-18_What_is_not_an_observability_solution/README.md)
 - [2023-10-11 #1 Savings dilemma](./2023-10-11_Savings_dilemma/README.md)
+
+## Demos
+- [2023-11-16 Production ready Vector demo](./2023-11-16_Meet_Vector/demo/README.md)
+- [2023-11-09 Graphite/Prometheus/Mimir/VictoriaMetrics/OpenTelemetry Collector Config](./2023-11-09_Monotonicity/demo/)
