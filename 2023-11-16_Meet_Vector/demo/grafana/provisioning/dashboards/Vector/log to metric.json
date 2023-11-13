@@ -51,6 +51,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -99,7 +100,9 @@
           ],
           "displayMode": "table",
           "placement": "right",
-          "showLegend": true
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
         },
         "tooltip": {
           "mode": "single",
@@ -114,7 +117,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "topk(3, max by(hotel) (rate(service_total[$__rate_interval]) / rate(service_count[$__rate_interval])))",
+          "expr": "topk(3, max by(hotel) (rate(app_total[$__rate_interval]) / rate(app_count[$__rate_interval])))",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -144,6 +147,6 @@
   "timezone": "",
   "title": "Log 2 metric",
   "uid": "eEZIy984z",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }

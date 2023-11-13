@@ -39,6 +39,8 @@ Transformation Pipeline DAG : https://vector.dev/docs/about/under-the-hood/archi
 
 ### Log to metric
 
+### Vector as Node exporter
+
 ## Conclusion
 
 ### Strength

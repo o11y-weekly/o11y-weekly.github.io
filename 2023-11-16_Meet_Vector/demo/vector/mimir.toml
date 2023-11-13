@@ -1,0 +1,8 @@
+[transforms.for_mimir]
+type = "remap"
+inputs = ["host_metrics", "vector_metrics"]
+file = "/vector/config/vrl/for_mimir.vrl"
+# forward to a dead letter queue on error or abort 
+drop_on_error = true
+drop_on_abort = true
+reroute_dropped = true

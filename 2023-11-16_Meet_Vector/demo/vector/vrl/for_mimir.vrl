@@ -1,0 +1,3 @@
+.tags.instance = .tags.host
+del(.tags.host)
+.tags.job = "vector"

@@ -1,14 +1,25 @@
 version: '3.8'
 services:
   app:
-    image: alpine:3.18.4
+    image: ubuntu:23.10
     volumes:
       - ./fakeapp:/app:ro
-      - logs:/applog/
+      - logs:/applog/:rw
     environment:
       - LOG=/applog/
     working_dir: /app
     command: ./run.sh
+    networks:
+      - bridge
+  vector:
+    image: timberio/vector:0.34.0-distroless-static
+    command: --log-format=json --config /vector/config/**/*.toml
+    volumes:
+      - ./vector/:/vector/config/:ro
+      - logs:/applog/:ro
+      - vectordata:/var/lib/vector
+    networks:
+      - bridge
   mimir:
     image: grafana/mimir:2.10.3
     volumes:
@@ -41,6 +52,9 @@ services:
 networks:
   bridge:
 
+
 volumes:
   logs:
+  vectordata:
+
 

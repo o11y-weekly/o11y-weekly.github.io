@@ -1,0 +1,11 @@
+## vector monitoring
+
+[sources.vector_logs]
+type = "internal_logs"
+
+[sources.vector_metrics]
+type = "internal_metrics"
+
+[sources.host_metrics]
+type = "host_metrics"
+namespace = "node"

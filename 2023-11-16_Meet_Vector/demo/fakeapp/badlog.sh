@@ -1,2 +1,2 @@
 #!/bin/sh
-echo "t=$(date +%s%N)	bad logs"
+echo "t=$(date +%Y-%m-%dT%H:%M:%S.%N%:z)	bad logs"
