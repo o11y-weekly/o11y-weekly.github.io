@@ -9,6 +9,8 @@ services:
       - LOG=/applog/
     working_dir: /app
     command: ./run.sh
+    deploy:
+      replicas: 4
     networks:
       - bridge
   vector:
@@ -17,13 +19,17 @@ services:
     volumes:
       - ./vector/:/vector/config/:ro
       - logs:/applog/:ro
-      - vectordata:/var/lib/vector
+      - vectordata:/var/lib/vector:rw
     networks:
       - bridge
+    depends_on:
+      - app
+      - mimir
+      - loki
   mimir:
     image: grafana/mimir:2.10.3
     volumes:
-      - ./mimir/mimir.yaml:/etc/mimir.yaml
+      - ./mimir/mimir.yaml:/etc/mimir.yaml:ro
     command: --config.file=/etc/mimir.yaml
     networks:
       - bridge

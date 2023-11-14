@@ -2,7 +2,7 @@ Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
 
-This week, meet [Vector](https://vector.dev/) from DataDog as an agent with hands-on and production ready integration demo, log 2 metrics pipeline, agent monitoring, safe error handling, ...
+This week, meet [Vector](https://vector.dev/) from DataDog as an agent with hands-on integration demo, log 2 metrics pipeline, agent monitoring, safe error handling, ...
 
 # Last Post
 [2023-11-16 #5 Meet Vector](./2023-11-16_Meet_Vector/README.md)
@@ -14,5 +14,5 @@ This week, meet [Vector](https://vector.dev/) from DataDog as an agent with hand
 - [2023-10-11 #1 Savings dilemma](./2023-10-11_Savings_dilemma/README.md)
 
 ## Demos
-- [2023-11-16 Production ready Vector demo](./2023-11-16_Meet_Vector/demo/README.md)
+- [2023-11-16 Vector demo](./2023-11-16_Meet_Vector/demo/README.md)
 - [2023-11-09 Graphite/Prometheus/Mimir/VictoriaMetrics/OpenTelemetry Collector Config](./2023-11-09_Monotonicity/demo/)
