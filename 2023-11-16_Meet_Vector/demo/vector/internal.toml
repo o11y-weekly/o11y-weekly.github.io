@@ -5,6 +5,7 @@ type = "internal_logs"
 
 [sources.vector_metrics]
 type = "internal_metrics"
+tags = { pid_key = "pid", host_key = "host" }
 
 [sources.host_metrics]
 type = "host_metrics"
