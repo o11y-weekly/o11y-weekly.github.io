@@ -25,6 +25,9 @@ https://vector.dev/docs/about/under-the-hood/
 ### Configuration
 Organize files
 
+### Vector Spec
+proto vector spec vs otlp proto spec
+
 ### Transformation
 
 Transformation Pipeline DAG : https://vector.dev/docs/about/under-the-hood/architecture/pipeline-model/
