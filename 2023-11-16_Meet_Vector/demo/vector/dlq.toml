@@ -4,4 +4,4 @@ type = "loki"
 endpoint = "http://loki:3100"
 inputs = ["*.dropped"]
 encoding = { codec = "json" }
-labels = { application = "dead-letter-queue" }
+labels = { application = "dead-letter-queue", host="{{ host }}", pid="{{ pid }}" }
