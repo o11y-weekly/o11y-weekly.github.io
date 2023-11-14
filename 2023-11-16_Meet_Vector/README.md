@@ -25,6 +25,9 @@ https://vector.dev/docs/about/under-the-hood/
 ### Configuration
 Organize files
 
+### Data directory
+file state management
+
 ### Vector Spec
 proto vector spec vs otlp proto spec
 

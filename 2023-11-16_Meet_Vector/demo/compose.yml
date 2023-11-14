@@ -52,7 +52,6 @@ services:
 networks:
   bridge:
 
-
 volumes:
   logs:
   vectordata:
