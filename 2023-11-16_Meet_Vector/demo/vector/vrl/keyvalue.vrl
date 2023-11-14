@@ -2,4 +2,5 @@
 .timestamp = parse_timestamp!(.t, "%Y-%m-%dT%H:%M:%S%.f%:z")
 .job = "vector"
 .tags.instance = .h
+.tags.host = .h
 del(.message)
