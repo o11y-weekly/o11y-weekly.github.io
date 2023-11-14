@@ -1,7 +1,7 @@
 # https://vector.dev/docs/reference/configuration/transforms/remap/#examples-parse-key/value-logfmt-logs
 # https://github.com/vectordotdev/vector/issues/6435
 
-data_dir = "/var/lib/vector"
+data_dir = "/workspace/vector/data"
 
 # debug sink to console
 [sinks.console]

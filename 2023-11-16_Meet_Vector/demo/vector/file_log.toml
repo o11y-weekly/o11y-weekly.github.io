@@ -1,12 +1,12 @@
 # file log
 [sources.applog_file_raw]
 type = "file"
-include = ["/applog/*.log"]
+include = ["${LOG_BASE_PATH}**/*.*"]
 
 [transforms.applog_file]
 type = "remap"
 inputs = ["applog_file_raw"]
-file = "/vector/config/vrl/keyvalue.vrl"
+file = "config/vrl/keyvalue.vrl"
 # forward to a dead letter queue on error or abort 
 drop_on_error = true
 drop_on_abort = true

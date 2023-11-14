@@ -1,29 +1,14 @@
 version: '3.8'
 services:
   app:
-    image: ubuntu:23.10
-    volumes:
-      - ./fakeapp:/app:ro
-      - logs:/applog/:rw
-    environment:
-      - LOG=/applog/
-    working_dir: /app
-    command: ./run.sh
+    build: ./app
     deploy:
-      replicas: 4
-    networks:
-      - bridge
-  vector:
-    image: timberio/vector:0.34.0-distroless-static
-    command: --log-format=json --config /vector/config/**/*.toml
+      replicas: 1
     volumes:
-      - ./vector/:/vector/config/:ro
-      - logs:/applog/:ro
-      - vectordata:/var/lib/vector:rw
+      - ./vector/:/workspace/vector/config:ro
     networks:
       - bridge
     depends_on:
-      - app
       - mimir
       - loki
   mimir:
@@ -57,9 +42,3 @@ services:
 
 networks:
   bridge:
-
-volumes:
-  logs:
-  vectordata:
-
-
