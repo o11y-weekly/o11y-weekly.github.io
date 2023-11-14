@@ -1,3 +1,2 @@
 # prometheus equivalent tags
-.tags.instance = .tags.host
 .tags.job = "vector"

@@ -1,7 +1,7 @@
 #!/bin/sh
 while true
 do
-    DELAY=0.1
+    DELAY=1
     echo "sleeping ${DELAY}s" && sleep ${DELAY}
     
     LOG_PATH=${LOG_BASE_PATH}/$(hostname)_$(date +%Y%m%d).log

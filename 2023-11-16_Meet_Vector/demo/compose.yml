@@ -3,7 +3,7 @@ services:
   app:
     build: ./app
     deploy:
-      replicas: 1
+      replicas: 10
     volumes:
       - ./vector/:/workspace/vector/config:ro
     networks:
