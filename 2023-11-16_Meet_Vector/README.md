@@ -40,17 +40,23 @@ Here is the vector log_2_metric pipeline graph for the next week vector demo:
 
 #### Vector Remapping language
 
-##### Rust crate
-https://crates.io/crates/vrl
+Vector is written in rust and the VRL module is available on [crates.io](https://crates.io/crates/vrl)
 
-##### Project using VRL
-https://github.com/openobserve/openobserve/blob/main/Cargo.toml#L164
+[OpenObserve](https://github.com/openobserve/openobserve/blob/main/Cargo.toml#L164) took the opportunity to reuse subpart of vector to build a different backend than DataDog which is very interesting and can be analyzed deeper through another post.
 
 ### Configuration
-Organize files
+It is possible to use json, toml or cue file formats.
+
+The configuration can be splitted like this way as example:
+- vector.toml : global configuration
+- sinks.tml
+- XXX.toml: one file per pipeline and test
+- dlq.tml: one config file for the dead letter queue configuration
 
 ### Data directory
-file state management
+Vector is a statefull component depending the source transforms and sink used and a [data directory](https://vector.dev/docs/reference/configuration/global-options/#data_dir) is used to store the vector state
+
+The [file source uses the data directory](https://vector.dev/docs/reference/configuration/sources/file/#data_dir) to store checkpoint positions
 
 ### I/O Telemetry Compatibility
 sources (input) and sinks (output)
@@ -63,12 +69,74 @@ sources (input) and sinks (output)
 |vector|X|X|
 
 ### Error Handling
+[VRL is a fail-safe](https://vector.dev/docs/reference/vrl/errors/) language meaning that errors should be treated and are statically verified during the vrl setup and vector startup.
+
+```vrl
+. |= parse_key_value!(.message, field_delimiter:"\t", accept_standalone_key:false)
+.timestamp = parse_timestamp!(.t, "%Y-%m-%dT%H:%M:%S%.f%:z")
+.job = "vector"
+del(.message)
+```
+
+`.message` is the raw message which can be parsed.
+
+1/ parse message as key value and put the object at root level (dot) `.`. The parse_key_value returns a result which can be the object or an error. the bang `!` operator is used to fail on error.
+2/ Add a field `timestamp` by parsing and fail if there is an error
+3/ Add `job` field to vector
+4/ Remove `message` to avoid paying twice raw and structured signal.
+
+Pay close attention that this program will fail on error meaning that vector will stop on error.
+
+It is also possible to handle errors in vrl but it comes at repeating the same error handling every time.
+
+Instead of failing vector on error, it is also possible and recommended to drop on error so that vector will not fail at all and the message is not lost but reroute.
+
+```toml
+[transforms.applog_file]
+type = "remap"
+inputs = ["applog_file_raw"]
+file = "config/vrl/keyvalue.vrl"
+# forward to a dead letter queue on error or abort 
+drop_on_error = true
+drop_on_abort = true
+reroute_dropped = true
+```
+
+All dropped messages are available with the `.dropped` input suffix.
+
+Here is the associated loki sink to forward all [dropped messages](https://vector.dev/highlights/2021-11-18-failed-event-routing/).
+
+```toml
+## dead letter queue for dropped messages
+[sinks.dlq_loki]
+type = "loki"
+endpoint = "http://loki:3100"
+inputs = ["*.dropped"]
+encoding = { codec = "json" }
+labels = { application = "dead-letter-queue", host="{{ host }}", pid="{{ pid }}" }
+```
 
 ### TDD
 
+One of the concept of vector is the ability to test a transformation pipeline.
+
+It becomes really easy to fix a breaking changes during a parsing failure.
+
+This command runs vector inside docker to test the pipeline
+
+```bash
+docker run --rm -w /vector -v $(pwd):/vector/config/ timberio/vector:0.34.0-debian test --config-toml /vector/config/**/*.toml
+```
+
 ### Monitoring Vector
+Vector is really well instrumented and [grafana dashboards](https://grafana.com/grafana/dashboards/19649-vector-monitoring/) are avaible to monitor it properly.
+
+The [Vector Monitoring dashboard](https://grafana.com/grafana/dashboards/19649-vector-monitoring/) exposes all the telemetry data available while depending the vector integration, only a subpart is really useful.
 
 ## Vector as Node exporter (host metrics)
+Vector as a [`host_metric`](https://vector.dev/docs/reference/configuration/sources/host_metrics/) source which can be a node exporter drop-in solution.
+
+The [Node exporter dashboard for vector](https://grafana.com/grafana/dashboards/19650-node-exporter-vector-host-metrics/) is a compatible node exported dashboard for vector host_metric.
 
 ### Agent communication
 Agent communication is an important topic to understand when talking about observability agent.
@@ -101,6 +169,8 @@ Internally, DataDog has built a UI over vector + aggregated telemetry over vecto
 ## Conclusion
 
 Vector is good at log and metric pipeline transformation and really well integrated with DataDog.
+
+Vector is best at pipeline transformation like log to metric transformation / aggregation while it does not support nor full OTLP and traces. Vector uses its own protocol which can conflict with OTLP (ie: OTLP trace). 
 
 Its compatibility outside DataDog is limited to log and metric 
 
