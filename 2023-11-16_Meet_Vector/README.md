@@ -204,6 +204,7 @@ How about a true opentelemetry based vector ?
 ### Strength
 
 + Safe error handling
++ Testability
 + [Documentation](https://vector.dev/docs/about/under-the-hood/)
 + Resiliency
 + Data Durability see [buffer](https://vector.dev/docs/about/under-the-hood/architecture/buffering-model/#disk-buffers)
