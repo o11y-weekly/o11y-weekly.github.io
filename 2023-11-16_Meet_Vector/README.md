@@ -51,7 +51,7 @@ The configuration can be splitted like this way as example:
 - dlq.tml: one config file for the dead letter queue configuration
 
 ### Data directory
-Vector is a statefull component depending the source transforms and sink used and a [data directory](https://vector.dev/docs/reference/configuration/global-options/#data_dir) is used to store the vector state
+Vector is a statefull component depending the source transforms and sink used. A [data directory](https://vector.dev/docs/reference/configuration/global-options/#data_dir) is used to store the vector state
 
 The [file source uses the data directory](https://vector.dev/docs/reference/configuration/sources/file/#data_dir) to store checkpoint positions
 
