@@ -12,14 +12,11 @@ Since vector has been acquired by DataDog, it turns out that vector is more focu
 [Mozilla Public License 2.0](https://github.com/vectordotdev/vector/blob/master/LICENSE)
 
 ## When to use it ?
+
+Vector can replace several agent on the server
 https://vector.dev/docs/setup/going-to-prod/architecting/#1-use-the-best-tool-for-the-job
 
 https://vector.dev/docs/setup/going-to-prod/architecting/#choosing-agents
-
-Basic principle
-
-Under the hood
-https://vector.dev/docs/about/under-the-hood/
 
 ## Concept
 
@@ -64,9 +61,12 @@ sources (input) and sinks (output)
 | Protocol | Input | Output |
 |-|-|-|
 |OTLP metric|||
-|OTLP log|||
+|OTLP log|X||
 |OTLP trace|||
 |vector|X|X|
+|datadog|X|X|
+
+One of the strange things is that many DataDog competitors are available as sinks but OTLP is not fully supported as input and no OTLP sink is available which is a blocker for using vector as gateway with OTLP.
 
 ### Error Handling
 [VRL is a fail-safe](https://vector.dev/docs/reference/vrl/errors/) language meaning that errors should be treated and are statically verified during the vrl setup and vector startup.
@@ -179,7 +179,7 @@ How about a true opentelemetry based vector ?
 ### Strength
 
 + Safe error handling
-+ Documentation
++ [Documentation](https://vector.dev/docs/about/under-the-hood/)
 + Resiliency
 + Data Durability see [buffer](https://vector.dev/docs/about/under-the-hood/architecture/buffering-model/#disk-buffers)
 
@@ -188,4 +188,5 @@ How about a true opentelemetry based vector ?
 - OTLP support / Vector <> OTLP conversion and alignment issues : [partial OTLP support](https://github.com/vectordotdev/vector/issues/1444#issuecomment-1704040812)
 - Datadog vendor locking : [vector protocol DataDog leak](https://github.com/vectordotdev/vector/blob/master/lib/vector-core/proto/event.proto#L91)
 
+## What next ?
 Next week, a full vector hands-on will be available to see its strength
