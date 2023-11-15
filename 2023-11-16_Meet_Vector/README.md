@@ -81,8 +81,11 @@ del(.message)
 `.message` is the raw message which can be parsed.
 
 1/ parse message as key value and put the object at root level (dot) `.`. The parse_key_value returns a result which can be the object or an error. the bang `!` operator is used to fail on error.
+
 2/ Add a field `timestamp` by parsing and fail if there is an error
+
 3/ Add `job` field to vector
+
 4/ Remove `message` to avoid paying twice raw and structured signal.
 
 Pay close attention that this program will fail on error meaning that vector will stop on error.
