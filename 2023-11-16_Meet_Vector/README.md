@@ -3,8 +3,8 @@
 This week, [Vector.dev](https://vector.dev/) from DataDog will be deeply analyzed.
 
 ## History
-2018 : [vector is born](https://github.com/vectordotdev/vector/commit/83705cb791254b331b27f7719f5adae083ac3b13) and written in rust.
-2021 : [DataDog acquires Vector and Timber technologies](https://www.datadoghq.com/blog/datadog-acquires-timber-technologies-vector/)
+- 2018 : [vector is born](https://github.com/vectordotdev/vector/commit/83705cb791254b331b27f7719f5adae083ac3b13) and written in rust.
+- 2021 : [DataDog acquires Vector and Timber technologies](https://www.datadoghq.com/blog/datadog-acquires-timber-technologies-vector/)
 
 Since vector has been acquired by DataDog, it turns out that vector is more focused on gateway than agent to be used as a pipeline ([Directed Acyclic Graph: DAG](https://vector.dev/docs/about/under-the-hood/architecture/pipeline-model/))
 
@@ -28,6 +28,9 @@ Component: source or transform or sink, it is a component of the pipeline (this 
 ### Sources
 https://vector.dev/docs/reference/configuration/sources/
 
+### Sinks
+https://vector.dev/docs/reference/configuration/sinks/
+
 ### Transforms
 https://vector.dev/docs/reference/configuration/transforms/
 
@@ -47,9 +50,6 @@ https://crates.io/crates/vrl
 
 ##### Project using VRL
 https://github.com/openobserve/openobserve/blob/main/Cargo.toml#L164
-
-### Sinks
-https://vector.dev/docs/reference/configuration/sinks/
 
 ### Configuration
 Organize files
@@ -94,12 +94,12 @@ The [vector protocol contains specific DataDog metadata](https://github.com/vect
 
 The context history can help to understand the trade-off. It seems that the vector team did not use or see the benefits of using opentracing or opentelemetry to [serialize telemetry to disk](https://github.com/vectordotdev/vector/pull/81).
 
-- 2021 : [Datadog acquires vector](https://www.datadoghq.com/blog/datadog-acquires-timber-technologies-vector/)
-- 2019/02: birth of [vector protocol](https://github.com/vectordotdev/vector/pull/81) which is the main communication protocol between agents and gateway at the time of writing.
-- 2019/05 : [opencensus](https://opencensus.io/) jaeger tracing, [opentracing](https://github.com/opentracing/opentracing-go) merged to [opentelemetry spec + instrumentation](https://github.com/open-telemetry/opentelemetry-java/pull/244)
-- 2018/09: [vector initial commit](https://github.com/vectordotdev/vector/commit/83705cb791254b331b27f7719f5adae083ac3b13)
-- 2017/01: [opencensus instrumentaion first commit](https://github.com/census-instrumentation/opencensus-go/commit/304ea252d1c39e8aecc84d1bb608c806ff25bfb3)
 - 2015/11: [opentracing spec first commit](https://github.com/opentracing/opentracing-go/commit/eab1a36e622e49f29d348dc39bc03730ae228b72)
+- 2017/01: [opencensus instrumentaion first commit](https://github.com/census-instrumentation/opencensus-go/commit/304ea252d1c39e8aecc84d1bb608c806ff25bfb3)
+- 2018/09: [vector initial commit](https://github.com/vectordotdev/vector/commit/83705cb791254b331b27f7719f5adae083ac3b13)
+- 2019/05 : [opencensus](https://opencensus.io/) jaeger tracing, [opentracing](https://github.com/opentracing/opentracing-go) merged to [opentelemetry spec + instrumentation](https://github.com/open-telemetry/opentelemetry-java/pull/244)
+- 2019/02: birth of [vector protocol](https://github.com/vectordotdev/vector/pull/81) which is the main communication protocol between agents and gateway at the time of writing.
+- 2021 : [Datadog acquires vector](https://www.datadoghq.com/blog/datadog-acquires-timber-technologies-vector/)
 
 Internally, DataDog has built a UI over vector + aggregated telemetry over vector graphs
 
