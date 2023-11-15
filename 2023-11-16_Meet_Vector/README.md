@@ -53,7 +53,7 @@ The configuration can be splitted like this way as example:
 ### Data directory
 Vector is a statefull component depending the source transforms and sink used. A [data directory](https://vector.dev/docs/reference/configuration/global-options/#data_dir) is used to store the vector state
 
-The [file source uses the data directory](https://vector.dev/docs/reference/configuration/sources/file/#data_dir) to store checkpoint positions
+The [file source uses the data directory](https://vector.dev/docs/reference/configuration/sources/file/#data_dir) to store checkpoint positions.
 
 ### I/O Telemetry Compatibility
 sources (input) and sinks (output)
