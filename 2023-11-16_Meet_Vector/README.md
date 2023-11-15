@@ -69,7 +69,7 @@ sources (input) and sinks (output)
 One of the strange thing is that many DataDog competitors are available as sinks but OTLP is not fully supported as input and no OTLP sink is available which is a blocker for using vector as gateway with OTLP.
 
 ### Error Handling
-[VRL is a fail-safe](https://vector.dev/docs/reference/vrl/errors/) language meaning that errors should be treated and are statically verified during the vrl setup and vector startup.
+[VRL is a fail-safe](https://vector.dev/docs/reference/vrl/errors/) language meaning that errors should be treated and are statically verified during the vrl compilation and vector startup.
 
 ```vrl
 . |= parse_key_value!(.message, field_delimiter:"\t", accept_standalone_key:false)
