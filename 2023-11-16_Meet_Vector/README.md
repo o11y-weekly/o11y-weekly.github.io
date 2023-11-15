@@ -185,7 +185,7 @@ How about a true opentelemetry based vector ?
 
 ### Weakness
 
-- OTLP support / Vector <> OTLP conversion and alignment issues
-- Datadog vendor locking : https://github.com/vectordotdev/vector/issues/1444#issuecomment-1704040812 + https://github.com/vectordotdev/vector/blob/master/lib/vector-core/proto/event.proto#L91
+- OTLP support / Vector <> OTLP conversion and alignment issues : [partial OTLP support](https://github.com/vectordotdev/vector/issues/1444#issuecomment-1704040812)
+- Datadog vendor locking : [vector protocol DataDog leak](https://github.com/vectordotdev/vector/blob/master/lib/vector-core/proto/event.proto#L91)
 
 Next week, a full vector hands-on will be available to see its strength
