@@ -92,7 +92,7 @@ del(.message)
 
 It is also possible to handle errors in vrl but it comes at repeating the same error handling every time.
 
-Instead of failing vector on error, it is also possible and recommended to drop on error so that vector will not fail at all and the message is not lost but reroute.
+Instead of failing vector on error, it is also possible and recommended to drop on error so that vector will not fail at all and the message is not lost but rerouted.
 
 ```toml
 [transforms.applog_file]
