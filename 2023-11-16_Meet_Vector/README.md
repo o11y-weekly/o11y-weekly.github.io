@@ -20,7 +20,7 @@ Vector can replace several agent on the server
 
 ## Concept
 
-Component: source or transform or sink, it is a component of the pipeline (this notion is largely used when monitoring vector per component id)
+Component: source or transform or sink, are components of the pipeline (this notion is largely used when monitoring vector per component id)
 
 Vector supports multiple [sources](https://vector.dev/docs/reference/configuration/sources/) and [sinks](https://vector.dev/docs/reference/configuration/sinks/) like logstash, prometheus, files, loki, elastic, ...
 
