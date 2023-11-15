@@ -4,7 +4,7 @@ This week, [Vector.dev](https://vector.dev/) from DataDog will be deeply analyze
 
 ## History
 
-### Timeberio
+### Timberio
 
 ### DataDog
 
