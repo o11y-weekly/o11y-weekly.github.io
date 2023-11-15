@@ -88,7 +88,11 @@ It seems that log and metrics are really well integrated but tracing has a limit
 
 Again, 3 protocols has to be synced (vector, datadog and OTLP) which is a complex problem when there is alignment issues.
 
-The project history may help to understand the trade-off. It seems that the vector team did not use or see the benefits of using opentracing or opentelemetry to [serialize telemetry to disk](https://github.com/vectordotdev/vector/pull/81).
+The [vector protocol contains specific DataDog metadata](https://github.com/vectordotdev/vector/blob/master/lib/vector-core/proto/event.proto#L91) which can be strange from the standard point of view.
+
+![vector protocol contains specific features](./vector-protocol-datadog.png)
+
+The context history can help to understand the trade-off. It seems that the vector team did not use or see the benefits of using opentracing or opentelemetry to [serialize telemetry to disk](https://github.com/vectordotdev/vector/pull/81).
 
 - 2021 : [Datadog acquires vector](https://www.datadoghq.com/blog/datadog-acquires-timber-technologies-vector/)
 - 2019/02: birth of [vector protocol](https://github.com/vectordotdev/vector/pull/81) which is the main communication protocol between agents and gateway at the time of writing.
