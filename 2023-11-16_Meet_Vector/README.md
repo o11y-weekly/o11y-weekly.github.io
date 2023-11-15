@@ -172,7 +172,7 @@ proto vector spec vs otlp proto spec
 
 Instead of using an external standard, vector has a internal protocol which can create incompatibility and [OTLP integration issues](https://github.com/vectordotdev/vector/issues/1444#issuecomment-1704040812).
 
-It seems that log and metrics are really well integrated but tracing has a limited support and only available for datadog since the only trace sink available is the [datadog traces sink](https://vector.dev/docs/reference/configuration/sinks/datadog_traces/).
+It seems that logs and metrics are really well integrated from the transformation point of view but tracing has a limited support and only available for datadog since the only trace sink available is the [datadog traces sink](https://vector.dev/docs/reference/configuration/sinks/datadog_traces/).
 
 Again, 3 protocols has to be synced (vector, datadog and OTLP) which is a complex problem when there is alignment issues.
 
