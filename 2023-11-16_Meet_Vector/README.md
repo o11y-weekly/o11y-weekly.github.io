@@ -101,20 +101,7 @@ The context history can help to understand the trade-off. It seems that the vect
 - 2017/01: [opencensus instrumentaion first commit](https://github.com/census-instrumentation/opencensus-go/commit/304ea252d1c39e8aecc84d1bb608c806ff25bfb3)
 - 2015/11: [opentracing spec first commit](https://github.com/opentracing/opentracing-go/commit/eab1a36e622e49f29d348dc39bc03730ae228b72)
 
-#### DataDog internal usage
 Internally, DataDog has built a UI over vector + aggregated telemetry over vector graphs
-
-Dataplatform vs Observability Platform
-
-"data lake : A data lake is a centralized repository designed to store, process, and secure large amounts of structured, semistructured, and unstructured data. It can store data in its native format and process any variety of it, ignoring size limits. Learn more about modernizing your data lake on Google Cloud."
-
-Dataplatform : data lake + scheduling
-
-Same tools but different trade-offs: best for observability effort with possible data drops vs at-least-once for dataplatform to not impact analytics.
-
-Workflow scheduling / Choreography alternatives : message+data passing orchestration / cooperative scheduling
-
-Tools: Function As A Service (FAAS) + Messaging + Blob Storage + apache parquet vs airflow + spark + apache parquet and blob storage
 
 ## Conclusion
 
