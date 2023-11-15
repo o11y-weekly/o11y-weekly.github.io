@@ -26,22 +26,22 @@ Vector supports multiple [sources](https://vector.dev/docs/reference/configurati
 
 One of the big feature of vector is the [transforms](https://vector.dev/docs/reference/configuration/transforms/) component.
 
-### Transforms
+## Transforms
 [Transforms](https://vector.dev/docs/reference/configuration/transforms/) is a [Directed Acyclic Graph (DAG)](https://vector.dev/docs/about/under-the-hood/architecture/pipeline-model/) oriented solution and help transforming telemetry data to add more tags, filtering or simply transforming signal to another one like log to metric.
 
-#### Pipeline Graph
+### Pipeline Graph
 Vector CLI has a [`graph`](https://vector.dev/docs/reference/cli/#graph) command which is pretty handy to visualize the pipeline. In DataDog, it is possible to see the telemetry over the graph for instance.
 
 Here is the vector log_2_metric pipeline graph for the next week vector demo:
 ![vector graph demo](./vector-graph.svg)
 
-#### Vector Remapping language
+### Vector Remapping language
 
 Vector is written in rust and the VRL module is available on [crates.io](https://crates.io/crates/vrl)
 
 [OpenObserve](https://github.com/openobserve/openobserve/blob/main/Cargo.toml#L164) took the opportunity to reuse subpart of vector to build a different backend than DataDog which is very interesting and can be analyzed deeper through another post.
 
-### Configuration
+## Configuration
 It is possible to use json, toml or cue file formats.
 
 The configuration can be splitted like this way as example:
@@ -50,12 +50,12 @@ The configuration can be splitted like this way as example:
 - XXX.toml: one file per pipeline and test
 - dlq.tml: one config file for the dead letter queue configuration
 
-### Data directory
+## Data directory
 Vector is a statefull component depending the source transforms and sink used. A [data directory](https://vector.dev/docs/reference/configuration/global-options/#data_dir) is used to store the vector state
 
 The [file source uses the data directory](https://vector.dev/docs/reference/configuration/sources/file/#data_dir) to store checkpoint positions.
 
-### I/O Telemetry Compatibility
+## I/O Telemetry Compatibility
 sources (input) and sinks (output)
 
 | Protocol | Input | Output |
@@ -68,7 +68,7 @@ sources (input) and sinks (output)
 
 One of the strange thing is that many DataDog competitors are available as sinks but OTLP is not fully supported as input and no OTLP sink is available which is a blocker for using vector as gateway with OTLP.
 
-### Error Handling
+## Error Handling
 [VRL is a fail-safe](https://vector.dev/docs/reference/vrl/errors/) language meaning that errors should be treated and are statically verified during the vrl compilation and vector startup.
 
 ```vrl
@@ -119,7 +119,7 @@ encoding = { codec = "json" }
 labels = { application = "dead-letter-queue", host="{{ host }}", pid="{{ pid }}" }
 ```
 
-### TDD
+## TDD
 
 One of the concept of vector is the ability to test a transformation pipeline.
 
@@ -153,7 +153,7 @@ assert!(is_timestamp(.timestamp))
 '''
 ```
 
-### Monitoring Vector
+## Monitoring Vector
 Vector is really well instrumented and [grafana dashboards](https://grafana.com/grafana/dashboards/19649-vector-monitoring/) are available to monitor it properly.
 
 The [Vector Monitoring dashboard](https://grafana.com/grafana/dashboards/19649-vector-monitoring/) exposes all the telemetry data available while depending the integration, only a subpart is really useful.
@@ -163,7 +163,7 @@ Vector as a [`host_metric`](https://vector.dev/docs/reference/configuration/sour
 
 The [Node exporter dashboard for vector](https://grafana.com/grafana/dashboards/19650-node-exporter-vector-host-metrics/) is a compatible node exported dashboard for vector host_metric.
 
-### Agent communication
+## Agent communication
 Agent communication is an important topic to understand when talking about observability agent.
 Vector uses its own gRPC protocol between agents/gateways. 
 - [vector event model proto](https://github.com/vectordotdev/vector/blob/master/lib/vector-core/proto/event.proto)
