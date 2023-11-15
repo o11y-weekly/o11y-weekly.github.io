@@ -131,6 +131,28 @@ This command runs vector inside docker to test the pipeline
 docker run --rm -w /vector -v $(pwd):/vector/config/ timberio/vector:0.34.0-debian test --config-toml /vector/config/**/*.toml
 ```
 
+A tranform test example where assertions can also be written in vrl.
+```toml
+[[tests]]
+name = "Test applog_file parsing"
+
+[[tests.inputs]]
+insert_at = "applog_file"
+type = "log" 
+
+[tests.inputs.log_fields]
+message = "t=2023-11-13T15:53:37.728584030+01:00\th=FR-LT-00410\tH=6666\tT=5663"
+
+[[tests.outputs]]
+extract_from = "applog_file"
+
+[[tests.outputs.conditions]]
+type = "vrl"
+source = '''
+assert!(is_timestamp(.timestamp))
+'''
+```
+
 ### Monitoring Vector
 Vector is really well instrumented and [grafana dashboards](https://grafana.com/grafana/dashboards/19649-vector-monitoring/) are avaible to monitor it properly.
 
