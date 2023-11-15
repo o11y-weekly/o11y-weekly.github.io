@@ -27,7 +27,7 @@ Vector supports multiple [sources](https://vector.dev/docs/reference/configurati
 One of the big feature of vector is the [transforms](https://vector.dev/docs/reference/configuration/transforms/) component.
 
 ### Transforms
-[Transforms](https://vector.dev/docs/reference/configuration/transforms/) is a [Directed Acyclic Graph (DAG)](https://vector.dev/docs/about/under-the-hood/architecture/pipeline-model/) oriented solution and help transforming teleemetry data to add more tags, filtering or simply transform signal to another one like log to metric.
+[Transforms](https://vector.dev/docs/reference/configuration/transforms/) is a [Directed Acyclic Graph (DAG)](https://vector.dev/docs/about/under-the-hood/architecture/pipeline-model/) oriented solution and help transforming telemetry data to add more tags, filtering or simply transform signal to another one like log to metric.
 
 #### Pipeline Graph
 Vector CLI has a [`graph`](https://vector.dev/docs/reference/cli/#graph) command which is pretty handy to visualize the pipeline. In DataDog, it is possible to see the telemetry over the graph for instance.
