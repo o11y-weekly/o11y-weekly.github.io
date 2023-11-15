@@ -156,7 +156,7 @@ assert!(is_timestamp(.timestamp))
 ### Monitoring Vector
 Vector is really well instrumented and [grafana dashboards](https://grafana.com/grafana/dashboards/19649-vector-monitoring/) are available to monitor it properly.
 
-The [Vector Monitoring dashboard](https://grafana.com/grafana/dashboards/19649-vector-monitoring/) exposes all the telemetry data available while depending the vector integration, only a subpart is really useful.
+The [Vector Monitoring dashboard](https://grafana.com/grafana/dashboards/19649-vector-monitoring/) exposes all the telemetry data available while depending the integration, only a subpart is really useful.
 
 ## Vector as Node exporter (host metrics)
 Vector as a [`host_metric`](https://vector.dev/docs/reference/configuration/sources/host_metrics/) source which can be a node exporter drop-in solution.
