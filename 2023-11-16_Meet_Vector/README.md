@@ -10,12 +10,9 @@ This week, [Vector.dev](https://vector.dev/) from DataDog will be deeply analyze
 
 ### License
 
+## Features
 ### When to use it ?
 https://vector.dev/docs/setup/going-to-prod/architecting/#choosing-agents
-
-## Hands-on
-
-### Principle
 
 Basic principle
 
@@ -32,7 +29,6 @@ file state management
 proto vector spec vs otlp proto spec
 
 ### Transformation
-
 Transformation Pipeline DAG : https://vector.dev/docs/about/under-the-hood/architecture/pipeline-model/
 
 ### Vector Remapping language
@@ -60,7 +56,3 @@ Transformation Pipeline DAG : https://vector.dev/docs/about/under-the-hood/archi
 
 - OTLP support / Vector <> OTLP conversion and alignment issues
 - Datadog vendor locking : https://github.com/vectordotdev/vector/issues/1444#issuecomment-1704040812 + https://github.com/vectordotdev/vector/blob/master/lib/vector-core/proto/event.proto#L91
-
-### Alternatives
-
-OpenTelemetry Collector Contrib
