@@ -53,7 +53,27 @@ Compatibility model issues between vector <> datadog <> opentelemetry.
 ### Transformation
 Transformation Pipeline DAG : https://vector.dev/docs/about/under-the-hood/architecture/pipeline-model/
 
+#### Pipeline Visualization
 Vector graph : https://vector.dev/docs/reference/cli/#graph
+
+Here is the vector log_2_metric pipeline graph for the next vector demo:
+![vector graph demo](./vector-graph.svg)
+
+#### DataDog usage
+Internally, DataDog has built a UI over vector + aggregated telemetry over vector graphs
+
+Dataplatform vs Observability Platform
+
+
+"data lake : A data lake is a centralized repository designed to store, process, and secure large amounts of structured, semistructured, and unstructured data. It can store data in its native format and process any variety of it, ignoring size limits. Learn more about modernizing your data lake on Google Cloud."
+
+Dataplatform : data lake + scheduling
+
+Same tools but different trade-offs: best for observability effort with possible data drops vs at-least-once for dataplatform to not impact analytics.
+
+Workflow scheduling / Choreography alternatives : message+data passing orchestration / cooperative scheduling
+
+Tools: Function As A Service (FAAS) + Messaging + Blob Storage + apache parquet vs airflow + spark + apache parquet and blob storage
 
 ### Telemetry I/O
 sources and sinks
