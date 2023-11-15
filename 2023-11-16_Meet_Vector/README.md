@@ -25,22 +25,17 @@ https://vector.dev/docs/about/under-the-hood/
 
 Component: source or transform or sink, it is a component of the pipeline (this notion is largely used when monitoring vector per component id)
 
-### Sources
-https://vector.dev/docs/reference/configuration/sources/
+Vector supports multiple [sources](https://vector.dev/docs/reference/configuration/sources/) and [sinks](https://vector.dev/docs/reference/configuration/sinks/) like logstash, prometheus, files, loki, elastic, ...
 
-### Sinks
-https://vector.dev/docs/reference/configuration/sinks/
+One of the big feature of vector is the [transforms](https://vector.dev/docs/reference/configuration/transforms/) component.
 
 ### Transforms
-https://vector.dev/docs/reference/configuration/transforms/
-
-Transformation Pipeline DAG : https://vector.dev/docs/about/under-the-hood/architecture/pipeline-model/
+[Transforms](https://vector.dev/docs/reference/configuration/transforms/) is a [Directed Acyclic Graph (DAG)](https://vector.dev/docs/about/under-the-hood/architecture/pipeline-model/) oriented solution and help transforming teleemetry data to add more tags, filtering or simply transform signal to another one like log to metric.
 
 #### Pipeline Graph
-Vector graph : https://vector.dev/docs/reference/cli/#graph
+Vector CLI has a [`graph`](https://vector.dev/docs/reference/cli/#graph) command which is pretty handy to visualize the pipeline. In DataDog, it is possible to see the telemetry over the graph for instance.
 
-#### Converting log to metric
-Here is the vector log_2_metric pipeline graph for the next vector demo:
+Here is the vector log_2_metric pipeline graph for the next week vector demo:
 ![vector graph demo](./vector-graph.svg)
 
 #### Vector Remapping language
@@ -122,3 +117,5 @@ How about a true opentelemetry based vector ?
 
 - OTLP support / Vector <> OTLP conversion and alignment issues
 - Datadog vendor locking : https://github.com/vectordotdev/vector/issues/1444#issuecomment-1704040812 + https://github.com/vectordotdev/vector/blob/master/lib/vector-core/proto/event.proto#L91
+
+Next week, a full vector hands-on will be available to see its strength
