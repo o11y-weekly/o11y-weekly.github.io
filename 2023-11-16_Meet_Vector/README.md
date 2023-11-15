@@ -14,9 +14,9 @@ Since vector has been acquired by DataDog, it turns out that vector is more focu
 ## When to use it ?
 
 Vector can replace several agent on the server
-https://vector.dev/docs/setup/going-to-prod/architecting/#1-use-the-best-tool-for-the-job
+- https://vector.dev/docs/setup/going-to-prod/architecting/#1-use-the-best-tool-for-the-job
 
-https://vector.dev/docs/setup/going-to-prod/architecting/#choosing-agents
+- https://vector.dev/docs/setup/going-to-prod/architecting/#choosing-agents
 
 ## Concept
 
