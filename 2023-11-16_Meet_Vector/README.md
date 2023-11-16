@@ -50,7 +50,7 @@ It is possible to use json, toml or cue file formats.
 
 The configuration can be splitted like this way as example:
 - vector.toml : global configuration
-- sinks.tml
+- sinks.toml: all sinks configuration
 - XXX.toml: one file per pipeline and test
 - dlq.tml: one config file for the dead letter queue configuration
 
