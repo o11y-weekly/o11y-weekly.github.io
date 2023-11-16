@@ -1,6 +1,6 @@
 # 2023-11-16 #5 Meet Vector
 
-This week, [Vector.dev](https://vector.dev/) from DataDog will be deeply analyzed.
+This week, [Vector.dev](https://vector.dev/) from DataDog is deeply analyzed.
 
 ## History
 - 2018 : [vector is born](https://github.com/vectordotdev/vector/commit/83705cb791254b331b27f7719f5adae083ac3b13) and written in rust.
