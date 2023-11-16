@@ -18,6 +18,8 @@ Vector can replace several agent on the server
 
 - https://vector.dev/docs/setup/going-to-prod/architecting/#choosing-agents
 
+![vector vs other agents](./vector-vs-other-agents.png)
+
 ## Concept
 
 Component: source or transform or sink, are components of the pipeline (this notion is largely used when monitoring vector per component id)
