@@ -86,7 +86,7 @@ del(.message)
 
 `.message` is the raw message which can be parsed.
 
-1/ parse message as key value and put the object at root level (dot) `.`. The parse_key_value returns a result which can be the object or an error. the bang `!` operator is used to fail on error.
+1/ parse message as key value and put the object at root level (dot) `.`. The parse_key_value returns a result which can be the object or an error. The bang `!` operator is used to fail on error.
 
 2/ Add a field `timestamp` by parsing and fail if there is an error
 
