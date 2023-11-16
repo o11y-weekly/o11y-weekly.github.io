@@ -2,7 +2,7 @@ Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
 
-This week, meet [Vector](https://vector.dev/) from DataDog as an agent or gateway/aggregator, log 2 metrics pipeline, agent monitoring, safe error handling, ...
+This week, [Meet Vector](https://vector.dev/) from DataDog as an agent or gateway/aggregator, log 2 metrics pipeline, agent monitoring, safe error handling, ...
 
 # Last Post
 [2023-11-16 #5 Meet Vector](./2023-11-16_Meet_Vector/README.md)
