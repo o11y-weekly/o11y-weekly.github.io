@@ -75,7 +75,7 @@ One of the strange thing is that many DataDog competitors are available as sinks
 ## Error Handling
 [VRL is a fail-safe](https://vector.dev/docs/reference/vrl/errors/) language meaning that errors should be treated and are statically verified during the vrl compilation and vector startup.
 
-This is a great feature, all possible runtime error have been forward to a compiler upfront. It is hard to have a unmanaged parsing failure. The returned value is a result and errors should be treated and verified.
+This is a great feature, all possible runtime errors have been forward to a compiler upfront. It is hard to have a unmanaged parsing failure. The returned value is a result and errors should be treated and verified.
 
 ```vrl
 . |= parse_key_value!(.message, field_delimiter:"\t", accept_standalone_key:false)
