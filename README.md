@@ -5,9 +5,10 @@ Here is the latest news / feedbacks about observability.
 This week, [Meet Vector](https://vector.dev/) from DataDog as an agent or gateway/aggregator, log 2 metrics pipeline, agent monitoring, safe error handling, ...
 
 # Last Post
-[2023-11-16 #5 Meet Vector](./2023-11-16_Meet_Vector/README.md)
+[2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/README.md)
 
 ## Archives
+- [2023-11-16 #5 Meet Vector](./2023-11-16_Meet_Vector/README.md)
 - [2023-11-09 #4 Monotonicity](./2023-11-09_Monotonicity/README.md)
 - [2023-10-27 #3 Defining Good Observability backend Trade-offs and QoS](./2023-10-27_Defining_Good_Observability_backend_Trade-offs_and_QoS/README.md)
 - [2023-10-18 #2 News and Post (What is not o11y solution ?)](./2023-10-18_What_is_not_an_observability_solution/README.md)
