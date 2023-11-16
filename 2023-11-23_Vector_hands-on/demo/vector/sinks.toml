@@ -1,0 +1,11 @@
+[sinks.loki]
+type = "loki"
+endpoint = "http://loki:3100"
+inputs = ["vector_logs"]
+encoding = { codec = "json" }
+labels = { application = "vector", host="{{ host }}", pid="{{ pid }}" }
+
+[sinks.mimir]
+type = "prometheus_remote_write"
+inputs = ["for_mimir", "applog_file_2_metric"]
+endpoint = "http://mimir:9009/api/v1/push"

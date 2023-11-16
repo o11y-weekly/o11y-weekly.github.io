@@ -1,0 +1,51 @@
+# file log
+[sources.applog_file_raw]
+type = "file"
+include = ["${LOG_BASE_PATH}**/*.*"]
+
+[transforms.applog_file]
+type = "remap"
+inputs = ["applog_file_raw"]
+file = "config/vrl/keyvalue.vrl"
+# forward to a dead letter queue on error or abort 
+drop_on_error = true
+drop_on_abort = true
+reroute_dropped = true
+
+[[tests]]
+name = "Test applog_file parsing"
+
+[[tests.inputs]]
+insert_at = "applog_file"
+type = "log" 
+
+[tests.inputs.log_fields]
+message = "t=2023-11-13T15:53:37.728584030+01:00\th=FR-LT-00410\tH=6666\tT=5663"
+
+[[tests.outputs]]
+extract_from = "applog_file"
+
+[[tests.outputs.conditions]]
+type = "vrl"
+source = '''
+assert!(is_timestamp(.timestamp))
+'''
+
+[transforms.applog_file_2_metric]
+type = "log_to_metric"
+inputs = ["applog_file"]
+[[transforms.applog_file_2_metric.metrics]]
+type = "counter"
+field = "T"
+namespace = "app"
+name = "count"
+    [transforms.applog_file_2_metric.metrics.tags]
+    hotel = "{{H}}"
+[[transforms.applog_file_2_metric.metrics]]
+type = "counter"
+field = "T"
+namespace = "app"
+name = "total"
+increment_by_value = true
+    [transforms.applog_file_2_metric.metrics.tags]
+    hotel = "{{H}}"

@@ -1,0 +1,7 @@
+## dead letter queue for dropped messages
+[sinks.dlq_loki]
+type = "loki"
+endpoint = "http://loki:3100"
+inputs = ["*.dropped"]
+encoding = { codec = "json" }
+labels = { application = "dead-letter-queue", host="{{ host }}", pid="{{ pid }}" }
