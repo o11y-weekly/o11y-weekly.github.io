@@ -129,7 +129,7 @@ labels = { application = "dead-letter-queue", host="{{ host }}", pid="{{ pid }}"
 
 One of the concept of vector is the ability to test a transformation pipeline.
 
-It becomes really easy to fix a breaking changes during a parsing failure.
+It becomes really easy to fix a breaking change during a parsing failure.
 
 This command runs vector inside docker to test the pipeline
 
