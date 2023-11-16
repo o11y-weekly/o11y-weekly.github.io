@@ -167,7 +167,7 @@ The [Vector Monitoring dashboard](https://grafana.com/grafana/dashboards/19649-v
 ## Vector as Node exporter (host metrics)
 Vector as a [`host_metric`](https://vector.dev/docs/reference/configuration/sources/host_metrics/) source which can be a node exporter drop-in solution.
 
-The [Node exporter dashboard for vector](https://grafana.com/grafana/dashboards/19650-node-exporter-vector-host-metrics/) is a compatible node exported dashboard for vector host_metric.
+The [Node exporter dashboard for vector](https://grafana.com/grafana/dashboards/19650-node-exporter-vector-host-metrics/) is a compatible node exporter dashboard for vector host_metric.
 
 ## Agent communication
 Agent communication is an important topic to understand when talking about observability agent.
