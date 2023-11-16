@@ -199,8 +199,6 @@ Internally, DataDog has built a UI over vector + aggregated telemetry over vecto
 
 ## Conclusion
 
-Vector is good at log and metric pipeline transformation and really well integrated with DataDog.
-
 Vector is best at pipeline transformation like log to metric transformation / aggregation while it does not support nor full OTLP and traces. Vector uses its own protocol which can conflict with OTLP (ie: OTLP trace). 
 
 Its compatibility outside DataDog is limited to log and metric 
