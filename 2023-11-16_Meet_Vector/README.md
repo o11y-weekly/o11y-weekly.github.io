@@ -174,7 +174,7 @@ Agent communication is an important topic to understand when talking about obser
 Vector uses its own gRPC protocol between agents/gateways. 
 - [vector event model proto](https://github.com/vectordotdev/vector/blob/master/lib/vector-core/proto/event.proto)
 - [vector service proto (push model with EventWrapper)](https://github.com/vectordotdev/vector/blob/master/proto/vector.proto)
-proto vector spec vs otlp proto spec
+vector spec vs otlp proto spec
 
 Instead of using an external standard, vector has a internal protocol which can create incompatibility and [OTLP integration issues](https://github.com/vectordotdev/vector/issues/1444#issuecomment-1704040812).
 
