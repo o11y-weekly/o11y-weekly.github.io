@@ -31,17 +31,19 @@ One of the big feature of vector is the [transforms](https://vector.dev/docs/ref
 ## Transforms
 [Transforms](https://vector.dev/docs/reference/configuration/transforms/) is a [Directed Acyclic Graph (DAG)](https://vector.dev/docs/about/under-the-hood/architecture/pipeline-model/) oriented solution and helps transforming telemetry data to add more tags, filtering or simply transforming signal to another one like log to metric.
 
-### Pipeline Graph
-Vector CLI has a [`graph`](https://vector.dev/docs/reference/cli/#graph) command which is pretty handy to visualize the pipeline. In DataDog, it is possible to see the telemetry over the graph for instance.
-
-Here is the vector log_2_metric pipeline graph for the next week vector demo:
-![vector graph demo](./vector-graph.svg)
+[Transforms](https://vector.dev/docs/reference/configuration/transforms/) can be configured through Vector Remapping Language (VRL), dedup, filter, aggregate, ...
 
 ### Vector Remapping language
 
 Vector is written in rust and the VRL module is available on [crates.io](https://crates.io/crates/vrl)
 
 [OpenObserve](https://github.com/openobserve/openobserve/blob/main/Cargo.toml#L164) took the opportunity to reuse subpart of vector to build a different backend than DataDog which is very interesting and can be analyzed deeper through another post.
+
+### Pipeline Graph
+Vector CLI has a [`graph`](https://vector.dev/docs/reference/cli/#graph) command which is pretty handy to visualize the pipeline. In DataDog, it is possible to see the telemetry over the graph for instance.
+
+Here is the vector log_2_metric pipeline graph for the next week vector demo:
+![vector graph demo](./vector-graph.svg)
 
 ## Configuration
 It is possible to use json, toml or cue file formats.
