@@ -1,4 +1,4 @@
-# monotonicity demo
+# [monotonicity](https://o11y-weekly.github.io/2023-11-09_Monotonicity) demo
 
 ## TL;DR
 Rates are essential to support monitoring and alterting while long lived cumulative counters can be useful for business KPI and can be approximated (approximated resolution for cumulative model) or partially exact (data loss for delta model).
