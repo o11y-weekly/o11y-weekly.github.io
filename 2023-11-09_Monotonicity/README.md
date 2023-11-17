@@ -71,7 +71,7 @@ As an example, a delta model where rate is calculated with 2 metrics sum (total 
 
 If only one metric is lost during an outage, the rate is not reliable anymore.
 
-In such case, sum and count should be located inside the same udp paket so that the overhall rate is not impacted while the amount of packet lost is neglectable.
+In such case, sum and count should be located inside the same udp packet so that the overhall rate is not impacted while the amount of packet lost is neglectable.
 
 # OTLP metric
 
