@@ -12,7 +12,7 @@ Run the docker compose demo with prometheus and an app to increment a counter.
 
 Every 10s (prometheus scrap interval, statsd and otlp flush) , the metric is scrapped and a counter increases by 1 each time.
 
-Every 30s, the app is stopped for 30s and restart.
+Every 30s, the app is stopped for 30s and restarts.
 
 The counter increases by 3 per minute which is (30s / 10s) and the rate should be between from 0 to 0.1rps.
 
