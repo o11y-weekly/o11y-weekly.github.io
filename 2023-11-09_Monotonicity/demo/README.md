@@ -5,7 +5,7 @@ Rates are essential to support monitoring and alterting while long lived cumulat
 
 The cumulative model trade-offs are not really compatible to support exact counters due to non monotonic issue and data loss.
 
-This demo illustrate those trade-offs for observability.
+This demo illustrates those trade-offs for observability.
 
 ## Context
 Run the docker compose demo with prometheus and an app to increment a counter.
