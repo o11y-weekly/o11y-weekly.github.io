@@ -15,4 +15,5 @@ This week, [Meet Vector](https://vector.dev/) from DataDog as an agent or gatewa
 - [2023-10-11 #1 Savings dilemma](./2023-10-11_Savings_dilemma/README.md)
 
 ## Demos
+- [2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/demo/)
 - [2023-11-09 Graphite/Prometheus/Mimir/VictoriaMetrics/OpenTelemetry Collector Config](./2023-11-09_Monotonicity/demo/)
