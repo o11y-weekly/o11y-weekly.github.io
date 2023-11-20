@@ -2,7 +2,9 @@ Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
 
-This week, [Meet Vector](https://vector.dev/) from DataDog as an agent or gateway/aggregator, log 2 metrics pipeline, agent monitoring, safe error handling, ...
+[Last week, vector has been introduced](./2023-11-16_Meet_Vector/README.md) and [this week](./2023-11-23_Vector_in_action/README.md), a log to metric convertion with Vector.
+
+But also, a complete setup of vector including monitoring and host metrics (Vector as a node exporter) has been setup into the demo.
 
 # Last Post
 [2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/README.md)
