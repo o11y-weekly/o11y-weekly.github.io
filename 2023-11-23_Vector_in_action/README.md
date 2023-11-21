@@ -2,12 +2,12 @@
 
 <iframe src="https://youtu.be/gYoY9NCajbE?si=JZ3jjXYX82qB1M40" title="Vector.dev Log_to_metric demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-[Last week, vector has been introduced](../2023-11-16_Meet_Vector/README.md), and this week, this demo has been created with a complete vector demo including log to metric, monitoring vector agent and host metrics (Vector as a node exporter) has been setup into the demo.
+[Last week, vector has been introduced](../2023-11-16_Meet_Vector/README.md). This week, this demo has been created including parsing, log to metric, vector agent monitoring and host metrics (Vector as a node exporter) .
 
 ## Run the demo
 
 1/ Clone the [repository](./)
-- https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2023-11-23_Vector_in_action/demo
+- https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2023-11-23_Vector_in_action
 
 2/ Run the script
 ```bash
@@ -16,20 +16,20 @@
 
 3/ Open Grafana Dashboards:
   - [Log to metric](http://localhost:3000/d/eEZIy984z/log-2-metric?orgId=1&refresh=5s)
-  - [Agent Monitoring](http://localhost:3000/d/eEZIy984z/log-2-metric?orgId=1&refresh=5s) : monitoring vector and pipelines
+  - [Agent Monitoring](http://localhost:3000/d/NzDtFbMVz/agent-monitoring?orgId=1&refresh=5s) : monitoring vector and pipelines
   - [Vector host_metrics](http://localhost:3000/d/rYdddlPWk/node-exporter-vector-host-metrics?orgId=1&refresh=5s): setup vector to replace a node exporter agent.
 
 ### Demo Components
 
 ![Architecture Demo](./docker-compose.png)
 
-The app contains 2 [supervisor](http://supervisord.org/) services: 
-- [app.sh](./app/app.sh) writes logs to LOG_BASE_PATH (/workspace/app/log/). The log structure is 2 lines, bad logs will be use to monitor pipeline errors while the second one will be parsed as a metric (H is hotel and T in the timing part in milliseconds).
+The app contains 2 [supervisord](http://supervisord.org/) services: 
+- [app.sh](./app/app.sh) writes logs to `LOG_BASE_PATH` (/workspace/app/log/). The log structure is 2 lines; bad logs will be use to monitor pipeline errors while the second one will be parsed as a metric (H is hotel and T in the fake app think time part in milliseconds).
  ```bash
 t=2023-11-20T11:34:15.692975421+00:00 bad logs
 t=2023-11-20T11:34:15.694559072+00:00 H=2497  T=2725
 ```
-- [vector](./app/supervisor/supervisor.d/vector.ini) reads the logs from the app and converts logs to metrics.
+- [vector](./app/supervisor/supervisor.d/vector.ini) reads the logs from the app and converts logs to metrics. Vector is also monitored and a grafana dashboard is available.
 
 A mimir, loki and grafana will be used as a backend to visualize datapoints.
 
@@ -39,9 +39,15 @@ A mimir, loki and grafana will be used as a backend to visualize datapoints.
 
 To convert log to metrics, the log should be structured and correctly parsed. Vector component [Vector Remapping Language](https://vector.dev/docs/reference/vrl/) is used to parse line to structured log.
 
-[VRL](https://vector.dev/docs/reference/vrl/) is a lightweight [rust](https://www.rust-lang.org/) which brings [safety](https://vector.dev/docs/reference/vrl/#safety) and true error handling to avoid runtime error when the error can be statically verifier during writing the parser.
+[VRL](https://vector.dev/docs/reference/vrl/) is a lightweight [rust](https://www.rust-lang.org/) which brings [safety](https://vector.dev/docs/reference/vrl/#safety) and true error handling to avoid runtime error when the error can be statically verified during writing the parser. 
+
+It helps to easily maintain transformations.
 
 ### Vector Remapping Language (VRL)
+In this demo, the following VRL is used to parse the log line to a structured log.
+
+The following part has been introduced on the [previous post](../2023-11-16_Meet_Vector/README.md).
+
 ```vrl
 . |= parse_key_value!(.message, field_delimiter:"\t", accept_standalone_key:false)
 .timestamp = parse_timestamp!(.t, "%Y-%m-%dT%H:%M:%S%.f%:z")
@@ -69,13 +75,13 @@ Instead of failing vector on error, it is also possible and recommended to drop 
 #### Pipeline setup
 Log to metric transformation in vector is a common pattern where logs are visualized as aggregated metrics only. The problem of visualizing logs can be the required percentage of CPU or simply the cost of long term retention higher than one year based on logs.
 
-To avoid high ressource usage to simply visualize datapoints, a lot to metric transformation can be used to convert log to metric.
+To avoid high resource usage to simply visualize datapoints, a log to metric transformation can be used.
 
-The demo log to metric pipeline: 
+The log to metric demo pipeline: 
 
-1/ Setup source app_file_raw
+1/ Setup source `app_file_raw`
 
-2/ Parse line to structured log by configuring the transforms conversion by using vector remapping language (VRL) [keyvalue.vrl](./vector/vrl/keyvalue.vrl). Drop on error and abort and reroute thoses messages to a drop channel.
+2/ Parse line to structured log by configuring the transforms vector remapping language (VRL) conversion [keyvalue.vrl](./vector/vrl/keyvalue.vrl). Drop on error, abort and reroute thoses messages to a drop input.
 
 3/ Setup the `log_to_metric` vector transforms by creating 2 counters: one incremented by log (`app.count`) and another one incremented by `T` value (`app.total`) which is the thinktime of the `app` component.
 
