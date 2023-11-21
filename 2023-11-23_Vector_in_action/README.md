@@ -2,9 +2,7 @@
 
 <iframe src="https://youtu.be/gYoY9NCajbE?si=JZ3jjXYX82qB1M40" title="Vector.dev Log_to_metric demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-[Last week, vector has been introduced](../2023-11-16_Meet_Vector/README.md) and this week, a log to metric convertion with Vector.
-
-But also, a complete setup of vector including monitoring and host metrics (Vector as a node exporter) has been setup into the demo.
+[Last week, vector has been introduced](../2023-11-16_Meet_Vector/README.md), and this week, this demo has been created with a complete vector demo including log to metric, monitoring vector agent and host metrics (Vector as a node exporter) has been setup into the demo.
 
 ## Run the demo
 
