@@ -6,7 +6,7 @@
 
 ## Run the demo
 
-1/ Clone the [repository](./demo/)
+1/ Clone the [repository](./)
 - https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2023-11-23_Vector_in_action/demo
 
 2/ Run the script
@@ -21,15 +21,15 @@
 
 ### Demo Components
 
-![Architecture Demo](./demo/docker-compose.png)
+![Architecture Demo](./docker-compose.png)
 
 The app contains 2 [supervisor](http://supervisord.org/) services: 
-- [app.sh](./demo/app/app.sh) writes logs to LOG_BASE_PATH (/workspace/app/log/). The log structure is 2 lines, bad logs will be use to monitor pipeline errors while the second one will be parsed as a metric (H is hotel and T in the timing part in milliseconds).
+- [app.sh](./app/app.sh) writes logs to LOG_BASE_PATH (/workspace/app/log/). The log structure is 2 lines, bad logs will be use to monitor pipeline errors while the second one will be parsed as a metric (H is hotel and T in the timing part in milliseconds).
  ```bash
 t=2023-11-20T11:34:15.692975421+00:00 bad logs
 t=2023-11-20T11:34:15.694559072+00:00 H=2497  T=2725
 ```
-- [vector](./demo/app/supervisor/supervisor.d/vector.ini) reads the logs from the app and converts logs to metrics.
+- [vector](./app/supervisor/supervisor.d/vector.ini) reads the logs from the app and converts logs to metrics.
 
 A mimir, loki and grafana will be used as a backend to visualize datapoints.
 
@@ -75,7 +75,7 @@ The demo log to metric pipeline:
 
 1/ Setup source app_file_raw
 
-2/ Parse line to structured log by configuring the transforms conversion by using vector remapping language (VRL) [keyvalue.vrl](./demo/vector/vrl/keyvalue.vrl). Drop on error and abort and reroute thoses messages to a drop channel.
+2/ Parse line to structured log by configuring the transforms conversion by using vector remapping language (VRL) [keyvalue.vrl](./vector/vrl/keyvalue.vrl). Drop on error and abort and reroute thoses messages to a drop channel.
 
 3/ Setup the `log_to_metric` vector transforms by creating 2 counters: one incremented by log (`app.count`) and another one incremented by `T` value (`app.total`) which is the thinktime of the `app` component.
 
@@ -131,7 +131,7 @@ Vector has the ability to unit test the transformation pipeline like the log 2 m
     docker run --rm -w /vector -v $(pwd):/vector/config/ timberio/vector:0.34.0-debian test --config-toml /vector/config/**/*.toml
     ```
 
-A [vector_test.sh](./demo/vector/vector_test.sh) script has been made to ease the vector integration.
+A [vector_test.sh](./vector/vector_test.sh) script has been made to ease the vector integration.
 
 ```toml
 [[tests]]
@@ -156,13 +156,13 @@ assert!(is_timestamp(.timestamp))
 
 #### Vector graph
 
-Vector has a `graph` command which produces dot graph. A [vector_graph.sh](./demo/vector/vector_graph.sh) is available to build this graph.
+Vector has a `graph` command which produces dot graph. A [vector_graph.sh](./vector/vector_graph.sh) is available to build this graph.
 
 ```bash
 docker run --rm -w /vector -v $(pwd):/vector/config/ timberio/vector:0.34.0-debian graph --config-toml /vector/config/**/*.toml | dot -Tsvg > graph.svg
 ```
 
-![log to metric pipeline](./demo/graph.svg)
+![log to metric pipeline](./graph.svg)
 
 ## Vector monitoring
 
