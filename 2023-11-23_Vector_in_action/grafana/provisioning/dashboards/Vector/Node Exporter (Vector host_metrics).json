@@ -24,9 +24,23 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": 1860,
+  "gnetId": 19650,
   "graphTooltip": 1,
-  "links": [],
+  "id": 7,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": true,
+      "title": "Grafana Dashboard",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://grafana.com/grafana/dashboards/19650-node-exporter-vector-host-metrics/"
+    }
+  ],
   "liveNow": false,
   "panels": [
     {
@@ -5852,8 +5866,8 @@
       {
         "current": {
           "selected": false,
-          "text": "0f6dfb145bbc",
-          "value": "0f6dfb145bbc"
+          "text": "0079b9015d7f",
+          "value": "0079b9015d7f"
         },
         "datasource": {
           "type": "prometheus",
@@ -5932,8 +5946,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "Node Exporter (Vector host_metrics)",
-  "uid": "rYdddlPWk",
-  "version": 3,
+  "title": "Node Exporter (Vector host_metrics) 2",
+  "uid": "rYdddlPWk2",
+  "version": 1,
   "weekStart": ""
 }
