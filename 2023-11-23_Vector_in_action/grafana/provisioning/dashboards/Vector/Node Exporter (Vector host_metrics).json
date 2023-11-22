@@ -5946,8 +5946,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "Node Exporter (Vector host_metrics) 2",
-  "uid": "rYdddlPWk2",
-  "version": 1,
+  "title": "Node Exporter (Vector host_metrics)",
+  "uid": "rYdddlPWk",
+  "version": 3,
   "weekStart": ""
 }
