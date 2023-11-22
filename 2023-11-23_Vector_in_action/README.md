@@ -170,6 +170,12 @@ docker run --rm -w /vector -v $(pwd):/vector/config/ timberio/vector:0.34.0-debi
 
 ![log to metric pipeline](./graph.svg)
 
+As soon as the pipeline run, it becomes important to monitor errors, saturation and utilization to properly trigger alerts.
+
 ## Vector monitoring
+
+Vector is instrumented with logs and metrics.
+
+Dedicated pipeline metrics are available and a [grafana dashboard]() is available
 
 ## Vector as Node exporter
