@@ -222,7 +222,7 @@ Vector produces such log on error which is helpful to analyze which component is
 
 ### Monitoring pipeline performance and usage
 
-The `Utilization` graph helps to monitor components utilization to quickly identify a component using too much ressources. 
+The `Utilization` graph helps to monitor components utilization to quickly identify a component using too much resources. 
 
 ![pipeline usage](./vector_monitoring_usage.png)
 
