@@ -125,22 +125,6 @@ increment_by_value = true
 #### Vector test
 Vector has the ability to unit test the transformation pipeline like the log 2 metric test.
 
-1/ Substitute the input `applog_file` : the structured log.
-
-2/ Inject an entry `.message =2023-11-13T15:53:37.728584030+01:00\th=FR-LT-00410\tH=6666\tT=5663`
-
-3/ Intercept the pipeline output of `applog_file` to `test.outputs`
-
-4/ Assert the output with a [vrl]((https://vector.dev/docs/reference/vrl/)) assertion `assert!(is_timestamp(.timestamp))`.
-
-5/ Run the unit test
-
-    ```bash
-    docker run --rm -w /vector -v $(pwd):/vector/config/ timberio/vector:0.34.0-debian test --config-toml /vector/config/**/*.toml
-    ```
-
-A [vector_test.sh](./vector/vector_test.sh) script has been made to ease the vector integration.
-
 ```toml
 [[tests]]
 name = "Test applog_file parsing"
@@ -161,6 +145,22 @@ source = '''
 assert!(is_timestamp(.timestamp))
 '''
 ```
+
+1/ Substitute the input `applog_file` : the structured log.
+
+2/ Inject an entry `.message =2023-11-13T15:53:37.728584030+01:00\th=FR-LT-00410\tH=6666\tT=5663`
+
+3/ Intercept the pipeline output of `applog_file` to `test.outputs`
+
+4/ Assert the output with a [vrl]((https://vector.dev/docs/reference/vrl/)) assertion `assert!(is_timestamp(.timestamp))`.
+
+5/ Run the unit test
+
+    ```bash
+    docker run --rm -w /vector -v $(pwd):/vector/config/ timberio/vector:0.34.0-debian test --config-toml /vector/config/**/*.toml
+    ```
+
+A [vector_test.sh](./vector/vector_test.sh) script has been made to ease the vector integration.
 
 #### Vector graph
 
