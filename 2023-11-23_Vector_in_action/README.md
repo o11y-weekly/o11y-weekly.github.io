@@ -24,7 +24,7 @@
 ![Architecture Demo](./docker-compose.png)
 
 The app contains 2 [supervisord](http://supervisord.org/) services: 
-- [app.sh](./app/app.sh) writes logs to `LOG_BASE_PATH` (/workspace/app/log/). The log structure is 2 lines; `bad logs` will be use as an invalid key value to monitor pipeline errors while the second one will be parsed as a metric (H is hotel and T in the fake app think time part in milliseconds).
+- [app.sh](./app/app.sh) writes logs to `LOG_BASE_PATH` (/workspace/app/log/). The log structure is 2 lines; `bad logs` is used as an invalid key value to monitor pipeline errors while the second one is parsed as a metric (H is hotel and T in the fake app think time part in milliseconds).
   
   10 [app.sh](./app/app.sh) instances is configured to show how the graph scale when the number of agent is high.
  ```bash
@@ -33,7 +33,7 @@ t=2023-11-20T11:34:15.694559072+00:00 H=2497  T=2725
 ```
 - [vector](./app/supervisor/supervisor.d/vector.ini) reads the logs from the app and converts logs to metrics. [Vector is also monitored](http://localhost:3000/dashboards/f/e688f10d-a449-488d-9b9c-55a9b994144d/vector) and a grafana dashboard is available.
 
-A mimir, loki and grafana will be used as a backend to visualize datapoints.
+A mimir, loki and grafana are used as a backend to visualize datapoints.
 
 ![Datapoints](./Log2Metrics_Dashboard.png)
 
