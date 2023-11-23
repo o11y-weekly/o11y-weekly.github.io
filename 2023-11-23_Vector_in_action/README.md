@@ -176,6 +176,66 @@ As soon as the pipeline run, it becomes important to monitor errors, saturation 
 
 Vector is instrumented with logs and metrics.
 
-Dedicated pipeline metrics are available and a [grafana dashboard]() is available
+Dedicated pipeline metrics are available and a [grafana dashboard](https://grafana.com/grafana/dashboards/19649-vector-monitoring/) is available.
+
+For the sake of the demo, the dashboard is a lightweight version of the [full vector.dev](https://grafana.com/grafana/dashboards/19649-vector-monitoring/).
+
+### Monitoring Pipeline errors and dropped messages
+
+In this demo, on error, the log is dropped and it is possible to collect all dropped messages of the pipeline.
+
+```toml
+## dead letter queue for dropped messages
+[sinks.dlq_loki]
+type = "loki"
+endpoint = "http://loki:3100"
+inputs = ["*.dropped"]
+encoding = { codec = "json" }
+labels = { application = "dead-letter-queue", host="{{ host }}", pid="{{ pid }}" }
+```
+
+![errors and dropped messages](./vector_monitoring_errors.png)
+
+In this demo, a `bad logs` is not a key value and the pipeline fails so that this log appears in the dropped inputs. 
+
+Vector produces such log on error which is helpful to analyze which component is failing(`"component_id": "applog_file"`), the error message(`"message": "function call error for \"parse_key_value\" at (5:82): could not parse whole line successfully"`) and the full log message(`"message": "t=2023-11-23T13:00:14.872126641+00:00\tbad logs"`)
+
+```json
+{
+  "file": "/workspace/app/log/03523229af2f_20231123.log",
+  "host": "03523229af2f",
+  "message": "t=2023-11-23T13:00:14.872126641+00:00\tbad logs",
+  "metadata": {
+    "dropped": {
+      "component_id": "applog_file",
+      "component_kind": "transform",
+      "component_type": "remap",
+      "message": "function call error for \"parse_key_value\" at (5:82): could not parse whole line successfully",
+      "reason": "error"
+    }
+  },
+  "source_type": "file"
+}
+```
+
+### Monitoring pipeline performance and usage
+
+The `Utilization` graph helps to monitor components utilization to quickly identify a component using to much ressources. 
+
+![pipeline usage](./vector_monitoring_usage.png)
+
+Sinks and sources components bandwidth is monitored through `Component sent` and `Component received`
+
+![component received](./vector_monitoring_component_received.png)
+
+[Buffer](https://vector.dev/docs/about/under-the-hood/architecture/buffering-model/) Events is also important to care, in case of problem on the sink side, the number of events can be high and it is important to check that there is no dropped telemetry due to a sink problem.
+
+![buffer](./vector_monitoring_buffers.png)
 
 ## Vector as Node exporter
+
+Vector can also be used as a drop-in solution of node exporter to reduce the number of agent per host.
+
+This [grafana graph](https://grafana.com/grafana/dashboards/19650-node-exporter-vector-host-metrics/) has been imported and vector has been configured to export host metrics.
+
+![Node exported dashboard for vector](./vector_node_exporter.png)
