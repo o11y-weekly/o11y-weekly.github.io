@@ -24,7 +24,8 @@
 ![Architecture Demo](./docker-compose.png)
 
 The app contains 2 [supervisord](http://supervisord.org/) services: 
-- [app.sh](./app/app.sh) writes logs to `LOG_BASE_PATH` (/workspace/app/log/). The log structure is 2 lines; `bad logs` will be use as an invalid key value to monitor pipeline errors while the second one will be parsed as a metric (H is hotel and T in the fake app think time part in milliseconds). 10 instances is configured to show how the graph scale when the number of agent is high.
+- [app.sh](./app/app.sh) writes logs to `LOG_BASE_PATH` (/workspace/app/log/). The log structure is 2 lines; `bad logs` will be use as an invalid key value to monitor pipeline errors while the second one will be parsed as a metric (H is hotel and T in the fake app think time part in milliseconds).
+  10 instances is configured to show how the graph scale when the number of agent is high.
  ```bash
 t=2023-11-20T11:34:15.692975421+00:00 bad logs
 t=2023-11-20T11:34:15.694559072+00:00 H=2497  T=2725
