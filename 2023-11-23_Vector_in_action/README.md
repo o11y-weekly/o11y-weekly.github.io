@@ -236,7 +236,7 @@ Sinks and sources components bandwidth is monitored through `Component sent` and
 
 ## Vector as Node exporter
 
-Vector can also be used as a drop-in solution of node exporter to reduce the number of agent per host.
+Vector can also be used as a drop-in solution of [node exporter](https://github.com/prometheus/node_exporter) to reduce the number of agent per host.
 
 This [grafana graph](https://grafana.com/grafana/dashboards/19650-node-exporter-vector-host-metrics/) has been imported and vector has been configured to export host metrics.
 
