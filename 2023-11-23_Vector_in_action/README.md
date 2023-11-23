@@ -75,7 +75,7 @@ Instead of failing vector on error, it is also possible and recommended to drop 
 
 ### Log to Metric Transformation
 #### Pipeline setup
-Log to metric transformation in vector is a common pattern where logs are visualized as aggregated metrics only. The problem of visualizing logs can be the required percentage of CPU or simply the cost of long term retention higher than one year based on logs.
+Log to metric transformation in vector is a common pattern where logs are visualized as aggregated metrics only. Using logs as direct source to visualize is CPU and IO intensive and unefficient way to visualize datapoints.
 
 To avoid high resource usage to simply visualize datapoints, a log to metric transformation can be used.
 
