@@ -2,7 +2,7 @@ Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
 
-[Last week, vector has been introduced](./2023-11-16_Meet_Vector/README.md), and [this week](./2023-11-23_Vector_in_action/README.md), [a demo](./2023-11-23_Vector_in_action/demo/README.md) has been created with a complete vector demo including log to metric, monitoring vector agent and host metrics (Vector as a node exporter) has been setup into the demo.
+[Last week, vector has been introduced](./2023-11-16_Meet_Vector/README.md), and [this week](./2023-11-23_Vector_in_action/README.md), [a demo](./2023-11-23_Vector_in_action/demo/README.md) has been created with a complete vector demo including log to metric, monitoring vector agent and host metrics (Vector as a node exporter).
 
 # Last Post
 [2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/README.md)
