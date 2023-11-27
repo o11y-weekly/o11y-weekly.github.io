@@ -6,15 +6,15 @@
 
 ## Run the demo
 
-1/ Clone the [repository](./)
+1️⃣ Clone the [repository](./)
 - https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2023-11-23_Vector_in_action
 
-2/ Run the script
+2️⃣ Run the script
 ```bash
 ./run.sh
 ```
 
-3/ Open Grafana Dashboards:
+3️⃣ Open Grafana Dashboards:
   - [Log to metric](http://localhost:3000/d/eEZIy984z/log-2-metric?orgId=1&refresh=5s)
   - [Agent Monitoring](http://localhost:3000/d/NzDtFbMVz/agent-monitoring?orgId=1&refresh=5s) : monitoring vector and pipelines
   - [Vector host_metrics](http://localhost:3000/d/rYdddlPWk/node-exporter-vector-host-metrics?orgId=1&refresh=5s): setup vector to replace a node exporter agent.
@@ -59,13 +59,13 @@ del(.message)
 
 `.message` is the raw message which can be parsed.
 
-1/ parse message as key value and put the object at root level (dot) `.`. The parse_key_value returns a result which can be the object or an error. The bang `!` operator is used to fail on error.
+1️⃣ parse message as key value and put the object at root level (dot) `.`. The parse_key_value returns a result which can be the object or an error. The bang `!` operator is used to fail on error.
 
-2/ Add a field `timestamp` by parsing and fail if there is an error
+2️⃣ Add a field `timestamp` by parsing and fail if there is an error
 
-3/ Add `job` field to vector
+3️⃣ Add `job` field to vector
 
-4/ Remove `message` to avoid paying twice raw and structured signal.
+4️⃣ Remove `message` to avoid paying twice raw and structured signal.
 
 /!\ This program will fail on error meaning that vector will stop on error.
 
@@ -81,9 +81,9 @@ To avoid high resource usage to simply visualize datapoints, a log to metric tra
 
 The log to metric demo pipeline: 
 
-1/ Setup source `app_file_raw`
+1️⃣ Setup source `app_file_raw`
 
-2/ Parse line to structured log by configuring the transforms vector remapping language (VRL) conversion [keyvalue.vrl](./vector/vrl/keyvalue.vrl). Drop on error, abort and reroute thoses messages to a drop input.
+2️⃣ Parse line to structured log by configuring the transforms vector remapping language (VRL) conversion [keyvalue.vrl](./vector/vrl/keyvalue.vrl). Drop on error, abort and reroute thoses messages to a drop input.
 
 3/ Setup the `log_to_metric` vector transforms by creating 2 counters: one incremented by log (`app.count`) and another one incremented by `T` value (`app.total`) which is the thinktime of the `app` component.
 
@@ -146,15 +146,15 @@ assert!(is_timestamp(.timestamp))
 '''
 ```
 
-1/ Substitute the input `applog_file` : the structured log.
+1️⃣ Substitute the input `applog_file` : the structured log.
 
-2/ Inject an entry `.message =2023-11-13T15:53:37.728584030+01:00\th=FR-LT-00410\tH=6666\tT=5663`
+2️⃣ Inject an entry `.message =2023-11-13T15:53:37.728584030+01:00\th=FR-LT-00410\tH=6666\tT=5663`
 
-3/ Intercept the pipeline output of `applog_file` to `test.outputs`
+3️⃣ Intercept the pipeline output of `applog_file` to `test.outputs`
 
-4/ Assert the output with a [vrl]((https://vector.dev/docs/reference/vrl/)) assertion `assert!(is_timestamp(.timestamp))`.
+4️⃣ Assert the output with a [vrl]((https://vector.dev/docs/reference/vrl/)) assertion `assert!(is_timestamp(.timestamp))`.
 
-5/ Run the unit test
+5️⃣ Run the unit test
 
     ```bash
     docker run --rm -w /vector -v $(pwd):/vector/config/ timberio/vector:0.34.0-debian test --config-toml /vector/config/**/*.toml
