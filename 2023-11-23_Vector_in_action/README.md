@@ -85,7 +85,7 @@ The log to metric demo pipeline:
 
 2️⃣ Parse line to structured log by configuring the transforms vector remapping language (VRL) conversion [keyvalue.vrl](./vector/vrl/keyvalue.vrl). Drop on error, abort and reroute thoses messages to a drop input.
 
-3/ Setup the `log_to_metric` vector transforms by creating 2 counters: one incremented by log (`app.count`) and another one incremented by `T` value (`app.total`) which is the thinktime of the `app` component.
+3️⃣ Setup the `log_to_metric` vector transforms by creating 2 counters: one incremented by log (`app.count`) and another one incremented by `T` value (`app.total`) which is the thinktime of the `app` component.
 
 ```toml
 # file log
