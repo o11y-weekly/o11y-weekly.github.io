@@ -80,7 +80,7 @@ gRPC has been chosen from OpenTelemetry for performance, tooling and specificati
 
 An excellent medium post explains this perfectly why json and REST would not be a good choice over gRPC : https://medium.com/data-science-community-srm/json-is-incredibly-slow-heres-what-s-faster-ca35d5aaf9e8
 
-/!\ The thing is that OTLP does not use protocol buffer streaming at all which at some point can be bad. Another post will be done later on this topic and missed opportunities but pay close attention that large payload or long workflow cannot be integrated in OTLP directly. Another usecase, for large logs cannot fit in such configuration since all the data should be sent at once causing large memory allocation on backend and collectors.
+/!\ OTLP does not use protocol buffer streaming at all which at some point can be bad. Another post will be done later on this topic and missed opportunities but pay close attention that large payload or long workflow cannot be integrated in OTLP directly. Another usecase, for large logs cannot fit in such configuration since all the data should be sent at once causing large memory allocation on backend and collectors.
 
 ### gRPC
 
