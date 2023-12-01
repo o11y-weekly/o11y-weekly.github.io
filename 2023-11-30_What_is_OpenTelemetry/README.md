@@ -124,7 +124,7 @@ Automatic instrumentation decorates the code dynamically or statically depending
 
 A majority of framework are supported, for each language, an automatic instrumentation is available and a list of compatible framework is also available.
 
-Before using automatic instrumentation, a list of used framework should be done to compare with requirements and available framework. If the framework is not available, a [manual instrumentation](./README.md#manual) should be used.
+Before using automatic instrumentation, a list of used framework should be done to compare between requirements and available framework. If the framework is not available, a [manual instrumentation](./README.md#manual) should be used.
 
 As an example, in [dotnet](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation), instrumentation is setup through a [startup hook](https://github.com/dotnet/runtime/blob/main/docs/design/features/host-startup-hook.md). This [OpenTelemetry startup hook](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/blob/main/src/OpenTelemetry.AutoInstrumentation.StartupHook/StartupHook.cs) inject [native code](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/tree/main/src/OpenTelemetry.AutoInstrumentation.Native) to integrate with the CLR.
 
