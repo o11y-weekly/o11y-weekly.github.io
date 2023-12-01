@@ -188,7 +188,7 @@ Technically, the trace id, decision and all other context should be transfered f
 
 To do it, process to process context propagation is done inside the instrumentation and stored via OTLP and [baggage](https://opentelemetry.io/docs/concepts/signals/baggage/).
 
-It is generally metadata associated with the telemetry payload.
+It is generally a metadata associated with the telemetry payload.
 
 Instrumentation should retrieve the context, extract information such trace id to correlate span together.
 
