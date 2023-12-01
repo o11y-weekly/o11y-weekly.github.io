@@ -39,7 +39,7 @@ Another important aspect of metrics is how the value is collected and aggregated
 A dedicated post has been made before: [Cumulative and delta Temporality](../2023-11-09_Monotonicity/README.md)
 
 ### Logs
-Logs can be correlated to traces or simply correlated because the system is distributed and from the client point of view, the transaction span multiple apps.
+Logs can be correlated to traces or simply correlated because the system is distributed and from the client point of view, the transaction traverses to multiple apps.
 
 It is really handy to see all logs for a given transaction inside the distributed system like if the system was only one instance.
 
