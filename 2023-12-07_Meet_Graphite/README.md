@@ -4,10 +4,20 @@
 
 ## Protocol
 
-## Graphite and StatsD
-
 ## Telemetry temporality
 
 delta mode.
 
 [demo](../2023-11-09_Monotonicity/demo/README.md)
+
+## Architecture
+
+## Graphite and StatsD
+
+## Scaling Graphite
+
+## Compatible backends
+
+### Mimir
+
+### VictoriaMetrics
