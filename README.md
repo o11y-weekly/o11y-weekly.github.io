@@ -5,9 +5,10 @@ Here is the latest news / feedbacks about observability.
 This week, let's see [what is OpenTelemetry](./2023-11-30_What_is_OpenTelemetry/README.md) and as a conclusion what are its limitations ?
 
 # Last Post
-[2023-11-30 #7 What is OpenTelemetry ?](./2023-11-30_What_is_OpenTelemetry/README.md)
+[2023-11-30 #8 Meet Graphite](./2023-12-07_Meet_Graphite/README.md)
 
 ## Archives
+- [2023-11-30 #7 What is OpenTelemetry ?](./2023-11-30_What_is_OpenTelemetry/README.md)
 - [2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/README.md)
 - [2023-11-16 #5 Meet Vector](./2023-11-16_Meet_Vector/README.md)
 - [2023-11-09 #4 Monotonicity](./2023-11-09_Monotonicity/README.md)
