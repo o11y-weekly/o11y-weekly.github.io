@@ -39,15 +39,15 @@ Another important aspect of metrics is how the value is collected and aggregated
 A dedicated post has been made before: [Cumulative and delta Temporality](../2023-11-09_Monotonicity/README.md)
 
 ### Logs
-Logs can be correlated to traces or simply correlated because the system is distributed and from the client point of view, the transaction traverses to multiple apps.
+Logs can be correlated to traces or simply correlated because the system is distributed and from the client point of view, the transaction traverses multiple apps.
 
 It is really handy to see all logs for a given transaction inside the distributed system like if the system was only one instance.
 
 Existing logging libraries can support traceId and spanId context but the official OpenTelemetry log instrumentation provides the context propagation which is very simple to use without too much configuration for many languages.
 
-Pay clause attention that existing library might provide thread static context propagation which conflict with new threading model (green thread, virtual task) including java and dotnet. This is why the OpenTelemetry context propagation should be used in favor of such thread static method.
+Pay clause attention that existing libraries might provide thread static context propagation which conflict with new threading model (green thread, virtual task) including java and dotnet. This is why the OpenTelemetry context propagation should be used in favor of such thread static method.
 
-OTLP started with traces then metrics and logs was the latest mature signal integrated in OpenTelemetry which is really different from other solution because usually backend and solutions start by integrating log first.
+OTLP started with traces then metrics and logs was the latest mature signal integrated in OpenTelemetry which is really different from other solutions because usually backends and solutions start by integrating log first.
 
 [By understanding the OpenTelemetry history](./README.md#history-of-distributed-tracing), it is not that hard to understand that log is the least mature instrumentation because specification and implementation started to solve distributed tracing and metrics.
 
@@ -57,11 +57,11 @@ As mentioned in [logs](./README.md#logs) OpenTelemetry started with this signal 
 
 A transaction of a client can traverse multiple components and servers in a system and analysing what happen in a distributed system can be hard.
 
-To solve this issue, OpenTelemetry provides specifications, instrumentation and exporters to collect traces and export them to backends without too much effort.
+To solve this issue, OpenTelemetry provides specifications, instrumentations and exporters to collect traces and export them to backends without too much effort.
 
 Instrumentation can be manual or automatic.
 
-The automatic instrumentation can be really verbose due too the number of framework used in the observed application and testing the output of such configuration before pushing the conf directly to production is a good idea to avoid hammering the backend or simply having high and large traces which might not be useful.
+The automatic instrumentation can be really verbose due too the number of frameworks used in the observed application and testing the output of such configuration before pushing the configuration directly to production is a good idea to avoid hammering the backend or simply having high and large traces which might not be useful.
 
 ### Profiling
 Profiling is the old new signal since before OpenTelemetry or simply observability tools exist, profiling was still there to solve performance issues.
@@ -111,26 +111,26 @@ This instrumentation can also produce metrics and traces because [doing everythi
 
 Manual instrumentation should be considered when the observed code does not come from a standard library / open source project / framework.
 
-Since everything cannot be tracked automatically, it is a good thing to master first instrumentation, exporters and collectors on logs and metrics first.It is different for traces, starting from automatic instrumentation and filter can be a good choice to start quickly.
+Since everything cannot be tracked automatically, it is a good thing to master first instrumentation, exporters and collectors on logs and metrics first. It is different for traces, starting from automatic instrumentation and filter can be a good choice to start quickly.
 
 Distributed tracing and traces is the most mature signal integrated in OpenTelemetry since it was the first signal integrated in the solution. Automatic instrumentation can be done really easily and depending the number of backend and framework, the traces can be really consise with automatic instrumentation.
 
-A good sign of the technical debt of the observed solution can be the number of spans and framework used to handle one transaction. Application with too much frameworks can produces heavy and large traces which is not good for the observability backend.
+A good sign of the technical debt of the observed solution can be the number of spans and frameworks used to handle one transaction. Application with too much frameworks can produces heavy and large traces which is not good for the observability backend.
 
 ### Automatic
 Reference: https://opentelemetry.io/docs/concepts/components/#automatic-instrumentation
 
 Automatic instrumentation decorates the code dynamically or statically depending the language.
 
-A majority of framework are supported, for each language, an automatic instrumentation is available and a list of compatible framework is also available.
+A majority of frameworks are supported, for each language, an automatic instrumentation is available and a list of compatible framework is also available.
 
-Before using automatic instrumentation, a list of used framework should be done to compare between requirements and available framework. If the framework is not available, a [manual instrumentation](./README.md#manual) should be used.
+Before using automatic instrumentation, a list of frameworks used should be done to compare between requirements and available frameworks. If the framework is not available, a [manual instrumentation](./README.md#manual) should be used.
 
 As an example, in [dotnet](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation), instrumentation is setup through a [startup hook](https://github.com/dotnet/runtime/blob/main/docs/design/features/host-startup-hook.md). This [OpenTelemetry startup hook](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/blob/main/src/OpenTelemetry.AutoInstrumentation.StartupHook/StartupHook.cs) inject [native code](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/tree/main/src/OpenTelemetry.AutoInstrumentation.Native) to integrate with the CLR.
 
 In java, a [java agent](https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/) can be used which contains instrumentation and exporter.
 
-In rust, OpenTelemetry does not mention automatic but still, a list of well know frameworks and [example](https://github.com/open-telemetry/opentelemetry-rust/tree/main/examples/tracing-http-propagator) are available and implement instrumentation for. Macro are used to statically, during the build part, to produce the instrumentation while exporters can be configured in the main entrypoint.
+In rust, OpenTelemetry does not mention automatic but still, a list of well know frameworks and [example](https://github.com/open-telemetry/opentelemetry-rust/tree/main/examples/tracing-http-propagator) are available and implement instrumentation for. Macro are used to produce the instrumentation, statically, during the build part, while exporters can be configured in the main entrypoint.
 
 The rust version is less magic and such integration offers a better control over performance overhead of the instrumentation.
 
@@ -144,7 +144,7 @@ Usually instrumentations libraries are packed with exporters but can be used sep
 
 The exporter, like for the [previous log use case](./README.md#instrumentation) used to flush the aggregated data to a collector.
 
-The exporter should care about the interval, the higher the interval, the less requests can be sent to the backend but the higher the risk of losing signal may occur.
+The exporter should care about the interval, the higher the interval, the less requests can be sent to the backend but the higher the risk of losing signals may occur.
 
 To have a good balance between risk / signal resolution, a local agent (OpenTelemetry collector) is useful to flush as soon as possible the telemetry without hammering the backend.
 
@@ -190,7 +190,7 @@ To do it, process to process context propagation is done inside the instrumentat
 
 It is generally a metadata associated with the telemetry payload.
 
-Instrumentation should retrieve the context, extract information such trace id to correlate span together.
+Instrumentation should retrieve the context, extract information such as trace id to correlate spans together.
 
 The OpenTelemetry [Baggage](https://opentelemetry.io/docs/concepts/signals/baggage/) documentation explains the use case really well.
 
@@ -200,7 +200,7 @@ In conclusion, OpenTelemetry is mature and the collector contrib [Open telemetry
 
 Depending signals and telemetry, the maturity change: a common trap is thinking that OpenTelemetry logs are more mature than others which is false.
 
-Again, [doing everything with one signals](../2023-10-18_What_is_not_an_observability_solution/What_is_not_an_o11y_solution.md#all-you-need-is-logs), might hurt the required SLA and depending the signal and volume the complexity to support a given SLA for a backend responsible of storing one signal kind can be totally different.
+Again, [doing everything with one signals](../2023-10-18_What_is_not_an_observability_solution/What_is_not_an_o11y_solution.md#all-you-need-is-logs), might hurt the required SLA and depending the signal and volume, the complexity to support a given SLA for a backend responsible of storing one signal kind can be totally different.
 
 OTLP does not use the streaming feature of gRPC and protocol buffer which is discussable or incompatible with scenario like large logs, ...
 
