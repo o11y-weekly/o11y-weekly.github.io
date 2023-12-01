@@ -95,7 +95,7 @@ Reference: https://opentelemetry.io/docs/concepts/instrumentation/
 
 Instrumentation can be manual or automatic and refers to the act of decorating/collecting information to export it for later usage.
 
-The easiest instrumentation is the manual log instrumentation which is not hard to understand. A log library should be used to log event inside a function for diagnostic purpose. The log can be written in a file which is scrapped or analyzed later.
+The easiest instrumentation is the manual log instrumentation which is not hard to understand. A log library should be used to log events inside a function for diagnostic purpose. The log can be written in a file which is scrapped or analyzed later.
 
 In this log context, writing code around the function to extract some useful information to help futur diagnostic is a manual Instrumentation.
 
