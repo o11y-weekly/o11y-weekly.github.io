@@ -128,7 +128,7 @@ Before using automatic instrumentation, a list of used framework should be done 
 
 As an example, in [dotnet](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation), instrumentation is setup through a [startup hook](https://github.com/dotnet/runtime/blob/main/docs/design/features/host-startup-hook.md). This [OpenTelemetry startup hook](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/blob/main/src/OpenTelemetry.AutoInstrumentation.StartupHook/StartupHook.cs) inject [native code](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/tree/main/src/OpenTelemetry.AutoInstrumentation.Native) to integrate with the CLR.
 
-In java, a [java agent](https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/) can be use which contains instrumentation and exporter.
+In java, a [java agent](https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/) can be used which contains instrumentation and exporter.
 
 In rust, OpenTelemetry does not mention automatic but still, a list of well know frameworks and [example](https://github.com/open-telemetry/opentelemetry-rust/tree/main/examples/tracing-http-propagator) are available and implement instrumentation for. 
 
