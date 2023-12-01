@@ -2,12 +2,13 @@ Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
 
-[Last week, vector has been introduced](./2023-11-16_Meet_Vector/README.md), and [this week](./2023-11-23_Vector_in_action/README.md), [a demo](./2023-11-23_Vector_in_action/README.md) has been created with a complete vector demo including log to metric, monitoring vector agent and host metrics (Vector as a node exporter).
+This week, let's see [what is OpenTelemetry](./2023-11-30_What_is_OpenTelemetry/README.md) and as a conclusion what are its limitations ?
 
 # Last Post
-[2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/README.md)
+[2023-11-30 #7 What is OpenTelemetry ?](./2023-11-30_What_is_OpenTelemetry/README.md)
 
 ## Archives
+- [2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/README.md)
 - [2023-11-16 #5 Meet Vector](./2023-11-16_Meet_Vector/README.md)
 - [2023-11-09 #4 Monotonicity](./2023-11-09_Monotonicity/README.md)
 - [2023-10-27 #3 Defining Good Observability backend Trade-offs and QoS](./2023-10-27_Defining_Good_Observability_backend_Trade-offs_and_QoS/README.md)
