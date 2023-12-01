@@ -33,7 +33,7 @@ Signal and telemetry are synonyms, metrics, logs, traces and the very latest one
 
 ### Metrics
 
-Metrics are exported at a configured rate, depending the resolution, from 10s to 60S means respectively from 6 to 1 metric per minute. The higher the resolution the higher metric/datapoint per minute should be handled by the backend.
+Metrics are exported at a configured rate, depending the resolution, from 10s to 60s means respectively from 6 to 1 metric per minute. The higher the resolution the higher metric/datapoint per minute should be handled by the backend.
 
 Another important aspect of metrics is how the value is collected and aggregated. It can be cumulative or delta.
 A dedicated post has been made before: [Cumulative and delta Temporality](../2023-11-09_Monotonicity/README.md)
