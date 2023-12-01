@@ -158,18 +158,49 @@ Collectors can support a high number of receivers and exporters but also the mai
 
 ## Sampler
 
+Reference: https://opentelemetry.io/docs/concepts/sampling/
+
 Sampler is mostly used for tracing since all traces are not relevant and without a sampling strategy, 100% of the telemetry is sent to the backend with high cost and usage.
 
 To avoid sending useless telemetry, a sampling strategy can help to reduce the amount of telemetry data.
 
 ### Head sampling
+
+The head sampling means that the decision of keeping the telemetry is decided ahead of time.
+
+[Probabilistic sampling](https://opentelemetry.io/docs/specs/otel/trace/tracestate-probability-sampling/#consistent-probability-sampling) can be done without any collector since the decision is taken from the start and transported in the context via [context propagation baggage](./README.md#cross-service-propagators).
+
+The head sampling helps to keep the instrumentation space in the observed application small without too much overhead. Setting 100% of instrumentation might hurt the overall performance at some point but not that high in general.
+
+Keeping 10% of traces can be useful at the beginning but it will not help in case of p99 optimization. In such configuration, the head sampling will not help.
+
 ### Tail sampling
 
+OpenTelemetry Collector provides a [tail sampling](https://opentelemetry.io/docs/concepts/sampling/#tail-sampling) processor : [tailsamplingprocessor](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/tailsamplingprocessor) which as opposed to head sampling does not decide ahead of time but after an event in a windows period to keep the telemetry.
+
+Errors and high latencies can be kept to have meaningful full traces without flushing all the useless part (goodput).
+
 ## Cross service Propagators
-https://opentelemetry.io/docs/concepts/components/#cross-service-propagators
+Reference: https://opentelemetry.io/docs/concepts/components/#cross-service-propagators
 
-## Components
+Technically, the trace id, decision and all other context should be transfered from one application to another.
 
-## Architecture
+To do it, process to process context propagation is done inside the instrumentation and stored via OTLP and [baggage](https://opentelemetry.io/docs/concepts/signals/baggage/).
+
+It is generally metadata associated with the telemetry payload.
+
+Instrumentation should retrieve the context, extract information such trace id to correlate span together.
+
+The OpenTelemetry [Baggage](https://opentelemetry.io/docs/concepts/signals/baggage/) documentation explains the use case really well.
 
 ## Conclusion
+
+In conclusion, OpenTelemetry is mature and the collector contrib [Open telemetry collector contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib/) is helpful to integrate existing or legacy application.
+
+Depending signals and telemetry, the maturity can depend and a common trap is thinking that OpenTelemetry logs are more mature than others which is false.
+
+Again, doing everything with one signals, might hurt the required SLA and depending the signal and volume the complexity to support a given SLA for a backend responsible of storing one signal kind can be totally different.
+
+OTLP does not use the streaming feature of gRPC and protocol buffer which is discussable or incompatible with scenario like large logs, ...
+
+OpenTelemetry is a good standard and define perfectly common observability use case already explained in [a previous post](../2023-10-18_What_is_not_an_observability_solution/What_is_not_an_o11y_solution.md)
