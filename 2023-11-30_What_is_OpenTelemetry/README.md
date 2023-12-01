@@ -177,7 +177,7 @@ Keeping 10% of traces can be useful at the beginning but it will not help in cas
 
 ### Tail sampling
 
-OpenTelemetry Collector provides a [tail sampling](https://opentelemetry.io/docs/concepts/sampling/#tail-sampling) processor : [tailsamplingprocessor](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/tailsamplingprocessor) which as opposed to head sampling does not decide ahead of time but after an event in a window period to keep the telemetry.
+OpenTelemetry Collector provides a [tail sampling](https://opentelemetry.io/docs/concepts/sampling/#tail-sampling) processor : [tailsamplingprocessor](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/tailsamplingprocessor) which as opposed to head sampling does not decide ahead of time but after an event in a window period to keep the telemetry data.
 
 Errors and high latencies can be kept to have meaningful full traces without flushing all the useless part (goodput).
 
