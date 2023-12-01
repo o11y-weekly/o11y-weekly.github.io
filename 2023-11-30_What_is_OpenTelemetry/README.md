@@ -49,7 +49,7 @@ Pay clause attention that existing library might provide thread static context p
 
 OTLP started with traces then metrics and logs was the latest mature signal integrated in OpenTelemetry which is really different from other solution because usually backend and solutions start by integrating log first.
 
-[By understanding the OpenTelemetry history](./README.md#history), it is not that hard to understand that log is the least mature instrumentation because specification and implementation started to solve distributed tracing and metrics.
+[By understanding the OpenTelemetry history](./README.md#history-of-distributed-tracing), it is not that hard to understand that log is the least mature instrumentation because specification and implementation started to solve distributed tracing and metrics.
 
 ### Traces
 
