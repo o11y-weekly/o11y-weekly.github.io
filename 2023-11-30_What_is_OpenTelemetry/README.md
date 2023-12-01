@@ -66,7 +66,7 @@ The automatic instrumentation can be really verbose due too the number of framew
 ### Profiling
 Profiling is the old new signal since before OpenTelemetry or simply observability tools exist, profiling was still there to solve performance issues.
 
-Profiling can be scoped to the runtime (dotnet, java, golang, ...) or system (flamegraph). Depending the situation, a good code can hammer the system and a profiling with system calls.
+Profiling can be scoped to the runtime (dotnet, java, golang, ...) or system (flamegraph). Depending the situation, a good code can hammer the system and a profiling with system calls really help to get the problem.
 
 A dedicated post will be available later for the profiling part.
 
