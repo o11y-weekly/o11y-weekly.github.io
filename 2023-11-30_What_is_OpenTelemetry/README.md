@@ -111,7 +111,7 @@ This instrumentation can also produce metrics and traces because [doing everythi
 
 Manual instrumentation should be considered when the observed code does not come from a standard library / open source project / framework.
 
-Since everything cannot be tracked automatically, it is a good thing to master first instrumentation, exporters and collectors on logs and metrics first while with tracing, it can be slighly different.
+Since everything cannot be tracked automatically, it is a good thing to master first instrumentation, exporters and collectors on logs and metrics first.It is different for traces, starting from automatic instrumentation and filter can be a good choice to start quickly.
 
 Distributed tracing and traces is the most mature signal integrated in OpenTelemetry since it was the first signal integrated in the solution. Automatic instrumentation can be done really easily and depending the number of backend and framework, the traces can be really consise with automatic instrumentation.
 
