@@ -70,7 +70,6 @@ Profiling can be scoped to the runtime (dotnet, java, golang, ...) or system (fl
 
 A dedicated post will be available later for the profiling part.
 
-
 All this signals should be specified and a protocol should support serialization/deserialization and transport of those singals which is the aim of OTLP
 
 ## OTLP
