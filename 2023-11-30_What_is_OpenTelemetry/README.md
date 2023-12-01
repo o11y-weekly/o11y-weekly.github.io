@@ -204,4 +204,4 @@ Again, [doing everything with one signals](../2023-10-18_What_is_not_an_observab
 
 OTLP does not use the streaming feature of gRPC and protocol buffer which is discussable or incompatible with scenario like large logs, ...
 
-OpenTelemetry is a good standard and define perfectly common observability use case already explained in [a previous post](../2023-10-18_What_is_not_an_observability_solution/What_is_not_an_o11y_solution.md)
+OpenTelemetry is a good standard and perfectly defines common observability use case already explained in [a previous post](../2023-10-18_What_is_not_an_observability_solution/What_is_not_an_o11y_solution.md)
