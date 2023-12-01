@@ -45,6 +45,8 @@ It is really handy to see all logs for a given transaction inside the distribute
 
 Existing logging libraries can support traceId and spanId context but the official OpenTelemetry log instrumentation provides the context propagation which is very simple to use without too much configuration for many languages.
 
+Pay clause attention that existing library might provide thread static context propagation which conflict with new threading model (green thread, virtual task) including java and dotnet. This is why the OpenTelemetry context propagation should be used in favor of such thread static method.
+
 OTLP started with traces then metrics and logs was the latest mature signal integrated in OpenTelemetry which is really different from other solution because usually backend and solutions start by integrating log first.
 
 [By understanding the OpenTelemetry history](./README.md#history), it is not that hard to understand that log is the least mature instrumentation because specification and implementation started to solve distributed tracing and metrics.
