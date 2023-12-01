@@ -135,7 +135,7 @@ In rust, OpenTelemetry does not mention automatic but still, a list of well know
 The rust version is less magic and such integration offers a better control over performance overhead of the instrumentation.
 
 ### Alternatives
-An alternative of instrumented code can be using external distributed tracing to decorate legacy app by using a proxy. [Envoy](https://www.envoyproxy.io/docs/envoy/latest/start/sandboxes/opentelemetry) can be use to support opentelemetry widely on a huge legacy to offer the distruted tracing between application without having deep details. It can be a good start to have the global picture to find out which service is the less effective first without too much integration effort.
+An alternative of instrumented code can be using external distributed tracing to decorate legacy app by using a proxy. [Envoy](https://www.envoyproxy.io/docs/envoy/latest/start/sandboxes/opentelemetry) can be used to support opentelemetry widely on a huge legacy to offer the distruted tracing between application without having deep details. It can be a good start to have the global picture to find out which service is the less effective first without too much integration effort.
 
 ## Exporters
 Reference: https://opentelemetry.io/docs/concepts/components/#exporters
