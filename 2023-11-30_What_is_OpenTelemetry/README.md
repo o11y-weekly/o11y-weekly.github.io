@@ -9,7 +9,7 @@ But first, what is the history of distributed tracing ?
 ## History of distributed tracing
 
 - 2010: [Dapper](https://research.google/pubs/pub36356/)
-- 2012: [Zipkin](https://www.uber.com/en-FR/blog/distributed-tracing/)
+- 2012: [Zipkin](https://www.uber.com/en-FR/blog/distributed-tracing/) from uber
 - 2015: [Jaeger](https://www.jaegertracing.io/)
 - 2015/11: [opentracing spec first commit](https://github.com/opentracing/opentracing-go/commit/eab1a36e622e49f29d348dc39bc03730ae228b72)
 - 2016 [Towards Turnkey Distributed Tracing post](https://medium.com/opentracing/towards-turnkey-distributed-tracing-5f4297d1736)
