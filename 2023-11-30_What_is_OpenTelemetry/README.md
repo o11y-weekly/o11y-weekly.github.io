@@ -16,7 +16,7 @@ But first, what is the history of distributed tracing ?
 - 2017/01: [opencensus instrumentation first commit](https://github.com/census-instrumentation/opencensus-go/commit/304ea252d1c39e8aecc84d1bb608c806ff25bfb3)
 - 2019/05 : [opencensus](https://opencensus.io/) jaeger tracing, [opentracing](https://github.com/opentracing/opentracing-go) merged to [opentelemetry spec + instrumentation](https://github.com/open-telemetry/opentelemetry-java/pull/244)
 
-Back in 2017, many other competitors provided such feature like Azure with the service map (with azure function FAAS) to vizualise service dependencies including statistics, metrics and sampling of errors and latencies.
+Back in 2017, many other vendors (mostly cloud providers) provided such feature like Azure with the service map (with azure function FAAS) to vizualise service dependencies including statistics, metrics and sampling of errors and latencies.
 
 The aim of OpenTelemetry is to provide a specification, instrumentation, exporter, collectors (agent) and backend specification.
 
