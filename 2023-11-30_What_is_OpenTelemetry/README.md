@@ -115,7 +115,7 @@ Since everything cannot be tracked automatically, it is a good thing to master f
 
 Distributed tracing and traces is the most mature signal integrated in OpenTelemetry since it was the first signal integrated in the solution. Automatic instrumentation can be done really easily and depending the number of backend and framework, the traces can be really consise with automatic instrumentation.
 
-A good sign of the technical debt of the observed solution can be the number of spans and framework used to handle one transaction. Application with too much framework can produces heavy and large traces which is not good for the observability backend.
+A good sign of the technical debt of the observed solution can be the number of spans and framework used to handle one transaction. Application with too much frameworks can produces heavy and large traces which is not good for the observability backend.
 
 ### Automatic
 Reference: https://opentelemetry.io/docs/concepts/components/#automatic-instrumentation
