@@ -198,7 +198,7 @@ The OpenTelemetry [Baggage](https://opentelemetry.io/docs/concepts/signals/bagga
 
 In conclusion, OpenTelemetry is mature and the collector contrib [Open telemetry collector contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib/) is helpful to integrate existing or legacy application.
 
-Depending signals and telemetry, the maturity can depend and a common trap is thinking that OpenTelemetry logs are more mature than others which is false.
+Depending signals and telemetry, the maturity change and a common trap is thinking that OpenTelemetry logs are more mature than others which is false.
 
 Again, doing everything with one signals, might hurt the required SLA and depending the signal and volume the complexity to support a given SLA for a backend responsible of storing one signal kind can be totally different.
 
