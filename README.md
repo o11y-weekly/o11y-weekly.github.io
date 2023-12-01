@@ -2,7 +2,7 @@ Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
 
-[Last week, vector has been introduced](./2023-11-16_Meet_Vector/README.md), and [this week](./2023-11-23_Vector_in_action/README.md), [a demo](./2023-11-23_Vector_in_action/README.md) has been created with a complete vector demo including log to metric, monitoring vector agent and host metrics (Vector as a node exporter).
+This week, let's see [what is OpenTelemetry](./2023-11-30_What_is_OpenTelemetry/README.md) and as a conclusion what are the limitations ?
 
 # Last Post
 [2023-11-30 #7 What is OpenTelemetry ?](./2023-11-30_What_is_OpenTelemetry/README.md)
