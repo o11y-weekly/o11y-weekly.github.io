@@ -144,7 +144,7 @@ Usually instrumentations libraries are packed with exporters but can be used sep
 
 The exporter, like for the [previous log use case](./README.md#instrumentation) used to flush the aggregated data to a collector.
 
-The exporter should care about the interval, the higher the interval, the less request can be sent to the backend but the higher the risk of lost signal might occurs.
+The exporter should care about the interval, the higher the interval, the less requests can be sent to the backend but the higher the risk of losing signal might occurs.
 
 To have a good balance between risk / signal resolution, a local agent (OpenTelemetry collector) is useful to flush as soon as possible the telemetry without hammering the backend.
 
