@@ -130,9 +130,7 @@ As an example, in [dotnet](https://github.com/open-telemetry/opentelemetry-dotne
 
 In java, a [java agent](https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/) can be used which contains instrumentation and exporter.
 
-In rust, OpenTelemetry does not mention automatic but still, a list of well know frameworks and [example](https://github.com/open-telemetry/opentelemetry-rust/tree/main/examples/tracing-http-propagator) are available and implement instrumentation for. 
-
-Macro are used to statically, during the build phase producing the instrumentation while exporters can be configured in the main entrypoint.
+In rust, OpenTelemetry does not mention automatic but still, a list of well know frameworks and [example](https://github.com/open-telemetry/opentelemetry-rust/tree/main/examples/tracing-http-propagator) are available and implement instrumentation for. Macro are used to statically, during the build phase producing the instrumentation while exporters can be configured in the main entrypoint.
 
 The rust version is less magic and such integration offers a better control over performance overhead of the instrumentation.
 
