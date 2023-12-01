@@ -155,7 +155,7 @@ Reference: https://opentelemetry.io/docs/concepts/components/#collector
 
 A collector supports the service definition of OpenTelemetry.
 
-Collectors can support a high number of receivers and exporters but also the main protocol OTLP.
+Collectors can support a high number of receivers and exporters but also the main protocol OTLP and processors like [tail sampling](./README.md#tail-sampling).
 
 ## Sampler
 
