@@ -4,7 +4,9 @@ It has been 14 years since Google created Dapper to monitor distributed system.
 
 What is OpenTelemetry? Where does it come from? What are its influences ? Finally is it really mature ?
 
-## History
+But first, what is the history of distributed tracing ?
+
+## History of distributed tracing
 
 - 2010: [Dapper](https://research.google/pubs/pub36356/)
 - 2012: [Zipkin](https://www.uber.com/en-FR/blog/distributed-tracing/)
