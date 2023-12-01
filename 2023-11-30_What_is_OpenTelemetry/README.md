@@ -200,7 +200,7 @@ In conclusion, OpenTelemetry is mature and the collector contrib [Open telemetry
 
 Depending signals and telemetry, the maturity change: a common trap is thinking that OpenTelemetry logs are more mature than others which is false.
 
-Again, doing everything with one signals, might hurt the required SLA and depending the signal and volume the complexity to support a given SLA for a backend responsible of storing one signal kind can be totally different.
+Again, [doing everything with one signals](../2023-10-18_What_is_not_an_observability_solution/What_is_not_an_o11y_solution.md#all-you-need-is-logs), might hurt the required SLA and depending the signal and volume the complexity to support a given SLA for a backend responsible of storing one signal kind can be totally different.
 
 OTLP does not use the streaming feature of gRPC and protocol buffer which is discussable or incompatible with scenario like large logs, ...
 
