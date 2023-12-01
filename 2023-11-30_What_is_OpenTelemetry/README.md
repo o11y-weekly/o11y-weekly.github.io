@@ -76,7 +76,7 @@ All this signals should be specified and a protocol should support serialization
 
 gRPC has been chosen from OpenTelemetry for performance, tooling and specification reason.
 
-[Protobuf](https://protobuf.dev/) (protocol buffer 3) is a specification and toolchain to make message service and client/backend.
+[Protobuf](https://protobuf.dev/) (protocol buffer 3) is a specification and toolchain to make message, service and client/backend.
 
 An excellent medium post explains this perfectly why json and REST would not be a good choice over gRPC : https://medium.com/data-science-community-srm/json-is-incredibly-slow-heres-what-s-faster-ca35d5aaf9e8
 
