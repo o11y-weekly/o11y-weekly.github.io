@@ -55,7 +55,7 @@ OTLP started with traces then metrics and logs was the latest mature signal inte
 
 As mentioned in [logs](./README.md#logs) OpenTelemetry started with this signal to solve distributed tracing.
 
-A transaction of a client can traverse multiple component and servers in a system and analysing what happen in a distributed system can be hard.
+A transaction of a client can traverse multiple components and servers in a system and analysing what happen in a distributed system can be hard.
 
 To solve this issue, OpenTelemetry provides specifications, instrumentation and exporters to collect traces and export them to backends without too much effort.
 
