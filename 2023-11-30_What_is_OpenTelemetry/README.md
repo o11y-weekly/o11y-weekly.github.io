@@ -119,23 +119,49 @@ Reference: https://opentelemetry.io/docs/concepts/components/#automatic-instrume
 
 Automatic instrumentation decorates the code dynamically or statically depending the language.
 
-As an example, in dotnet, instrumentation is done during the JIT phase where native code can be injected one to avoid paying the abstraction everytime.
+A majority of framework are supported, for each language, an automatic instrumentation is available and a list of compatible framework is also available.
 
-In java, a java agent can be use which contains instrumentation and exporter.
+Before using automatic instrumentation, a list of used framework should be done to compare with requirements and available framework. If the framework is not available, a [manual instrumentation](./README.md#manual) should be used.
 
-In rust, macro are used to statically, during the build phase producing the instrumentation while exporters can be configured in the main entrypoint.
+As an example, in [dotnet](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation), instrumentation is setup through a [startup hook](https://github.com/dotnet/runtime/blob/main/docs/design/features/host-startup-hook.md). This [OpenTelemetry startup hook](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/blob/main/src/OpenTelemetry.AutoInstrumentation.StartupHook/StartupHook.cs) inject [native code](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/tree/main/src/OpenTelemetry.AutoInstrumentation.Native) to integrate with the CLR.
+
+In java, a [java agent](https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/) can be use which contains instrumentation and exporter.
+
+In rust, OpenTelemetry does not mention automatic but still, a list of well know frameworks and [example](https://github.com/open-telemetry/opentelemetry-rust/tree/main/examples/tracing-http-propagator) are available and implement instrumentation for. 
+
+Macro are used to statically, during the build phase producing the instrumentation while exporters can be configured in the main entrypoint.
 
 The rust version is less magic and such integration offers a better control over performance overhead of the instrumentation.
 
+### Alternatives
+An alternative of instrumented code can be using external distributed tracing to decorate legacy app by using a proxy. [Envoy](https://www.envoyproxy.io/docs/envoy/latest/start/sandboxes/opentelemetry) can be use to support opentelemetry widely on a huge legacy to offer the distruted tracing between application without having deep details. It can be a good start to have the global picture to find out which service is the less effective first without too much integration effort.
+
 ## Exporters
-https://opentelemetry.io/docs/concepts/components/#exporters
+Reference: https://opentelemetry.io/docs/concepts/components/#exporters
+
+Usually instrumentations libraries are packed with exporters but can be used separately.
+
+The exporter, like for the [previous log use case](./README.md#instrumentation) used to flush the aggregated data to a collector.
+
+The exporter should care about the interval, the higher the interval, the less request can be sent to the backend but the higher the risk of lost signal might occurs.
+
+To have a good balance between risk / signal resolution, a local agent (OpenTelemetry collector) is useful to flush as soon as possible the telemetry without hammering the backend.
 
 ## Collector
+Reference: https://opentelemetry.io/docs/concepts/components/#collector
+
+> "The OpenTelemetry Collector is a vendor-agnostic proxy that can receive, process, and export telemetry data. It supports receiving telemetry data in multiple formats (for example, OTLP, Jaeger, Prometheus, as well as many commercial/proprietary tools) and sending data to one or more backends. It also supports processing and filtering telemetry data before it gets exported."
+
+A collector supports the service definition of OpenTelemetry.
 
 Collectors can support a high number of receivers and exporters but also the main protocol OTLP.
 
 ## Sampler
-https://opentelemetry.io/docs/concepts/components/#sampler
+
+Sampler is mostly used for tracing since all traces are not relevant and without a sampling strategy, 100% of the telemetry is sent to the backend with high cost and usage.
+
+To avoid sending useless telemetry, a sampling strategy can help to reduce the amount of telemetry data.
+
 ### Head sampling
 ### Tail sampling
 
