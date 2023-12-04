@@ -113,7 +113,7 @@ The protocol is not the same as Graphite but simpler, still plain text: `<metric
 echo "foo:1|c" | nc -u -w0 127.0.0.1 8125
 ```
 
-A demo is available from this previous post: [graphite + statsd vs other backends](../2023-11-09_Monotonicity/demo/README.md#context)
+A demo is available from this previous post: [graphite + statsd vs other backends](../2023-11-09_Monotonicity/demo/README.md#context) with [this statsd udp configuration](../2023-11-09_Monotonicity/demo/graphite/statsd/udp.js)
 
 ## Archiving old data
 Reference: https://graphite.readthedocs.io/en/latest/whisper.html#archives-retention-and-precision
@@ -139,7 +139,7 @@ Grafana offers the best integration for graphite since it has been created for.
 
 According to the OTLP and prometheus Grafana intregration, Grafana metrics backend like Mimir supports only cumulative metrics while graphite is a true delta metrics. A dedicated post is comparing [the pros and cons of delta and cumulative temporality](../2023-11-09_Monotonicity/README.md).
 
-A dedicated post will be created later for Grafana
+A dedicated post will be created later for Grafana.
 
 ### Datadog
 Reference: https://www.datadoghq.com/blog/dogstatsd-mapper/
