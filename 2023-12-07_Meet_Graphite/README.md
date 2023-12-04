@@ -36,6 +36,10 @@ Graphite is not a monolith and multiple components compose graphite such as [car
 
 ## Architecture
 
+Projects: 
+- [Graphite](https://github.com/graphite-project)
+- [Go Graphite](https://github.com/go-graphite)
+
 ### whisper
 Reference: https://github.com/graphite-project/whisper
 
