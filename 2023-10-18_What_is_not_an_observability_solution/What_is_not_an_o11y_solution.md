@@ -78,7 +78,7 @@ The more the panel are added, the more the backend will suffer.
 
 Computing logs is IO and CPU intensive and this part can be precomputed for metrics dashboards.
 
-To do it, collectors and agent can be use to transform logs to metrics.
+To do it, collectors and agent can be used to transform logs to metrics.
 
 Converting logs to metrics reduces CPU, IO usage but also rate (DPM : datapoint per minute). You can easily reduce 100K DPM to 5 DPM (5 metrics like max, min, p99, median, average per minute).
 
