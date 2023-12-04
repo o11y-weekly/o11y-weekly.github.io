@@ -34,6 +34,13 @@ The [monotonicity and temporality post](../2023-11-09_Monotonicity/README.md#cum
 
 Graphite is not a monolith and multiple components compose graphite such as [carbon](https://graphite.readthedocs.io/en/latest/carbon-daemons.html)
 
+## Quickstart
+Reference: https://graphite.readthedocs.io/en/latest/install.html#docker
+
+Using [graphite with docker](https://graphite.readthedocs.io/en/latest/install.html#docker) is the easiest way to test graphite quickly.
+
+The docker image is not production ready though and many components are installed by default to make it easy to use for development but not for production.
+
 ## Architecture and Scalability
 
 Graphite has been forked and updated to support scalability at different scope.
@@ -135,15 +142,8 @@ Datadog has model where all the data should be stored inside Datadog which is a 
 
 A dedicated post will be created later for Datadog
 
-## Compatible backends
-
-### Mimir
-
-### VictoriaMetrics
-
-## Demo
-- [Graphite vs VictoriaMetrics vs Prometheus vs Mimir demo](../2023-11-09_Monotonicity/demo/README.md)
-- [Setup Graphite with docker](https://graphite.readthedocs.io/en/latest/install.html#docker)
+## Comparison
+[Graphite vs VictoriaMetrics vs Prometheus vs Mimir demo](../2023-11-09_Monotonicity/demo/README.md)
 
 ### When to use it ?
 [Long lived counters metrics](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter) with few labels.
