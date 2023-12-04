@@ -1,5 +1,7 @@
 # 2023-11-30 #8 Meet Graphite
 
+Graphite has been created at Orbitz, a hotel industry actor to monitor and support their growth.
+
 ## What is Graphite ?
 
 ## Protocol

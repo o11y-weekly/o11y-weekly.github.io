@@ -1,0 +1,1 @@
+How observability backends are built ? Observability backend architecture is simply a OLAP Dataplatform with oppiniated trade-offs
