@@ -191,7 +191,7 @@ The context history can help to understand the trade-off. It seems that the vect
 - 2015/11: [opentracing spec first commit](https://github.com/opentracing/opentracing-go/commit/eab1a36e622e49f29d348dc39bc03730ae228b72)
 - 2017/01: [opencensus instrumentaion first commit](https://github.com/census-instrumentation/opencensus-go/commit/304ea252d1c39e8aecc84d1bb608c806ff25bfb3)
 - 2018/09: [vector initial commit](https://github.com/vectordotdev/vector/commit/83705cb791254b331b27f7719f5adae083ac3b13)
-- 2019/05 : [opencensus](https://opencensus.io/) jaeger tracing, [opentracing](https://github.com/opentracing/opentracing-go) merged to [opentelemetry spec + instrumentation](https://github.com/open-telemetry/opentelemetry-java/pull/244)
+- 2019/05: [opencensus](https://opencensus.io/) jaeger tracing, [opentracing](https://github.com/opentracing/opentracing-go) merged to [opentelemetry spec + instrumentation](https://github.com/open-telemetry/opentelemetry-java/pull/244)
 - 2019/02: birth of [vector protocol](https://github.com/vectordotdev/vector/pull/81) which is the main communication protocol between agents and gateway at the time of writing.
 - 2021 : [Datadog acquires vector](https://www.datadoghq.com/blog/datadog-acquires-timber-technologies-vector/)
 
