@@ -103,17 +103,13 @@ Depending the backend configuration, the `<metric path>` can contain tags (aka l
 ## Archiving old data
 Reference: https://graphite.readthedocs.io/en/latest/whisper.html#archives-retention-and-precision
 
-## Tags
-Tags are the equivalent of prometheus labels or simply labels in [OpenTelemetry](../2023-11-30_What_is_OpenTelemetry/README.md) terminology
-Reference: https://graphite.readthedocs.io/en/latest/tags.html
+Optimizing space over the time is crucial. Data can simply be deleted or better compressed. Compression can be lossless or lossy and depending the use case, supporting both can be a good idea.
+
+It is possible to setup lossy compression by increasing the resolution period datapoint. A datapoint can be at a resolution of 10s for the last 3 months then at 1 minute to reduce space by 6 (60s / 10s).
 
 ## Telemetry temporality
 
-delta mode.
-
-[demo](../2023-11-09_Monotonicity/demo/README.md)
-
-## Graphite and StatsD
+As mentioned in [OpenTelemetry metrics temporality](../2023-11-30_What_is_OpenTelemetry/README.md#metrics) and the [Monotonicity demo](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter) graphite is a dela metrics temporality backend which support [long lived cumulative counter](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter).
 
 ## Scaling Graphite
 
