@@ -84,6 +84,7 @@ A dedicated post will be created later for Datadog
 
 ## Demo
 - [Graphite vs VictoriaMetrics vs Prometheus vs Mimir demo](../2023-11-09_Monotonicity/demo/README.md)
+- [Setup Graphite with docker](https://graphite.readthedocs.io/en/latest/install.html#docker)
 
 ### When to use it ?
 [Long lived counters metrics](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter) with few labels.
