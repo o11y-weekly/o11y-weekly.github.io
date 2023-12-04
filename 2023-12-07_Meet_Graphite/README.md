@@ -57,7 +57,11 @@ Whisper is the default TSDB with graphite. Graphite can support [much more TSDB]
 ) with different trade-offs.
 
 ### carbon
-Reference: https://github.com/graphite-project/carbon
+References: 
+- https://github.com/graphite-project/carbon
+- https://graphite.readthedocs.io/en/stable/carbon-daemons.html
+
+
 
 ### graphite-web
 Reference: https://github.com/graphite-project/graphite-web 
