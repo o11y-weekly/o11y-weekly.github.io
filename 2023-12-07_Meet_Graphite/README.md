@@ -16,7 +16,9 @@ A problem in RRDtool is that it does not really support temporary absence of the
 According to the `null` latency value use case, using `0` is not a good trade-offs at all and this is the first reason why Orbitz team decided to create Graphite ([before 2006](https://graphite.readthedocs.io/en/latest/faq.html#does-graphite-use-rrdtool)).
 
 ## What is Graphite ?
-Reference: https://graphite.readthedocs.io/en/latest/faq.html#what-is-graphite
+References: 
+- https://graphite.readthedocs.io/en/latest/faq.html#what-is-graphite
+- https://graphite.readthedocs.io/en/latest/overview.html#about-the-project
 
 Usually, TSDB backends are used for non functional requirements like request per second, ...
 
