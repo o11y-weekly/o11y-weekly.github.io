@@ -36,12 +36,25 @@ Graphite is not a monolith and multiple components compose graphite such as [car
 
 ## Architecture
 
+Graphite has been forked and updated to support scalability at different scope.
+
 Projects: 
 - [Graphite](https://github.com/graphite-project)
 - [Go Graphite](https://github.com/go-graphite)
 
+An excellent (old) post from Teads mentioned how to scale graphite: https://medium.com/teads-engineering/scaling-graphite-in-a-cloud-environment-6a92fb495e5
+
+Graphite can be viewed as a backend or protocol and other backends are compatible with like prometheus, mimir, victoriametrics but with different aggregation temporality. 
+
+/!\ All backends are not fully compliant with [long lived counters](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter) and if this feature matter, it is important to scale the data storage first and the other graphite component like the [Go Graphite](https://github.com/go-graphite) did. 
+
 ### whisper
 Reference: https://github.com/graphite-project/whisper
+
+Differences with RRD: https://graphite.readthedocs.io/en/latest/whisper.html#differences-between-whisper-and-rrd
+
+Whisper is the default TSDB with graphite. Graphite can support [much more TSDB](https://graphite.readthedocs.io/en/1.1.8/tools.html#storage-backend-alternates
+) with different trade-offs.
 
 ### carbon
 Reference: https://github.com/graphite-project/carbon
@@ -55,6 +68,9 @@ Reference: https://github.com/graphite-project/graphite-web
 ## Protocol
 
 ## Functions
+
+## Archiving old data
+Reference: https://graphite.readthedocs.io/en/latest/whisper.html#archives-retention-and-precision
 
 ## Tags
 Tags are the equivalent of prometheus labels or simply labels in [OpenTelemetry](../2023-11-30_What_is_OpenTelemetry/README.md) terminology
