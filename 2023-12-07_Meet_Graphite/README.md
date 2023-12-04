@@ -34,7 +34,7 @@ The [monotonicity and temporality post](../2023-11-09_Monotonicity/README.md#cum
 
 Graphite is not a monolith and multiple components compose graphite such as [carbon](https://graphite.readthedocs.io/en/latest/carbon-daemons.html)
 
-## Architecture
+## Architecture and Scalability
 
 Graphite has been forked and updated to support scalability at different scope.
 
@@ -61,15 +61,42 @@ References:
 - https://github.com/graphite-project/carbon
 - https://graphite.readthedocs.io/en/stable/carbon-daemons.html
 
+Carbon is the write path of the metrics signal. It serves different purpose like: 
 
+- Replicate and shard writes to backend (ie: whisper)
+- Rewrite metrics
+- Allow or Block metrics
+- Aggregate metrics
 
 ### graphite-web
-Reference: https://github.com/graphite-project/graphite-web 
+Reference: https://github.com/graphite-project/graphite-web
+
+As opposed to carbon, graphite-web is responsible for the metric read path. This component serves the api and graph visualization.
+
+Usually, only the [api](https://graphite-api.readthedocs.io/en/latest/) part of graphite-web is used in conjuction with a frontend like [grafana](https://grafana.com/grafana/).
+
+## Protocol
+Reference: https://graphite.readthedocs.io/en/latest/feeding-carbon.html
+
+Carbon supports many protocol but the most used is the straightforward plain text protocol.
+
+### Plain Text
+`<metric path> <metric value> <metric timestamp>`
+
+```bash
+PORT=2003
+SERVER=graphite.your.org
+echo "local.random.diceroll 4 `date +%s`" | nc ${SERVER} ${PORT}
+```
+### Labels
+Reference: https://graphite.readthedocs.io/en/latest/tags.html
+
+Depending the backend configuration, the `<metric path>` can contain tags (aka labels).
+
+`my.series;tag1=value1;tag2=value2`
 
 ## StatsD
 // FIXME Etsy: big success of graphite but prometheus won the battle due to tags and scalability issues.
-
-## Protocol
 
 ## Functions
 
