@@ -103,9 +103,17 @@ Depending the backend configuration, the `<metric path>` can contain tags (aka l
 `my.series;tag1=value1;tag2=value2`
 
 ## StatsD
-// FIXME Etsy: big success of graphite but prometheus won the battle due to tags and scalability issues.
+Reference: https://www.etsy.com/codeascraft/measure-anything-measure-everything/
 
-## Functions
+[StatsD](https://github.com/statsd/statsd) has been [created by Etsy](https://www.etsy.com/codeascraft/measure-anything-measure-everything/) to send metrics without performance overhead or simply impacting SLA when the metrics backend is dead. By simply using UDP to send metrics to StatsD, the observed application is not responsible anymore to manage state and decoupled from the metrics backend which is good if SLAs are different. StatsD also reduces the rate and send data at a given resolution (ie: 10s).
+
+The protocol is not the same as Graphite but simpler, still plain text: `<metricname>:<value>|<type>`
+
+```bash
+echo "foo:1|c" | nc -u -w0 127.0.0.1 8125
+```
+
+A demo is available from this previous post: [graphite + statsd vs other backends](../2023-11-09_Monotonicity/demo/README.md#context)
 
 ## Archiving old data
 Reference: https://graphite.readthedocs.io/en/latest/whisper.html#archives-retention-and-precision
@@ -118,9 +126,7 @@ It is possible to setup lossy compression by increasing the resolution period da
 
 As mentioned in [OpenTelemetry metrics temporality](../2023-11-30_What_is_OpenTelemetry/README.md#metrics) and the [Monotonicity demo](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter) graphite is a dela metrics temporality backend which support [long lived cumulative counter](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter).
 
-## Scaling Graphite
-
-## Compatible frontend
+## Additional tools
 
 ### Grafana
 Reference: https://grafana.com/docs/grafana/latest/datasources/graphite/
@@ -138,14 +144,18 @@ A dedicated post will be created later for Grafana
 ### Datadog
 Reference: https://www.datadoghq.com/blog/dogstatsd-mapper/
 
-Datadog has model where all the data should be stored inside Datadog which is a bit different from Grafana since you can choose via a [collector](../2023-11-30_What_is_OpenTelemetry/README.md#collector) to sync or fetch and cache data.
+Datadog has a centralized model where all the data should be stored inside its database which is a bit different from Grafana since you can choose via a [collector](../2023-11-30_What_is_OpenTelemetry/README.md#collector) to sync or fetch and cache data.
 
-A dedicated post will be created later for Datadog
+Datadog is a drop-in solution of graphite but seems supporting delta temporality.
 
-## Comparison
-[Graphite vs VictoriaMetrics vs Prometheus vs Mimir demo](../2023-11-09_Monotonicity/demo/README.md)
+A dedicated post will be created later for Datadog.
 
-### When to use it ?
-[Long lived counters metrics](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter) with few labels.
+## Backends comparison
+[Graphite vs VictoriaMetrics vs Prometheus vs Mimir demo from previous post](../2023-11-09_Monotonicity/demo/README.md)
 
 ## Conclusion
+Graphite powered etsy, clickhouse metrics and has changed significantly to support label and scalability. In the meantime, prometheus won the battle for the observability and rates monitoring while delta modes and other usecases are not fully covered by those alternatives.
+
+As mentioned by the prometheus team, graphite is best at supporting [long lived cumulative counters](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter) with few labels.
+
+As soon as scalability becomes important for metrics, labels and pure observability, other solutions fit could be considered.
