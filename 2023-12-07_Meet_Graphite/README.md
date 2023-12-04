@@ -18,15 +18,35 @@ According to the `null` latency value use case, using `0` is not a good trade-of
 ## What is Graphite ?
 Reference: https://graphite.readthedocs.io/en/latest/faq.html#what-is-graphite
 
+Usually, TSDB backends are used for non functional requirements like request per second, ...
+
+[According to the use case](https://graphite.readthedocs.io/en/latest/faq.html#who-should-use-graphite), Graphite can also be suitable for measuring business values.
+
+> " For example, Graphite would be good at graphing stock prices because they are numbers that change over time"
+
+[Prometheus comparison](https://prometheus.io/docs/introduction/comparison/#summary) highlight such use case
+
+> "Prometheus offers a richer data model and query language, in addition to being easier to run and integrate into your environment. If you want a clustered solution that can hold historical data long term, Graphite may be a better choice."
+
+The [monotonicity and temporality post](../2023-11-09_Monotonicity/README.md#cumulative-vs-delta) illustrates the fact and trade-offs.
+
+Graphite is not a monolith and multiple components compose graphite such as [carbon](https://graphite.readthedocs.io/en/latest/carbon-daemons.html)
+
+## Architecture
+
 ## Protocol
+
+## Functions
+
+## Tags
+Tags are the equivalent of prometheus labels or simply labels in [OpenTelemetry](../2023-11-30_What_is_OpenTelemetry/README.md) terminology
+Reference: https://graphite.readthedocs.io/en/latest/tags.html
 
 ## Telemetry temporality
 
 delta mode.
 
 [demo](../2023-11-09_Monotonicity/demo/README.md)
-
-## Architecture
 
 ## Graphite and StatsD
 
@@ -62,3 +82,8 @@ A dedicated post will be created later for Datadog
 
 ## Demo
 - [Graphite vs VictoriaMetrics vs Prometheus vs Mimir demo](../2023-11-09_Monotonicity/demo/README.md)
+
+### When to use it ?
+[Long lived counters metrics](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter) with few labels.
+
+## Conclusion
