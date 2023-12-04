@@ -36,6 +36,18 @@ Graphite is not a monolith and multiple components compose graphite such as [car
 
 ## Architecture
 
+### whisper
+Reference: https://github.com/graphite-project/whisper
+
+### carbon
+Reference: https://github.com/graphite-project/carbon
+
+### graphite-web
+Reference: https://github.com/graphite-project/graphite-web 
+
+## StatsD
+// FIXME Etsy: big success of graphite but prometheus won the battle due to tags and scalability issues.
+
 ## Protocol
 
 ## Functions
