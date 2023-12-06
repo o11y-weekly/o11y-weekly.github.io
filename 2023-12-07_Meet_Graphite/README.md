@@ -111,7 +111,7 @@ Reference: https://www.etsy.com/codeascraft/measure-anything-measure-everything/
 
 [StatsD](https://github.com/statsd/statsd) has been [created by Etsy](https://www.etsy.com/codeascraft/measure-anything-measure-everything/) to send metrics without performance overhead or simply impacting SLA when the metrics backend is dead. By simply using UDP to send metrics to StatsD, the observed application is not responsible anymore to manage state and is decoupled from the metrics backend which is good if SLAs are different. StatsD also reduces the rate and send data at a given resolution (ie: 10s).
 
-The protocol is not the same as Graphite but simpler, still plain text: `<metricname>:<value>|<type>`
+The protocol is not the same as Graphite but simpler and still plain text: `<metricname>:<value>|<type>`
 
 ```bash
 echo "foo:1|c" | nc -u -w0 127.0.0.1 8125
@@ -122,7 +122,7 @@ A demo is available from this previous post: [graphite + statsd vs other backend
 ## Archiving old data
 Reference: https://graphite.readthedocs.io/en/latest/whisper.html#archives-retention-and-precision
 
-Optimizing space over the time is crucial. Data can simply be deleted or better compressed. Compression can be lossless or lossy and depending the use case, supporting both can be a good idea.
+Optimizing space over the time is crucial. Data can simply be deleted or compressed. Compression can be lossless or lossy and depending the use case, supporting both can be a good idea.
 
 It is possible to setup lossy compression by increasing the resolution period datapoint. A datapoint can be at a resolution of 10s for the last 3 months then at 1 minute to reduce space by 6 (60s / 10s).
 
