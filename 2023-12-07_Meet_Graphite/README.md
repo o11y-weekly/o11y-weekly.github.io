@@ -158,8 +158,8 @@ A dedicated post will be created later for Datadog.
 [Graphite vs VictoriaMetrics vs Prometheus vs Mimir demo from previous post](../2023-11-09_Monotonicity/demo/README.md)
 
 ## Conclusion
-Graphite powered etsy, clickhouse metrics and has changed significantly to support label and scalability. In the meantime, prometheus won the battle for the observability and rates monitoring while delta modes and other usecases are not fully covered by those alternatives.
+Graphite and all the middleware/TSDB (StatsD, clickhouse, ...) have changed significantly to support labels and scalability. In the meantime, prometheus won the battle for the observability and rates monitoring while delta modes and other usecases are not fully covered by those alternatives.
 
 As mentioned by the prometheus team, graphite is best at supporting [long lived cumulative counters](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter) with few labels.
 
-As soon as scalability becomes important for metrics, labels and pure observability, other solutions fit could be considered.
+As soon as scalability becomes important for metrics, labels and pure observability, other solutions fit should be considered.
