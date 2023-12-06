@@ -109,7 +109,7 @@ Depending the backend configuration, the `<metric path>` can contain tags (aka l
 ## StatsD
 Reference: https://www.etsy.com/codeascraft/measure-anything-measure-everything/
 
-[StatsD](https://github.com/statsd/statsd) has been [created by Etsy](https://www.etsy.com/codeascraft/measure-anything-measure-everything/) to send metrics without performance overhead or simply impacting SLA when the metrics backend is dead. By simply using UDP to send metrics to StatsD, the observed application is not responsible anymore to manage state and decoupled from the metrics backend which is good if SLAs are different. StatsD also reduces the rate and send data at a given resolution (ie: 10s).
+[StatsD](https://github.com/statsd/statsd) has been [created by Etsy](https://www.etsy.com/codeascraft/measure-anything-measure-everything/) to send metrics without performance overhead or simply impacting SLA when the metrics backend is dead. By simply using UDP to send metrics to StatsD, the observed application is not responsible anymore to manage state and is decoupled from the metrics backend which is good if SLAs are different. StatsD also reduces the rate and send data at a given resolution (ie: 10s).
 
 The protocol is not the same as Graphite but simpler, still plain text: `<metricname>:<value>|<type>`
 
