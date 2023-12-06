@@ -137,7 +137,7 @@ Reference: https://grafana.com/docs/grafana/latest/datasources/graphite/
 
 Grafana comes from the concatenation of 2 words: `Graphite` and `Kibana` to make Graphite visualization as smooth as possible.
 
-The main difference between Grafana and other competitors is a support of datasource and caching without involving a full synchronization which impact resources and costs.
+The main difference between Grafana and other competitors is a cached datasource support without involving a full synchronization which impact resources and costs.
 
 Grafana offers the best integration for graphite since it has been created for.
 
