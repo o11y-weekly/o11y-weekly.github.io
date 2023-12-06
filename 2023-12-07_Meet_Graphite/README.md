@@ -28,7 +28,7 @@ Usually, TSDB backends are used for non functional requirements like request per
 
 > "For example, Graphite would be good at graphing stock prices because they are numbers that change over time."
 
-[Prometheus comparison](https://prometheus.io/docs/introduction/comparison/#summary) highlight such use case
+[Prometheus comparison](https://prometheus.io/docs/introduction/comparison/#summary) highlights such use case
 
 > "Prometheus offers a richer data model and query language, in addition to being easier to run and integrate into your environment. If you want a clustered solution that can hold historical data long term, Graphite may be a better choice."
 
