@@ -155,7 +155,7 @@ Datadog is a drop-in solution of graphite but seems supporting delta temporality
 A dedicated post will be created later for Datadog.
 
 ## Backends comparison
-[Graphite vs VictoriaMetrics vs Prometheus vs Mimir demo from previous post](../2023-11-09_Monotonicity/demo/README.md)
+[Graphite vs VictoriaMetrics vs Prometheus vs Mimir demo from previous post](../2023-11-09_Monotonicity/demo/README.md#datapoints-visualization-comparison)
 
 ## Conclusion
 Graphite and all the middleware/TSDB (StatsD, clickhouse, ...) have changed significantly to support labels and scalability. In the meantime, prometheus won the battle for the observability and rates monitoring while delta modes and other usecases are not fully covered by those alternatives.
