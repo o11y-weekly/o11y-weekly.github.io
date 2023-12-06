@@ -89,7 +89,7 @@ Usually, only the [api](https://graphite-api.readthedocs.io/en/latest/) part of 
 ## Protocol
 Reference: https://graphite.readthedocs.io/en/latest/feeding-carbon.html
 
-Carbon supports many protocol but the most used is the straightforward plain text protocol.
+Carbon supports many protocols but the most used is the straightforward plain text protocol.
 
 ### Plain Text
 `<metric path> <metric value> <metric timestamp>`
