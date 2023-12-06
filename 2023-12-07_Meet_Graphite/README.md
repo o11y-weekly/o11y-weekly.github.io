@@ -162,4 +162,4 @@ Graphite and all the middleware/TSDB (StatsD, clickhouse, ...) have changed sign
 
 As mentioned by the prometheus team, graphite is best at supporting [long lived cumulative counters](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter) with few labels.
 
-As soon as scalability becomes important for metrics, labels and pure observability, other solutions fit should be considered.
+As soon as scalability becomes important for metrics, labels and pure observability, other solutions should be considered.
