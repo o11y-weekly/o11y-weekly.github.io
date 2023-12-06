@@ -6,6 +6,8 @@ Other Time Series Database [TSDB](https://en.wikipedia.org/wiki/Time_series_data
 
 Why Orbitz decided to not use [RRDtool](https://oss.oetiker.ch/rrdtool/) + [Cacti](https://www.cacti.net/) and created Graphite ?
 
+Is Graphite still worth over other new and existing solutions ?
+
 ## Why Graphite ?
 Reference: https://graphite.readthedocs.io/en/latest/faq.html#does-graphite-use-rrdtool
 
