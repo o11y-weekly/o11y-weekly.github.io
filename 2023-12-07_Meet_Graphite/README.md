@@ -65,7 +65,7 @@ Reference: https://github.com/graphite-project/whisper
 Differences with RRD: https://graphite.readthedocs.io/en/latest/whisper.html#differences-between-whisper-and-rrd
 
 Whisper is the default TSDB with graphite. Graphite can support [much more TSDB](https://graphite.readthedocs.io/en/1.1.8/tools.html#storage-backend-alternates
-) with different trade-offs.
+) with different trade-offs (clickhouse, InfluxDB, ...).
 
 ### carbon
 References: 
