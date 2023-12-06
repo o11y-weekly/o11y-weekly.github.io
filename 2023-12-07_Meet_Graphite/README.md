@@ -26,7 +26,7 @@ Usually, TSDB backends are used for non functional requirements like request per
 
 [According to the use case](https://graphite.readthedocs.io/en/latest/faq.html#who-should-use-graphite), Graphite can also be suitable for measuring business values.
 
-> " For example, Graphite would be good at graphing stock prices because they are numbers that change over time"
+> "For example, Graphite would be good at graphing stock prices because they are numbers that change over time."
 
 [Prometheus comparison](https://prometheus.io/docs/introduction/comparison/#summary) highlight such use case
 
