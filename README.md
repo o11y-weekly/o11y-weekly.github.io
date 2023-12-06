@@ -2,7 +2,7 @@ Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
 
-This week, let's see [what is OpenTelemetry](./2023-11-30_What_is_OpenTelemetry/README.md) and as a conclusion what are its limitations ?
+After [OpenTelemetry](./2023-11-30_What_is_OpenTelemetry/README.md), this week, let's [Meet Graphite](./2023-12-07_Meet_Graphite/README.md) and see if it still worth and when over other solution and protocols ?
 
 # Last Post
 [2023-11-30 #8 Meet Graphite](./2023-12-07_Meet_Graphite/README.md)
