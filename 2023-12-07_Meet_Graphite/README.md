@@ -43,6 +43,8 @@ Using [graphite with docker](https://graphite.readthedocs.io/en/latest/install.h
 
 The docker image is not production ready though and many components are installed by default to make it easy to use for development but not for production.
 
+A demo with other backends is available on a [previous post demo](../2023-11-09_Monotonicity/demo/README.md#context)
+
 ## Architecture and Scalability
 
 Graphite has been forked and updated to support scalability at different scope.
