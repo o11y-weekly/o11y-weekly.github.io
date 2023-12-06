@@ -47,7 +47,7 @@ A demo with other backends is available on a [previous post demo](../2023-11-09_
 
 ## Architecture and Scalability
 
-Graphite has been forked and updated to support scalability at different scope.
+Graphite has been forked and updated to support scalability at different scope over time since the project has a long history since 2006.
 
 Projects: 
 - [Graphite](https://github.com/graphite-project)
