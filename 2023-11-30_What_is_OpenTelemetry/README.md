@@ -80,7 +80,7 @@ gRPC has been chosen from OpenTelemetry for performance, tooling and specificati
 
 An excellent medium post explains this perfectly why json and REST would not be a good choice over gRPC : https://medium.com/data-science-community-srm/json-is-incredibly-slow-heres-what-s-faster-ca35d5aaf9e8
 
-/!\ OTLP does not use protocol buffer streaming at all. Another post will be done later on this topic about missed opportunities. Pay close attention that large payload or long workflow cannot be integrated in OTLP directly. Another usecase, for large logs cannot fit in such configuration since all the data should be sent at once causing large memory allocation on backend and collectors.
+⚠️ OTLP does not use protocol buffer streaming at all. Another post will be done later on this topic about missed opportunities. Pay close attention that large payload or long workflow cannot be integrated in OTLP directly. Another usecase, for large logs cannot fit in such configuration since all the data should be sent at once causing large memory allocation on backend and collectors.
 
 ### gRPC
 
@@ -105,7 +105,7 @@ To solve this, automatic instrumentation can be done by using framework integrat
 
 This instrumentation can also produce metrics and traces because [doing everything with log can be an antipattern](../2023-10-18_What_is_not_an_observability_solution/What_is_not_an_o11y_solution.md#all-you-need-is-logs).
 
-/!\ There is no magic, instrumentation collects and aggregate data, consumes CPU and Memory with an overhead. Also, if the storage used is the memory, which is good for low overhead, it means that all signals are lost when the process panic. Such solutions are best effort. For instance, SLA can be different between signals and logs can be flushed to the disk (and even synchronously or asynchonously depending SLA) while metrics and traces might not.
+⚠️ There is no magic, instrumentation collects and aggregate data, consumes CPU and Memory with an overhead. Also, if the storage used is the memory, which is good for low overhead, it means that all signals are lost when the process panic. Such solutions are best effort. For instance, SLA can be different between signals and logs can be flushed to the disk (and even synchronously or asynchonously depending SLA) while metrics and traces might not.
 
 ### Manual
 
