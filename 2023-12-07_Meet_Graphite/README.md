@@ -141,7 +141,7 @@ The main difference between Grafana and other competitors is a cached datasource
 
 Grafana offers the best integration for graphite since it has been created for.
 
-According to the OTLP and prometheus Grafana intregration, Grafana metrics backend like Mimir supports only cumulative metrics while graphite is a true delta metrics. A dedicated post is comparing [the pros and cons of delta and cumulative temporality](../2023-11-09_Monotonicity/README.md).
+According to the OTLP and prometheus Grafana intregration, Grafana metrics backend like Mimir supports only cumulative metrics while graphite is a true delta metrics backend. A dedicated post is comparing [the pros and cons of delta and cumulative temporality](../2023-11-09_Monotonicity/README.md).
 
 A dedicated post will be created later for Grafana.
 
