@@ -150,7 +150,7 @@ Reference: https://www.datadoghq.com/blog/dogstatsd-mapper/
 
 Datadog has a centralized model where all the data should be stored inside its database which is a bit different from Grafana since you can choose via a [collector](../2023-11-30_What_is_OpenTelemetry/README.md#collector) to sync or fetch and cache data.
 
-Datadog is a drop-in solution of graphite but seems supporting delta temporality.
+Datadog is a drop-in solution for graphite but seems supporting delta temporality.
 
 A dedicated post will be created later for Datadog.
 
