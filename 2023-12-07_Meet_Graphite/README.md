@@ -1,6 +1,6 @@
 # 2023-11-30 #8 Meet Graphite
 
-Graphite has been created at Orbitz (2006), a hotel industry actor to monitor and support their growth.
+Graphite has been created by Orbitz (2006), a hotel industry actor to monitor and support their growth.
 
 Other Time Series Database [TSDB](https://en.wikipedia.org/wiki/Time_series_database) was already there before like [RRDtool](https://en.wikipedia.org/wiki/RRDtool).
 
