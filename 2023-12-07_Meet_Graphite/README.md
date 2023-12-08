@@ -57,7 +57,7 @@ An excellent (old) post from Teads mentioned how to scale graphite: https://medi
 
 Graphite can be viewed as a backend or as a protocol and other backends are compatible with it, like prometheus, mimir, victoriametrics but with different aggregation temporality which can conflict with the main feature of graphite ([long lived cumulative counter](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter)).
 
-/!\ All backends are not fully compliant with [long lived counters](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter) and if this feature matter, it is important to scale the data storage first or any other graphite components like the [Go Graphite](https://github.com/go-graphite) does.
+⚠️ All backends are not fully compliant with [long lived counters](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter) and if this feature matter, it is important to scale the data storage first or any other graphite components like the [Go Graphite](https://github.com/go-graphite) does.
 
 ### whisper
 Reference: https://github.com/graphite-project/whisper

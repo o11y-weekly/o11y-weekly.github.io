@@ -67,7 +67,7 @@ del(.message)
 
 4️⃣ Remove `message` to avoid paying twice raw and structured signal.
 
-/!\ This program will fail on error meaning that vector will stop on error.
+⚠️ This program will fail on error meaning that vector will stop on error.
 
 It is also possible to handle errors in vrl but it comes at repeating the same error handling every time.
 
