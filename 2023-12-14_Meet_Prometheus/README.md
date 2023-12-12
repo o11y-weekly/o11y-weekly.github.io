@@ -25,3 +25,8 @@ https://grafana.com/blog/2021/05/13/how-to-correlate-graphite-metrics-and-loki-l
 
 ### PushGateway
 https://github.com/prometheus/pushgateway
+
+## Backends comparison
+[Graphite vs VictoriaMetrics vs Prometheus vs Mimir demo from previous post](../2023-11-09_Monotonicity/demo/README.md#datapoints-visualization-comparison)
+
+## Conclusion
