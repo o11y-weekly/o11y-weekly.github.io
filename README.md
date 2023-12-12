@@ -2,12 +2,13 @@ Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
 
-After [OpenTelemetry](./2023-11-30_What_is_OpenTelemetry/README.md), this week, let's [Meet Graphite](./2023-12-07_Meet_Graphite/README.md) and see if it is still worth and when over other solutions and protocols ?
+After [Graphite](./2023-12-07_Meet_Graphite/README.md), this week, let's [Meet Prometheus](./2023-12-14_Meet_Prometheus/README.md) and better understand its trade-offs ?
 
 # Last Post
-[2023-11-30 #8 Meet Graphite](./2023-12-07_Meet_Graphite/README.md)
+[2023-12-14 #9 Meet Prometheus](./2023-12-14_Meet_Prometheus/README.md)
 
 ## Archives
+- [2023-11-30 #8 Meet Graphite](./2023-12-07_Meet_Graphite/README.md)
 - [2023-11-30 #7 What is OpenTelemetry ?](./2023-11-30_What_is_OpenTelemetry/README.md)
 - [2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/README.md)
 - [2023-11-16 #5 Meet Vector](./2023-11-16_Meet_Vector/README.md)
