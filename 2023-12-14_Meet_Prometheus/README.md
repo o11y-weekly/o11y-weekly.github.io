@@ -19,5 +19,7 @@ https://grafana.com/blog/2021/05/13/how-to-correlate-graphite-metrics-and-loki-l
 
 ## Additional tools
 
+### Grafana
+
 ### PushGateway
 https://github.com/prometheus/pushgateway
