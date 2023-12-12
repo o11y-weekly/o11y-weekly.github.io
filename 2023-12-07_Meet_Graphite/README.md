@@ -130,6 +130,12 @@ It is possible to setup lossy compression by increasing the resolution period da
 
 As mentioned in [OpenTelemetry metrics temporality](../2023-11-30_What_is_OpenTelemetry/README.md#metrics) and the [Monotonicity demo](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter) graphite is a delta metrics temporality backend which supports [long lived cumulative counter](../2023-11-09_Monotonicity/demo/README.md#long-lived-cumulative-counter).
 
+## Query Language
+
+TODO (hierarchy and performance impact)
+
+https://grafana.com/blog/2021/05/13/how-to-correlate-graphite-metrics-and-loki-logs/
+
 ## Additional tools
 
 ### Grafana
