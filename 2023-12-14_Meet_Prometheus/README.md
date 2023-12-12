@@ -10,6 +10,8 @@ https://railsadventures.wordpress.com/2019/12/02/from-graphite-to-prometheus-thi
 
 ## Architecture
 
+Service discovery, ...
+
 ## Storage
 Cortex, thanos, ...
 
