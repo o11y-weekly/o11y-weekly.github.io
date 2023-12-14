@@ -134,32 +134,24 @@ As mentioned in [OpenTelemetry metrics temporality](../2023-11-30_What_is_OpenTe
 
 The query language is really simple and composed by [functions](https://graphite.readthedocs.io/en/latest/functions.html) and [series list](https://graphite.readthedocs.io/en/latest/terminology.html#term-series-list)
 
-### Functions
-
-Reference: https://graphite.readthedocs.io/en/latest/functions.html
-
-### Series list
-
-Reference: https://graphite.readthedocs.io/en/latest/terminology.html#term-series-list
-
-A series list is a metric with multiple hierachical labels. 
+A series list is a metric with multiple hierachical dimensions. 
 Counting per environment and hostname can be structured like `env.hostname.counter`:
 
 ```
 prod.srv1.requests
 ```
 
-While counting for a specific env/hostname `prod.srv1.requests` does not impact graphite performance, counting all `prod` `requests` with graphite using wildcard `prod.*.requests` works but can impact performances when combined `*.*.requests`.
+While counting for a specific env/hostname `prod.srv1.requests` does not impact graphite performance, counting all `prod` `requests` with graphite using wildcard (`prod.*.requests`) works but can impact performances when combined (`*.*.requests`).
 
 Counting all requests can become complex as soon as the number of labels increases.
 
-Another issue is adding labels afterward impact queries since a depth is added per added labels.
+Another issue is adding labels afterward impacts queries since a depth is added per added dimension.
 
-⚠️ Adding the `application` name from `env.hostname.counter` to `env.hostname.application.counter` change the path of the metrics and all related queries is impacted.
+⚠️ Adding the `application` name from `env.hostname.counter` to `env.hostname.application.counter` changes the path of the metrics and all related queries is impacted.
 
-The dashboard and queries should care of previous and new structure to avoid loosing the metric history
+The dashboard and queries should care of previous and new hierarchy to avoid loosing the metric history
 
-Graphite works best when metrics has few dimensions and low cardinality.
+Graphite works best when metrics has few dimensions and low cardinality and the hierarchy carefully created.
 
 ## Additional tools
 
