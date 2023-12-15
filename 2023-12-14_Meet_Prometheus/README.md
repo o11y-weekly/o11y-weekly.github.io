@@ -54,7 +54,7 @@ services:
 docker compose up
 ```
 
-View the `up` metric which is automatically added by prometheus to [monitor the uptime](http://localhost:9090/graph?g0.expr=up&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h):
+View the `up` metric which is automatically added by prometheus to [monitor](http://localhost:9090/graph?g0.expr=up&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h):
 - http://localhost:9090/graph?g0.expr=up&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h
 
 An example of prometheus configuration is also available to scrape itself: [prometheus.yml](./prometheus/prometheus.yml)
@@ -79,8 +79,9 @@ scrape_configs:
 A demo is also available to compare Prometheus with other backends in a [previous post demo](../2023-11-09_Monotonicity/demo/README.md#context)
 
 ## Architecture
+Reference: https://prometheus.io/docs/introduction/overview/#architecture
 
-https://prometheus.io/docs/introduction/overview/#architecture
+The prometheus server components 
 
 Service discovery, ...
 
