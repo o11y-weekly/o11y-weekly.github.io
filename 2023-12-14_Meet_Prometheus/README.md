@@ -28,8 +28,55 @@ Prometheus is really easy to add dimension on metrics without breaking all the q
 Prometheus is less impacted than Graphite to support aggregation over a or more dimensions.
 
 ## What is Prometheus ?
+Prometheus has been created for monitoring and alerting only. It is the second project [incubated by the CNCF in 2016 after Kubernetes](https://prometheus.io/docs/introduction/overview/) and has been popular since [it has been used by Docker](https://developers.soundcloud.com/blog/prometheus-monitoring-at-soundcloud).
+
+The data model combined with PromQL solve the problem of querying multi-dimensional data.
+
+Prometheus is focused on reliability at edge and uses a HTTP pull model to avoid loosing telemetry during an outage.
+
+It can also support [pushing time series](https://prometheus.io/docs/instrumenting/pushing/) for short lived time jobs like batch on function as a service but with [limited use case](https://prometheus.io/docs/practices/pushing/).
+
+Prometheus has not been designed to support centralized storage and uses remote write to scale. 
 
 ## Quickstart
+
+A docker compose file is available: [compose.yml](./compose.yml)
+
+```yaml
+services:
+  prometheus:
+    image: prom/prometheus:v2.47.2
+    ports:
+      - 9090:9090
+```
+
+```bash
+docker compose up
+```
+
+View the `up` metric which is automatically added by prometheus to [monitor the uptime](http://localhost:9090/graph?g0.expr=up&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h):
+- http://localhost:9090/graph?g0.expr=up&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h
+
+An example of prometheus configuration is also available to scrape itself: [prometheus.yml](./prometheus/prometheus.yml)
+```yaml
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+
+  external_labels:
+    monitor: 'prometheus-monitor'
+
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+
+    static_configs:
+      - targets: ['localhost:9090']
+```
+
+A demo is also available to compare Prometheus with other backends in a [previous post demo](../2023-11-09_Monotonicity/demo/README.md#context)
 
 ## Architecture
 
