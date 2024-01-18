@@ -39,12 +39,16 @@ public class Controllers {
 		return random.nextInt(max - min + 1) + min;
 	}
 
+	@WithSpan
+	private static void slowDependency(final int latency) throws InterruptedException {
+		Thread.sleep(latency);
+	}
+
 	@GetMapping(path = "/user")
 	User getUser(@RequestParam("id") Integer id) throws InterruptedException {
 		int timing = getRandom(0, 1000);
 
-		Thread.sleep(timing);
-
+		slowDependency(timing);
 		customLogger.info("bad logs");
 		customLogger.info("H={}\tT={}", id, timing);
 		logger.info("/user has been called!");
