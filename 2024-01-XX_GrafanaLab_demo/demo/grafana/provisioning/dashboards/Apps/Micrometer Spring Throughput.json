@@ -183,7 +183,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -246,9 +246,10 @@
           "fields": "",
           "values": false
         },
-        "showUnfilled": true
+        "showUnfilled": true,
+        "valueMode": "color"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -331,7 +332,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -399,6 +400,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 2,
             "pointSize": 5,
@@ -499,6 +501,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 2,
             "pointSize": 5,
@@ -529,7 +532,7 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "ms"
         },
         "overrides": []
       },
@@ -596,6 +599,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -686,7 +690,7 @@
         "current": {
           "selected": false,
           "text": "Mimir",
-          "value": "Mimir"
+          "value": "mimir"
         },
         "hide": 2,
         "includeAll": false,
@@ -734,8 +738,8 @@
       {
         "current": {
           "selected": false,
-          "text": "01c313846d48",
-          "value": "01c313846d48"
+          "text": "3e519053825f",
+          "value": "3e519053825f"
         },
         "datasource": {
           "type": "prometheus",
@@ -815,6 +819,6 @@
   "timezone": "",
   "title": "Micrometer Spring Throughput",
   "uid": "MkcEBbPVk",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }
