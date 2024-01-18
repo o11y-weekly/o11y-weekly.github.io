@@ -30,7 +30,6 @@ services:
         - JDK_IMAGE=${JDK_IMAGE}
         - DISTRO=${DISTRO}
         - OTEL_JAVA_AGENT_VERSION=${OTEL_JAVA_AGENT_VERSION}
-        - OTEL_CONTRIB_COL=${OTEL_CONTRIB_COL}
     deploy:
       replicas: 4
     networks:
