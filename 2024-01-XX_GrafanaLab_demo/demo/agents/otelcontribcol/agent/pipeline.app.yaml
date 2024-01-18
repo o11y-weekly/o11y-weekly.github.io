@@ -1,0 +1,68 @@
+exporters:
+  prometheus/app:
+    endpoint: "127.0.0.1:9091"
+receivers:
+  prometheus/app:
+    config:
+      scrape_configs:
+        - job_name: app
+          scrape_interval: 10s
+          static_configs:
+            - targets: [127.0.0.1:9091]
+  # client log parsing
+  filelog/client:
+    include: [ /app/log/*.log ]
+    storage: file_storage/client
+    attributes:
+      application: client
+      service.name: client
+      service.namespace: otelcontribcol-app
+      host: ${env:HOSTNAME}
+    operators:
+      - type: key_value_parser
+        delimiter: "="
+        pair_delimiter: "\t"
+        # send or drop pattern. Prefer drop with a dead letter queue (filter agent log with action="drop" and dedicated field to monitor dlq)
+        on_error: drop
+        timestamp:
+          parse_from: attributes.timestamp
+          layout_type: gotime
+          layout: '2006/01/02 15:04:05.999999999'
+
+processors:
+  batch/app:
+  attributes/app/loki:
+    actions:
+      - action: insert
+        key: loki.attribute.labels
+        value: H, host, application, service.name, service.namespace, kind, name
+
+connectors:
+  count/client-hotel:
+    logs:
+      hotel.count:
+        description: The number of logs by hotel.
+        attributes:
+          - key: H
+            default_value: -1 # meaning an error in the stats
+
+service:
+  pipelines:
+    logs/client:
+      receivers: [filelog/client]
+      processors: [batch/app, attributes/app/loki]
+      exporters: [loki]
+
+    logs/client-metrics:
+      receivers: [filelog/client]
+      processors: [batch/app, attributes/app/loki]
+      exporters: [count/client-hotel]
+    metrics/client-metrics:
+      receivers: [count/client-hotel]
+      processors: [batch/app]
+      exporters: [prometheus/app]
+
+    # mimir refuses raw metrics "invalid temporality and type combination for metric"
+    metrics/client-mirmir-hack:
+      receivers: [prometheus/app]
+      exporters: [otlphttp/mimir]

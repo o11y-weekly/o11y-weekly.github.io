@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty name="app" source="spring.application.name"/>
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+        <http>
+            <url>http://loki:3100/loki/api/v1/push</url>
+        </http>
+        <format>
+            <label>
+                <pattern>application=${app},host=${HOSTNAME},level=%level,env=${SERVICE_ENV}</pattern>
+            </label>
+            <message>
+                <pattern>l=%level h=${HOSTNAME} c=%logger{20} t=%thread traceId=%X{trace_id} spanId=%X{span_id} | %msg %ex</pattern>
+            </message>
+            <sortByTime>true</sortByTime>
+        </format>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>log/client.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>timestamp=%d{yyyy/MM/dd HH:mm:ss.SSSSSSSSS}\t%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="custom_logger" level="INFO">
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="LOKI" />
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>

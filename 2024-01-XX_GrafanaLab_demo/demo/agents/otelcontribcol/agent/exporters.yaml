@@ -1,0 +1,11 @@
+exporters:
+  # file/no_rotation:
+  #   path: ./otel.out
+  # logging:
+  #   # https://github.com/open-telemetry/opentelemetry-collector/blob/80d704deb46021176c3fc408f63496773388f3b1/service/telemetry/config.go#L111
+  #   verbosity: detailed
+  loki:
+    endpoint: http://loki:3100/loki/api/v1/push
+  otlphttp/mimir:
+    endpoint: http://mimir:9009/otlp
+    # compression: none

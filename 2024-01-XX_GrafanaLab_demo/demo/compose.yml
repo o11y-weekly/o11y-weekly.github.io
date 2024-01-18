@@ -1,0 +1,104 @@
+# keep version only for graphviz
+version: '3.8'
+services:
+  service:
+    build:
+      context: ./service
+      args:
+        - JDK_IMAGE=${JDK_IMAGE}
+        - DISTRO=${DISTRO}
+        - OTEL_JAVA_AGENT_VERSION=${OTEL_JAVA_AGENT_VERSION}
+    deploy:
+      replicas: 4
+    networks:
+      - bridge
+    environment:
+      - SERVICE_NAME=service
+      - SERVICE_ENV=dev
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4317
+      - OTEL_METRICS_EXPORTER=none
+    depends_on:
+      - mimir
+      - loki
+      - tempo
+
+  client:
+    build:
+      context: ./client
+      args:
+        - JDK_IMAGE=${JDK_IMAGE}
+        - DISTRO=${DISTRO}
+        - OTEL_JAVA_AGENT_VERSION=${OTEL_JAVA_AGENT_VERSION}
+        - OTEL_CONTRIB_COL=${OTEL_CONTRIB_COL}
+    deploy:
+      replicas: 4
+    networks:
+      - bridge
+    volumes:
+      - ./agents/otelcontribcol/agent/:/etc/otelcol-contrib/:ro
+    environment:
+      - SERVICE_NAME=client
+      - SERVICE_ENV=dev
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4317
+      - OTEL_METRICS_EXPORTER=none
+    # ports:
+    #   - 8080:8080
+    depends_on:
+      - mimir
+      - loki
+      - tempo
+      - service
+
+  curl:
+    image: curlimages/curl:8.4.0
+    networks:
+      - bridge
+    entrypoint: sh -c "watch -n 0.5 -d -- curl http://client:8080/hello 2>&1 > /dev/null"
+    depends_on:
+      - client
+
+  loki:
+    image: grafana/loki:2.9.2
+    command: -config.file=/etc/loki/local-config.yaml -validation.reject-old-samples=false -query-scheduler.max-outstanding-requests-per-tenant=2048 -querier.max-outstanding-requests-per-tenant=2048
+    volumes:
+      - ./loki/:/etc/loki/:ro
+    networks:
+      - bridge
+
+  mimir:
+    image: grafana/mimir:2.10.3
+    volumes:
+      - ./mimir/mimir.yaml:/etc/mimir.yaml
+    command: --config.file=/etc/mimir.yaml
+    networks:
+      - bridge
+
+  tempo:
+    image: grafana/tempo:2.3.0
+    volumes:
+      - ./tempo/tempo-local.yaml:/etc/tempo.yaml:ro
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    networks:
+      - bridge
+
+  grafana:
+    image: grafana/grafana-oss:10.1.5
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    ports:
+      - 3000:3000
+    networks:
+      - bridge
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./grafana/provisioning/:/etc/grafana/provisioning/:ro
+    depends_on:
+      - mimir
+      - loki
+      - tempo
+
+networks:
+  bridge:
