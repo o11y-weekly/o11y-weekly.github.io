@@ -6,6 +6,8 @@ Security, scalling and so on will not be introduced and GrafanaCloud offers the 
 
 ## run it
 
+![docker compose services](./docker-compose.png)
+
 ```bash
 ./up.sh
 ```

@@ -1,7 +1,7 @@
 # keep version only for graphviz
 version: '3.8'
 services:
-  agent:
+  gateway-agent:
     image: grafana/agent:v0.39.0
     volumes:
       - ./agent/config:/etc/agent-config
@@ -38,7 +38,7 @@ services:
       - SERVICE_NAME=service
       - SERVICE_ENV=dev
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://agent:4317
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://gateway-agent:4317
       - OTEL_METRICS_EXPORTER=none
     depends_on:
       - mimir
@@ -60,7 +60,7 @@ services:
       - SERVICE_NAME=client
       - SERVICE_ENV=dev
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://agent:4317
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://gateway-agent:4317
       - OTEL_METRICS_EXPORTER=none
     # ports:
     #   - 8080:8080
@@ -71,7 +71,7 @@ services:
       - service
 
   curl:
-    image: curlimages/curl:8.4.0
+    image: curlimages/curl:8.5.0
     networks:
       - bridge
     entrypoint: sh -c "watch -n 0.5 -d -- curl http://client:8080/hello 2>&1 > /dev/null"
