@@ -14,6 +14,8 @@ services:
       - -config.enable-read-api
     environment:
       TEMPO_HOST: tempo:4317
+      REMOTE_WRITE_HOST: mimir:9009
+      LOKI_HOST: loki:3100
     networks:
       - bridge
     depends_on:

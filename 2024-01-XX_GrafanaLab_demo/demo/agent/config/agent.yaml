@@ -1,6 +1,14 @@
 server:
   log_level: debug
 
+metrics:
+  global:
+    scrape_interval: 60s
+    remote_write:
+    - url: http://${REMOTE_WRITE_HOST:-mimir:9009}/api/v1/push
+  configs:
+    - name: default
+
 traces:
   configs:
   - name: tempo
@@ -22,3 +30,14 @@ traces:
       otlp:
         protocols:
           grpc:
+
+integrations:
+  metrics:
+    autoscrape:
+      enable: true
+      metrics_instance: default
+  agent:
+    extra_labels:
+      cluster: docker-compose
+      namespace: gateway
+  node_exporter:
