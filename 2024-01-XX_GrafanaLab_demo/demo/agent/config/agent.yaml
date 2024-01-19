@@ -41,4 +41,5 @@ integrations:
       cluster: docker-compose
       namespace: gateway
       container: gateway
+      pod: gateway
   node_exporter:
