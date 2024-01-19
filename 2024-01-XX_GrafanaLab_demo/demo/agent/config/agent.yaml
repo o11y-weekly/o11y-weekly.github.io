@@ -40,4 +40,5 @@ integrations:
     extra_labels:
       cluster: docker-compose
       namespace: gateway
+      container: gateway
   node_exporter:
