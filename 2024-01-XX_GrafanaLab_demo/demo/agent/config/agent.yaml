@@ -12,6 +12,8 @@ metrics:
 traces:
   configs:
   - name: tempo
+    service_graphs:
+      enabled: true
     tail_sampling:
       policies:
         # sample traces that have a total duration longer than 100ms

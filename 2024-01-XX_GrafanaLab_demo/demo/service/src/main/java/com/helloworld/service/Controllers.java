@@ -49,12 +49,12 @@ public class Controllers {
 	}
 
 	@WithSpan
-	private static void slowDependency(final int latency) throws InterruptedException {
+	private static void callSlowDependency(final int latency) throws InterruptedException {
 		Thread.sleep(latency);
 	}
 
 	@WithSpan
-	private static void failure(final int counter) {
+	private static void callFailure(final int counter) {
 		if (counter % 10 == 0) {
 			throw new ControllerException("boom!");
 		}
@@ -65,8 +65,8 @@ public class Controllers {
 		final var counter = COUNTER.getAndIncrement();
 		final var timing = getRandom(0, 1000);
 
-		slowDependency(timing);
-		failure(counter);
+		callSlowDependency(timing);
+		callFailure(counter);
 		customLogger.info("bad logs");
 		customLogger.info("H={}\tT={}", id, timing);
 		logger.info("/user has been called!");
