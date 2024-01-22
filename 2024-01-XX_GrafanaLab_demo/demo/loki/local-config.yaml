@@ -4,7 +4,13 @@ auth_enabled: false
 server:
   http_listen_port: 3100
 
+# otlp config: https://github.com/grafana/loki/blob/main/docs/sources/send-data/otel/_index.md
+# PR: https://github.com/grafana/loki/pull/10727
+limits_config:
+  allow_structured_metadata: true
+
 common:
+  instance_addr: 0.0.0.0
   path_prefix: /loki
   storage:
     filesystem:
