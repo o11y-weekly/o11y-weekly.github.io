@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +16,17 @@ import lombok.Value;
 
 @RestController
 public class Controllers {
+	private static class ControllerException extends RuntimeException {
+		public ControllerException(final String message) {
+			super(message);
+		}
+	}
+
 	private static final Logger logger = LoggerFactory.getLogger(Controllers.class);
 	private static final Logger customLogger = LoggerFactory.getLogger("custom_logger");
 	private static final Random random = new Random(0);
+
+	private static final AtomicInteger COUNTER = new AtomicInteger(0);
 
 	@Value
 	static class User {
@@ -44,11 +53,20 @@ public class Controllers {
 		Thread.sleep(latency);
 	}
 
+	@WithSpan
+	private static void failure(final int counter) {
+		if (counter % 10 == 0) {
+			throw new ControllerException("boom!");
+		}
+	}
+
 	@GetMapping(path = "/user")
 	User getUser(@RequestParam("id") Integer id) throws InterruptedException {
-		int timing = getRandom(0, 1000);
+		final var counter = COUNTER.getAndIncrement();
+		final var timing = getRandom(0, 1000);
 
 		slowDependency(timing);
+		failure(counter);
 		customLogger.info("bad logs");
 		customLogger.info("H={}\tT={}", id, timing);
 		logger.info("/user has been called!");
