@@ -21,7 +21,6 @@ public class Controllers {
 	}
 
 	private static final Logger logger = LoggerFactory.getLogger(Controllers.class);
-	private static final Logger customLogger = LoggerFactory.getLogger("custom_logger");
 	private static final Random random = new Random(0);
 
 	private static final AtomicInteger COUNTER = new AtomicInteger(0);
@@ -57,8 +56,6 @@ public class Controllers {
 
 		callSlowDependency(timing);
 		callFailure(counter);
-		customLogger.info("bad logs");
-		customLogger.info("H={}\tT={}", id, timing);
 		logger.info("/user has been called!");
 		return getSpringGuruUser();
 	}

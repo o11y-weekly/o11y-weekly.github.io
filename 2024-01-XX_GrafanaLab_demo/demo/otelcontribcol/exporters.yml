@@ -1,0 +1,7 @@
+exporters:
+  otlphttp/loki:
+    endpoint: http://loki:3100/otlp 
+  otlphttp/mimir:
+    endpoint: http://mimir:9009/otlp
+  otlphttp/tempo:
+    endpoint: http://tempo:4318/

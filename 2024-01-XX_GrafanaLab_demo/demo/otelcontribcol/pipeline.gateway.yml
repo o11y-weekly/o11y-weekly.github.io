@@ -1,0 +1,37 @@
+receivers:
+  otlp/gateway:
+    protocols:
+      http:
+      grpc:
+
+exporters:
+  debug:
+    verbosity: detailed
+
+processors:
+  tail_sampling:
+    decision_wait: 10s
+    policies:
+      [
+          {
+            name: latency-policy,
+            type: latency,
+            latency: {threshold_ms: 100}
+          },
+          {
+            name: error-policy,
+            type: status_code,
+            status_code: {status_codes: [ERROR, UNSET]}
+          }
+      ]
+
+service:
+  pipelines:
+    logs/gateway:
+      receivers: [otlp/gateway]
+      exporters: [otlphttp/loki]
+    
+    traces/gateway:
+      receivers: [otlp/gateway]
+      processors: [tail_sampling]
+      exporters: [otlphttp/tempo]

@@ -13,7 +13,7 @@ distributor:
     # zipkin:
     otlp:
       protocols:
-        # http:
+        http:
         grpc:
     # opencensus:
 

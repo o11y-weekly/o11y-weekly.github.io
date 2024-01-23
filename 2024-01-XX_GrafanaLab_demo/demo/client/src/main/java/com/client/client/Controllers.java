@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 public class Controllers {
 	private static final Logger Logger = LoggerFactory.getLogger(Controllers.class);
 	private static final Random random = new Random(0);
-	private static final Logger customLogger = LoggerFactory.getLogger("custom_logger");
 
 	@Autowired
 	UsersServiceClient client;	
@@ -32,13 +31,10 @@ public class Controllers {
 	@WithSpan
 	private String getHello() {
 		Logger.info("calling getUser");
-		int hotel = getRandom(1000, 1500); 
-		int timing = getRandom(100, 10000);
+		final var id = getRandom(1000, 1500); 
 
-		User user = client.getUser(hotel);
-		long ts = java.time.Instant.now().toEpochMilli();
-		customLogger.info("H={}\tT={}", hotel, timing);
-		customLogger.info("bad log");
+		final var user = client.getUser(id);
+		final var ts = java.time.Instant.now().toEpochMilli();
 		return "Hello " + user.name() + " " + user.surname() + " " + ts;
 	}
 
