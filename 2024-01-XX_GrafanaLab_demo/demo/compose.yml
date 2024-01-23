@@ -1,21 +1,11 @@
 # keep version only for graphviz
 version: '3.8'
 services:
-  gateway-agent:
-    image: grafana/agent:v0.39.0
+  otelcontribcol-gateway:
+    image: otel/opentelemetry-collector-contrib:0.92.0
+    command: "--config /etc/otelcol-contrib/exporters.yml --config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.gateway.yml"
     volumes:
-      - ./agent/config:/etc/agent-config
-    entrypoint:
-      - /bin/grafana-agent
-      - -config.file=/etc/agent-config/agent.yaml
-      - -metrics.wal-directory=/tmp/agent/wal
-      - -enable-features=integrations-next
-      - -config.expand-env
-      - -config.enable-read-api
-    environment:
-      TEMPO_HOST: tempo:4317
-      REMOTE_WRITE_HOST: mimir:9009
-      LOKI_HOST: loki:3100
+      - ./otelcontribcol/:/etc/otelcol-contrib/:ro
     networks:
       - bridge
     depends_on:
@@ -38,7 +28,7 @@ services:
       - SERVICE_NAME=service
       - SERVICE_ENV=dev
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://gateway-agent:4317
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
       - OTEL_METRICS_EXPORTER=none
     depends_on:
       - mimir
@@ -59,12 +49,12 @@ services:
     environment:
       - SERVICE_NAME=client
       - SERVICE_ENV=dev
-      - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=grpc
-      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://gateway-agent:4317
-      - OTEL_EXPORTER_OTLP_LOGS_ENDPOINT=http://loki:3100/otlp/v1/logs
-      - OTEL_METRICS_EXPORTER=none
-    # ports:
-    #   - 8080:8080
+      - OTEL_TRACES_SAMPLER=parentbased_traceidratio
+      - OTEL_TRACES_SAMPLER_ARG=1
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
+    ports:
+      - 8080:8080
     depends_on:
       - mimir
       - loki
