@@ -6,15 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 
-import lombok.RequiredArgsConstructor;
-
 import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-@RequiredArgsConstructor
 public class Controllers {
 	private static final Logger Logger = LoggerFactory.getLogger(Controllers.class);
 	private static final Random random = new Random(0);
@@ -42,7 +39,7 @@ public class Controllers {
 		long ts = java.time.Instant.now().toEpochMilli();
 		customLogger.info("H={}\tT={}", hotel, timing);
 		customLogger.info("bad log");
-		return "Hello " + user.getName() + " " + user.getSurname() + " " + ts;
+		return "Hello " + user.name() + " " + user.surname() + " " + ts;
 	}
 
 	@GetMapping("/hello")

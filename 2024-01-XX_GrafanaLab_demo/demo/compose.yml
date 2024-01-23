@@ -59,8 +59,9 @@ services:
     environment:
       - SERVICE_NAME=client
       - SERVICE_ENV=dev
-      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://gateway-agent:4317
+      - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=grpc
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://gateway-agent:4317
+      - OTEL_EXPORTER_OTLP_LOGS_ENDPOINT=http://loki:3100/otlp/v1/logs
       - OTEL_METRICS_EXPORTER=none
     # ports:
     #   - 8080:8080

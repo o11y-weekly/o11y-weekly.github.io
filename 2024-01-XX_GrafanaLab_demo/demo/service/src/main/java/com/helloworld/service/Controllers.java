@@ -12,8 +12,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import lombok.Value;
-
 @RestController
 public class Controllers {
 	private static class ControllerException extends RuntimeException {
@@ -28,15 +26,7 @@ public class Controllers {
 
 	private static final AtomicInteger COUNTER = new AtomicInteger(0);
 
-	@Value
-	static class User {
-		public User(final String name, final String surname) {
-			this.name = name;
-			this.surname = surname;
-		}
-
-		String name;
-		String surname;
+	static record User(String name, String surname) {
 	}
 
 	@WithSpan
