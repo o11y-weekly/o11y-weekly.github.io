@@ -126,7 +126,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, sum by (service_instance_id,method,uri,status) (rate(http_server_requests_count{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\", status=~\"5..\"}[1m])))",
+          "expr": "topk(10, sum by (service_instance_id,method,uri,status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", status=~\"5..\"}[1m])))",
           "instant": false,
           "legendFormat": "{{method}} {{service_instance_id}}{{uri}}: {{status}}",
           "range": true,
@@ -286,7 +286,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, sum by (service_instance_id,status,uri,method) (rate(http_server_requests_sum{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\"}[1m]))/sum by (service_instance_id,status,uri,method) (rate(http_server_requests_count{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\"}[1m])))",
+          "expr": "topk(10, sum by (service_instance_id,status,uri,method) (rate(http_server_requests_sum{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))/sum by (service_instance_id,status,uri,method) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])))",
           "instant": false,
           "legendFormat": "{{method}} {{service_instance_id}}{{uri}}: {{status}}",
           "range": true,
@@ -446,7 +446,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, sum by (service_instance_id,method,uri,status) (rate(http_server_requests_count{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\"}[1m])))",
+          "expr": "topk(10, sum by (service_instance_id,method,uri,status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])))",
           "instant": false,
           "legendFormat": "{{method}} {{service_instance_id}}{{uri}}: {{status}}",
           "range": true,
@@ -479,7 +479,7 @@
         "defaults": {
           "color": {
             "fixedColor": "dark-orange",
-            "mode": "fixed"
+            "mode": "shades"
           },
           "custom": {
             "axisBorderShow": false,
@@ -562,7 +562,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, system_cpu_usage{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\"}*100> ${saturation:value})",
+          "expr": "topk(10, system_cpu_usage{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}*100> ${saturation:value})",
           "instant": false,
           "legendFormat": "{{service_instance_id}}.cpu.usage",
           "range": true,
@@ -581,7 +581,7 @@
         "defaults": {
           "color": {
             "fixedColor": "dark-orange",
-            "mode": "fixed"
+            "mode": "shades"
           },
           "custom": {
             "axisBorderShow": false,
@@ -664,7 +664,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})*100/sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"}) > ${saturation:value})",
+          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})*100/sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"}) > ${saturation:value})",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -683,7 +683,7 @@
         "defaults": {
           "color": {
             "fixedColor": "dark-orange",
-            "mode": "fixed"
+            "mode": "shades"
           },
           "custom": {
             "axisBorderShow": false,
@@ -766,7 +766,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})*100/sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"}) > ${saturation:value})",
+          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})*100/sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"}) > ${saturation:value})",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -777,12 +777,115 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir"
+      },
+      "description": "process_files_open_files: The open file descriptor count\n\nprocess_files_max_files: The maximum file descriptor count",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-orange",
+            "mode": "shades"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 36
+      },
+      "id": 25,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "topk(10, process_files_open{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"} / process_files_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"} > ${saturation:value})",
+          "instant": false,
+          "legendFormat": "{{service_instance_id}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "File Descriptors > ${saturation:text}",
+      "type": "timeseries"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 44
       },
       "id": 5,
       "panels": [],
@@ -869,7 +972,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 37
+        "y": 45
       },
       "id": 17,
       "options": {
@@ -896,7 +999,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\"}))",
+          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}))",
           "instant": false,
           "legendFormat": "{{service_instance_id}}.used",
           "range": true,
@@ -908,7 +1011,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_committed{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\"}))",
+          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_committed{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}))",
           "hide": false,
           "instant": false,
           "legendFormat": "{{service_instance_id}}.committed",
@@ -921,7 +1024,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\"}))",
+          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}))",
           "hide": false,
           "instant": false,
           "legendFormat": "{{service_instance_id}}.max",
@@ -996,7 +1099,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 37
+        "y": 45
       },
       "id": 12,
       "options": {
@@ -1023,7 +1126,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})*100/sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"}))",
+          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})*100/sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"}))",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1097,7 +1200,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 37
+        "y": 45
       },
       "id": 15,
       "options": {
@@ -1124,7 +1227,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})*100/sum by(service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"}))",
+          "expr": "topk(10, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})*100/sum by(service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"}))",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1215,7 +1318,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 45
+        "y": 53
       },
       "id": 18,
       "options": {
@@ -1242,7 +1345,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, system_cpu_usage{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\"})",
+          "expr": "topk(10, system_cpu_usage{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
           "instant": false,
           "legendFormat": "{{service_instance_id}}.system.cpu.usage",
           "range": true,
@@ -1332,7 +1435,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 45
+        "y": 53
       },
       "id": 16,
       "options": {
@@ -1359,7 +1462,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, tomcat_threads_busy{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\"})",
+          "expr": "topk(10, tomcat_threads_busy{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
           "instant": false,
           "legendFormat": "{{service_instance_id}}.tomcat.busy",
           "range": true,
@@ -1371,7 +1474,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, tomcat_threads_current{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\"})",
+          "expr": "topk(10, tomcat_threads_current{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
           "hide": false,
           "instant": false,
           "legendFormat": "{{service_instance_id}}.tomcat.current",
@@ -1384,7 +1487,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "topk(10, tomcat_threads_config_max{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\"})",
+          "expr": "topk(10, tomcat_threads_config_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
           "hide": false,
           "instant": false,
           "legendFormat": "{{service_instance_id}}.tomcat.max",
@@ -1396,12 +1499,745 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir"
+      },
+      "description": "https://en.wikipedia.org/wiki/Load_(computing)\n\nFrom micrometer:\n\"The sum of the number of runnable entities queued to available processors and the number of runnable entities running on the available processors averaged over a period of time\"",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 53
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "topk(10, system_load_average_1m{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}/system_cpu_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{service_instance_id}}.load.1m",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "System load",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir"
+      },
+      "description": "jvm_threads_live_threads: The current number of live threads including both daemon and non-daemon threads\n\njvm_threads_daemon_threads: The current number of live daemon threads\n\njvm_threads_peak_threads: The peak live thread count since the Java virtual machine started or peak was reset",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 61
+      },
+      "id": 21,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "topk(10, jvm_threads_live{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{service_instance_id}}.lived",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "topk(10, jvm_threads_daemon{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{service_instance_id}}.daemon",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "topk(10, jvm_threads_peak{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{service_instance_id}}.peak",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "JVM Threads",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 61
+      },
+      "id": 22,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "topk(10, jvm_threads_states{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{service_instance_id}}.{{state}}",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "topk(10, jvm_threads_daemon{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{service_instance_id}}.daemon",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "topk(10, jvm_threads_peak{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{service_instance_id}}.peak",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "JVM Threads States",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir"
+      },
+      "description": "process_files_open_files: The open file descriptor count\n\nprocess_files_max_files: The maximum file descriptor count",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 61
+      },
+      "id": 24,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "topk(10, process_files_open{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"} / process_files_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{service_instance_id}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "File Descriptors",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir"
+      },
+      "description": "logback_events_total: Number of log events that were enabled by the effective log level",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.error$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.info$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.warn$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.debug$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.trace$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 69
+      },
+      "id": 23,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "topk(10, increase(logback_events{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{service_instance_id}}.{{level}}",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "topk(10, jvm_threads_daemon{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{service_instance_id}}.daemon",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "topk(10, jvm_threads_peak{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{service_instance_id}}.peak",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "Logback events",
+      "type": "timeseries"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 53
+        "y": 77
       },
       "id": 10,
       "panels": [],
@@ -1436,7 +2272,7 @@
         "h": 4,
         "w": 2,
         "x": 0,
-        "y": 54
+        "y": 78
       },
       "id": 9,
       "options": {
@@ -1463,7 +2299,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "min(process_uptime{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\"})",
+          "expr": "min(process_uptime{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
           "instant": false,
           "legendFormat": "min",
           "range": true,
@@ -1475,7 +2311,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "max(process_uptime{service_name=\"${service_name}\", deployment_environment=\"${deployment_environment}\"})",
+          "expr": "max(process_uptime{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
           "hide": false,
           "instant": false,
           "legendFormat": "max",
@@ -1535,9 +2371,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "client",
-          "value": "client"
+          "selected": true,
+          "text": "service",
+          "value": "service"
         },
         "datasource": {
           "type": "prometheus",
@@ -1563,7 +2399,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "dev",
           "value": "dev"
         },
@@ -1571,7 +2407,7 @@
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(jvm_info,deployment_environment)",
+        "definition": "label_values(jvm_info{service_name=\"$service_name\"},deployment_environment)",
         "hide": 1,
         "includeAll": false,
         "label": "Deployment Environment",
@@ -1580,7 +2416,35 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(jvm_info,deployment_environment)",
+          "query": "label_values(jvm_info{service_name=\"$service_name\"},deployment_environment)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "0.0.1-SNAPSHOT",
+          "value": "0.0.1-SNAPSHOT"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${prom_ds}"
+        },
+        "definition": "label_values(jvm_info{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
+        "hide": 1,
+        "includeAll": false,
+        "label": "Service version",
+        "multi": false,
+        "name": "service_version",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(jvm_info{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -1592,8 +2456,8 @@
       {
         "current": {
           "selected": false,
-          "text": "0.1",
-          "value": "0.1"
+          "text": "0.0000000001",
+          "value": "0.0000000001"
         },
         "hide": 0,
         "includeAll": false,
@@ -1617,7 +2481,7 @@
           }
         ],
         "query": "50% : 50,80% : 80,90% : 90",
-        "queryValue": "0.1",
+        "queryValue": "0.0000000001",
         "skipUrlSync": false,
         "type": "custom"
       }
@@ -1631,6 +2495,6 @@
   "timezone": "",
   "title": "Spring Micrometer RED (Top 10)",
   "uid": "cfbe9021-7851-48c9-8267-5a98709d9226",
-  "version": 3,
+  "version": 10,
   "weekStart": ""
 }
