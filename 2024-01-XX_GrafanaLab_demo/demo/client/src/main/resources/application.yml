@@ -5,6 +5,7 @@ server:
   tomcat:
     mbeanregistry:
       enabled: true
+
 management:
   otlp:      
     metrics:
@@ -17,17 +18,21 @@ management:
         #   Authorization: Basic ####
 
   metrics:
+    tags:
+      deployment.environment: '${deployment.environment}'
+      service:
+        name: '${service.name}'
+        namespace: '${service.namespace}'
+        version: '@project.version@'
+        instance.id: '${service.instance.id}'
     distribution:
       percentiles:
         all: 0.5, 0.95, 0.99, 0.999
       
-  endpoint:
-    configprops:
-      show-values: ALWAYS
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: health,info,metrics,prometheus
     jmx:
       exposure:
         include: '*'

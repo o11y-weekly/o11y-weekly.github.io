@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-public class Controllers {
+public record Controllers() {
 	private static class ControllerException extends RuntimeException {
 		public ControllerException(final String message) {
 			super(message);

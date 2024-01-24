@@ -1,6 +1,5 @@
 package com.client.client;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,12 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-public class Controllers {
+public record Controllers(UsersServiceClient client) {
 	private static final Logger Logger = LoggerFactory.getLogger(Controllers.class);
 	private static final Random random = new Random(0);
-
-	@Autowired
-	UsersServiceClient client;	
 
 	@GetMapping("/")
 	public String index() {

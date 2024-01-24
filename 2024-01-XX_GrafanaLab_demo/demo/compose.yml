@@ -48,7 +48,8 @@ services:
       - bridge
     environment:
       - SERVICE_NAME=client
-      - SERVICE_ENV=dev
+      - SERVICE_NAMESPACE=helloworld
+      - DEPLOYMENT_ENVIRONMENT=dev
       - OTEL_TRACES_SAMPLER=parentbased_traceidratio
       - OTEL_TRACES_SAMPLER_ARG=1
       - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
