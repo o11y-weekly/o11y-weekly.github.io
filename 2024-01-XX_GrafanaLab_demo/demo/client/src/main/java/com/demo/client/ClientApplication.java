@@ -1,4 +1,4 @@
-package com.client.client;
+package com.demo.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

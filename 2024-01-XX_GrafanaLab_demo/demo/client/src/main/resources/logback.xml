@@ -12,15 +12,16 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>log/client.log</file>
+        <file>log/${SERVICE_NAME}.log</file>
         <append>true</append>
         <encoder>
             <pattern>timestamp=%d{yyyy/MM/dd HH:mm:ss.SSSSSSSSS}\t%msg%n</pattern>
         </encoder>
     </appender>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
         <appender-ref ref="OpenTelemetry"/>
     </root>
 </configuration>

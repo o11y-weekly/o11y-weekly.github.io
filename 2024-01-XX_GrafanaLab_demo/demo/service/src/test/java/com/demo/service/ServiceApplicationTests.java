@@ -1,8 +1,8 @@
-package com.client.client;
+package com.demo.service;
 
 import org.junit.jupiter.api.Test;
 
-class ClientApplicationTests {
+class ServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

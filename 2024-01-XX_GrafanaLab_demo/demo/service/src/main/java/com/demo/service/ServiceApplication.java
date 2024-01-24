@@ -1,4 +1,4 @@
-package com.helloworld.service;
+package com.demo.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

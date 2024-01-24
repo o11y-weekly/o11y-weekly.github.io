@@ -27,10 +27,12 @@ services:
       - bridge
     environment:
       - SERVICE_NAME=service
-      - SERVICE_ENV=dev
-      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
-      - OTEL_METRICS_EXPORTER=none
+      - SERVICE_NAMESPACE=demo
+      - DEPLOYMENT_ENVIRONMENT=dev
+      - OTEL_TRACES_SAMPLER=parentbased_traceidratio
+      - OTEL_TRACES_SAMPLER_ARG=1
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
     depends_on:
       - mimir
       - loki
@@ -50,7 +52,7 @@ services:
       - bridge
     environment:
       - SERVICE_NAME=client
-      - SERVICE_NAMESPACE=helloworld
+      - SERVICE_NAMESPACE=demo
       - DEPLOYMENT_ENVIRONMENT=dev
       - OTEL_TRACES_SAMPLER=parentbased_traceidratio
       - OTEL_TRACES_SAMPLER_ARG=1
