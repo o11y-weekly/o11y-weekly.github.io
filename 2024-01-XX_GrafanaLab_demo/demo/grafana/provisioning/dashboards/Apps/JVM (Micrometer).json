@@ -27,7 +27,7 @@
           "uid": "${datasource}"
         },
         "enable": true,
-        "expr": "resets(process_uptime_seconds{application=\"$application\", instance=\"$instance\"}[1m]) > 0",
+        "expr": "resets(process_uptime_seconds{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}[1m]) > 0",
         "iconColor": "rgba(255, 96, 96, 1)",
         "name": "Restart Detection",
         "showIn": 0,
@@ -132,9 +132,10 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -142,7 +143,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "process_uptime{application=\"$application\", instance=\"$instance\"}",
+          "expr": "process_uptime{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -214,9 +215,10 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -224,7 +226,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "process_start_time{application=\"$application\", instance=\"$instance\"}",
+          "expr": "process_start_time{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -301,9 +303,10 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -311,7 +314,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(jvm_memory_used{application=\"$application\", instance=\"$instance\", area=\"heap\"})*100/sum(jvm_memory_max{application=\"$application\",instance=\"$instance\", area=\"heap\"})",
+          "expr": "sum(jvm_memory_used{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", area=\"heap\"})*100/sum(jvm_memory_max{service_name=\"${service_name}\",service_instance_id=\"${service_instance_id}\", area=\"heap\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -397,9 +400,10 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -407,7 +411,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(jvm_memory_used{application=\"$application\", instance=\"$instance\", area=\"nonheap\"})*100/sum(jvm_memory_max{application=\"$application\",instance=\"$instance\", area=\"nonheap\"})",
+          "expr": "sum(jvm_memory_used{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", area=\"nonheap\"})*100/sum(jvm_memory_max{service_name=\"${service_name}\",service_instance_id=\"${service_instance_id}\", area=\"nonheap\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -456,6 +460,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -469,6 +474,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -534,7 +540,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(rate(http_server_requests_count{application=\"$application\", instance=\"$instance\"}[1m]))",
+          "expr": "sum(rate(http_server_requests_count{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}[1m]))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "HTTP",
@@ -556,6 +562,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -569,6 +576,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -665,7 +673,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(rate(http_server_requests_count{application=\"$application\", instance=\"$instance\", status=~\"5..\"}[1m]))",
+          "expr": "sum(rate(http_server_requests_count{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", status=~\"5..\"}[1m]))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "HTTP - 5xx",
@@ -687,6 +695,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -700,6 +709,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -765,7 +775,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(rate(http_server_requests_sum{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[1m]))/sum(rate(http_server_requests_count{application=\"$application\", instance=\"$instance\", status!~\"5..\"}[1m]))",
+          "expr": "sum(rate(http_server_requests_sum{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", status!~\"5..\"}[1m]))/sum(rate(http_server_requests_count{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", status!~\"5..\"}[1m]))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -779,7 +789,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "max(http_server_requests{application=\"$application\", instance=\"$instance\", status!~\"5..\"})",
+          "expr": "max(http_server_requests{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", status!~\"5..\"})",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -803,6 +813,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -816,6 +827,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -881,7 +893,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "tomcat_threads_busy{application=\"$application\", instance=\"$instance\"}",
+          "expr": "tomcat_threads_busy{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -895,7 +907,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "tomcat_threads_current{application=\"$application\", instance=\"$instance\"}",
+          "expr": "tomcat_threads_current{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -909,7 +921,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "tomcat_threads_config_max{application=\"$application\", instance=\"$instance\"}",
+          "expr": "tomcat_threads_config_max{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -923,7 +935,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jetty_threads_busy{application=\"$application\", instance=\"$instance\"}",
+          "expr": "jetty_threads_busy{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -936,7 +948,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "jetty_threads_current{application=\"$application\", instance=\"$instance\"}",
+          "expr": "jetty_threads_current{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -949,7 +961,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jetty_threads_config_max{application=\"$application\", instance=\"$instance\"}",
+          "expr": "jetty_threads_config_max{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -998,6 +1010,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1011,6 +1024,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1048,7 +1062,7 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 6,
+        "w": 8,
         "x": 0,
         "y": 13
       },
@@ -1077,7 +1091,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(jvm_memory_used{application=\"$application\", instance=\"$instance\", area=\"heap\"})",
+          "expr": "sum(jvm_memory_used{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", area=\"heap\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "used",
@@ -1092,7 +1106,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(jvm_memory_committed{application=\"$application\", instance=\"$instance\", area=\"heap\"})",
+          "expr": "sum(jvm_memory_committed{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", area=\"heap\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "committed",
@@ -1106,7 +1120,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(jvm_memory_max{application=\"$application\", instance=\"$instance\", area=\"heap\"})",
+          "expr": "sum(jvm_memory_max{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", area=\"heap\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "max",
@@ -1129,6 +1143,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1142,6 +1157,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1179,8 +1195,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 6,
-        "x": 6,
+        "w": 8,
+        "x": 8,
         "y": 13
       },
       "id": 25,
@@ -1208,7 +1224,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(jvm_memory_used{application=\"$application\", instance=\"$instance\", area=\"nonheap\"})",
+          "expr": "sum(jvm_memory_used{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", area=\"nonheap\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1224,7 +1240,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(jvm_memory_committed{application=\"$application\", instance=\"$instance\", area=\"nonheap\"})",
+          "expr": "sum(jvm_memory_committed{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", area=\"nonheap\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "committed",
@@ -1238,7 +1254,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(jvm_memory_max{application=\"$application\", instance=\"$instance\", area=\"nonheap\"})",
+          "expr": "sum(jvm_memory_max{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", area=\"nonheap\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "max",
@@ -1261,6 +1277,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1274,6 +1291,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1311,8 +1329,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 6,
-        "x": 12,
+        "w": 8,
+        "x": 16,
         "y": 13
       },
       "id": 26,
@@ -1340,7 +1358,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(jvm_memory_used{application=\"$application\", instance=\"$instance\"})",
+          "expr": "sum(jvm_memory_used{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "used",
@@ -1355,7 +1373,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(jvm_memory_committed{application=\"$application\", instance=\"$instance\"})",
+          "expr": "sum(jvm_memory_committed{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "committed",
@@ -1369,7 +1387,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(jvm_memory_max{application=\"$application\", instance=\"$instance\"})",
+          "expr": "sum(jvm_memory_max{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "max",
@@ -1379,149 +1397,6 @@
         }
       ],
       "title": "JVM Total",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "bytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 18,
-        "y": 13
-      },
-      "id": 86,
-      "links": [],
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "9.4.7",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "editorMode": "code",
-          "expr": "process_memory_vss{application=\"$application\", instance=\"$instance\"}",
-          "format": "time_series",
-          "hide": true,
-          "intervalFactor": 2,
-          "legendFormat": "vss",
-          "metric": "",
-          "range": true,
-          "refId": "A",
-          "step": 2400
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "editorMode": "code",
-          "expr": "process_memory_rss{application=\"$application\", instance=\"$instance\"}",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "rss",
-          "range": true,
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "editorMode": "code",
-          "expr": "process_memory_swap{application=\"$application\", instance=\"$instance\"}",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "swap",
-          "range": true,
-          "refId": "C"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "editorMode": "code",
-          "expr": "process_memory_rss{application=\"$application\", instance=\"$instance\"} + process_memory_swap{application=\"$application\", instance=\"$instance\"}",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "total",
-          "range": true,
-          "refId": "D"
-        }
-      ],
-      "title": "JVM Process Memory",
       "type": "timeseries"
     },
     {
@@ -1561,6 +1436,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1574,6 +1450,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1598,7 +1475,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1640,7 +1518,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "system_cpu_usage{application=\"$application\", instance=\"$instance\"}",
+          "expr": "system_cpu_usage{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1654,7 +1532,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "process_cpu_usage{application=\"$application\", instance=\"$instance\"}",
+          "expr": "process_cpu_usage{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1666,7 +1544,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "avg_over_time(process_cpu_usage{application=\"$application\", instance=\"$instance\"}[1h])",
+          "expr": "avg_over_time(process_cpu_usage{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}[1h])",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1688,6 +1566,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1701,6 +1580,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1724,7 +1604,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1766,7 +1647,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "system_load_average_1m{application=\"$application\", instance=\"$instance\"}",
+          "expr": "system_load_average_1m{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "system-1m",
@@ -1779,7 +1660,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "system_cpu_count{application=\"$application\", instance=\"$instance\"}",
+          "expr": "system_cpu_count{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "cpus",
@@ -1800,6 +1681,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1813,6 +1695,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1836,7 +1719,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1879,7 +1763,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_threads_live{application=\"$application\", instance=\"$instance\"}",
+          "expr": "jvm_threads_live{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "live",
@@ -1894,7 +1778,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_threads_daemon{application=\"$application\", instance=\"$instance\"}",
+          "expr": "jvm_threads_daemon{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "daemon",
@@ -1909,7 +1793,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_threads_peak{application=\"$application\", instance=\"$instance\"}",
+          "expr": "jvm_threads_peak{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "peak",
@@ -1923,7 +1807,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "process{application=\"$application\", instance=\"$instance\"}",
+          "expr": "process{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1947,6 +1831,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1960,6 +1845,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1981,7 +1867,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2115,7 +2002,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_threads_states{application=\"$application\", instance=\"$instance\"}",
+          "expr": "jvm_threads_states{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{state}}",
@@ -2137,6 +2024,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -2150,6 +2038,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2173,7 +2062,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2292,7 +2182,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "increase(logback_events{application=\"$application\", instance=\"$instance\"}[1m])",
+          "expr": "increase(logback_events{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}[1m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2317,6 +2207,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -2330,6 +2221,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2354,7 +2246,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2397,7 +2290,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "process_files_open{application=\"$application\", instance=\"$instance\"}",
+          "expr": "process_files_open{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -2413,7 +2306,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "process_files_max{application=\"$application\", instance=\"$instance\"}",
+          "expr": "process_files_max{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -2465,6 +2358,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -2478,6 +2372,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2500,7 +2395,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2544,7 +2440,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_memory_used{application=\"$application\", instance=\"$instance\", id=~\"$jvm_memory_pool_heap\"}",
+          "expr": "jvm_memory_used{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", id=~\"$jvm_memory_pool_heap\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2561,7 +2457,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_memory_committed{application=\"$application\", instance=\"$instance\", id=~\"$jvm_memory_pool_heap\"}",
+          "expr": "jvm_memory_committed{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", id=~\"$jvm_memory_pool_heap\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2578,7 +2474,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_memory_max{application=\"$application\", instance=\"$instance\", id=~\"$jvm_memory_pool_heap\"}",
+          "expr": "jvm_memory_max{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", id=~\"$jvm_memory_pool_heap\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2630,6 +2526,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -2643,6 +2540,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2665,7 +2563,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2709,7 +2608,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_memory_used{application=\"$application\", instance=\"$instance\", id=~\"$jvm_memory_pool_nonheap\"}",
+          "expr": "jvm_memory_used{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", id=~\"$jvm_memory_pool_nonheap\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2726,7 +2625,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_memory_committed{application=\"$application\", instance=\"$instance\", id=~\"$jvm_memory_pool_nonheap\"}",
+          "expr": "jvm_memory_committed{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", id=~\"$jvm_memory_pool_nonheap\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2743,7 +2642,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_memory_max{application=\"$application\", instance=\"$instance\", id=~\"$jvm_memory_pool_nonheap\"}",
+          "expr": "jvm_memory_max{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", id=~\"$jvm_memory_pool_nonheap\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2795,6 +2694,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -2808,6 +2708,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2830,7 +2731,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2870,7 +2772,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "rate(jvm_gc_pause_count{application=\"$application\", instance=\"$instance\"}[1m])",
+          "expr": "rate(jvm_gc_pause_count{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}[1m])",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -2893,6 +2795,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -2906,6 +2809,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2928,7 +2832,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2968,7 +2873,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "rate(jvm_gc_pause_sum{application=\"$application\", instance=\"$instance\"}[1m])/rate(jvm_gc_pause_count{application=\"$application\", instance=\"$instance\"}[1m])",
+          "expr": "rate(jvm_gc_pause_sum{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}[1m])/rate(jvm_gc_pause_count{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}[1m])",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -2981,7 +2886,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "jvm_gc_pause_seconds_max{application=\"$application\", instance=\"$instance\"}",
+          "expr": "jvm_gc_pause_seconds_max{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -3004,6 +2909,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -3017,6 +2923,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -3039,7 +2946,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3079,7 +2987,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "rate(jvm_gc_memory_allocated{application=\"$application\", instance=\"$instance\"}[1m])",
+          "expr": "rate(jvm_gc_memory_allocated{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}[1m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -3093,7 +3001,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "rate(jvm_gc_memory_promoted{application=\"$application\", instance=\"$instance\"}[1m])",
+          "expr": "rate(jvm_gc_memory_promoted{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}[1m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -3142,6 +3050,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -3155,6 +3064,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -3177,7 +3087,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3217,7 +3128,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_classes_loaded{application=\"$application\", instance=\"$instance\"}",
+          "expr": "jvm_classes_loaded{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "loaded",
@@ -3241,6 +3152,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -3254,6 +3166,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -3275,7 +3188,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3315,7 +3229,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "delta(jvm_classes_loaded{application=\"$application\",instance=\"$instance\"}[1m])",
+          "expr": "delta(jvm_classes_loaded{service_name=\"${service_name}\",service_instance_id=\"${service_instance_id}\"}[1m])",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -3367,6 +3281,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -3380,6 +3295,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -3402,7 +3318,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3442,7 +3359,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_buffer_memory_used{application=\"$application\", instance=\"$instance\", id=\"direct\"}",
+          "expr": "jvm_buffer_memory_used{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", id=\"direct\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "used",
@@ -3457,7 +3374,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_buffer_total_capacity{application=\"$application\", instance=\"$instance\", id=\"direct\"}",
+          "expr": "jvm_buffer_total_capacity{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", id=\"direct\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "capacity",
@@ -3481,6 +3398,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -3494,6 +3412,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -3517,7 +3436,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3557,7 +3477,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_buffer_count{application=\"$application\", instance=\"$instance\", id=\"direct\"}",
+          "expr": "jvm_buffer_count{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", id=\"direct\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "count",
@@ -3581,6 +3501,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -3594,6 +3515,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -3616,7 +3538,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3656,7 +3579,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_buffer_memory_used{application=\"$application\", instance=\"$instance\", id=\"mapped\"}",
+          "expr": "jvm_buffer_memory_used{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", id=\"mapped\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "used",
@@ -3671,7 +3594,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_buffer_total_capacity{application=\"$application\", instance=\"$instance\", id=\"mapped\"}",
+          "expr": "jvm_buffer_total_capacity{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", id=\"mapped\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "capacity",
@@ -3695,6 +3618,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -3708,6 +3632,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -3731,7 +3656,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3771,7 +3697,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "jvm_buffer_count{application=\"$application\", instance=\"$instance\", id=\"mapped\"}",
+          "expr": "jvm_buffer_count{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", id=\"mapped\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "count",
@@ -3787,8 +3713,7 @@
   ],
   "refresh": "",
   "revision": 1,
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [
     "otlp",
     "push"
@@ -3799,7 +3724,7 @@
         "current": {
           "selected": false,
           "text": "Mimir",
-          "value": "Mimir"
+          "value": "mimir"
         },
         "hide": 2,
         "includeAll": false,
@@ -3817,23 +3742,24 @@
       {
         "current": {
           "selected": false,
-          "text": "service",
-          "value": "service"
+          "text": "client",
+          "value": "client"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "",
-        "hide": 0,
+        "definition": "label_values(jvm_info,service_name)",
+        "hide": 1,
         "includeAll": false,
-        "label": "Application",
+        "label": "Service Name",
         "multi": false,
-        "name": "application",
+        "name": "service_name",
         "options": [],
         "query": {
-          "query": "label_values(application)",
-          "refId": "Prometheus-application-Variable-Query"
+          "qryType": 1,
+          "query": "label_values(jvm_info,service_name)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 2,
         "regex": "",
@@ -3848,24 +3774,25 @@
         "allFormat": "glob",
         "current": {
           "selected": false,
-          "text": "01c313846d48",
-          "value": "01c313846d48"
+          "text": "5e44d533173d",
+          "value": "5e44d533173d"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(jvm_memory_used{application=\"$application\"}, instance)",
-        "hide": 0,
+        "definition": "label_values(jvm_info{service_name=\"$service_name\"},service_instance_id)",
+        "hide": 1,
         "includeAll": false,
-        "label": "Instance",
+        "label": "Service Instance Id",
         "multi": false,
         "multiFormat": "glob",
-        "name": "instance",
+        "name": "service_instance_id",
         "options": [],
         "query": {
-          "query": "label_values(jvm_memory_used{application=\"$application\"}, instance)",
-          "refId": "StandardVariableQuery"
+          "qryType": 1,
+          "query": "label_values(jvm_info{service_name=\"$service_name\"},service_instance_id)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 2,
         "regex": "",
@@ -3887,8 +3814,8 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(jvm_memory_used{application=\"$application\", instance=\"$instance\", area=\"heap\"},id)",
-        "hide": 0,
+        "definition": "label_values(jvm_memory_used{service_name=\"$service_name\", service_instance_id=\"$service_instance_id\", area=\"heap\"},id)",
+        "hide": 2,
         "includeAll": true,
         "label": "JVM Memory Pools Heap",
         "multi": false,
@@ -3896,8 +3823,9 @@
         "name": "jvm_memory_pool_heap",
         "options": [],
         "query": {
-          "query": "label_values(jvm_memory_used{application=\"$application\", instance=\"$instance\", area=\"heap\"},id)",
-          "refId": "StandardVariableQuery"
+          "qryType": 1,
+          "query": "label_values(jvm_memory_used{service_name=\"$service_name\", service_instance_id=\"$service_instance_id\", area=\"heap\"},id)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
@@ -3919,8 +3847,8 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(jvm_memory_used{application=\"$application\", instance=\"$instance\", area=\"nonheap\"},id)",
-        "hide": 0,
+        "definition": "label_values(jvm_memory_used{service_name=\"$service_name\", service_instance_id=\"$service_instance_id\", area=\"nonheap\"},id)",
+        "hide": 2,
         "includeAll": true,
         "label": "JVM Memory Pools Non-Heap",
         "multi": false,
@@ -3928,8 +3856,9 @@
         "name": "jvm_memory_pool_nonheap",
         "options": [],
         "query": {
-          "query": "label_values(jvm_memory_used{application=\"$application\", instance=\"$instance\", area=\"nonheap\"},id)",
-          "refId": "StandardVariableQuery"
+          "qryType": 1,
+          "query": "label_values(jvm_memory_used{service_name=\"$service_name\", service_instance_id=\"$service_instance_id\", area=\"nonheap\"},id)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
@@ -3975,6 +3904,6 @@
   "timezone": "browser",
   "title": "JVM (Micrometer)",
   "uid": "dN7v-xPVz",
-  "version": 10,
+  "version": 3,
   "weekStart": ""
 }
