@@ -16,6 +16,7 @@ services:
   service:
     build:
       context: ./service
+      dockerfile: ../java.Dockerfile
       args:
         - JDK_IMAGE=${JDK_IMAGE}
         - DISTRO=${DISTRO}
@@ -38,6 +39,7 @@ services:
   client:
     build:
       context: ./client
+      dockerfile: ../java.Dockerfile
       args:
         - JDK_IMAGE=${JDK_IMAGE}
         - DISTRO=${DISTRO}

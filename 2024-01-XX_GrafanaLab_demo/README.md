@@ -17,6 +17,9 @@ References: https://github.com/grafana/loki/blob/main/docs/sources/send-data/ote
 TODO PR to add service.version: https://github.com/grafana/loki/blob/de251c3fc2cbd3e9de8d19bd986680c2b99c88bc/pkg/loghttp/push/otlp.go#L31
 
 
+## java agent 2
+https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/tag/v2.0.0
+
 # Correlation and naming conventions are important
 
 # otel resource conventions

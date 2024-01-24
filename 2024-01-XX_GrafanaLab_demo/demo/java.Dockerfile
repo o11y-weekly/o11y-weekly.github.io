@@ -44,7 +44,7 @@ ADD --chown=1000:1000 https://github.com/open-telemetry/opentelemetry-java-instr
 COPY --chown=1000:1000 ./supervisord.conf /app/supervisord.conf
 COPY --chown=1000:1000 ./supervisor.d/ /app/supervisor.d/
 
-COPY --chown=1000:1000 --from=build /app/target/service-0.0.1-SNAPSHOT.jar /app/main.jar
+COPY --chown=1000:1000 --from=build /app/target/main.jar /app/main.jar
 
 EXPOSE 8080
 CMD ["/usr/bin/supervisord", "-n"]
