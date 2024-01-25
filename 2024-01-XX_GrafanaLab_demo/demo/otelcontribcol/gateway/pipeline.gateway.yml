@@ -30,7 +30,7 @@ processors:
                     {
                       name: status_code-error-policy,
                       type: status_code,
-                      status_code: {status_codes: [ERROR, UNSET]}
+                      status_code: {status_codes: [ERROR]}
                     },
                     {
                       name: http-status-code-error-policy,
