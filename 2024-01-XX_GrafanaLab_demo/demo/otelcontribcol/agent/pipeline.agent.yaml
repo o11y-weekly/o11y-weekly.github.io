@@ -45,7 +45,7 @@ processors:
     actions:
       - action: insert
         key: loki.attribute.labels
-        value: service.name, service.namespace, service.version, deployment.environment, service.instance.id
+        value: service.name, service.namespace, service.version, deployment.environment, host.name
 
 service:
   telemetry:

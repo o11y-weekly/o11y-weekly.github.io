@@ -18,7 +18,7 @@ In the following demo, [resources](https://opentelemetry.io/docs/languages/js/re
 |service.name| the application name |
 |service.namespace| namespace to group multiple service [Bounded context](https://martinfowler.com/bliki/BoundedContext.html) |
 |service.version| version of the service |
-|service.instance.id | hostname |
+|host.name | hostname |
 |deployment.environment | the environment where the application runs (dev,test,prod, ...) |
 
 As an example, by clicking or errors, it can be easy to switch to get corresponding traces:

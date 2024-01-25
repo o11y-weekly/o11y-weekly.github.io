@@ -1843,7 +1843,7 @@
             "uid": "$datasource"
           },
           "exemplar": true,
-          "expr": "count(count(otelcol_process_cpu_seconds{service_instance_id=~\".*\"}) by (service_instance_id))",
+          "expr": "count(count(otelcol_process_cpu_seconds{host_name=~\".*\"}) by (host_name))",
           "format": "time_series",
           "hide": false,
           "interval": "$minstep",

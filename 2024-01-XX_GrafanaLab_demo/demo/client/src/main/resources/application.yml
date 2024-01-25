@@ -20,11 +20,11 @@ management:
   metrics:
     tags:
       deployment.environment: '${deployment.environment}'
+      host.name: '${host.name}'
       service:
         name: '${service.name}'
         namespace: '${service.namespace}'
         version: '@project.version@'
-        instance.id: '${service.instance.id}'
     distribution:
       percentiles:
         all: 0.5, 0.95, 0.99

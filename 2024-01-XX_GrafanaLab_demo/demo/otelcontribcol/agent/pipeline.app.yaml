@@ -7,8 +7,9 @@ receivers:
     resource:
       service.name: ${env:SERVICE_NAME}
       service.namespace: ${env:SERVICE_NAMESPACE}
-      service.instance.id: ${env:HOSTNAME}
+      host.name: ${env:HOSTNAME}
       deployment.environment: ${env:DEPLOYMENT_ENVIRONMENT}
+      service.instance.id: ${env:HOSTNAME} # loki does not accept host.name (https://github.com/grafana/loki/issues/11786)
 
 processors:
   batch/app:
@@ -16,7 +17,7 @@ processors:
     attributes:
       - action: insert
         key: loki.resource.labels
-        value: service.name, service.namespace, service.version, service.instance.id, deployment.environment
+        value: service.name, service.namespace, service.version, host.name, deployment.environment, service.instance.id
       - action: insert
         key: loki.format
         value: raw

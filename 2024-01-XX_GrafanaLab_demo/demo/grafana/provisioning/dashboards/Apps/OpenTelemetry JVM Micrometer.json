@@ -384,8 +384,8 @@
           "links": [
             {
               "targetBlank": true,
-              "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "title": "${__field.labels.host_name} details",
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -483,9 +483,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (service_instance_id,method,uri,status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name,method,uri,status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
           "instant": false,
-          "legendFormat": "{{method}} {{service_instance_id}}{{uri}}: {{status}}",
+          "legendFormat": "{{method}} {{host_name}}{{uri}}: {{status}}",
           "range": true,
           "refId": "A"
         }
@@ -539,8 +539,8 @@
           "links": [
             {
               "targetBlank": true,
-              "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "title": "${__field.labels.host_name} details",
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
             },
             {
               "targetBlank": true,
@@ -598,11 +598,11 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by(service_instance_id, method, uri, status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", status!~\"[1-3]..\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by(host_name, method, uri, status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", status!~\"[1-3]..\"}[1m]))\r\n)",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "{{method}} {{service_instance_id}}{{uri}}: {{status}}",
+          "legendFormat": "{{method}} {{host_name}}{{uri}}: {{status}}",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -656,8 +656,8 @@
           "links": [
             {
               "targetBlank": true,
-              "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "title": "${__field.labels.host_name} details",
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -755,9 +755,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (service_instance_id,status,uri,method) (rate(http_server_requests_sum{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n    /\r\n    sum by (service_instance_id,status,uri,method) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name,status,uri,method) (rate(http_server_requests_sum{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n    /\r\n    sum by (host_name,status,uri,method) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
           "instant": false,
-          "legendFormat": "{{method}} {{service_instance_id}}{{uri}}: {{status}}",
+          "legendFormat": "{{method}} {{host_name}}{{uri}}: {{status}}",
           "range": true,
           "refId": "A"
         }
@@ -825,8 +825,8 @@
           "links": [
             {
               "targetBlank": true,
-              "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "title": "${__field.labels.host_name} details",
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -879,7 +879,7 @@
           "editorMode": "code",
           "expr": "topk(${top}, \r\n    system_cpu_usage{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n    * 100 \r\n    > ${saturation:value}\r\n)",
           "instant": false,
-          "legendFormat": "{{service_instance_id}}.cpu.usage",
+          "legendFormat": "{{host_name}}.cpu.usage",
           "range": true,
           "refId": "A"
         }
@@ -933,8 +933,8 @@
           "links": [
             {
               "targetBlank": true,
-              "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "title": "${__field.labels.host_name} details",
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -985,7 +985,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})\r\n    * 100 /\r\n    sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"}) \r\n    > ${saturation:value}\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})\r\n    * 100 /\r\n    sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"}) \r\n    > ${saturation:value}\r\n)",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1041,8 +1041,8 @@
           "links": [
             {
               "targetBlank": true,
-              "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "title": "${__field.labels.host_name} details",
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -1093,7 +1093,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})\r\n    * 100 / \r\n    sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"}) \r\n    > ${saturation:value}\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})\r\n    * 100 / \r\n    sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"}) \r\n    > ${saturation:value}\r\n)",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1150,8 +1150,8 @@
           "links": [
             {
               "targetBlank": true,
-              "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "title": "${__field.labels.host_name} details",
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -1204,7 +1204,7 @@
           "editorMode": "code",
           "expr": "topk(${top}, \r\n    process_files_open{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"} \r\n    / \r\n    process_files_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"} \r\n    > ${saturation:value}\r\n)",
           "instant": false,
-          "legendFormat": "{{service_instance_id}}",
+          "legendFormat": "{{host_name}}",
           "range": true,
           "refId": "A"
         }
@@ -1267,8 +1267,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -1335,9 +1335,9 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "topk(${top}, \r\n    sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})\r\n)",
+              "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})\r\n)",
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.used",
+              "legendFormat": "{{host_name}}.used",
               "range": true,
               "refId": "A"
             },
@@ -1347,10 +1347,10 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "topk(${top}, sum by (service_instance_id) (jvm_memory_committed{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}))",
+              "expr": "topk(${top}, sum by (host_name) (jvm_memory_committed{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}))",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.committed",
+              "legendFormat": "{{host_name}}.committed",
               "range": true,
               "refId": "B"
             },
@@ -1360,10 +1360,10 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "topk(${top}, sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}))",
+              "expr": "topk(${top}, sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}))",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.max",
+              "legendFormat": "{{host_name}}.max",
               "range": true,
               "refId": "C"
             }
@@ -1416,8 +1416,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -1468,7 +1468,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "topk(${top}, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})*100/sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"}))",
+              "expr": "topk(${top}, sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})*100/sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"}))",
               "instant": false,
               "legendFormat": "__auto",
               "range": true,
@@ -1523,8 +1523,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -1575,7 +1575,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "topk(${top}, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})*100/sum by(service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"}))",
+              "expr": "topk(${top}, sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})*100/sum by(host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"}))",
               "instant": false,
               "legendFormat": "__auto",
               "range": true,
@@ -1631,8 +1631,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -1701,7 +1701,7 @@
               "editorMode": "code",
               "expr": "topk(${top}, \r\n    system_cpu_usage{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.system.cpu.usage",
+              "legendFormat": "{{host_name}}.system.cpu.usage",
               "range": true,
               "refId": "A"
             }
@@ -1754,8 +1754,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -1824,7 +1824,7 @@
               "editorMode": "code",
               "expr": "topk(${top}, \r\n    tomcat_threads_busy{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.tomcat.busy",
+              "legendFormat": "{{host_name}}.tomcat.busy",
               "range": true,
               "refId": "A"
             },
@@ -1837,7 +1837,7 @@
               "expr": "topk(${top}, \r\n    tomcat_threads_current{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.tomcat.current",
+              "legendFormat": "{{host_name}}.tomcat.current",
               "range": true,
               "refId": "B"
             },
@@ -1850,7 +1850,7 @@
               "expr": "topk(${top}, \r\n    tomcat_threads_config_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.tomcat.max",
+              "legendFormat": "{{host_name}}.tomcat.max",
               "range": true,
               "refId": "C"
             }
@@ -1904,8 +1904,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -1975,7 +1975,7 @@
               "expr": "topk(${top}, \r\n    system_load_average_1m{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n    /\r\n    system_cpu_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.load.1m",
+              "legendFormat": "{{host_name}}.load.1m",
               "range": true,
               "refId": "A"
             }
@@ -2029,8 +2029,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2100,7 +2100,7 @@
               "expr": "topk(${top}, \r\n    jvm_threads_live{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.lived",
+              "legendFormat": "{{host_name}}.lived",
               "range": true,
               "refId": "A"
             },
@@ -2113,7 +2113,7 @@
               "expr": "topk(${top}, \r\n    jvm_threads_daemon{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.daemon",
+              "legendFormat": "{{host_name}}.daemon",
               "range": true,
               "refId": "B"
             },
@@ -2126,7 +2126,7 @@
               "expr": "topk(${top}, \r\n    jvm_threads_peak{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.peak",
+              "legendFormat": "{{host_name}}.peak",
               "range": true,
               "refId": "C"
             }
@@ -2180,8 +2180,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2251,7 +2251,7 @@
               "expr": "topk(${top},\r\n    jvm_threads_states{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.{{state}}",
+              "legendFormat": "{{host_name}}.{{state}}",
               "range": true,
               "refId": "A"
             },
@@ -2264,7 +2264,7 @@
               "expr": "topk(${top}, \r\n    jvm_threads_daemon{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.daemon",
+              "legendFormat": "{{host_name}}.daemon",
               "range": true,
               "refId": "B"
             },
@@ -2277,7 +2277,7 @@
               "expr": "topk(${top}, \r\n    jvm_threads_peak{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.peak",
+              "legendFormat": "{{host_name}}.peak",
               "range": true,
               "refId": "C"
             }
@@ -2331,8 +2331,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2402,7 +2402,7 @@
               "expr": "topk(${top}, \r\n    process_files_open{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"} \r\n    / \r\n    process_files_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}",
+              "legendFormat": "{{host_name}}",
               "range": true,
               "refId": "A"
             }
@@ -2456,8 +2456,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2587,7 +2587,7 @@
               "expr": "topk(${top}, rate(logback_events{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.{{level}}",
+              "legendFormat": "{{host_name}}.{{level}}",
               "range": true,
               "refId": "A"
             }
@@ -2641,8 +2641,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2712,7 +2712,7 @@
               "expr": "topk(${top}, \r\n    jvm_classes_loaded{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}",
+              "legendFormat": "{{host_name}}",
               "range": true,
               "refId": "A"
             }
@@ -2779,8 +2779,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2850,7 +2850,7 @@
               "editorMode": "code",
               "expr": "topk(${top}, \r\n    rate(jvm_gc_pause_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n)",
               "instant": false,
-              "legendFormat": "{{service_instance_id}} / {{cause}} / {{gc}} / {{action}}",
+              "legendFormat": "{{host_name}} / {{cause}} / {{gc}} / {{action}}",
               "range": true,
               "refId": "A"
             }
@@ -2903,8 +2903,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2974,7 +2974,7 @@
               "editorMode": "code",
               "expr": "topk(${top}, \r\n    rate(jvm_gc_pause_sum{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n    /\r\n    rate(jvm_gc_pause_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n)",
               "instant": false,
-              "legendFormat": "{{service_instance_id}} / {{cause}} / {{gc}} / {{action}}",
+              "legendFormat": "{{host_name}} / {{cause}} / {{gc}} / {{action}}",
               "range": true,
               "refId": "A"
             }
@@ -3027,8 +3027,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -3082,7 +3082,7 @@
               "editorMode": "code",
               "expr": "topk(${top}, \r\n    rate(jvm_gc_memory_allocated{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n)",
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.allocated",
+              "legendFormat": "{{host_name}}.allocated",
               "range": true,
               "refId": "A"
             },
@@ -3095,7 +3095,7 @@
               "expr": "topk(${top}, \r\n    rate(jvm_gc_memory_promoted{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.promoted",
+              "legendFormat": "{{host_name}}.promoted",
               "range": true,
               "refId": "B"
             }
@@ -3162,8 +3162,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -3234,7 +3234,7 @@
               "editorMode": "code",
               "expr": "topk(${top}, jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", id=\"${jvm_memory_used_id}\"})",
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.{{area}}",
+              "legendFormat": "{{host_name}}.{{area}}",
               "range": true,
               "refId": "A"
             }
@@ -3287,8 +3287,8 @@
               "links": [
                 {
                   "targetBlank": true,
-                  "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "title": "${__field.labels.host_name} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -3359,7 +3359,7 @@
               "editorMode": "code",
               "expr": "topk(${top}, jvm_buffer_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", id=\"${jvm_buffer_memory_used_id}\"})",
               "instant": false,
-              "legendFormat": "{{service_instance_id}}.{{id}}",
+              "legendFormat": "{{host_name}}.{{id}}",
               "range": true,
               "refId": "A"
             }
