@@ -16,12 +16,33 @@ processors:
           {
             name: latency-policy,
             type: latency,
-            latency: {threshold_ms: 100}
+            latency: {threshold_ms: 1000}
           },
           {
             name: error-policy,
-            type: status_code,
-            status_code: {status_codes: [ERROR, UNSET]}
+            type: and,
+            and:
+              {
+                and_sub_policy:
+                  [
+                    {
+                      name: status_code-error-policy,
+                      type: status_code,
+                      status_code: {status_codes: [ERROR, UNSET]}
+                    },
+                    {
+                      name: http-status-code-error-policy,
+                      type: string_attribute,
+                      string_attribute:
+                        {
+                          key: error.type,
+                          values: ["[1-4].."],
+                          enabled_regex_matching: true,
+                          invert_match: true,
+                        },
+                    },
+                  ]
+              }
           }
       ]
 
