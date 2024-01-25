@@ -13,11 +13,13 @@ processors:
     decision_wait: 10s
     policies:
       [
+          # skip traces where latencies are < 1000ms
           {
             name: latency-policy,
             type: latency,
             latency: {threshold_ms: 1000}
           },
+          # keep only error traces by skipping 4XX errors
           {
             name: error-policy,
             type: and,
