@@ -15,10 +15,12 @@
       }
     ]
   },
+  "description": "OpenTelemetry JVM Micrometer using RED and USE method",
   "editable": true,
   "fiscalYearStartMonth": 0,
+  "gnetId": 20352,
   "graphTooltip": 0,
-  "id": 8,
+  "id": 6,
   "links": [
     {
       "asDropdown": false,
@@ -115,7 +117,19 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "process_uptime{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", service_instance_id=\"${service_instance_id}\"}",
+          "expr": "min(process_uptime{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
+          "instant": false,
+          "legendFormat": "min",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "max(process_uptime{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
           "hide": false,
           "instant": false,
           "legendFormat": "max",
@@ -230,7 +244,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "sum by (status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", service_instance_id=\"${service_instance_id}\"}[1m]))",
+          "expr": "topk(${top}, \r\n    sum by (status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
           "instant": false,
           "legendFormat": "{{status}}",
           "range": true,
@@ -300,7 +314,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(http_server_requests{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", service_instance_id=\"${service_instance_id}\"}) by (quantile)",
+          "expr": "sum(http_server_requests{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}) by (quantile)",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -367,6 +381,13 @@
               "mode": "off"
             }
           },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.service_instance_id} details",
+              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+            }
+          ],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -462,9 +483,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "sum by (method,uri,status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", service_instance_id=\"${service_instance_id}\"}[1m]))",
+          "expr": "topk(${top}, \r\n    sum by (service_instance_id,method,uri,status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
           "instant": false,
-          "legendFormat": "{{method}} {{uri}}: {{status}}",
+          "legendFormat": "{{method}} {{service_instance_id}}{{uri}}: {{status}}",
           "range": true,
           "refId": "A"
         }
@@ -515,6 +536,13 @@
               "mode": "off"
             }
           },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.service_instance_id} details",
+              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+            }
+          ],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -565,11 +593,11 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "sum by(method, uri, status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", service_instance_id=\"${service_instance_id}\", status!~\"[1-3]..\"}[1m]))",
+          "expr": "topk(${top}, \r\n    sum by(service_instance_id, method, uri, status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", status!~\"[1-3]..\"}[1m]))\r\n)",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "{{method}} {{uri}}: {{status}}",
+          "legendFormat": "{{method}} {{service_instance_id}}{{uri}}: {{status}}",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -620,6 +648,13 @@
               "mode": "off"
             }
           },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.service_instance_id} details",
+              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+            }
+          ],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -715,9 +750,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "sum by (status,uri,method) (rate(http_server_requests_sum{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", service_instance_id=\"${service_instance_id}\"}[1m]))\r\n/\r\nsum by (status,uri,method) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", service_instance_id=\"${service_instance_id}\"}[1m]))",
+          "expr": "topk(${top}, \r\n    sum by (service_instance_id,status,uri,method) (rate(http_server_requests_sum{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n    /\r\n    sum by (service_instance_id,status,uri,method) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
           "instant": false,
-          "legendFormat": "{{method}} {{uri}}: {{status}}",
+          "legendFormat": "{{method}} {{service_instance_id}}{{uri}}: {{status}}",
           "range": true,
           "refId": "A"
         }
@@ -782,6 +817,13 @@
               "mode": "off"
             }
           },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.service_instance_id} details",
+              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+            }
+          ],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -830,9 +872,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "system_cpu_usage{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", service_instance_id=\"${service_instance_id}\"}\r\n* 100\r\n> ${saturation:value}",
+          "expr": "topk(${top}, \r\n    system_cpu_usage{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n    * 100 \r\n    > ${saturation:value}\r\n)",
           "instant": false,
-          "legendFormat": "${service_instance_id}",
+          "legendFormat": "{{service_instance_id}}.cpu.usage",
           "range": true,
           "refId": "A"
         }
@@ -883,6 +925,13 @@
               "mode": "off"
             }
           },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.service_instance_id} details",
+              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+            }
+          ],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -931,9 +980,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "sum (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})\r\n* 100 /\r\nsum (jvm_memory_max{service_name=\"${service_name}\", service_instance_id=\"${service_instance_id}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"}) \r\n> ${saturation:value}",
+          "expr": "topk(${top}, \r\n    sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})\r\n    * 100 /\r\n    sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"}) \r\n    > ${saturation:value}\r\n)",
           "instant": false,
-          "legendFormat": "${service_instance_id}",
+          "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
@@ -984,6 +1033,13 @@
               "mode": "off"
             }
           },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.service_instance_id} details",
+              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+            }
+          ],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1032,9 +1088,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "sum (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", service_instance_id=\"${service_instance_id}\", area=\"nonheap\"})\r\n* 100 / \r\nsum (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", service_instance_id=\"${service_instance_id}\", area=\"nonheap\"}) \r\n> ${saturation:value}",
+          "expr": "topk(${top}, \r\n    sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})\r\n    * 100 / \r\n    sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"}) \r\n    > ${saturation:value}\r\n)",
           "instant": false,
-          "legendFormat": "${service_instance_id}",
+          "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
@@ -1086,6 +1142,13 @@
               "mode": "off"
             }
           },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.service_instance_id} details",
+              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+            }
+          ],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1134,7 +1197,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "process_files_open{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"} \r\n/ \r\nprocess_files_max{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"} \r\n> ${saturation:value}",
+          "expr": "topk(${top}, \r\n    process_files_open{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"} \r\n    / \r\n    process_files_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"} \r\n    > ${saturation:value}\r\n)",
           "instant": false,
           "legendFormat": "{{service_instance_id}}",
           "range": true,
@@ -1196,6 +1259,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -1215,7 +1285,7 @@
               {
                 "matcher": {
                   "id": "byRegexp",
-                  "options": "/\\max$/"
+                  "options": "/\\.max$/"
                 },
                 "properties": [
                   {
@@ -1260,9 +1330,9 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "sum (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"})",
+              "expr": "topk(${top}, \r\n    sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})\r\n)",
               "instant": false,
-              "legendFormat": "used",
+              "legendFormat": "{{service_instance_id}}.used",
               "range": true,
               "refId": "A"
             },
@@ -1272,10 +1342,10 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "sum (jvm_memory_committed{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\",deployment_environment=\"${deployment_environment}\"})",
+              "expr": "topk(${top}, sum by (service_instance_id) (jvm_memory_committed{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}))",
               "hide": false,
               "instant": false,
-              "legendFormat": "committed",
+              "legendFormat": "{{service_instance_id}}.committed",
               "range": true,
               "refId": "B"
             },
@@ -1285,10 +1355,10 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "sum (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"})",
+              "expr": "topk(${top}, sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}))",
               "hide": false,
               "instant": false,
-              "legendFormat": "max",
+              "legendFormat": "{{service_instance_id}}.max",
               "range": true,
               "refId": "C"
             }
@@ -1338,6 +1408,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -1386,9 +1463,9 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "sum (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})\r\n* 100 /\r\nsum (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})",
+              "expr": "topk(${top}, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})*100/sum by (service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"}))",
               "instant": false,
-              "legendFormat": "${service_instance_id}",
+              "legendFormat": "__auto",
               "range": true,
               "refId": "A"
             }
@@ -1438,6 +1515,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -1486,9 +1570,9 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "sum (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})\r\n* 100 / \r\nsum (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\",  service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})",
+              "expr": "topk(${top}, sum by (service_instance_id) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})*100/sum by(service_instance_id) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"}))",
               "instant": false,
-              "legendFormat": "${service_instance_id}",
+              "legendFormat": "__auto",
               "range": true,
               "refId": "A"
             }
@@ -1539,6 +1623,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -1603,9 +1694,9 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "system_cpu_usage{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}",
+              "expr": "topk(${top}, \r\n    system_cpu_usage{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "instant": false,
-              "legendFormat": "system.cpu.usage",
+              "legendFormat": "{{service_instance_id}}.system.cpu.usage",
               "range": true,
               "refId": "A"
             }
@@ -1655,6 +1746,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -1719,9 +1817,9 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "tomcat_threads_busy{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}",
+              "expr": "topk(${top}, \r\n    tomcat_threads_busy{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "instant": false,
-              "legendFormat": "tomcat.busy",
+              "legendFormat": "{{service_instance_id}}.tomcat.busy",
               "range": true,
               "refId": "A"
             },
@@ -1731,10 +1829,10 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "topk(10, tomcat_threads_current{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"})",
+              "expr": "topk(${top}, \r\n    tomcat_threads_current{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "tomcat.current",
+              "legendFormat": "{{service_instance_id}}.tomcat.current",
               "range": true,
               "refId": "B"
             },
@@ -1744,10 +1842,10 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "topk(10, tomcat_threads_config_max{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"})",
+              "expr": "topk(${top}, \r\n    tomcat_threads_config_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "tomcat.max",
+              "legendFormat": "{{service_instance_id}}.tomcat.max",
               "range": true,
               "refId": "C"
             }
@@ -1798,6 +1896,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -1862,10 +1967,10 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "system_load_average_1m{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}\r\n/\r\nsystem_cpu_count{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}",
+              "expr": "topk(${top}, \r\n    system_load_average_1m{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n    /\r\n    system_cpu_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
-              "legendFormat": "load.1m",
+              "legendFormat": "{{service_instance_id}}.load.1m",
               "range": true,
               "refId": "A"
             }
@@ -1916,6 +2021,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -1980,7 +2092,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "jvm_threads_live{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}",
+              "expr": "topk(${top}, \r\n    jvm_threads_live{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
               "legendFormat": "{{service_instance_id}}.lived",
@@ -1993,7 +2105,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "topk(10, jvm_threads_daemon{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"})",
+              "expr": "topk(${top}, \r\n    jvm_threads_daemon{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
               "legendFormat": "{{service_instance_id}}.daemon",
@@ -2006,7 +2118,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "topk(10, jvm_threads_peak{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"})",
+              "expr": "topk(${top}, \r\n    jvm_threads_peak{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
               "legendFormat": "{{service_instance_id}}.peak",
@@ -2060,6 +2172,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -2124,7 +2243,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "jvm_threads_states{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}",
+              "expr": "topk(${top},\r\n    jvm_threads_states{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
               "legendFormat": "{{service_instance_id}}.{{state}}",
@@ -2137,7 +2256,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "jvm_threads_daemon{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}",
+              "expr": "topk(${top}, \r\n    jvm_threads_daemon{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
               "legendFormat": "{{service_instance_id}}.daemon",
@@ -2150,7 +2269,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "jvm_threads_peak{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}",
+              "expr": "topk(${top}, \r\n    jvm_threads_peak{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
               "legendFormat": "{{service_instance_id}}.peak",
@@ -2204,6 +2323,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -2268,7 +2394,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "process_files_open{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"} \r\n/ \r\nprocess_files_max{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}",
+              "expr": "topk(${top}, \r\n    process_files_open{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"} \r\n    / \r\n    process_files_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
               "legendFormat": "{{service_instance_id}}",
@@ -2322,6 +2448,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -2446,7 +2579,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "rate(logback_events{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}[1m])",
+              "expr": "topk(${top}, rate(logback_events{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))",
               "hide": false,
               "instant": false,
               "legendFormat": "{{service_instance_id}}.{{level}}",
@@ -2500,6 +2633,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -2564,7 +2704,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "jvm_classes_loaded{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}",
+              "expr": "topk(${top}, \r\n    jvm_classes_loaded{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
               "hide": false,
               "instant": false,
               "legendFormat": "{{service_instance_id}}",
@@ -2631,6 +2771,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -2696,7 +2843,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "rate(jvm_gc_pause_count{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}[1m])",
+              "expr": "topk(${top}, \r\n    rate(jvm_gc_pause_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n)",
               "instant": false,
               "legendFormat": "{{service_instance_id}} / {{cause}} / {{gc}} / {{action}}",
               "range": true,
@@ -2748,6 +2895,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -2813,7 +2967,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "rate(jvm_gc_pause_sum{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n/\r\nrate(jvm_gc_pause_count{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}[1m])",
+              "expr": "topk(${top}, \r\n    rate(jvm_gc_pause_sum{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n    /\r\n    rate(jvm_gc_pause_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n)",
               "instant": false,
               "legendFormat": "{{service_instance_id}} / {{cause}} / {{gc}} / {{action}}",
               "range": true,
@@ -2865,6 +3019,13 @@
                   "mode": "off"
                 }
               },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -2914,7 +3075,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "rate(jvm_gc_memory_allocated{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}[1m])",
+              "expr": "topk(${top}, \r\n    rate(jvm_gc_memory_allocated{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n)",
               "instant": false,
               "legendFormat": "{{service_instance_id}}.allocated",
               "range": true,
@@ -2926,7 +3087,7 @@
                 "uid": "${prom_ds}"
               },
               "editorMode": "code",
-              "expr": "rate(jvm_gc_memory_promoted{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\"}[1m])",
+              "expr": "topk(${top}, \r\n    rate(jvm_gc_memory_promoted{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n)",
               "hide": false,
               "instant": false,
               "legendFormat": "{{service_instance_id}}.promoted",
@@ -2942,7 +3103,7 @@
       "type": "row"
     },
     {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2996,6 +3157,13 @@
               "mode": "off"
             }
           },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.service_instance_id} details",
+              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+            }
+          ],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -3062,9 +3230,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\", id=\"${jvm_memory_used_id}\"}",
+          "expr": "topk(${top}, jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", id=\"${jvm_memory_used_id}\"})",
           "instant": false,
-          "legendFormat": "{{area}}",
+          "legendFormat": "{{service_instance_id}}.{{area}}",
           "range": true,
           "refId": "A"
         }
@@ -3114,6 +3282,13 @@
               "mode": "off"
             }
           },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.service_instance_id} details",
+              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+            }
+          ],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -3180,9 +3355,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "jvm_buffer_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", service_instance_id=\"${service_instance_id}\", deployment_environment=\"${deployment_environment}\", id=\"${jvm_buffer_memory_used_id}\"}",
+          "expr": "topk(${top}, jvm_buffer_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", id=\"${jvm_buffer_memory_used_id}\"})",
           "instant": false,
-          "legendFormat": "{{id}}",
+          "legendFormat": "{{service_instance_id}}.{{id}}",
           "range": true,
           "refId": "A"
         }
@@ -3209,7 +3384,7 @@
             "h": 6,
             "w": 24,
             "x": 0,
-            "y": 54
+            "y": 62
           },
           "id": 68,
           "options": {
@@ -3229,7 +3404,7 @@
                 "uid": "${loki_ds}"
               },
               "editorMode": "builder",
-              "expr": "{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_instance_id=\"$service_instance_id\"} |= ``",
+              "expr": "{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"} |= ``",
               "queryType": "range",
               "refId": "A"
             }
@@ -3374,30 +3549,35 @@
       {
         "current": {
           "selected": false,
-          "text": "db3e26053c01",
-          "value": "db3e26053c01"
+          "text": "10",
+          "value": "10"
         },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${prom_ds}"
-        },
-        "definition": "label_values(jvm_info{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_instance_id)",
-        "hide": 1,
+        "hide": 0,
         "includeAll": false,
-        "label": "Service Instance Id",
+        "label": "Top",
         "multi": false,
-        "name": "service_instance_id",
-        "options": [],
-        "query": {
-          "qryType": 1,
-          "query": "label_values(jvm_info{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_instance_id)",
-          "refId": "PrometheusVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
+        "name": "top",
+        "options": [
+          {
+            "selected": false,
+            "text": "1",
+            "value": "1"
+          },
+          {
+            "selected": false,
+            "text": "5",
+            "value": "5"
+          },
+          {
+            "selected": true,
+            "text": "10",
+            "value": "10"
+          }
+        ],
+        "query": "1, 5, 10",
+        "queryValue": "",
         "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
+        "type": "custom"
       },
       {
         "current": {
@@ -3407,6 +3587,7 @@
         },
         "hide": 0,
         "includeAll": false,
+        "label": "Saturation",
         "multi": false,
         "name": "saturation",
         "options": [
@@ -3495,8 +3676,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "OpenTelemetry Spring Micrometer",
-  "uid": "opentelemetry-spring-micrometer",
+  "title": "OpenTelemetry JVM Micrometer",
+  "uid": "otel-jvm-micrometer",
   "version": 1,
   "weekStart": ""
 }
