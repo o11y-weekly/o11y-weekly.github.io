@@ -59,7 +59,9 @@ SDK also offers exporters which is the [No Collector](https://opentelemetry.io/d
 
 3 different ways are available to deploy a collector: [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/), [Agent](https://opentelemetry.io/docs/collector/deployment/agent/), [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/).
 
-[No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/) and [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) has been used during the demo.
+All this deployment has been used in the [demo](./demo/README.md).
+
+The [Agent](https://opentelemetry.io/docs/collector/deployment/agent/) is quite common and used to scrap telemetry like prometheus, filelog, ...
 
 The [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/) can help to support observability in short lived tasks (like Function As A Service, ...) while [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) can help to introduce [Tail Sampling](./README.md#traces-sampling-head-vs-tail-sampling) and avoid loosing telemetry data when [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/) is used.
 
