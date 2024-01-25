@@ -20,7 +20,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 20352,
   "graphTooltip": 0,
-  "id": 6,
+  "id": 3,
   "links": [
     {
       "asDropdown": false,
@@ -3111,259 +3111,260 @@
         "y": 28
       },
       "id": 27,
-      "panels": [],
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "bytes"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/\\.max$/"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 0,
+            "y": 29
+          },
+          "id": 26,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "repeat": "jvm_memory_used_id",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prom_ds}"
+              },
+              "editorMode": "code",
+              "expr": "topk(${top}, jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", id=\"${jvm_memory_used_id}\"})",
+              "instant": false,
+              "legendFormat": "{{service_instance_id}}.{{area}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "JVM Memory (${jvm_memory_used_id})",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "${__field.labels.service_instance_id} details",
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "bytes"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/\\.max$/"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 45
+          },
+          "id": 53,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "repeat": "jvm_buffer_memory_used_id",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${prom_ds}"
+              },
+              "editorMode": "code",
+              "expr": "topk(${top}, jvm_buffer_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", id=\"${jvm_buffer_memory_used_id}\"})",
+              "instant": false,
+              "legendFormat": "{{service_instance_id}}.{{id}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "JVM Buffer Memory (${jvm_buffer_memory_used_id})",
+          "type": "timeseries"
+        }
+      ],
       "title": "JVM Memory",
       "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${prom_ds}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
-            }
-          ],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "bytes"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": "/\\.max$/"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 0,
-        "y": 29
-      },
-      "id": 26,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "mean",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "repeat": "jvm_memory_used_id",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "editorMode": "code",
-          "expr": "topk(${top}, jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", id=\"${jvm_memory_used_id}\"})",
-          "instant": false,
-          "legendFormat": "{{service_instance_id}}.{{area}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "JVM Memory (${jvm_memory_used_id})",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${prom_ds}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
-            }
-          ],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "bytes"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": "/\\.max$/"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 0,
-        "y": 45
-      },
-      "id": 53,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "mean",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "repeat": "jvm_buffer_memory_used_id",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "editorMode": "code",
-          "expr": "topk(${top}, jvm_buffer_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", id=\"${jvm_buffer_memory_used_id}\"})",
-          "instant": false,
-          "legendFormat": "{{service_instance_id}}.{{id}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "JVM Buffer Memory (${jvm_buffer_memory_used_id})",
-      "type": "timeseries"
     },
     {
       "collapsed": true,
@@ -3371,7 +3372,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 53
+        "y": 29
       },
       "id": 67,
       "panels": [

@@ -43,6 +43,7 @@ services:
       - OTEL_TRACES_SAMPLER_ARG=1
       - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
+      - OTEL_METRICS_EXPORTER=none
     depends_on:
       - db
       - otelcontribcol-gateway
@@ -68,9 +69,11 @@ services:
       - OTEL_TRACES_SAMPLER_ARG=1
       - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
+      - OTEL_METRICS_EXPORTER=none
     ports:
       - 8080:8080
     depends_on:
+      - service
       - otelcontribcol-gateway
       - mimir
 
