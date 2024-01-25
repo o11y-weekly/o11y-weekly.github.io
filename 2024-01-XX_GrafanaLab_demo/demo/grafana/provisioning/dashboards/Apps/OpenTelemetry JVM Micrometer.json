@@ -385,7 +385,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -540,7 +540,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -652,7 +652,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -821,7 +821,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -929,7 +929,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -1037,7 +1037,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -1146,7 +1146,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -1263,7 +1263,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -1412,7 +1412,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -1519,7 +1519,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -1627,7 +1627,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -1750,7 +1750,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -1900,7 +1900,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2025,7 +2025,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2176,7 +2176,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2327,7 +2327,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2452,7 +2452,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2637,7 +2637,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2775,7 +2775,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -2899,7 +2899,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -3023,7 +3023,7 @@
                 {
                   "targetBlank": true,
                   "title": "${__field.labels.service_instance_id} details",
-                  "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
                 }
               ],
               "mappings": [],
@@ -3161,7 +3161,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -3286,7 +3286,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.service_instance_id} details",
-              "url": "./d/opentelemetry-spring-micrometer/opentelemetry-spring-micrometer?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
+              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-service_instance_id=${__field.labels.service_instance_id}&${__url_time_range}"
             }
           ],
           "mappings": [],
