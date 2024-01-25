@@ -13,6 +13,16 @@ services:
       - loki
       - tempo
 
+  db:
+    image: postgres:16.1-alpine3.19
+    volumes:
+      - ./postgres/initdb.d:/docker-entrypoint-initdb.d:ro
+    environment:
+      - POSTGRES_DB=persons
+      - POSTGRES_PASSWORD=ReallyBadPassword
+    networks:
+      - bridge
+
   service:
     build:
       context: ./service
@@ -34,9 +44,9 @@ services:
       - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
     depends_on:
+      - db
+      - otelcontribcol-gateway
       - mimir
-      - loki
-      - tempo
 
   client:
     build:
@@ -61,10 +71,8 @@ services:
     ports:
       - 8080:8080
     depends_on:
+      - otelcontribcol-gateway
       - mimir
-      - loki
-      - tempo
-      - service
 
   curl:
     image: curlimages/curl:8.5.0
