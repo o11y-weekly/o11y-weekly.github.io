@@ -55,6 +55,7 @@ public record Controllers(UsersServiceClient client) {
 	}
 
 	@PostMapping("/user")
+	@ResponseStatus(value = HttpStatus.CREATED)
 	public String createUser(final @RequestBody User user) {
 		Logger.info("calling createUser");
 		client.createUser(user);
