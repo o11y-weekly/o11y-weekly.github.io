@@ -1,5 +1,6 @@
 ARG JDK_IMAGE
 ARG DISTRO
+ARG OTEL_CONTRIB_COL
 
 FROM ${JDK_IMAGE} as jdk
 # required for strip-debug to work
@@ -23,6 +24,7 @@ RUN ./mvnw dependency:resolve dependency:go-offline -B
 COPY src ./src
 RUN ./mvnw -o package
 
+FROM otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL} as otelcontribcol
 FROM ${DISTRO}
 
 RUN apk add --no-cache supervisor
@@ -36,10 +38,16 @@ ARG OTEL_JAVA_AGENT_VERSION
 
 RUN adduser --no-create-home -u 1000 -D $APPLICATION_USER
 
+RUN mkdir -p /etc/otelcol-contrib && chown 1000:1000 /etc/otelcol-contrib
+
 USER 1000
 WORKDIR /app
 
+RUN mkdir -p /app/log /app/logstate/app /app/logstate/agent
+
 ADD --chown=1000:1000 https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/${OTEL_JAVA_AGENT_VERSION}/opentelemetry-javaagent.jar ./opentelemetry-javaagent.jar
+
+COPY --chown=1000:1000 --from=otelcontribcol /otelcol-contrib /app/otelcol-contrib
 
 COPY --chown=1000:1000 ./supervisord.conf /app/supervisord.conf
 COPY --chown=1000:1000 ./supervisor.d/ /app/supervisor.d/

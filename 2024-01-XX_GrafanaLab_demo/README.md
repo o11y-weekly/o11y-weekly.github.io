@@ -27,7 +27,7 @@ As an example, by clicking or errors, it can be easy to switch to get correspond
 ![traces](./traces.png)
 ![trace](./trace.png)
 
-## Traces Tail Sampling
+## Traces Sampling: Head vs Tail sampling
 This demo uses tail sampling introduced during the last [Tail sampling post](../2023-11-30_What_is_OpenTelemetry/README.md#tail-sampling).
 
 By default, head sampling is used to decided the percentage of the traffic that should be traced.
@@ -41,40 +41,50 @@ Tail sampling has been setup with [opentelemetry collector contrib](https://gith
 
 Again, when tracing error, it become important to avoid tracing 4XX errors when it is not useful or important.
 
-## Standard dashboards
+## Instrumentations
+A dedicated [post section](../2023-11-30_What_is_OpenTelemetry/README.md#instrumentation) has been introduced during the [last post](../2023-11-30_What_is_OpenTelemetry/README.md#instrumentation).
 
-Along this demo, 2 dashboards has been built:
+Having a telemetry backends is not the only one requirement to support observability: instrumentations are really important to get telemetry metrics, logs and traces.
 
+Having standard instrumentation really helps opensource projects to give a fully integrated service including observability and monitoring.
 
-## logs
-references: 
-- https://opentelemetry.io/docs/specs/otel/logs/#direct-to-collector
-- https://github.com/open-telemetry/opentelemetry-java-examples/tree/main/spring-native
-- https://opentelemetry.io/docs/languages/java/automatic/spring-boot/
-- https://github.com/grafana/grafana-opentelemetry-starter/blob/main/build.gradle
-- https://github.com/spring-projects/spring-boot/issues/37278
-- https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md
+As opposed, having to much telemetry can be costly, that is why it is important to choose instrumented middleware when using [automatic instrumentation](../2023-11-30_What_is_OpenTelemetry/README.md#automatic)
 
-## OTEL > LOKI labels mapping
+## Collectors
+References: https://opentelemetry.io/docs/collector/deployment/
+
+OpenTelemetry offers different ways to integrate a collector. The official [OpenTelemetry Collector](https://github.com/open-telemetry/opentelemetry-collector) can be forked or partially used to build a different one like the [Grafana Agent](https://grafana.com/docs/agent/latest/) or simply the enhanced like [OpenTelemetry Collector Contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib) which has been used during the [demo](./demo/README.md).
+
+SDK also offers exporters which is the [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/) mode.
+
+3 different ways are available to deploy a collector: [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/), [Agent](https://opentelemetry.io/docs/collector/deployment/agent/), [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/).
+
+[No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/) and [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) has been used during the demo.
+
+The [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/) can help to support observability in short lived tasks (like Function As A Service, ...) while [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) can help to introduce [Tail Sampling](./README.md#traces-sampling-head-vs-tail-sampling) and avoid loosing telemetry data when [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/) is used.
+
+The agent monitoring is also important and the gateway has been instrumented and dashboard has also been provisionned in the [demo](./demo/README.md)
+
+## Telemetry Queries
+Having well instrumented middlewares/libraries available without a proper/common way to query and build dashboard is annoying.
+
+This is why Grafana Labs has been smart to integrate Mimir (Previously Cortex) compatible with [Graphite](../2023-12-07_Meet_Graphite/README.md) and [PromQL](https://prometheus.io/docs/prometheus/latest/querying/basics/).
+
+Grafana Labs push really hard to integrate PromQL like query models inside their products like Loki(LogQL) and Tempo (TraceQL) for instance.
+
+## Dashboard templates
+
+What a nightmare to monitor same kind of application but with different ways and tools. At some point, when using micro services at scale, it becomes important to have the same approach for the same problems. Building dashboard templates increase the culture and the Grafana Labs dashboard is a good place to share.
+
+Along the [demo](./demo/README.md), 2 dashboards has been published to Grafana Labs dashboard:
+- https://grafana.com/grafana/dashboards/20352-opentelemetry-jvm-micrometer/
+- https://grafana.com/grafana/dashboards/20353-opentelemetry-jvm-micrometer-per-instance/
+
+Those dashboard are provisionned in the [demo](./demo/README.md).
+
+## Sidenotes
+### OTEL > LOKI labels mapping
 References: https://github.com/grafana/loki/blob/main/docs/sources/send-data/otel/_index.md
 
-TODO PR to add service.version: https://github.com/grafana/loki/blob/de251c3fc2cbd3e9de8d19bd986680c2b99c88bc/pkg/loghttp/push/otlp.go#L31
+OTLP support from loki is quite recent, during the demo, the service.version label is skipped according to this [allow listed labels](https://github.com/grafana/loki/issues/11786)
 
-
-## java agent 2
-https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/tag/v2.0.0
-
-# Correlation and naming conventions are important
-
-# otel resource conventions
-https://opentelemetry.io/docs/specs/semconv/resource/
-
-# metric naming conventions
-https://opentelemetry.io/docs/specs/semconv/general/metrics/
-
-
-## Maven build info to get version
-https://github.com/open-telemetry/opentelemetry-java-instrumentation/pull/9480
-
-## live demo
-<iframe width="1920" height="1080" src="https://www.youtube.com/embed/Hrq4-HouO-s?si=vDB68ywkS0UddXai" title="GrafanaCon CFP demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

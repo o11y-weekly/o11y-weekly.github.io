@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <springProperty name="app" source="spring.application.name"/>
+    <property resource="application.yml" />
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -8,20 +8,16 @@
         </encoder>
     </appender>
 
-    <appender name="OpenTelemetry" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
-    </appender>
-
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>log/${SERVICE_NAME}.log</file>
         <append>true</append>
         <encoder>
-            <pattern>timestamp=%d{yyyy/MM/dd HH:mm:ss.SSSSSSSSS}\t%msg%n</pattern>
+            <pattern>timestamp=%d{yyyy/MM/dd HH:mm:ss.SSSSSSSSS}\tservice.version=${service.version}\tmessage=%msg%n</pattern>
         </encoder>
     </appender>
 
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
-        <!-- <appender-ref ref="FILE" /> -->
-        <appender-ref ref="OpenTelemetry"/>
+        <appender-ref ref="FILE" />
     </root>
 </configuration>

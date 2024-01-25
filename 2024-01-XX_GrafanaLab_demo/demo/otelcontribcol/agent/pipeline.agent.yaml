@@ -1,0 +1,70 @@
+receivers:
+  # otelcontribcol metrics + host metrics
+  prometheus/agent:
+    config:
+      scrape_configs:
+        - job_name: otelcontribcol
+          scrape_interval: 10s
+          static_configs:
+            - targets: [0.0.0.0:8888]
+  hostmetrics:
+    collection_interval: 10s
+    scrapers:
+      load:
+      filesystem:
+      memory:
+      network:
+
+  filelog/agent:
+    include: [ /app/otelcol.log.json ]
+    storage: file_storage/agent
+    attributes:
+      service.name: otelcol-contrib
+      service.namespace: agent
+    operators:
+      - type: json_parser
+    #     parse_from:	body
+    #     parse_to: attributes
+        severity: 
+          parse_from: attributes.level
+        timestamp:
+          parse_from: attributes.ts
+          layout_type: epoch
+          layout: 's.ns'
+      - type: remove
+        field: body
+
+processors:
+  batch/agent:
+  attributes/agent:
+    actions:
+      - action: upsert
+        key: service.namespace
+        value: agent
+  attributes/agent/loki:
+    actions:
+      - action: insert
+        key: loki.attribute.labels
+        value: service.name, service.namespace, service.version, deployment.environment, service.instance.id
+
+service:
+  telemetry:
+    metrics:
+      level: detailed
+    logs:
+      level: info
+      encoding: json
+      output_paths: ["otelcol.log.json"]
+      # output_paths: ["stdout", "otelcol.log.json"]
+      # error_output_paths: ["stderr", "otelcol.error.log.json"]
+
+  pipelines:
+    metrics/agent:
+      receivers: [prometheus/agent, hostmetrics]
+      processors: [batch/agent, attributes/agent]
+      exporters: [otlphttp/mimir]
+
+    logs/agent:
+      receivers: [filelog/agent]
+      processors: [batch/agent, attributes/agent, attributes/agent/loki]
+      exporters: [loki]

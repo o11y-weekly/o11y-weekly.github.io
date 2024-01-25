@@ -6,6 +6,8 @@ server:
     mbeanregistry:
       enabled: true
 
+service.version: '@project.version@'
+
 spring:
   datasource:
     show-sql: true

@@ -2,10 +2,11 @@
 version: '3.8'
 services:
   otelcontribcol-gateway:
-    image: otel/opentelemetry-collector-contrib:0.92.0
+    image: otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL}
     command: "--config /etc/otelcol-contrib/exporters.yml --config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.gateway.yml"
     volumes:
-      - ./otelcontribcol/:/etc/otelcol-contrib/:ro
+      - ./otelcontribcol/gateway/:/etc/otelcol-contrib/:ro
+
     networks:
       - bridge
     depends_on:
@@ -31,8 +32,11 @@ services:
         - JDK_IMAGE=${JDK_IMAGE}
         - DISTRO=${DISTRO}
         - OTEL_JAVA_AGENT_VERSION=${OTEL_JAVA_AGENT_VERSION}
+        - OTEL_CONTRIB_COL=${OTEL_CONTRIB_COL}
     deploy:
       replicas: 1
+    volumes:
+      - ./otelcontribcol/agent/:/etc/otelcol-contrib/:ro
     networks:
       - bridge
     environment:
@@ -41,8 +45,9 @@ services:
       - DEPLOYMENT_ENVIRONMENT=dev
       - OTEL_TRACES_SAMPLER=parentbased_traceidratio
       - OTEL_TRACES_SAMPLER_ARG=1
-      - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
+      - OTEL_LOGS_EXPORTER=none
       - OTEL_METRICS_EXPORTER=none
     depends_on:
       - db
@@ -57,6 +62,7 @@ services:
         - JDK_IMAGE=${JDK_IMAGE}
         - DISTRO=${DISTRO}
         - OTEL_JAVA_AGENT_VERSION=${OTEL_JAVA_AGENT_VERSION}
+        - OTEL_CONTRIB_COL=${OTEL_CONTRIB_COL}
     deploy:
       replicas: 1
     networks:
@@ -70,8 +76,8 @@ services:
       - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
       - OTEL_METRICS_EXPORTER=none
-    ports:
-      - 8080:8080
+    # ports:
+    #   - 8080:8080
     depends_on:
       - service
       - otelcontribcol-gateway
@@ -94,8 +100,6 @@ services:
       - ./loki/:/etc/loki/:ro
     networks:
       - bridge
-    ports:
-      - 3100:3100
 
   mimir:
     image: grafana/mimir:2.11.0
