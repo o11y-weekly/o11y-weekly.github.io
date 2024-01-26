@@ -6,7 +6,6 @@ services:
     command: "--config /etc/otelcol-contrib/exporters.yml --config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.gateway.yml"
     volumes:
       - ./otelcontribcol/gateway/:/etc/otelcol-contrib/:ro
-
     networks:
       - bridge
     depends_on:

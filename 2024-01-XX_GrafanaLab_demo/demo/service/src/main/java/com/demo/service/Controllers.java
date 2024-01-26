@@ -62,7 +62,7 @@ public record Controllers(@Autowired JdbcTemplate jdbcTemplate) {
 		jdbcTemplate.update("insert into persons(firstname, surname) values(?, ?)", user.name, user.surname);
 	}
 
-	private static int getRandom(int min, int max) {
+	private static int getRandom(final int min, final int max) {
 		return random.nextInt(max - min + 1) + min;
 	}
 
