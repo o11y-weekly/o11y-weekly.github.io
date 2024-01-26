@@ -56,7 +56,7 @@ services:
         - OTEL_JAVA_AGENT_VERSION=${OTEL_JAVA_AGENT_VERSION}
         - OTEL_CONTRIB_COL=${OTEL_CONTRIB_COL}
     deploy:
-      replicas: 1
+      replicas: 4
     volumes:
       - ./otelcontribcol/agent/:/etc/otelcol-contrib/:ro
     networks:
@@ -86,7 +86,7 @@ services:
         - OTEL_JAVA_AGENT_VERSION=${OTEL_JAVA_AGENT_VERSION}
         - OTEL_CONTRIB_COL=${OTEL_CONTRIB_COL}
     deploy:
-      replicas: 1
+      replicas: 2
     networks:
       - bridge
     environment:

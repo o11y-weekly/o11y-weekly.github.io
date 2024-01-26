@@ -1,17 +1,17 @@
 exporters:
-  otlphttp/agent/mimir:
+  otlphttp/traces-collector/mimir:
     endpoint: http://mimir:9009/otlp
 
 receivers:
   # otelcontribcol metrics + host metrics
-  prometheus/agent:
+  prometheus/traces-collector:
     config:
       scrape_configs:
-        - job_name: otelcontribcol
+        - job_name: traces-collector
           scrape_interval: 10s
           static_configs:
             - targets: [0.0.0.0:8888]
-  hostmetrics:
+  hostmetrics/traces-collector:
     collection_interval: 10s
     scrapers:
       load:
@@ -20,9 +20,9 @@ receivers:
       network:
 
 processors:
-  batch/agent:
-  attributes/agent:
-    actions:
+  batch/traces-collector:
+  resource/traces-collector:
+    attributes:
       - action: upsert
         key: service.namespace
         value: traces-collector
@@ -38,7 +38,7 @@ service:
       # error_output_paths: ["stderr", "otelcol.error.log.json"]
 
   pipelines:
-    metrics/agent:
-      receivers: [prometheus/agent, hostmetrics]
-      processors: [batch/agent, attributes/agent]
-      exporters: [otlphttp/agent/mimir]
+    metrics/traces-collector:
+      receivers: [prometheus/traces-collector, hostmetrics/traces-collector]
+      processors: [batch/traces-collector, resource/traces-collector]
+      exporters: [otlphttp/traces-collector/mimir]

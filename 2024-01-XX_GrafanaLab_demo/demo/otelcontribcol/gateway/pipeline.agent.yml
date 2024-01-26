@@ -1,13 +1,13 @@
 receivers:
   # otelcontribcol metrics + host metrics
-  prometheus/agent:
+  prometheus/gateway:
     config:
       scrape_configs:
-        - job_name: otelcontribcol
+        - job_name: gateway
           scrape_interval: 10s
           static_configs:
             - targets: [0.0.0.0:8888]
-  hostmetrics:
+  hostmetrics/gateway:
     collection_interval: 10s
     scrapers:
       load:
@@ -16,9 +16,9 @@ receivers:
       network:
 
 processors:
-  batch/agent:
-  attributes/agent:
-    actions:
+  batch/gateway:
+  resource/gateway:
+    attributes:
       - action: upsert
         key: service.namespace
         value: gateway
@@ -34,7 +34,7 @@ service:
       # error_output_paths: ["stderr", "otelcol.error.log.json"]
 
   pipelines:
-    metrics/agent:
-      receivers: [prometheus/agent, hostmetrics]
-      processors: [batch/agent, attributes/agent]
-      exporters: [otlphttp/mimir]
+    metrics/gateway:
+      receivers: [prometheus/gateway, hostmetrics/gateway]
+      processors: [batch/gateway, resource/gateway]
+      exporters: [otlphttp/gateway/mimir]

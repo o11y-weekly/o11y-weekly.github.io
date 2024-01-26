@@ -7,7 +7,7 @@ receivers:
           scrape_interval: 10s
           static_configs:
             - targets: [0.0.0.0:8888]
-  hostmetrics:
+  hostmetrics/agent:
     collection_interval: 10s
     scrapers:
       load:
@@ -36,8 +36,8 @@ receivers:
 
 processors:
   batch/agent:
-  attributes/agent:
-    actions:
+  resource/agent:
+    attributes:
       - action: upsert
         key: service.namespace
         value: agent
@@ -60,11 +60,11 @@ service:
 
   pipelines:
     metrics/agent:
-      receivers: [prometheus/agent, hostmetrics]
-      processors: [batch/agent, attributes/agent]
+      receivers: [prometheus/agent, hostmetrics/agent]
+      processors: [batch/agent, resource/agent]
       exporters: [otlphttp/mimir]
 
     logs/agent:
       receivers: [filelog/agent]
-      processors: [batch/agent, attributes/agent, attributes/agent/loki]
+      processors: [batch/agent, resource/agent, attributes/agent/loki]
       exporters: [loki]

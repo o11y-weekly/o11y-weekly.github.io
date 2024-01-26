@@ -1,5 +1,5 @@
 receivers:
-  otlp/traces:
+  otlp/loadbalancing/traces:
     protocols:
       grpc:
 
@@ -17,15 +17,11 @@ exporters:
         tls:
           insecure: true
     resolver:
-      static:
-        hostnames:
-        - otel-lgtm-otelcontribcol-traces-1:4317
-        - otel-lgtm-otelcontribcol-traces-2:4317
-        - otel-lgtm-otelcontribcol-traces-3:4317
-        - otel-lgtm-otelcontribcol-traces-4:4317
+      dns:
+        hostname: otelcontribcol-traces
 
 service:
   pipelines:
     traces:
-      receivers: [otlp/traces]
+      receivers: [otlp/loadbalancing/traces]
       exporters: [loadbalancing/traces]

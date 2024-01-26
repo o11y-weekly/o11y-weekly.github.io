@@ -1,5 +1,5 @@
 exporters:
-  otlphttp/traces/tempo:
+  otlphttp/tempo:
     endpoint: http://tempo:4318/
   debug:
     verbosity: detailed
@@ -54,4 +54,4 @@ service:
     traces/collector:
       receivers: [otlp/traces]
       processors: [tail_sampling]
-      exporters: [otlphttp/traces/tempo]
+      exporters: [otlphttp/tempo]

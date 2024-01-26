@@ -1,5 +1,5 @@
 exporters:
-  otlphttp/loki:
+  otlphttp/gateway/loki:
     endpoint: http://loki:3100/otlp 
-  otlphttp/mimir:
+  otlphttp/gateway/mimir:
     endpoint: http://mimir:9009/otlp

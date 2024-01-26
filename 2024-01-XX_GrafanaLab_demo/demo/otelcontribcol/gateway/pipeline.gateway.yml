@@ -1,7 +1,7 @@
 exporters:
   debug:
     verbosity: detailed
-  otlp/traces/lb:
+  otlp/gateway/traces:
     endpoint: otelcontribcol-traces-lb:4317
     tls:
       insecure: true
@@ -24,8 +24,8 @@ service:
     logs/gateway:
       receivers: [otlp/gateway]
       processors: [resource/loki]
-      exporters: [otlphttp/loki]
+      exporters: [otlphttp/gateway/loki]
     
     traces/gateway:
       receivers: [otlp/gateway]
-      exporters: [otlp/traces/lb]
+      exporters: [otlp/gateway/traces]
