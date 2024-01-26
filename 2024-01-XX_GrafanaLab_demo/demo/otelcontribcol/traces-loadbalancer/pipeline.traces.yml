@@ -2,7 +2,6 @@ receivers:
   otlp/traces:
     protocols:
       grpc:
-      http:
 
 exporters:
   debug:

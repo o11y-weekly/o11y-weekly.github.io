@@ -7,7 +7,6 @@ exporters:
 receivers:
   otlp/traces:
     protocols:
-      http:
       grpc:
 
 processors:

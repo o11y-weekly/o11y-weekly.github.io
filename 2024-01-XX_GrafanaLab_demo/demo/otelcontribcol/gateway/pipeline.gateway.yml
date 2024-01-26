@@ -1,12 +1,16 @@
+exporters:
+  debug:
+    verbosity: detailed
+  otlp/traces/lb:
+    endpoint: otelcontribcol-traces-lb:4317
+    tls:
+      insecure: true
+
 receivers:
   otlp/gateway:
     protocols:
       http:
       grpc:
-
-exporters:
-  debug:
-    verbosity: detailed
 
 processors:
   resource/loki:
