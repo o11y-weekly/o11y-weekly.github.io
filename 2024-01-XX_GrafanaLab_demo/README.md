@@ -1,17 +1,17 @@
 # OpenTelemetry Looks Good To Me
 
-LGTM are a GrafanaLabs joke to quickly name Loki, Grafana, Tempo and Mimir which have been used in this [demo](./demo/README.md).
+LGTM are a GrafanaLabs products initials and a joke for Loki, Grafana, Tempo and Mimir which have been used in this [demo](./demo/README.md).
 
-[OpenTelemetry](../2023-11-30_What_is_OpenTelemetry/README.md) become standard and really useful to solves common problems in observability.
+[OpenTelemetry](../2023-11-30_What_is_OpenTelemetry/README.md) becomes standard and really useful to solve common problems in observability.
 
 [Dedicated post for the docker compose GrafanaLabs LGTM for java with OpenTelemetry demo](./demo/README.md)
 
 ## Naming conventions
 References: https://opentelemetry.io/docs/concepts/semantic-conventions/
 
-Without naming and value conventions, correlating signal can become quickly a nightmare, to solve that issue, [OpenTelemetry Semantic Conventions](https://opentelemetry.io/docs/concepts/semantic-conventions/) concept is really good to start and adopt.
+Without naming and value conventions, correlating signals can become quickly a nightmare, to solve that issue, [OpenTelemetry Semantic Conventions](https://opentelemetry.io/docs/concepts/semantic-conventions/) concept is really good to start and integrate.
 
-In the following demo, [resources](https://opentelemetry.io/docs/languages/js/resources/#:~:text=A%20resource%20represents%20the%20entity,be%20included%20in%20the%20resource.) have been defined to have such attributes for all signals to query/correlated telemetry for those dimensions.
+In the following [demo](./demo/README.md), [resources](https://opentelemetry.io/docs/specs/semconv/resource/) have been defined to have such attributes for all signals to query/correlated telemetry for those dimensions.
 
 | Resource Attribute | Value |
 |-|-|
@@ -21,7 +21,7 @@ In the following demo, [resources](https://opentelemetry.io/docs/languages/js/re
 |host.name | hostname |
 |deployment.environment | the environment where the application runs (dev,test,prod, ...) |
 
-As an example, by clicking or errors, it can be easy to switch to get corresponding traces:
+As an example, by clicking on errors, it can be easy to get corresponding traces:
 
 ![errors to traces](./errors_to_traces.png)
 ![traces](./traces.png)
@@ -48,37 +48,37 @@ Having a telemetry backends is not the only one requirement to support observabi
 
 Having standard instrumentation really helps opensource projects to give a fully integrated service including observability and monitoring.
 
-As opposed, having to much telemetry can be costly, that is why it is important to choose instrumented middleware when using [automatic instrumentation](../2023-11-30_What_is_OpenTelemetry/README.md#automatic)
+As opposed, having too much telemetry can be costly and it becomes important to choose carefully instrumented middleware when using [automatic instrumentation](../2023-11-30_What_is_OpenTelemetry/README.md#automatic)
 
 ## Collectors
 References: https://opentelemetry.io/docs/collector/deployment/
 
-OpenTelemetry offers different ways to integrate a collector. The official [OpenTelemetry Collector](https://github.com/open-telemetry/opentelemetry-collector) can be forked or partially used to build a different one like the [Grafana Agent](https://grafana.com/docs/agent/latest/) or simply the enhanced like [OpenTelemetry Collector Contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib) which has been used during the [demo](./demo/README.md).
+OpenTelemetry offers different ways to integrate a collector. The official [OpenTelemetry Collector](https://github.com/open-telemetry/opentelemetry-collector) can be forked or partially used to build a different one like the [Grafana Agent](https://grafana.com/docs/agent/latest/) or simply enhanced like [OpenTelemetry Collector Contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib) which has been used during the [demo](./demo/README.md).
 
-SDK also offers exporters which is the [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/) mode.
+SDKs also offers exporters which is the [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/) mode.
 
 3 different ways are available to deploy a collector: [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/), [Agent](https://opentelemetry.io/docs/collector/deployment/agent/), [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/).
 
-All this deployment has been used in the [demo](./demo/README.md).
+All this deployments are used in the [demo](./demo/README.md).
 
 The [Agent](https://opentelemetry.io/docs/collector/deployment/agent/) is quite common and used to scrap telemetry like prometheus, filelog, ...
 
 The [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/) can help to support observability in short lived tasks (like Function As A Service, ...) while [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) can help to introduce [Tail Sampling](./README.md#traces-sampling-head-vs-tail-sampling) and avoid loosing telemetry data when [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/) is used.
 
-The agent monitoring is also important and the gateway has been instrumented and dashboard has also been provisionned in the [demo](./demo/README.md)
+The agent monitoring is also important, the gateway has been instrumented and dashboard has also been provisionned in the [demo](./demo/README.md)
 
 ## Telemetry Queries
 Having well instrumented middlewares/libraries available without a proper/common way to query and build dashboard is annoying.
 
 This is why Grafana Labs has been smart to integrate Mimir (Previously Cortex) compatible with [Graphite](../2023-12-07_Meet_Graphite/README.md) and [PromQL](https://prometheus.io/docs/prometheus/latest/querying/basics/).
 
-Grafana Labs push really hard to integrate PromQL like query models inside their products like Loki(LogQL) and Tempo (TraceQL) for instance.
+Grafana Labs push really hard to integrate PromQL like query models inside their products like Loki (LogQL) and Tempo (TraceQL).
 
 ## Dashboard templates
 
-What a nightmare to monitor same kind of application but with different ways and tools. At some point, when using micro services at scale, it becomes important to have the same approach for the same problems. Building dashboard templates increase the culture and the Grafana Labs dashboard is a good place to share.
+What a nightmare to monitor same kind of application but with different ways and tools. At some point, when using micro services at scale, it becomes important to have the same approach for the same problems. Building dashboard templates increase the productivity and the Grafana Labs dashboard is a good place to share them.
 
-Along the [demo](./demo/README.md), 2 dashboards has been published to Grafana Labs dashboard:
+Along the [demo](./demo/README.md), 2 dashboards have been published to Grafana Labs dashboard:
 - https://grafana.com/grafana/dashboards/20352-opentelemetry-jvm-micrometer/
 - https://grafana.com/grafana/dashboards/20353-opentelemetry-jvm-micrometer-per-instance/
 
