@@ -9,44 +9,6 @@ exporters:
     verbosity: detailed
 
 processors:
-  tail_sampling:
-    decision_wait: 10s
-    policies:
-      [
-          # skip traces where latencies are < 1000ms
-          {
-            name: latency-policy,
-            type: latency,
-            latency: {threshold_ms: 1000}
-          },
-          # keep only error traces by skipping 4XX errors
-          {
-            name: error-policy,
-            type: and,
-            and:
-              {
-                and_sub_policy:
-                  [
-                    {
-                      name: status_code-error-policy,
-                      type: status_code,
-                      status_code: {status_codes: [ERROR]}
-                    },
-                    {
-                      name: http-status-code-error-policy,
-                      type: string_attribute,
-                      string_attribute:
-                        {
-                          key: error.type,
-                          values: ["[1-4].."],
-                          enabled_regex_matching: true,
-                          invert_match: true,
-                        },
-                    },
-                  ]
-              }
-          }
-      ]
   resource/loki:
     attributes:
       - action: upsert
@@ -62,5 +24,4 @@ service:
     
     traces/gateway:
       receivers: [otlp/gateway]
-      processors: [tail_sampling]
-      exporters: [otlphttp/tempo]
+      exporters: [otlp/traces/lb]

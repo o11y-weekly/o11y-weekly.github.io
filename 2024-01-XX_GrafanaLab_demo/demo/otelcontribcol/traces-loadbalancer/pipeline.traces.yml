@@ -1,0 +1,32 @@
+receivers:
+  otlp/traces:
+    protocols:
+      grpc:
+      http:
+
+exporters:
+  debug:
+    verbosity: detailed
+
+  loadbalancing/traces:
+    routing_key: "traceID"
+    protocol:
+      otlp:
+        # all options from the OTLP exporter are supported
+        # except the endpoint
+        timeout: 1s
+        tls:
+          insecure: true
+    resolver:
+      static:
+        hostnames:
+        - otel-lgtm-otelcontribcol-traces-1:4317
+        - otel-lgtm-otelcontribcol-traces-2:4317
+        - otel-lgtm-otelcontribcol-traces-3:4317
+        - otel-lgtm-otelcontribcol-traces-4:4317
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp/traces]
+      exporters: [loadbalancing/traces]

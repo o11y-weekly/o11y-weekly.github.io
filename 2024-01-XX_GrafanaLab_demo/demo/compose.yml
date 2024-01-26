@@ -1,5 +1,6 @@
 # keep version only for graphviz
 version: '3.8'
+name: otel-lgtm
 services:
   otelcontribcol-gateway:
     image: otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL}
@@ -11,7 +12,29 @@ services:
     depends_on:
       - mimir
       - loki
+      - otelcontribcol-traces-lb
+  otelcontribcol-traces-lb:
+    image: otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL}
+    command: "--config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.traces.yml"
+    volumes:
+      - ./otelcontribcol/traces-loadbalancer/:/etc/otelcol-contrib/:ro
+    networks:
+      - bridge
+    depends_on:
+      - mimir
+      - otelcontribcol-traces
+  otelcontribcol-traces:
+    image: otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL}
+    command: "--config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.traces.yml"
+    volumes:
+      - ./otelcontribcol/traces-collector/:/etc/otelcol-contrib/:ro
+    networks:
+      - bridge
+    depends_on:
+      - mimir
       - tempo
+    deploy:
+      replicas: 4
 
   db:
     image: postgres:16.1-alpine3.19

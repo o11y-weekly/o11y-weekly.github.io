@@ -1,0 +1,58 @@
+exporters:
+  otlphttp/traces/tempo:
+    endpoint: http://tempo:4318/
+  debug:
+    verbosity: detailed
+
+receivers:
+  otlp/traces:
+    protocols:
+      http:
+      grpc:
+
+processors:
+  tail_sampling:
+    decision_wait: 10s
+    policies:
+      [
+          # skip traces where latencies are < 1000ms
+          {
+            name: latency-policy,
+            type: latency,
+            latency: {threshold_ms: 1000}
+          },
+          # keep only error traces by skipping 4XX errors
+          {
+            name: error-policy,
+            type: and,
+            and:
+              {
+                and_sub_policy:
+                  [
+                    {
+                      name: status_code-error-policy,
+                      type: status_code,
+                      status_code: {status_codes: [ERROR]}
+                    },
+                    {
+                      name: http-status-code-error-policy,
+                      type: string_attribute,
+                      string_attribute:
+                        {
+                          key: error.type,
+                          values: ["[1-4].."],
+                          enabled_regex_matching: true,
+                          invert_match: true,
+                        },
+                    },
+                  ]
+              }
+          }
+      ]
+
+service:
+  pipelines:
+    traces/collector:
+      receivers: [otlp/traces]
+      processors: [tail_sampling]
+      exporters: [otlphttp/traces/tempo]
