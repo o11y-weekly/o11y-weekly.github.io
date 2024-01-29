@@ -12,28 +12,81 @@ This demo includes 2 java services (service and client) and a postgres database 
 
 ![docker compose services](./docker-compose.png)
 
-
 ## Run locally
 
 ### Run the docker compose
 ```bash
 ./up.sh
 ```
-
-## Run Grafana
-Open dashboard: http://localhost:3000
+### Run Grafana
+Open Grafana: http://localhost:3000
 
 2 folders:
-- App: contains app dashboard
+- App: contains app dashboards
 - OpenTelemetry Collector Contrib: Agent and Gateway monitoring
 
-## Features
+## Grafana Dashboards
+
+### Java
+
+### OTEL
+
+
+
+
+## Java Instrumentation
+
+### Automatic instrumentation
+
+### Manual instrumentation
+
+### Metrics
+
+Micrometer
+
+### Logs
+Logback
+
+#### Traces
+WithSpan attribute
+
+### Java Agent
+
+### Micrometer
+
+### File Log
+
+### OTEL Log exporter
+
+### OTEL Trace exporter
+
+## OTEL Collector
+
+### Deployment
+
+### Scaling
+https://opentelemetry.io/docs/collector/scaling/
+
+### Configuration
+
+#### Agent
+
+#### Gateway
+
+### Traces Tail Sampling
+
+
+
+
+
+
+## OpenTelemetry Collector Contrib
 
 ### Agent Deployment
 - [Agent Configuration](./otelcontribcol/agent/)
 - [Gateway Configuration](./otelcontribcol/gateway/)
 
-Gateway Tail sampling configuration:
+Traces Tail sampling configuration:
 
 ```yaml
 processors:

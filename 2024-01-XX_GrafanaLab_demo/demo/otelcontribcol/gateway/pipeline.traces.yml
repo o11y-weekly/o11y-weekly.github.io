@@ -1,0 +1,21 @@
+exporters:
+  otlp/traces-lb:
+    endpoint: otelcontribcol-traces-lb:4317
+    tls:
+      insecure: true
+  otlp/traces:
+    endpoint: otelcontribcol-traces:4317
+    tls:
+      insecure: true
+  otlphttp/tempo:
+    endpoint: http://tempo:4318/
+
+service:
+  pipelines:    
+    traces/gateway:
+      receivers: [otlp/gateway]
+      # choose one of : 
+      # - otlp/traces-lb: forward to a loadbalancer collector over multiple tail sampling collectors
+      # - otlp/traces : forward to tail sampling collector 
+      # - otlphttp/tempo: send traces to tempo directly without tail-sampling
+      exporters: [otlp/traces-lb]

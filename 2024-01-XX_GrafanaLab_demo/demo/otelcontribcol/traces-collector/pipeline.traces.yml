@@ -1,8 +1,6 @@
 exporters:
   otlphttp/tempo:
     endpoint: http://tempo:4318/
-  debug:
-    verbosity: detailed
 
 receivers:
   otlp/traces:
@@ -33,6 +31,7 @@ processors:
                       type: status_code,
                       status_code: {status_codes: [ERROR]}
                     },
+                    # exclude false positive like bad requests or not found
                     {
                       name: http-status-code-error-policy,
                       type: string_attribute,

@@ -23,3 +23,6 @@ https://opentelemetry.io/docs/specs/semconv/general/metrics/
 
 ## Maven build info to get version
 https://github.com/open-telemetry/opentelemetry-java-instrumentation/pull/9480
+
+## OTEL demo
+https://github.com/open-telemetry/opentelemetry-demo

@@ -1,12 +1,9 @@
 receivers:
-  otlp/loadbalancing/traces:
+  otlp/traces-lb:
     protocols:
       grpc:
 
 exporters:
-  debug:
-    verbosity: detailed
-
   loadbalancing/traces:
     routing_key: "traceID"
     protocol:
@@ -23,5 +20,5 @@ exporters:
 service:
   pipelines:
     traces:
-      receivers: [otlp/loadbalancing/traces]
+      receivers: [otlp/traces-lb]
       exporters: [loadbalancing/traces]
