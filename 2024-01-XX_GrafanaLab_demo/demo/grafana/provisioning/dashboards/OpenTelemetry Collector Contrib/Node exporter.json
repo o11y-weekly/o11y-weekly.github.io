@@ -770,9 +770,10 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "node_time_seconds{host_name=\"${host}\",service_namespace=\"${service_namespace}\"} - node_boot_time_seconds{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}",
+          "expr": "otelcol_process_uptime{host_name=\"${host}\", service_namespace=\"${service_namespace}\"}",
           "instant": true,
           "intervalFactor": 1,
+          "legendFormat": "__auto",
           "range": false,
           "refId": "A",
           "step": 240
@@ -786,7 +787,7 @@
         "type": "prometheus",
         "uid": "mimir"
       },
-      "description": "Total RootFS",
+      "description": "Total FS\n\nhttps://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/receiver/hostmetricsreceiver/internal/scraper/filesystemscraper/documentation.md",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -860,7 +861,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "node_filesystem_size_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\",mountpoint=\"/\",fstype!=\"rootfs\"}",
+          "expr": "min(system_filesystem_usage{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"free\"})",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -870,7 +871,7 @@
           "step": 240
         }
       ],
-      "title": "RootFS Total",
+      "title": "FS Total",
       "type": "stat"
     },
     {
@@ -948,9 +949,10 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "node_memory_MemTotal_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}",
+          "expr": "system_memory_limit{host_name=\"${host}\", service_namespace=\"${service_namespace}\"}",
           "instant": true,
           "intervalFactor": 1,
+          "legendFormat": "__auto",
           "range": false,
           "refId": "A",
           "step": 240
@@ -1034,9 +1036,10 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "system_cpu_logical_count{ host_name=\"198de1ef89a5\" }",
+          "expr": "sum(system_paging_usage{host_name=\"${host}\", service_namespace=\"${service_namespace}\"})",
           "instant": true,
           "intervalFactor": 1,
+          "legendFormat": "__auto",
           "range": false,
           "refId": "A",
           "step": 240
@@ -23732,8 +23735,8 @@
       {
         "current": {
           "selected": false,
-          "text": "39e3c9f5dda7",
-          "value": "39e3c9f5dda7"
+          "text": "3456e3d3d778",
+          "value": "3456e3d3d778"
         },
         "datasource": {
           "type": "prometheus",

@@ -17,7 +17,9 @@ receivers:
       memory:
         metrics:
           system.memory.utilization:
-            enabled: true      
+            enabled: true
+          system.memory.limit:
+            enabled: true
       load:
       disk:
       filesystem:
