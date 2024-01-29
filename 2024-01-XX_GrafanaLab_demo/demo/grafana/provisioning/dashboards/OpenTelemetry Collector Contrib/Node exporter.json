@@ -1821,11 +1821,13 @@
             "type": "prometheus",
             "uid": "mimir"
           },
-          "expr": "node_memory_MemTotal_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}",
+          "editorMode": "code",
+          "expr": "system_memory_limit{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "RAM Total",
+          "legendFormat": "Available",
+          "range": true,
           "refId": "A",
           "step": 240
         },
@@ -1834,11 +1836,13 @@
             "type": "prometheus",
             "uid": "mimir"
           },
-          "expr": "node_memory_MemTotal_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"} - node_memory_MemFree_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"} - (node_memory_Cached_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"} + node_memory_Buffers_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"} + node_memory_SReclaimable_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"})",
+          "editorMode": "code",
+          "expr": "system_memory_utilization{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"free\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "RAM Used",
+          "legendFormat": "RAM Free",
+          "range": true,
           "refId": "B",
           "step": 240
         },
@@ -1847,10 +1851,12 @@
             "type": "prometheus",
             "uid": "mimir"
           },
-          "expr": "node_memory_Cached_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"} + node_memory_Buffers_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"} + node_memory_SReclaimable_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}",
+          "editorMode": "code",
+          "expr": "sum(system_memory_utilization{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=~\"cached|buffered\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "RAM Cache + Buffer",
+          "range": true,
           "refId": "C",
           "step": 240
         },
@@ -1859,22 +1865,12 @@
             "type": "prometheus",
             "uid": "mimir"
           },
-          "expr": "node_memory_MemFree_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}",
+          "editorMode": "code",
+          "expr": "sum(system_paging_usage{host_name=\"$host\", service_namespace=\"${service_namespace}\", state=\"used\"})",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "RAM Free",
-          "refId": "D",
-          "step": 240
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "mimir"
-          },
-          "expr": "(node_memory_SwapTotal_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"} - node_memory_SwapFree_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"})",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "SWAP Used",
+          "legendFormat": "Swap Used",
+          "range": true,
           "refId": "E",
           "step": 240
         }
@@ -1916,7 +1912,7 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": false,
+            "spanNulls": 3600000,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -1940,7 +1936,7 @@
               }
             ]
           },
-          "unit": "bps",
+          "unit": "binBps",
           "unitScale": true
         },
         "overrides": [
@@ -2330,10 +2326,12 @@
             "type": "prometheus",
             "uid": "mimir"
           },
-          "expr": "irate(node_network_receive_bytes_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])*8",
+          "editorMode": "code",
+          "expr": "rate(system_network_io{host_name=\"${host}\", service_namespace=\"${service_namespace}\", direction=\"receive\"}[$__interval])",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "recv {{device}}",
+          "legendFormat": "{{device}}",
+          "range": true,
           "refId": "A",
           "step": 240
         },
@@ -2342,10 +2340,12 @@
             "type": "prometheus",
             "uid": "mimir"
           },
-          "expr": "irate(node_network_transmit_bytes_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])*8",
+          "editorMode": "code",
+          "expr": "rate(system_network_io{host_name=\"${host}\", service_namespace=\"${service_namespace}\", direction=\"transmit\"}[$__interval])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "trans {{device}} ",
+          "range": true,
           "refId": "B",
           "step": 240
         }
@@ -23679,7 +23679,7 @@
       "type": "row"
     }
   ],
-  "refresh": "",
+  "refresh": false,
   "revision": 1,
   "schemaVersion": 39,
   "tags": [
@@ -23791,7 +23791,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
