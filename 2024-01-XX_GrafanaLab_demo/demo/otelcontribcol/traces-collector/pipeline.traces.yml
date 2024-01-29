@@ -8,6 +8,7 @@ receivers:
       grpc:
 
 processors:
+  batch/tempo:
   tail_sampling:
     decision_wait: 10s
     policies:
@@ -43,6 +44,12 @@ processors:
                           invert_match: true,
                         },
                     },
+                    {
+                      # apply probabilistic sampling
+                      name: probabilistic-policy,
+                      type: probabilistic,
+                      probabilistic: { sampling_percentage: 1 },
+                    },
                   ]
               }
           }
@@ -52,5 +59,5 @@ service:
   pipelines:
     traces/collector:
       receivers: [otlp/traces]
-      processors: [tail_sampling]
+      processors: [tail_sampling, batch/tempo]
       exporters: [otlphttp/tempo]

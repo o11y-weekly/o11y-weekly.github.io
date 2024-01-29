@@ -3,6 +3,9 @@ receivers:
     protocols:
       grpc:
 
+processors:
+  batch/traces:
+
 exporters:
   loadbalancing/traces:
     routing_key: "traceID"
@@ -21,4 +24,5 @@ service:
   pipelines:
     traces:
       receivers: [otlp/traces-lb]
+      processors: [batch/traces]
       exporters: [loadbalancing/traces]

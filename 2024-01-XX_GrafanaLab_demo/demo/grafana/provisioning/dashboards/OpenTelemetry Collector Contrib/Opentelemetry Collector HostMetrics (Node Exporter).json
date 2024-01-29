@@ -48,6 +48,7 @@
   "liveNow": false,
   "panels": [
     {
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -55,6 +56,7 @@
         "y": 0
       },
       "id": 267,
+      "panels": [],
       "title": "Quick",
       "type": "row"
     },
@@ -1035,6 +1037,7 @@
       "type": "stat"
     },
     {
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1042,6 +1045,7 @@
         "y": 5
       },
       "id": 266,
+      "panels": [],
       "title": "Basic",
       "type": "row"
     },
@@ -1808,7 +1812,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "system_memory_utilization{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"free\"}",
+          "expr": "system_memory_usage{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"free\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1823,7 +1827,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum(system_memory_utilization{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=~\"cached|buffered\"})",
+          "expr": "sum(system_memory_usage{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=~\"cached|buffered\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "RAM Cache + Buffer",
@@ -3193,7 +3197,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3426,7 +3431,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3837,7 +3843,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3940,9 +3947,9 @@
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "default",
-          "value": "default"
+          "selected": true,
+          "text": "Mimir",
+          "value": "mimir"
         },
         "hide": 0,
         "includeAll": false,
@@ -3951,6 +3958,7 @@
         "name": "DS_PROMETHEUS",
         "options": [],
         "query": "prometheus",
+        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -3958,7 +3966,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "agent",
           "value": "agent"
         },
@@ -3989,9 +3997,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "2c89c8123215",
-          "value": "2c89c8123215"
+          "selected": true,
+          "text": "97287d5cdbff",
+          "value": "97287d5cdbff"
         },
         "datasource": {
           "type": "prometheus",
@@ -4073,6 +4081,6 @@
   "timezone": "browser",
   "title": "Opentelemetry Collector HostMetrics (Node Exporter)",
   "uid": "rYdddlPWk",
-  "version": 3,
+  "version": 1,
   "weekStart": ""
 }
