@@ -35,6 +35,15 @@ receivers:
       processes:
       process:
         mute_process_user_error: true
+        metrics:
+          process.cpu.utilization:
+            enabled: true
+          process.memory.utilization:
+            enabled: true
+          process.threads:
+            enabled: true
+          process.paging.faults:
+            enabled: true
 
 processors:
   batch/traces-collector:
@@ -55,6 +64,14 @@ processors:
       - context: datapoint
         statements:
           - set(attributes["host.name"], resource.attributes["host.name"])
+          - set(attributes["process.command"], resource.attributes["process.command"])
+          - set(attributes["process.command_line"], resource.attributes["process.command_line"])
+          - set(attributes["process.executable.name"], resource.attributes["process.executable.name"])
+          - set(attributes["process.executable.path"], resource.attributes["process.executable.path"])
+          - set(attributes["process.owner"], resource.attributes["process.owner"])
+          - set(attributes["process.parent_pid"], resource.attributes["process.parent_pid"])
+          - set(attributes["process.pid"], resource.attributes["process.pid"])
+
 
 service:
   telemetry:
