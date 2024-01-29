@@ -52,11 +52,6 @@ service:
       # error_output_paths: ["stderr", "otelcol.error.log.json"]
 
   pipelines:
-    metrics/debug:
-      receivers: [prometheus/traces-loadbalancer]
-      processors: [resourcedetection/system, attributes/traces-loadbalancer, transform, batch/traces-loadbalancer]
-      exporters: [debug]
-    
     metrics/traces-loadbalancer:
       receivers: [prometheus/traces-loadbalancer, hostmetrics]
       processors: [resourcedetection/system, attributes/traces-loadbalancer, transform, batch/traces-loadbalancer]
