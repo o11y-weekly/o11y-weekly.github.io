@@ -3958,7 +3958,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "agent",
           "value": "agent"
         },
@@ -4071,8 +4071,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "Node Exporter Full",
+  "title": "Opentelemetry Collector HostMetrics (Node Exporter)",
   "uid": "rYdddlPWk",
-  "version": 7,
+  "version": 5,
   "weekStart": ""
 }
