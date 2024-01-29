@@ -1170,7 +1170,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Busy Iowait"
+              "options": "Busy Wait"
             },
             "properties": [
               {
@@ -1273,7 +1273,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum by(host_name) (irate(node_cpu_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", mode=\"system\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(node_cpu_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
+          "expr": "sum by(host_name) (irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"system\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1288,7 +1288,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum by(host_name) (irate(node_cpu_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", mode=\"user\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(node_cpu_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
+          "expr": "sum by(host_name) (irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"user\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1303,10 +1303,11 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum by(host_name) (irate(node_cpu_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", mode=\"iowait\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(node_cpu_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
+          "expr": "sum by(host_name) (irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"wait\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "Busy Iowait",
+          "legendFormat": "Busy Wait",
           "range": true,
           "refId": "C",
           "step": 240
@@ -1317,8 +1318,9 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum by(host_name) (irate(node_cpu_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", mode=~\".*irq\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(node_cpu_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
+          "expr": "sum by(host_name) (irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=~\".*irq\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
           "legendFormat": "Busy IRQs",
           "range": true,
@@ -1331,8 +1333,9 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum by(host_name) (irate(node_cpu_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", mode!='idle',mode!='user',mode!='system',mode!='iowait',mode!='irq',mode!='softirq'}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(node_cpu_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
+          "expr": "sum by(host_name) (irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state!~\".*irq\", state!=\"idle\", state!=\"user\", state!=\"wait\", state!=\"system\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
           "legendFormat": "Busy Other",
           "range": true,
@@ -1345,8 +1348,9 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum by(host_name) (irate(node_cpu_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", mode=\"idle\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(node_cpu_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
+          "expr": "sum by(host_name) (irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"idle\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
           "legendFormat": "Idle",
           "range": true,
@@ -23704,8 +23708,8 @@
       {
         "current": {
           "selected": false,
-          "text": "traces-loadbalancer",
-          "value": "traces-loadbalancer"
+          "text": "traces-collector",
+          "value": "traces-collector"
         },
         "datasource": {
           "type": "prometheus",
@@ -23735,8 +23739,8 @@
       {
         "current": {
           "selected": false,
-          "text": "3456e3d3d778",
-          "value": "3456e3d3d778"
+          "text": "2fc4141dbda4",
+          "value": "2fc4141dbda4"
         },
         "datasource": {
           "type": "prometheus",
@@ -23818,6 +23822,6 @@
   "timezone": "browser",
   "title": "Node Exporter Full",
   "uid": "rYdddlPWk",
-  "version": 1,
+  "version": 4,
   "weekStart": ""
 }
