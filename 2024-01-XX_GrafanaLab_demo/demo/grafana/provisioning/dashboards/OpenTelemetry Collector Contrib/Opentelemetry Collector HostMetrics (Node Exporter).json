@@ -28,20 +28,21 @@
   "graphTooltip": 1,
   "links": [
     {
-      "icon": "external link",
+      "icon": "dashboard",
       "tags": [],
       "targetBlank": true,
-      "title": "GitHub",
+      "title": "grafana.com",
+      "tooltip": "grafana.com dashboard",
       "type": "link",
-      "url": "https://github.com/rfmoz/grafana-dashboards"
+      "url": "https://grafana.com/grafana/dashboards/20376"
     },
     {
-      "icon": "external link",
+      "icon": "cloud",
       "tags": [],
       "targetBlank": true,
-      "title": "Grafana",
+      "title": "github",
       "type": "link",
-      "url": "https://grafana.com/grafana/dashboards/1860"
+      "url": "https://github.com/cboudereau/grafana-dashboards/tree/main/opentelemetry/otelcol-contrib"
     }
   ],
   "liveNow": false,
@@ -3192,8 +3193,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3426,8 +3426,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3838,8 +3837,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3934,7 +3932,9 @@
   "revision": 1,
   "schemaVersion": 39,
   "tags": [
-    "linux"
+    "linux",
+    "otelcol-contrib",
+    "opentelemetry"
   ],
   "templating": {
     "list": [
@@ -4073,6 +4073,6 @@
   "timezone": "browser",
   "title": "Opentelemetry Collector HostMetrics (Node Exporter)",
   "uid": "rYdddlPWk",
-  "version": 5,
+  "version": 3,
   "weekStart": ""
 }
