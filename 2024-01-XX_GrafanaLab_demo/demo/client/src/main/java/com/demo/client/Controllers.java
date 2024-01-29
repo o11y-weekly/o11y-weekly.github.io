@@ -40,7 +40,7 @@ public record Controllers(UsersServiceClient client) {
 		Logger.info("calling getUser");
 		return client.getUser(id).map(user -> {
 			final var ts = java.time.Instant.now().toEpochMilli();
-			return "Hello " + user.name() + " " + user.surname() + " " + ts;
+			return "User: " + user.name() + " " + user.surname() + " " + ts;
 		}).orElseThrow(ResourceNotFoundException::new);
 	}
 
