@@ -16,13 +16,15 @@ receivers:
     scrapers:
       cpu:
       memory:
+        metrics:
+          system.memory.utilization:
+            enabled: true
       load:
       disk:
       filesystem:
       network:
       paging:
       processes:
-      process:
 
 processors:
   batch/traces-collector:
