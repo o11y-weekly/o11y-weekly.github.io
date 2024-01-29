@@ -31,6 +31,9 @@ processors:
       - key: service.namespace
         action: upsert
         value: traces-collector
+      - key: service.name
+        action: upsert
+        value: otel-collector
   resourcedetection/system:
     detectors: ["system"]
     system:
