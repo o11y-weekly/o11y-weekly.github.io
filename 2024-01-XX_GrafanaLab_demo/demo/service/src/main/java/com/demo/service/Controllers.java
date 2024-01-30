@@ -74,7 +74,7 @@ public record Controllers(@Autowired JdbcTemplate jdbcTemplate) {
 	@GetMapping(path = "/user")
 	User getUser(final @RequestParam("id") Integer id) throws InterruptedException {
 		final var counter = COUNTER.getAndIncrement();
-		final var timing = getRandom(0, 1000);
+		final var timing = getRandom(0, 100);
 
 		callSlowDependency(timing);
 		logger.info("/user has been called!");

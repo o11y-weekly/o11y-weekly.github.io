@@ -109,7 +109,7 @@ services:
     image: curlimages/curl:8.5.0
     networks:
       - bridge
-    entrypoint: sh -c "watch -n 0.5 -d -- /script/curl.sh 2>&1 > /dev/null"
+    entrypoint: sh -c "watch -n 0.1 -d -- /script/curl.sh 2>&1 > /dev/null"
     volumes:
       - ./curl:/script:ro
     depends_on:

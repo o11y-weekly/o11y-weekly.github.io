@@ -20,7 +20,6 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 20353,
   "graphTooltip": 0,
-  "id": 5,
   "links": [
     {
       "asDropdown": false,
@@ -82,7 +81,8 @@
               }
             ]
           },
-          "unit": "ms"
+          "unit": "ms",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -105,11 +105,12 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -152,7 +153,8 @@
               }
             ]
           },
-          "unit": "reqps"
+          "unit": "reqps",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -221,10 +223,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -262,7 +265,8 @@
               }
             ]
           },
-          "unit": "ms"
+          "unit": "ms",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -293,7 +297,7 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -383,7 +387,8 @@
               }
             ]
           },
-          "unit": "reqps"
+          "unit": "reqps",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -531,7 +536,8 @@
               }
             ]
           },
-          "unit": "reqps"
+          "unit": "reqps",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -636,7 +642,8 @@
               }
             ]
           },
-          "unit": "ms"
+          "unit": "ms",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -3377,8 +3384,8 @@
       {
         "current": {
           "selected": false,
-          "text": "d9c00af4299e",
-          "value": "d9c00af4299e"
+          "text": "29cef99dc1b7",
+          "value": "29cef99dc1b7"
         },
         "datasource": {
           "type": "prometheus",
@@ -3494,7 +3501,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},

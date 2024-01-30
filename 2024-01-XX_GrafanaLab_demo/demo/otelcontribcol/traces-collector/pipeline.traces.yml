@@ -16,18 +16,18 @@ processors:
           # apply probabilistic sampling
           name: probabilistic-policy,
           type: probabilistic,
-          probabilistic: { sampling_percentage: 10 },
+          probabilistic: { sampling_percentage: 100 },
         },
       ]
   tail_sampling/latency-error:
     decision_wait: 10s
     policies:
       [
-        # skip traces where latencies are < 500ms
+        # skip traces where latencies are < 100ms
         {
           name: latency-policy,
           type: latency,
-          latency: {threshold_ms: 500}
+          latency: {threshold_ms: 100}
         },
         # keep only error traces by skipping 4XX errors
         {
