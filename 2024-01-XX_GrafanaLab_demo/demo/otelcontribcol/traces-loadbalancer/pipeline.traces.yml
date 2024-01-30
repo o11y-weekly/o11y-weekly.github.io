@@ -1,13 +1,13 @@
 receivers:
-  otlp/traces-lb:
+  otlp/traces-loadbalancer:
     protocols:
       grpc:
 
 processors:
-  batch/traces:
+  batch/traces-collector:
 
 exporters:
-  loadbalancing/traces:
+  loadbalancing/traces-collector:
     routing_key: "traceID"
     protocol:
       otlp:
@@ -18,11 +18,11 @@ exporters:
           insecure: true
     resolver:
       dns:
-        hostname: otelcontribcol-traces
+        hostname: otelcontribcol-traces-collector
 
 service:
   pipelines:
     traces:
-      receivers: [otlp/traces-lb]
-      processors: [batch/traces]
-      exporters: [loadbalancing/traces]
+      receivers: [otlp/traces-loadbalancer]
+      processors: [batch/traces-collector]
+      exporters: [loadbalancing/traces-collector]

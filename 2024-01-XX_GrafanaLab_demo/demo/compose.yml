@@ -12,8 +12,8 @@ services:
     depends_on:
       - mimir
       - loki
-      - otelcontribcol-traces-lb
-  otelcontribcol-traces-lb:
+      - otelcontribcol-traces-loadbalancer
+  otelcontribcol-traces-loadbalancer:
     image: otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL}
     command: "--config /etc/otelcol-contrib/exporters.yml --config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.traces.yml"
     volumes:
@@ -22,8 +22,8 @@ services:
       - bridge
     depends_on:
       - mimir
-      - otelcontribcol-traces
-  otelcontribcol-traces:
+      - otelcontribcol-traces-collector
+  otelcontribcol-traces-collector:
     image: otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL}
     command: "--config /etc/otelcol-contrib/exporters.yml --config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.traces.yml"
     volumes:

@@ -3,7 +3,7 @@ exporters:
     endpoint: http://tempo:4318/
 
 receivers:
-  otlp/traces:
+  otlp/traces-collector:
     protocols:
       grpc:
 
@@ -62,7 +62,7 @@ processors:
 service:
   pipelines:
     traces/collector:
-      receivers: [otlp/traces]
+      receivers: [otlp/traces-collector]
       # [ordering processors](https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/README.md#ordering-processors)
       processors: [tail_sampling/latency-error, tail_sampling/probabilistic, batch/tempo]
       # processors: [batch/tempo]
