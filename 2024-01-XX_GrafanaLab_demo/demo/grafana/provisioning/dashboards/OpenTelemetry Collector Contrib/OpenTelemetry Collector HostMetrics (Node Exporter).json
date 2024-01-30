@@ -22,10 +22,12 @@
       }
     ]
   },
+  "description": "OpenTelemetry Collector otelcol-contrib hostmetrics (Node Exporter)",
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": 1860,
+  "gnetId": 20376,
   "graphTooltip": 1,
+  "id": 8,
   "links": [
     {
       "icon": "dashboard",
@@ -48,7 +50,6 @@
   "liveNow": false,
   "panels": [
     {
-      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -56,7 +57,6 @@
         "y": 0
       },
       "id": 267,
-      "panels": [],
       "title": "Quick",
       "type": "row"
     },
@@ -1037,7 +1037,6 @@
       "type": "stat"
     },
     {
-      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1045,7 +1044,6 @@
         "y": 5
       },
       "id": 266,
-      "panels": [],
       "title": "Basic",
       "type": "row"
     },
@@ -3947,9 +3945,9 @@
     "list": [
       {
         "current": {
-          "selected": true,
-          "text": "Mimir",
-          "value": "mimir"
+          "selected": false,
+          "text": "default",
+          "value": "default"
         },
         "hide": 0,
         "includeAll": false,
@@ -3958,7 +3956,6 @@
         "name": "DS_PROMETHEUS",
         "options": [],
         "query": "prometheus",
-        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -3966,7 +3963,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "agent",
           "value": "agent"
         },
@@ -3997,9 +3994,9 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": "97287d5cdbff",
-          "value": "97287d5cdbff"
+          "selected": false,
+          "text": "2ae629704fcb",
+          "value": "2ae629704fcb"
         },
         "datasource": {
           "type": "prometheus",
@@ -4080,7 +4077,7 @@
   },
   "timezone": "browser",
   "title": "OpenTelemetry Collector HostMetrics (Node Exporter)",
-  "uid": "rYdddlPWk",
+  "uid": "otelcol-contrib-hostmetrics",
   "version": 1,
   "weekStart": ""
 }
