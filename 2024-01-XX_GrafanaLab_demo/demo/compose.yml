@@ -65,7 +65,7 @@ services:
       - SERVICE_NAME=service
       - SERVICE_NAMESPACE=demo
       - DEPLOYMENT_ENVIRONMENT=dev
-      - FAILURE_RATIO=0.01
+      - FAILURE_RATIO=0.1
       - MIN_LATENCY=0 #ms
       - MAX_LATENCY=100 #ms
       - OTEL_TRACES_SAMPLER=parentbased_always_on
