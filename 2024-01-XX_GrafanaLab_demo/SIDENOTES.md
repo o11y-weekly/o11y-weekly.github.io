@@ -26,3 +26,5 @@ https://github.com/open-telemetry/opentelemetry-java-instrumentation/pull/9480
 
 ## OTEL demo
 https://github.com/open-telemetry/opentelemetry-demo
+
+yaml issue: https://github.com/go-yaml/yaml/issues/100 (tailsampling > string_attribute > values)

@@ -22,4 +22,4 @@ service:
       # - otlp/traces-loadbalancer: forward to a loadbalancer collector over multiple tail sampling collectors
       # - otlp/traces : forward to tail sampling collector 
       # - otlphttp/tempo: send traces to tempo directly without tail-sampling
-      exporters: [otlp/traces-loadbalancer]
+      exporters: [otlp/traces-loadbalancer, debug]

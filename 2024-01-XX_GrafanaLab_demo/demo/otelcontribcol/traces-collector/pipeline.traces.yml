@@ -49,8 +49,7 @@ processors:
                     string_attribute:
                       {
                         key: error.type,
-                        # https://github.com/go-yaml/yaml/issues/100
-                        values: [\005B1-4\005D..],
+                        values: [4..],
                         enabled_regex_matching: true,
                         invert_match: true,
                       },
@@ -66,5 +65,4 @@ service:
       receivers: [otlp/traces-collector]
       # [ordering processors](https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/README.md#ordering-processors)
       processors: [tail_sampling/latency-error, tail_sampling/probabilistic, batch/tempo]
-      # processors: [batch/tempo]
       exporters: [otlphttp/tempo]
