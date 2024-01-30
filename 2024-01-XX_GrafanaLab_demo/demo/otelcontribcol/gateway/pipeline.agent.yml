@@ -3,7 +3,7 @@ receivers:
   prometheus/gateway:
     config:
       scrape_configs:
-        - job_name: otel-collector
+        - job_name: otelcol-contrib/gateway
           scrape_interval: 10s
           static_configs:
             - targets: [0.0.0.0:8888]
@@ -50,7 +50,7 @@ processors:
         value: gateway
       - key: service.name
         action: upsert
-        value: otel-collector
+        value: otelcol-contrib/gateway
   resourcedetection/system:
     detectors: ["system"]
     system:

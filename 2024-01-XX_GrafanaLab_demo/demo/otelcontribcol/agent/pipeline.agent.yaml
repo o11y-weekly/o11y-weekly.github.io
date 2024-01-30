@@ -3,7 +3,7 @@ receivers:
   prometheus/agent:
     config:
       scrape_configs:
-        - job_name: otel-collector
+        - job_name: otelcol-contrib/agent
           scrape_interval: 10s
           static_configs:
             - targets: [0.0.0.0:8888]
@@ -45,7 +45,7 @@ receivers:
     include: [ /app/otelcol.log.json ]
     storage: file_storage/agent
     attributes:
-      service.name: otelcol-contrib
+      service.name: otelcol-contrib/agent
       service.namespace: agent
     operators:
       - type: json_parser
@@ -67,6 +67,9 @@ processors:
       - action: upsert
         key: service.namespace
         value: agent
+      - key: service.name
+        action: upsert
+        value: otelcol-contrib/agent
   attributes/agent:
     actions:
       - key: service.namespace
@@ -74,7 +77,7 @@ processors:
         value: agent
       - key: service.name
         action: upsert
-        value: otel-collector
+        value: otelcol-contrib/agent
   resourcedetection/system:
     detectors: ["system"]
     system:
