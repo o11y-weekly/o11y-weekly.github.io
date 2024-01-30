@@ -16,7 +16,7 @@ processors:
           # apply probabilistic sampling
           name: probabilistic-policy,
           type: probabilistic,
-          probabilistic: { sampling_percentage: 100 },
+          probabilistic: { sampling_percentage: 10 },
         },
       ]
   tail_sampling/latency-error:
@@ -65,4 +65,5 @@ service:
       receivers: [otlp/traces]
       # [ordering processors](https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/README.md#ordering-processors)
       processors: [tail_sampling/latency-error, tail_sampling/probabilistic, batch/tempo]
+      # processors: [batch/tempo]
       exporters: [otlphttp/tempo]
