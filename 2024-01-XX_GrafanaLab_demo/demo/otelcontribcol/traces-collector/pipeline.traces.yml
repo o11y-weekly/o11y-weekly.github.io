@@ -49,7 +49,8 @@ processors:
                     string_attribute:
                       {
                         key: error.type,
-                        values: ["[1-4].."],
+                        # https://github.com/go-yaml/yaml/issues/100
+                        values: [\005B1-4\005D..],
                         enabled_regex_matching: true,
                         invert_match: true,
                       },

@@ -34,7 +34,7 @@ services:
       - mimir
       - tempo
     deploy:
-      replicas: 4
+      replicas: 2
 
   db:
     image: postgres:16.1-alpine3.19
@@ -56,7 +56,7 @@ services:
         - OTEL_JAVA_AGENT_VERSION=${OTEL_JAVA_AGENT_VERSION}
         - OTEL_CONTRIB_COL=${OTEL_CONTRIB_COL}
     deploy:
-      replicas: 4
+      replicas: 2
     volumes:
       - ./otelcontribcol/agent/:/etc/otelcol-contrib/:ro
     networks:
@@ -65,6 +65,9 @@ services:
       - SERVICE_NAME=service
       - SERVICE_NAMESPACE=demo
       - DEPLOYMENT_ENVIRONMENT=dev
+      - FAILURE_RATIO=0.01
+      - MIN_LATENCY=0 #ms
+      - MAX_LATENCY=100 #ms
       - OTEL_TRACES_SAMPLER=parentbased_always_on
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
@@ -85,7 +88,7 @@ services:
         - OTEL_JAVA_AGENT_VERSION=${OTEL_JAVA_AGENT_VERSION}
         - OTEL_CONTRIB_COL=${OTEL_CONTRIB_COL}
     deploy:
-      replicas: 2
+      replicas: 1
     networks:
       - bridge
     environment:
@@ -93,13 +96,10 @@ services:
       - SERVICE_NAMESPACE=demo
       - DEPLOYMENT_ENVIRONMENT=dev
       - OTEL_TRACES_SAMPLER=parentbased_traceidratio
-      # - OTEL_TRACES_SAMPLER_ARG=0.1
-      - OTEL_TRACES_SAMPLER_ARG=1
+      - OTEL_TRACES_SAMPLER_ARG=0.1
       - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
       - OTEL_METRICS_EXPORTER=none
-    # ports:
-    #   - 8080:8080
     depends_on:
       - service
       - otelcontribcol-gateway
@@ -114,6 +114,8 @@ services:
       - ./curl:/script:ro
     depends_on:
       - client
+    deploy:
+      replicas: 1
 
   loki:
     image: grafana/loki@sha256:c59b9e928dffd375920b972e936c81e93bf14114c5229fae56a07cc47b15b475 #main with otlp support https://github.com/grafana/loki/pull/10727

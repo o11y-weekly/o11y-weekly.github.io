@@ -78,9 +78,6 @@ service:
       level: detailed
     logs:
       level: info
-      encoding: json
-      output_paths: ["stdout"]
-      # error_output_paths: ["stderr", "otelcol.error.log.json"]
 
   pipelines:
     metrics/traces-loadbalancer:

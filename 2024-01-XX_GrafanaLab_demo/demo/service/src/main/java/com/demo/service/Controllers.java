@@ -45,6 +45,10 @@ public record Controllers(@Autowired JdbcTemplate jdbcTemplate) {
 
 	private static final UserMapper USER_MAPPER = new UserMapper(); 
 
+	private static final Double FAILURE_RATIO = Optional.ofNullable(System.getenv("FAILURE_RATIO")).map(Double::parseDouble).orElseThrow();
+	private static final Integer MIN_LATENCY = Optional.ofNullable(System.getenv("MIN_LATENCY")).map(Integer::parseInt).orElseThrow();
+	private static final Integer MAX_LATENCY = Optional.ofNullable(System.getenv("MAX_LATENCY")).map(Integer::parseInt).orElseThrow();
+
 	@WithSpan
 	private Optional<User> getUserFromDatabase(final int id) {
 		logger.info("getting user {} from database", id);
@@ -74,11 +78,11 @@ public record Controllers(@Autowired JdbcTemplate jdbcTemplate) {
 	@GetMapping(path = "/user")
 	User getUser(final @RequestParam("id") Integer id) throws InterruptedException {
 		final var counter = COUNTER.getAndIncrement();
-		final var timing = getRandom(0, 100);
+		final var timing = getRandom(MIN_LATENCY, MAX_LATENCY);
 
 		callSlowDependency(timing);
 		logger.info("/user has been called!");
-		if (counter % 10 == 0) {
+		if (counter % (1 / FAILURE_RATIO) == 0) {
 			return getFailedUserFromDatabase(id);
 		}
 
