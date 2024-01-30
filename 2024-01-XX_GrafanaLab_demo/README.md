@@ -90,7 +90,8 @@ Those dashboard are provisionned in the [demo](./demo/README.md).
 An old topic regarding the true cost of errors (logs and traces) but also with latencies for traces.
 Without a proper sampling management, observability backend can be hammered in case of errors and/or latencies.
 
-
+Example: all errors
+Solution: use collector probabilistic tail sampling on outage if needed.
 
 ## Sidenotes
 ### OTEL > LOKI labels mapping
