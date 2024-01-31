@@ -4,6 +4,8 @@
 
 Security, scalling and so on will not be introduced and GrafanaCloud offers the best experience and a no brainer solution to start with.
 
+<iframe src="https://www.youtube.com/embed/1kgAzLYeKGY?si=dsrZowTsOmSJ1tsj" title="OpenTelemetry LGTM demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 ## Architecture
 
 This demo includes 2 java services (service and client) and a postgres database to use webserver and jdbc instrumentations.

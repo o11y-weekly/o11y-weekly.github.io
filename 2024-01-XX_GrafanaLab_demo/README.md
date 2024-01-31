@@ -6,6 +6,8 @@ LGTM are a GrafanaLabs products initials and a joke for Loki, Grafana, Tempo and
 
 [Dedicated post for the docker compose GrafanaLabs LGTM for java with OpenTelemetry demo](./demo/README.md)
 
+<iframe src="https://www.youtube.com/embed/1kgAzLYeKGY?si=dsrZowTsOmSJ1tsj" title="OpenTelemetry LGTM demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 ## Naming conventions
 References: https://opentelemetry.io/docs/concepts/semantic-conventions/
 
