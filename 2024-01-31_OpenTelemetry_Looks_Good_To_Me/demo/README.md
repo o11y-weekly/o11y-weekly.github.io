@@ -223,7 +223,7 @@ service:
       exporters: [otlphttp/gateway/loki]
 ```
 
- ### Traces
+### Traces
  - Instrumentation: automatic with [OpenTelemetry Java Agent](https://github.com/open-telemetry/opentelemetry-java-instrumentation)
 - Collector: No Collector to Gateway with tail sampling on latencies + error
 
