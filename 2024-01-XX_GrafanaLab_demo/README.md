@@ -39,9 +39,13 @@ While starting with head sampling can be done easily with good results, tracking
 
 No sampling is just a waste of resource since only errors and latencies are important.
 
-Tail sampling has been setup with [opentelemetry collector contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib) in this [demo](./demo/otelcontribcol/pipeline.gateway.yml).
+Tail sampling has been setup with [opentelemetry collector contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib) in this [demo](./demo/otelcontribcol/pipeline.gateway.yml). 
 
 Again, when tracing error, it become important to avoid tracing 4XX errors when it is not useful or important.
+
+Pay close attention that introducing a [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) comes with [trade-offs](https://opentelemetry.io/docs/collector/deployment/gateway/#tradeoffs).
+
+Temporary putting the sampling at 100% if it does not impact the bill or the observability backend is just ok.
 
 ## Instrumentations
 A dedicated [post section](../2023-11-30_What_is_OpenTelemetry/README.md#instrumentation) has been introduced during the [last post](../2023-11-30_What_is_OpenTelemetry/README.md#instrumentation).
@@ -69,10 +73,38 @@ The [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collect
 
 The agent monitoring is also important, the gateway has been instrumented and dashboard has also been provisionned in the [demo](./demo/README.md)
 
+As mentioned before, it all about trade-offs.
+
+### Trade-offs
+
+||Pros|Cons|
+|-|-|-|
+| [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/#tradeoffs) |+ Simple to use (especially in a dev/test environment)<br/>+ No additional moving parts to operate (in production environments)|- Requires code changes if collection, processing, or ingestion changes<br/>- Strong coupling between the application code and the backend<br/>- There are limited number of exporters per language implementation|
+| [Agent](https://opentelemetry.io/docs/collector/deployment/agent/#tradeoffs) |+ Simple to get started<br/>+ Clear 1:1 mapping between application and collector |- Scalability (human and load-wise)<br/>- Inflexible |
+| [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/#tradeoffs) | + Separation of concerns such as centrally managed credentials<br/>+ Centralized policy management (for example, filtering certain logs or sampling) | - It’s one more thing to maintain and that can fail (complexity)<br/> - Added latency in case of cascaded collectors<br/> - Higher overall resource usage (costs) | 
+
+### Short lived task
+While [Agent](https://opentelemetry.io/docs/collector/deployment/agent/) mode is the most used to start, it becomes complex to use this mode with short lived task like Function as a service or scheduled task since the telemetry might not be exported after the graceful shutdown.
+
+For this purpose, maintaining an Agent or a [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) is quite the same and less complex.
+
+This is why, in such cases, using OTLP really helps to avoid using an [Agent](https://opentelemetry.io/docs/collector/deployment/agent/) but instead, pushing the telemetry to a backend (a [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/)) co-located with the short lived tasks. 
+
+### Scaling Collectors
+Reference: https://opentelemetry.io/docs/collector/scaling/
+
+Monitoring collectors is really important to avoid [out of control agent antipattern](../2023-10-18_What_is_not_an_observability_solution/What_is_not_an_o11y_solution.md#out-of-control-collector).
+
+Without agent monitoring, it becomes complex to scale and understand the volumes and problems.
+
+OpenTelemetry Collectors combined with Mimir is a good choice to monitor all agents and gateway to be sure that everything is working correctly or need scaling.
+
+[This dashboard](https://grafana.com/grafana/dashboards/15983-opentelemetry-collector/) from MonitoringArtist has been used and updated.
+
 ## Telemetry Queries
 Having well instrumented middlewares/libraries available without a proper/common way to query and build dashboard is annoying.
 
-This is why Grafana Labs has been smart to integrate Mimir (Previously Cortex) compatible with [Graphite](../2023-12-07_Meet_Graphite/README.md) and [PromQL](https://prometheus.io/docs/prometheus/latest/querying/basics/).
+This is why Grafana Labs comes in to play and has been smart to integrate Mimir (Previously Cortex) compatible with [Graphite](../2023-12-07_Meet_Graphite/README.md) and [PromQL](https://prometheus.io/docs/prometheus/latest/querying/basics/).
 
 Grafana Labs push really hard to integrate PromQL like query models inside their products like Loki (LogQL) and Tempo (TraceQL).
 
@@ -84,16 +116,22 @@ Along the [demo](./demo/README.md), 3 dashboards have been published to Grafana 
 - https://grafana.com/grafana/dashboards/20353-opentelemetry-jvm-micrometer-per-instance/
 - https://grafana.com/grafana/dashboards/20376-opentelemetry-collector-hostmetrics-node-exporter/
 
-Those dashboard are provisionned in the [demo](./demo/README.md).
+[Those dashboard are provisionned](./demo/grafana/provisioning/dashboards/) in the [demo](./demo/README.md).
+
+One more dashboard has been used to monitor OpenTelemetry Collectors:
+https://grafana.com/grafana/dashboards/15983-opentelemetry-collector/
 
 ## What if everything goes wrong ?
 
 ### Error and latencies impact on observability platform
-An old topic regarding the true cost of errors (logs and traces) but also with latencies for traces.
+An old topic regarding the true cost of errors (logs and traces).
 Without a proper sampling management, observability backend can be hammered in case of errors and/or latencies.
 
-Example: all errors
-Solution: use collector probabilistic tail sampling on outage if needed.
+Example: everything is failling and all the traces end in the backend.
+
+Solution: 
+- Reduce the ratio but it can be annoying to redeploy everything during an outage.
+- Use collector probabilistic tail sampling [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) on outage if needed and monitor agents/gateway properly thanks to Grafana dashboards and Mimir.
 
 ## Sidenotes
 ### OTEL > LOKI labels mapping
