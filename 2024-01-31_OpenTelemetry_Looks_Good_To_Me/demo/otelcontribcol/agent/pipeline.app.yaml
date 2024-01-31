@@ -1,0 +1,30 @@
+receivers:
+  filelog/app:
+    include: [ /app/log/*.log ]
+    storage: file_storage/app
+    multiline:
+      line_start_pattern: timestamp=
+    resource:
+      service.name: ${env:SERVICE_NAME}
+      service.namespace: ${env:SERVICE_NAMESPACE}
+      host.name: ${env:HOSTNAME}
+      deployment.environment: ${env:DEPLOYMENT_ENVIRONMENT}
+      service.instance.id: ${env:HOSTNAME} # loki does not accept host.name (https://github.com/grafana/loki/issues/11786)
+
+processors:
+  batch/app:
+  resource/app/loki:
+    attributes:
+      - action: insert
+        key: loki.resource.labels
+        value: service.name, service.namespace, service.version, host.name, deployment.environment, service.instance.id
+      - action: insert
+        key: loki.format
+        value: raw
+
+service:
+  pipelines:
+    logs/app:
+      receivers: [filelog/app]
+      processors: [batch/app, resource/app/loki]
+      exporters: [loki]

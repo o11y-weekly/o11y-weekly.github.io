@@ -2,12 +2,15 @@ Welcome to o11y weekly (observability weekly!).
 
 Here is the latest news / feedbacks about observability.
 
-After [OpenTelemetry](./2023-11-30_What_is_OpenTelemetry/README.md), this week, let's [Meet Graphite](./2023-12-07_Meet_Graphite/README.md) and see if it is still worth and when over other solutions and protocols ?
+First of all, I broke the rule of writing 1 post every week; well nobody's perfect :) ?
+
+This week, I prepared a massive demo with OpenTelemetry and Grafana Labs products LTGM (Loki, Tempo, Grafana and Mimir) : [OpenTelemetry Looks Good To Me](./2024-01-31_OpenTelemetry_Looks_Good_To_Me/README.md). You wll discover with a docker compose demo an example of what could be OpenTelemetry and Grafana Labs apply to java applications.
 
 # Last Post
-[2023-12-07 #8 Meet Graphite](./2023-12-07_Meet_Graphite/README.md)
+[2024-01-31 #9 OpenTelemetry Looks Good To Me](./2024-01-31_OpenTelemetry_Looks_Good_To_Me/README.md)
 
 ## Archives
+- [2023-12-07 #8 Meet Graphite](./2023-12-07_Meet_Graphite/README.md)
 - [2023-11-30 #7 What is OpenTelemetry ?](./2023-11-30_What_is_OpenTelemetry/README.md)
 - [2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/README.md)
 - [2023-11-16 #5 Meet Vector](./2023-11-16_Meet_Vector/README.md)
