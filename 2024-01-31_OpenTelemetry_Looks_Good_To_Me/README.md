@@ -1,6 +1,6 @@
 # 2024-01-31 #9 OpenTelemetry Looks Good To Me
 
-LGTM are a GrafanaLabs products initials and a joke for Loki, Grafana, Tempo and Mimir which have been used in this [demo](./demo/README.md).
+LGTM are a GrafanaLabs products initials and a joke for Loki, Grafana, Tempo and Mimir which have been used in this [demo](./demo/README.md): https://o11y-weekly.github.io/2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/
 
 [OpenTelemetry](../2023-11-30_What_is_OpenTelemetry/README.md) becomes standard and really useful to solve common problems in observability.
 

@@ -18,6 +18,8 @@ This demo includes 2 java services (service and client) and a postgres database 
 
 ### Run the docker compose
 ```bash
+git clone git@github.com:o11y-weekly/o11y-weekly.github.io.git
+cd 2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/
 ./up.sh
 ```
 ### Run Grafana
