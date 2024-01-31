@@ -1,4 +1,4 @@
-# OpenTelemetry Looks Good To Me
+# 2024-01-31 #9 OpenTelemetry Looks Good To Me
 
 LGTM are a GrafanaLabs products initials and a joke for Loki, Grafana, Tempo and Mimir which have been used in this [demo](./demo/README.md).
 
