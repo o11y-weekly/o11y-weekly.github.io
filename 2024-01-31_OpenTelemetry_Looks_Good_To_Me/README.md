@@ -4,7 +4,7 @@ LGTM are a GrafanaLabs products initials and a joke for Loki, Grafana, Tempo and
 
 [OpenTelemetry](../2023-11-30_What_is_OpenTelemetry/README.md) becomes standard and really useful to solve common problems in observability.
 
-[Dedicated post for the docker compose GrafanaLabs LGTM for java with OpenTelemetry demo](./demo/README.md)
+[Dedicated post for the docker compose GrafanaLabs LGTM for java with OpenTelemetry demo](https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo)
 
 <iframe src="https://www.youtube.com/embed/1kgAzLYeKGY?si=dsrZowTsOmSJ1tsj" title="OpenTelemetry LGTM demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
