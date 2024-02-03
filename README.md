@@ -4,7 +4,7 @@ Here is the latest news / feedbacks about observability.
 
 First of all, I broke the rule of writing 1 post every week; well nobody's perfect :) ?
 
-This week, I prepared a massive demo with OpenTelemetry and Grafana Labs products LTGM (Loki, Tempo, Grafana and Mimir) : [OpenTelemetry Looks Good To Me](./2024-01-31_OpenTelemetry_Looks_Good_To_Me/README.md). You wll discover with a docker compose demo an example of what could be OpenTelemetry and Grafana Labs apply to java applications.
+This week, I prepared a massive demo with OpenTelemetry and Grafana Labs products LGTM (Loki, Grafana, Tempo and Mimir) : [OpenTelemetry Looks Good To Me](./2024-01-31_OpenTelemetry_Looks_Good_To_Me/README.md). You wll discover with a docker compose demo an example of what could be OpenTelemetry and Grafana Labs apply to java applications.
 
 # Last Post
 [2024-01-31 #9 OpenTelemetry Looks Good To Me](./2024-01-31_OpenTelemetry_Looks_Good_To_Me/README.md)
