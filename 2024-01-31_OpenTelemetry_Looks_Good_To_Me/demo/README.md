@@ -38,6 +38,13 @@ Open Grafana: http://localhost:3000
 
 - [OpenTelemetry JVM Micrometer per instance](./grafana/provisioning/dashboards/Apps/OpenTelemetry%20JVM%20Micrometer%20per%20instance.json)
 
+### OpenTelemetry Collector Monitoring
+
+- [OpenTelemetry Collector Contrib pipeline monitoring](./grafana/provisioning/dashboards/OpenTelemetry%20Collector%20Contrib/OpenTelemetry%20Collector.json)
+
+- [OpenTelemetry Collector Contrib node exporter drop-in](./grafana/provisioning/dashboards/OpenTelemetry%20Collector%20Contrib/OpenTelemetry%20Collector%20HostMetrics%20(Node%20Exporter).json)
+
+## Deep Dive
 ### OTEL
 
 ## Java Instrumentation
