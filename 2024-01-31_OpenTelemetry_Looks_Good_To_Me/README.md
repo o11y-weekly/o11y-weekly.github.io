@@ -1,6 +1,6 @@
 # 2024-01-31 #9 OpenTelemetry Looks Good To Me
 
-LGTM are a GrafanaLabs products initials and a joke for Loki, Grafana, Tempo and Mimir which have been used in this [demo](https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/#run-locally): [show the demo code](https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/compose.yml)
+LGTM are a GrafanaLabs products initials and a joke for Loki, Grafana, Tempo and Mimir which have been used in this [deep dive demo](https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/#run-locally): [show the deep dive demo code](https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/compose.yml)
 
 [OpenTelemetry](../2023-11-30_What_is_OpenTelemetry/README.md) becomes standard and really useful to solve common problems in observability but does not solve all the Observability problems. This is why Grafana Labs product and [OpenTelemetry](../2023-11-30_What_is_OpenTelemetry/README.md) work all together to both send telemetry and visualize / use them thanks Grafana Labs. 
 
