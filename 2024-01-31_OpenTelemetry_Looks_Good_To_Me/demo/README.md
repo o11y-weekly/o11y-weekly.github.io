@@ -34,31 +34,28 @@ Open Grafana: http://localhost:3000
 ### Java
 
 2 Java dashboards are available:
-- [OpenTelemetry JVM Micrometer](./grafana/provisioning/dashboards/Apps/OpenTelemetry%20JVM%20Micrometer.json)
+- [OpenTelemetry JVM Micrometer](https://grafana.com/grafana/dashboards/20352-opentelemetry-jvm-micrometer/)
 
-- [OpenTelemetry JVM Micrometer per instance](./grafana/provisioning/dashboards/Apps/OpenTelemetry%20JVM%20Micrometer%20per%20instance.json)
+- [OpenTelemetry JVM Micrometer per instance](https://grafana.com/grafana/dashboards/20353-opentelemetry-jvm-micrometer-per-instance/)
 
 ### OpenTelemetry Collector Monitoring
 
 - [OpenTelemetry Collector Contrib pipeline monitoring](./grafana/provisioning/dashboards/OpenTelemetry%20Collector%20Contrib/OpenTelemetry%20Collector.json)
 
-- [OpenTelemetry Collector Contrib node exporter drop-in](./grafana/provisioning/dashboards/OpenTelemetry%20Collector%20Contrib/OpenTelemetry%20Collector%20HostMetrics%20(Node%20Exporter).json)
+- [OpenTelemetry Collector Contrib node exporter drop-in](https://grafana.com/grafana/dashboards/20376-opentelemetry-collector-hostmetrics-node-exporter/)
 
 ## Deep Dive
-### OTEL
 
-## Java Instrumentation
+### Java Instrumentation setup
 
-### Automatic instrumentation
+#### Automatic instrumentation
 Reference : [Automatic instrumentation](../../2023-11-30_What_is_OpenTelemetry/README.md#automatic)
 
-### Manual instrumentation
+#### Manual instrumentation
 Reference : [Manual instrumentation](../../2023-11-30_What_is_OpenTelemetry/README.md#manual)
 
 
-### Metrics
-
-Micrometer OTLP
+#### Setup Metrics instrumentation and exporter
 
 Micrometer combined with the otlp registry has been used to push metrics with OTLP to mimir:
 
@@ -96,12 +93,12 @@ management:
         all: 0.5, 0.95, 0.99
 ```
 
-### Logs
+#### Logs
 2 different methods has been used to send logs to LOKI.
 
-Scrapping the file is a conventional and standard method to seng logs with a agent.
+Scrapping the file is a conventional and standard method to seng logs with a agent and used in the [service application](./service/) while [pushing logs to a gateway] is quite new and used in the [client application](./client/).
 
-#### File Scrap
+##### File Log
 
 In the [service application](./service/), Logback has been used to write the logs into a file log.
 
@@ -128,47 +125,8 @@ In the [service application](./service/), Logback has been used to write the log
 
 OpenTelemetry Collector contrib reads the file and forward logs to LOKI using the LOKI api.
 
-[OpenTelemetry Collector file log pipeline scrap](./otelcontribcol/agent/pipeline.app.yaml)
-```yaml
-exporters:
-  loki:
-    endpoint: http://loki:3100/loki/api/v1/push
-    default_labels_enabled:
-      level: true
 
-receivers:
-  filelog/app:
-    include: [ /app/log/*.log ]
-    storage: file_storage/app
-    multiline:
-      line_start_pattern: timestamp=
-    resource:
-      service.name: ${env:SERVICE_NAME}
-      service.namespace: ${env:SERVICE_NAMESPACE}
-      host.name: ${env:HOSTNAME}
-      deployment.environment: ${env:DEPLOYMENT_ENVIRONMENT}
-      service.instance.id: ${env:HOSTNAME} # loki does not accept host.name (https://github.com/grafana/loki/issues/11786)
-
-processors:
-  batch/app:
-  resource/app/loki:
-    attributes:
-      - action: insert
-        key: loki.resource.labels
-        value: service.name, service.namespace, service.version, host.name, deployment.environment, service.instance.id
-      - action: insert
-        key: loki.format
-        value: raw
-
-service:
-  pipelines:
-    logs/app:
-      receivers: [filelog/app]
-      processors: [batch/app, resource/app/loki]
-      exporters: [loki]
-```
-
-#### Java Agent exporter
+##### Java Agent exporter
 
 In the [client application](./client/) the Java agent sends log with OpenTelemetry embedded exporters.
 
@@ -189,38 +147,17 @@ command=java
 #### Traces
 WithSpan attribute
 
-### Java Agent
+##### Java Agent
 
-### Micrometer
-
-### File Log
-
-### OTEL Log exporter
-
-### OTEL Trace exporter
-
-## OTEL Collector
-
-### Deployment
-
-### Configuration
+### OpenTelemetry Collector
 
 #### Agent
+- [Agent Configuration](./otelcontribcol/agent/)
 
 #### Gateway
-
-### Traces Tail Sampling
-
-
-
-
-
-
-## OpenTelemetry Collector Contrib
-
-### Agent Deployment
-- [Agent Configuration](./otelcontribcol/agent/)
 - [Gateway Configuration](./otelcontribcol/gateway/)
+
+#### Traces Tail Sampling
 
 Traces Tail sampling [configuration](./otelcontribcol/traces-collector/pipeline.traces.yml):
 
@@ -267,31 +204,11 @@ processors:
       ]
 ```
 
+## OpenTelemetry Collector Contrib setup
+
 ### Metrics
 - Instrumentation: micrometer with otlp registry
 - Collector: No Collector
-
-Java [maven dependency](./client/pom.xml):
-```xml
-<dependency>
-    <groupId>io.micrometer</groupId>
-    <artifactId>micrometer-registry-otlp</artifactId>
-</dependency>
-```
-
-Java [micrometer-otlp configuration](./client/src/main/resources/application.yml)
-```yaml
-management:
-  otlp:      
-    metrics:
-      export:
-        enabled: true
-        step: 10s
-        url: http://mimir:9009/otlp/v1/metrics
-        # url: https://prometheus-prod-24-prod-eu-west-2.grafana.net/otlp/v1/metrics
-        # headers:
-        #   Authorization: Basic ####
-```
 
 ### Logs
 #### Agent mode
@@ -358,27 +275,8 @@ service:
       exporters: [otlphttp/gateway/loki]
 ```
 
-### Traces
- - Instrumentation: automatic with [OpenTelemetry Java Agent](https://github.com/open-telemetry/opentelemetry-java-instrumentation)
-- Collector: No Collector to Gateway with tail sampling on latencies + error
+## OpenTelemetry Collector Contrib Monitoring
 
-Java Agent supervisord [command line](./client/supervisor.d/app.ini)
-```ini
-[program:app]
-directory=/app
-command=java
-    -javaagent:/app/opentelemetry-javaagent.jar
-    -Dservice.name=%(ENV_SERVICE_NAME)s
-    -Dservice.namespace=%(ENV_SERVICE_NAMESPACE)s
-    -Dhost.name=%(host_node_name)s
-    -Ddeployment.environment=%(ENV_DEPLOYMENT_ENVIRONMENT)s
-    -Dotel.resource.attributes=service.name=%(ENV_SERVICE_NAME)s,service.namespace=%(ENV_SERVICE_NAMESPACE)s,deployment.environment=%(ENV_DEPLOYMENT_ENVIRONMENT)s,host.name=%(host_node_name)s
-    -jar /app/main.jar 
-    --spring.application.name=%(ENV_SERVICE_NAME)s 
-autorestart=false
-startretries=0
-stdout_logfile=/dev/fd/1
-stdout_logfile_maxbytes=0
-stderr_logfile=/dev/fd/2
-stderr_logfile_maxbytes=0
-```
+### HostMetrics (node exporter)
+
+### Pipeline
