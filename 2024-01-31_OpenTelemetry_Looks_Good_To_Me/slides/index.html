@@ -1,0 +1,468 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/theme/blood.min.css" id="theme">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/monokai.min.css">
+</head>
+
+<body>
+
+    <div class="reveal">
+        <div class="slides">
+            <section data-markdown>
+                <textarea data-template>
+                  ![OTEL](./otel.png)
+                  ![Looks Good To Me](./lgtm.png)
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ## Start up the demo !
+                    ![Architecture](./docker-compose.png)
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ## OpenTelemetry Logs with Loki
+                    ![Loki](./loki.svg)
+                </textarea>
+            </section>
+            <section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### OTEL Collector Agent mode
+                        - Java Logback File Appender
+                        - OpenTelemetry Collector Contrib Agent
+
+                        ![loki otel agent](./loki-agent.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Java Logback File Appender 
+                        ```xml
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <configuration>
+                            <property resource="application.yml" />
+                            <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+                                <file>log/${SERVICE_NAME}.log</file>
+                                <append>true</append>
+                                <encoder>
+                                    <pattern>
+                                        timestamp=%d{yyyy/MM/dd HH:mm:ss.SSSSSSSSS}\t
+                                        service.version=${service.version}\t
+                                        traceId=%X{trace_id}\t
+                                        spanId=%X{span_id}\t
+                                        message=%msg%n</pattern>
+                                </encoder>
+                            </appender>
+                            <root level="INFO">
+                                <appender-ref ref="FILE" />
+                            </root>
+                        </configuration>
+                        ```
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### OTEL Loki Pipeline
+```yaml
+exporters:
+  loki:
+    endpoint: http://loki:3100/loki/api/v1/push
+    default_labels_enabled:
+      level: true
+receivers:
+  filelog/app:
+    include: [ /app/log/*.log ]
+    storage: file_storage/app
+    multiline:
+      line_start_pattern: timestamp=
+    resource:
+      service.name: ${env:SERVICE_NAME}
+      service.namespace: ${env:SERVICE_NAMESPACE}
+      host.name: ${env:HOSTNAME}
+      deployment.environment: ${env:DEPLOYMENT_ENVIRONMENT}
+processors:
+  batch/app:
+  resource/app/loki:
+    attributes:
+      - action: insert
+        key: loki.resource.labels
+        value: service.name, service.namespace, service.version, host.name, deployment.environment, service.instance.id
+      - action: insert
+        key: loki.format
+        value: raw
+service:
+  pipelines:
+    logs/app:
+      receivers: [filelog/app]
+      processors: [batch/app, resource/app/loki]
+      exporters: [loki]
+```
+                    </textarea>
+                </section>
+            </section>
+            <section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Java Agent / OTLP mode
+                        - Logback OpenTelemetry Appender
+                        - OpenTelemetry Java Agent
+                        ![loki OTLP](loki-otlp.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Maven Dependency
+```xml
+<dependency>
+    <groupId>io.opentelemetry.instrumentation</groupId>
+    <artifactId>opentelemetry-logback-appender-1.0</artifactId>
+    <version>2.0.0-alpha</version>
+</dependency>
+```
+                    </textarea>
+                </section>
+
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Logback OTEL Configuration
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="OpenTelemetry" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="OpenTelemetry"/>
+    </root>
+</configuration>
+```
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### OpenTelemetry Java Agent
+                        ![java agent OTEL](./java-agent-otel.qrcode.gif)
+```ini
+command=java
+    -javaagent:/app/opentelemetry-javaagent.jar
+    -Dservice.name=%(ENV_SERVICE_NAME)s
+    -Dservice.namespace=%(ENV_SERVICE_NAMESPACE)s
+    -Dhost.name=%(host_node_name)s
+    -Ddeployment.environment=%(ENV_DEPLOYMENT_ENVIRONMENT)s
+    -Dotel.resource.attributes=service.name=%(ENV_SERVICE_NAME)s,service.namespace=%(ENV_SERVICE_NAMESPACE)s,deployment.environment=%(ENV_DEPLOYMENT_ENVIRONMENT)s,host.name=%(host_node_name)s
+    -jar /app/main.jar 
+    --spring.application.name=%(ENV_SERVICE_NAME)s 
+```
+                    </textarea>
+                </section>
+            </section>
+
+            <section>
+                <section data-markdown>
+                    <textarea data-template>
+                    ## Metrics with OTLP Mimir ![Mimir](./mimir.svg)
+                    
+                    ![Java metrics](./java-metrics.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                    ### OTLP Micrometer registry
+
+```xml
+<dependency>
+    <groupId>io.micrometer</groupId>
+    <artifactId>micrometer-registry-otlp</artifactId>
+</dependency>
+```
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                    ### Configuration
+```yaml
+management:
+  otlp:      
+    metrics:
+      export:
+        enabled: true
+        step: 10s
+        url: http://mimir:9009/otlp/v1/metrics
+
+  metrics:
+    tags:
+      deployment.environment: '${deployment.environment}'
+      host.name: '${host.name}'
+      service:
+        name: '${service.name}'
+        namespace: '${service.namespace}'
+        version: '@project.version@'
+    distribution:
+      percentiles:
+        all: 0.5, 0.95, 0.99
+```
+                    </textarea>
+                </section>
+            </section>
+
+            <section>
+                <section data-markdown>
+                    <textarea data-template>
+                    ## Tracing with Tempo <img height="70px" src="tempo.svg"/>
+
+                    ![traces error](./traces-error.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+
+                    ![traces durations](./traces-durations.png)
+                    </textarea>
+                </section>
+            </section>
+
+            <section>
+                <section data-markdown>
+                    <textarea data-template>
+                    ### Head Sampling
+                    - Start with low value: Parent Based and 1% or 10%
+                    - Increase if needed by taking care of observability backends / billing / rate limiting
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                    ### Head Sampling Configuration
+```yaml
+environment:
+- SERVICE_NAME=client
+- SERVICE_NAMESPACE=demo
+- DEPLOYMENT_ENVIRONMENT=dev
+- OTEL_TRACES_SAMPLER=parentbased_traceidratio
+- OTEL_TRACES_SAMPLER_ARG=0.1
+- OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+- OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
+- OTEL_METRICS_EXPORTER=none
+```
+                    </textarea>
+                </section>
+            </section>
+            <section>
+                <section data-markdown>
+                    <textarea data-template>
+                    ### Traces monitoring
+                    ![Pipeline monitoring](traces-pipeline-monitoring.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                    ### OTEL metrics
+```yaml
+receivers:
+  prometheus/gateway:
+    config:
+      scrape_configs:
+        - job_name: otelcol-contrib/gateway
+          scrape_interval: 10s
+          static_configs:
+            - targets: [0.0.0.0:8888]
+service:
+  telemetry:
+    metrics:
+      level: detailed
+  pipelines:
+    metrics/gateway:
+      receivers: [prometheus/gateway]
+      exporters: [otlphttp/gateway/mimir]
+```
+                </textarea>
+                </section>
+            </section>
+            <section>
+                <section data-markdown>
+                    <textarea data-template>
+                    ### OTEL Collector host metrics
+                    ![OTEL Collector Host Metrics](otelcol-hostmetrics.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                    ### Otelcol Configuration
+```yaml
+receivers:
+  # otelcontribcol metrics + host metrics
+  prometheus/gateway:
+    config:
+      scrape_configs:
+        - job_name: otelcol-contrib/gateway
+          scrape_interval: 10s
+          static_configs:
+            - targets: [0.0.0.0:8888]
+  hostmetrics/gateway:
+    collection_interval: 10s
+    scrapers:
+      cpu:
+        metrics:
+          system.cpu.logical.count:
+            enabled: true
+      memory:
+        metrics:
+          system.memory.utilization:
+            enabled: true
+          system.memory.limit:
+            enabled: true
+      load:
+      disk:
+      filesystem:
+        metrics:
+          system.filesystem.utilization:
+            enabled: true
+      network:
+      paging:
+      processes:
+      process:
+        mute_process_user_error: true
+        metrics:
+          process.cpu.utilization:
+            enabled: true
+          process.memory.utilization:
+            enabled: true
+          process.threads:
+            enabled: true
+          process.paging.faults:
+            enabled: true
+
+processors:
+  batch/gateway:
+  attributes/gateway:
+    actions:
+      - key: service.namespace
+        action: upsert
+        value: gateway
+      - key: service.name
+        action: upsert
+        value: otelcol-contrib/gateway
+  resourcedetection/system:
+    detectors: ["system"]
+    system:
+      hostname_sources: ["os"]
+  transform:
+    metric_statements:
+      - context: datapoint
+        statements:
+          - set(attributes["host.name"], resource.attributes["host.name"])
+          - set(attributes["process.command"], resource.attributes["process.command"])
+          - set(attributes["process.command_line"], resource.attributes["process.command_line"])
+          - set(attributes["process.executable.name"], resource.attributes["process.executable.name"])
+          - set(attributes["process.executable.path"], resource.attributes["process.executable.path"])
+          - set(attributes["process.owner"], resource.attributes["process.owner"])
+          - set(attributes["process.parent_pid"], resource.attributes["process.parent_pid"])
+          - set(attributes["process.pid"], resource.attributes["process.pid"])
+
+
+service:
+  telemetry:
+    metrics:
+      level: detailed
+    logs:
+      level: info
+
+  pipelines:
+    metrics/gateway:
+      receivers: [prometheus/gateway, hostmetrics/gateway]
+      processors: [attributes/gateway, resourcedetection/system, transform, batch/gateway]
+      exporters: [otlphttp/gateway/mimir]
+```
+                    </textarea>
+                </section>
+            </section>
+
+            <section>
+                <section data-markdown>
+                    <textarea data-template>
+                    ### Gateway Tail Sampling
+                    ![Gateway Tail Sampling](./traces-pipeline-monitoring.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                    ### Latency Policy
+```yaml
+# skip traces where latencies are < 100ms
+{
+  name: latency-policy,
+  type: latency,
+  latency: {threshold_ms: 100}
+},
+```
+                    </textarea>
+                </section>
+
+                <section data-markdown>
+                    <textarea data-template>
+                    ### Error Policy
+```yaml
+{
+    name: status_code-error-policy,
+    type: status_code,
+    status_code: {status_codes: [ERROR]}
+},
+```
+                    </textarea>
+                </section>
+
+                <section data-markdown>
+                    <textarea data-template>
+                    ### Exclude Error Policy
+```yaml
+{
+    name: http-status-code-error-policy,
+    type: string_attribute,
+    string_attribute:
+      {
+        key: error.type,
+        values: [4..],
+        enabled_regex_matching: true,
+        invert_match: true,
+      },
+},
+```
+                    </textarea>
+                </section>
+
+            </section>
+            <section>
+                <h2>demo</h2>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/1kgAzLYeKGY"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+                https://www.youtube.com/embed/1kgAzLYeKGY
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/notes/notes.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/highlight/highlight.min.js"></script>
+
+    <script>
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            plugins: [RevealMarkdown, RevealNotes, RevealHighlight],
+            slideNumber: true,
+            autoAnimate: false,
+            transition: 'none'
+        });
+    </script>
+
+</body>
+
+</html>
