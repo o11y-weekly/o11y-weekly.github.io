@@ -2,9 +2,9 @@
 
 LGTM are a GrafanaLabs products initials and a joke for Loki, Grafana, Tempo and Mimir which have been used in this [demo](https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/#run-locally): [show the demo code](https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/compose.yml)
 
-[OpenTelemetry](../2023-11-30_What_is_OpenTelemetry/README.md) becomes standard and really useful to solve common problems in observability.
+[OpenTelemetry](../2023-11-30_What_is_OpenTelemetry/README.md) becomes standard and really useful to solve common problems in observability but does not solve all the Observability problems. This is why Grafana Labs product and [OpenTelemetry](../2023-11-30_What_is_OpenTelemetry/README.md) work all together to both send telemetry and visualize / use them thanks Grafana Labs. 
 
-[Dedicated post for the docker compose GrafanaLabs LGTM for java with OpenTelemetry demo](https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/#run-locally)
+[A local docker compose demo with GrafanaLabs LGTM for java and OpenTelemetry is available](https://github.com/o11y-weekly/o11y-weekly.github.io/tree/main/2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/#run-locally)
 
 <iframe src="https://www.youtube.com/embed/1kgAzLYeKGY?si=dsrZowTsOmSJ1tsj" title="OpenTelemetry LGTM demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
@@ -13,7 +13,7 @@ References: https://opentelemetry.io/docs/concepts/semantic-conventions/
 
 Without naming and value conventions, correlating signals can become quickly a nightmare, to solve that issue, [OpenTelemetry Semantic Conventions](https://opentelemetry.io/docs/concepts/semantic-conventions/) concept is really good to start and integrate.
 
-In the following [demo](./demo/README.md), [resources](https://opentelemetry.io/docs/specs/semconv/resource/) have been defined to have such attributes for all signals to query/correlated telemetry for those dimensions.
+In the following [demo](./demo/README.md), [resources](https://opentelemetry.io/docs/specs/semconv/resource/) have been defined to have such attributes for all signals to query and correlate telemetry for those dimensions.
 
 | Resource Attribute | Value |
 |-|-|
@@ -41,7 +41,7 @@ No sampling is just a waste of resource since only errors and latencies are impo
 
 Tail sampling has been setup with [opentelemetry collector contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib) in this [demo](./demo/otelcontribcol/pipeline.gateway.yml). 
 
-Again, when tracing error, it become important to avoid tracing 4XX errors when it is not useful or important.
+Again, when tracing error, it becomes important to avoid tracing 4XX errors when it is not useful or important.
 
 Pay close attention that introducing a [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) comes with [trade-offs](https://opentelemetry.io/docs/collector/deployment/gateway/#tradeoffs).
 
@@ -50,7 +50,7 @@ Temporary putting the sampling at 100% if it does not impact the bill or the obs
 ## Instrumentations
 A dedicated [post section](../2023-11-30_What_is_OpenTelemetry/README.md#instrumentation) has been introduced during the [last post](../2023-11-30_What_is_OpenTelemetry/README.md#instrumentation).
 
-Having a telemetry backends is not the only one requirement to support observability: instrumentations are really important to get telemetry metrics, logs and traces.
+Having telemetry backends is not the only one requirement to support observability: instrumentations are really important to get telemetry metrics, logs and traces.
 
 Having standard instrumentation really helps opensource projects to give a fully integrated service including observability and monitoring.
 
@@ -61,7 +61,7 @@ References: https://opentelemetry.io/docs/collector/deployment/
 
 OpenTelemetry offers different ways to integrate a collector. The official [OpenTelemetry Collector](https://github.com/open-telemetry/opentelemetry-collector) can be forked or partially used to build a different one like the [Grafana Agent](https://grafana.com/docs/agent/latest/) or simply enhanced like [OpenTelemetry Collector Contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib) which has been used during the [demo](./demo/README.md).
 
-SDKs also offers exporters which is the [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/) mode.
+SDKs also offer exporters which are the [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/) mode.
 
 3 different ways are available to deploy a collector: [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collector/), [Agent](https://opentelemetry.io/docs/collector/deployment/agent/), [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/).
 
@@ -73,7 +73,7 @@ The [No Collector](https://opentelemetry.io/docs/collector/deployment/no-collect
 
 The agent monitoring is also important, the gateway has been instrumented and dashboard has also been provisionned in the [demo](./demo/README.md)
 
-As mentioned before, it all about trade-offs.
+As mentioned before, it is all about trade-offs.
 
 ### Trade-offs
 
