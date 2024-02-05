@@ -20,5 +20,6 @@ This week, I prepared a massive demo with OpenTelemetry and Grafana Labs product
 - [2023-10-11 #1 Savings dilemma](./2023-10-11_Savings_dilemma/README.md)
 
 ## Demos
+- [2024-01-31 #9 OpenTelemetry Looks Good To Me](./2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/)
 - [2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/demo/)
 - [2023-11-09 Graphite/Prometheus/Mimir/VictoriaMetrics/OpenTelemetry Collector Config](./2023-11-09_Monotonicity/demo/)
