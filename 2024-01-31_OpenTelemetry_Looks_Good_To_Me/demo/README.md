@@ -33,23 +33,151 @@ Open Grafana: http://localhost:3000
 
 ### Java
 
+2 Java dashboards are available:
+- [OpenTelemetry JVM Micrometer](./grafana/provisioning/dashboards/Apps/OpenTelemetry%20JVM%20Micrometer.json)
+
+- [OpenTelemetry JVM Micrometer per instance](./grafana/provisioning/dashboards/Apps/OpenTelemetry%20JVM%20Micrometer%20per%20instance.json)
+
 ### OTEL
-
-
-
 
 ## Java Instrumentation
 
 ### Automatic instrumentation
+Reference : [Automatic instrumentation](../../2023-11-30_What_is_OpenTelemetry/README.md#automatic)
 
 ### Manual instrumentation
+Reference : [Manual instrumentation](../../2023-11-30_What_is_OpenTelemetry/README.md#manual)
+
 
 ### Metrics
 
-Micrometer
+Micrometer OTLP
+
+Micrometer combined with the otlp registry has been used to push metrics with OTLP to mimir:
+
+[Client pom micrometer otlp dependency](./client/pom.xml)
+```xml
+<dependency>
+    <groupId>io.micrometer</groupId>
+    <artifactId>micrometer-registry-otlp</artifactId>
+</dependency>
+```
+
+[Client application.yml](./client/src/main/resources/application.yml)
+```yaml
+management:
+  otlp:      
+    metrics:
+      export:
+        enabled: true
+        step: 10s
+        url: http://mimir:9009/otlp/v1/metrics
+        # url: https://prometheus-prod-24-prod-eu-west-2.grafana.net/otlp/v1/metrics
+        # headers:
+        #   Authorization: Basic ####
+
+  metrics:
+    tags:
+      deployment.environment: '${deployment.environment}'
+      host.name: '${host.name}'
+      service:
+        name: '${service.name}'
+        namespace: '${service.namespace}'
+        version: '@project.version@'
+    distribution:
+      percentiles:
+        all: 0.5, 0.95, 0.99
+```
 
 ### Logs
-Logback
+2 different methods has been used to send logs to LOKI.
+
+Scrapping the file is a conventional and standard method to seng logs with a agent.
+
+#### File Scrap
+
+In the [service application](./service/), Logback has been used to write the logs into a file log.
+
+[Logback service configuration](./service/src/main/resources/logback.xml)
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property resource="application.yml" />
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>log/${SERVICE_NAME}.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>timestamp=%d{yyyy/MM/dd HH:mm:ss.SSSSSSSSS}\tservice.version=${service.version}\tmessage=%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
+```
+
+OpenTelemetry Collector contrib reads the file and forward logs to LOKI using the LOKI api.
+
+[OpenTelemetry Collector file log pipeline scrap](./otelcontribcol/agent/pipeline.app.yaml)
+```yaml
+exporters:
+  loki:
+    endpoint: http://loki:3100/loki/api/v1/push
+    default_labels_enabled:
+      level: true
+
+receivers:
+  filelog/app:
+    include: [ /app/log/*.log ]
+    storage: file_storage/app
+    multiline:
+      line_start_pattern: timestamp=
+    resource:
+      service.name: ${env:SERVICE_NAME}
+      service.namespace: ${env:SERVICE_NAMESPACE}
+      host.name: ${env:HOSTNAME}
+      deployment.environment: ${env:DEPLOYMENT_ENVIRONMENT}
+      service.instance.id: ${env:HOSTNAME} # loki does not accept host.name (https://github.com/grafana/loki/issues/11786)
+
+processors:
+  batch/app:
+  resource/app/loki:
+    attributes:
+      - action: insert
+        key: loki.resource.labels
+        value: service.name, service.namespace, service.version, host.name, deployment.environment, service.instance.id
+      - action: insert
+        key: loki.format
+        value: raw
+
+service:
+  pipelines:
+    logs/app:
+      receivers: [filelog/app]
+      processors: [batch/app, resource/app/loki]
+      exporters: [loki]
+```
+
+#### Java Agent exporter
+
+In the [client application](./client/) the Java agent sends log with OpenTelemetry embedded exporters.
+
+Java agent command line ([app command line](./client/supervisor.d/app.ini)) :
+```ini
+[program:app]
+command=java
+    -javaagent:/app/opentelemetry-javaagent.jar
+    -Dservice.name=%(ENV_SERVICE_NAME)s
+    -Dservice.namespace=%(ENV_SERVICE_NAMESPACE)s
+    -Dhost.name=%(host_node_name)s
+    -Ddeployment.environment=%(ENV_DEPLOYMENT_ENVIRONMENT)s
+    -Dotel.resource.attributes=service.name=%(ENV_SERVICE_NAME)s,service.namespace=%(ENV_SERVICE_NAMESPACE)s,deployment.environment=%(ENV_DEPLOYMENT_ENVIRONMENT)s,host.name=%(host_node_name)s
+    -jar /app/main.jar 
+    --spring.application.name=%(ENV_SERVICE_NAME)s 
+```
 
 #### Traces
 WithSpan attribute
