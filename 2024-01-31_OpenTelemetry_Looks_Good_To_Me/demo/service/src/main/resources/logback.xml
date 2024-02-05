@@ -12,7 +12,7 @@
         <file>log/${SERVICE_NAME}.log</file>
         <append>true</append>
         <encoder>
-            <pattern>timestamp=%d{yyyy/MM/dd HH:mm:ss.SSSSSSSSS}\tservice.version=${service.version}\tmessage=%msg%n</pattern>
+            <pattern>timestamp=%d{yyyy/MM/dd HH:mm:ss.SSSSSSSSS}\tservice.version=${service.version}\ttraceId=%X{trace_id}\tspanId=%X{span_id}\tmessage=%msg%n</pattern>
         </encoder>
     </appender>
 

@@ -9,7 +9,9 @@ LGTM are a GrafanaLabs products initials and a joke for Loki, Grafana, Tempo and
 <iframe src="https://www.youtube.com/embed/1kgAzLYeKGY?si=dsrZowTsOmSJ1tsj" title="OpenTelemetry LGTM demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## Naming conventions
-References: https://opentelemetry.io/docs/concepts/semantic-conventions/
+References: 
+- https://opentelemetry.io/docs/concepts/semantic-conventions/
+- https://grafana.com/docs/opentelemetry/instrumentation/configuration/resource-attributes/
 
 Without naming and value conventions, correlating signals can become quickly a nightmare, to solve that issue, [OpenTelemetry Semantic Conventions](https://opentelemetry.io/docs/concepts/semantic-conventions/) concept is really good to start and integrate.
 
