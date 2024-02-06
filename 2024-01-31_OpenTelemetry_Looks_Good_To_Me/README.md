@@ -10,7 +10,7 @@ LGTM are a GrafanaLabs products initials and a joke for Loki, Grafana, Tempo and
 
 <iframe src="https://www.youtube.com/embed/1kgAzLYeKGY?si=dsrZowTsOmSJ1tsj" title="OpenTelemetry LGTM demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-## Naming conventions
+## Naming conventions / Semantic-conventions
 References: 
 - https://opentelemetry.io/docs/concepts/semantic-conventions/
 - https://grafana.com/docs/opentelemetry/instrumentation/configuration/resource-attributes/
@@ -32,6 +32,17 @@ As an example, by clicking on errors, it can be easy to get corresponding traces
 ![errors to traces](./errors_to_traces.png)
 ![traces](./traces.png)
 ![trace](./trace.png)
+
+## RED/USE metrics
+
+[RED method](https://grafana.com/blog/2018/08/02/the-red-method-how-to-instrument-your-services/) has been used to track errors, rates and durations to quickly identify potential problems and correlations.
+
+![RED metrics](./metrics-red.png)
+
+For the Java internals, [USE method](https://www.brendangregg.com/usemethod.html) has been integrated to measure jvm utilization. In this example, there is no queues to monitor but heavy usage and the saturation part has been adjusted to display only series higher than 80% of utilization for the sake of the demo. About saturation, monitoring GC pause duration participate to the overhall response time and important to track.
+
+![JVM Utilization](./metrics-jvm-utilization.png)
+![JVM GC](./metrics-jvm-gc.png)
 
 ## Traces Sampling: Head vs Tail sampling
 This demo uses tail sampling introduced during the last [Tail sampling post](../2023-11-30_What_is_OpenTelemetry/README.md#tail-sampling).
