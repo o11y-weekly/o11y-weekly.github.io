@@ -35,24 +35,30 @@ public record Controllers(@Autowired JdbcTemplate jdbcTemplate) {
 	}
 
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-    private static class ResourceNotFoundException extends RuntimeException {
-    }
+	private static class ResourceNotFoundException extends RuntimeException {
+	}
 
 	private static final Logger logger = LoggerFactory.getLogger(Controllers.class);
 	private static final Random random = new Random(0);
 
 	private static final AtomicInteger COUNTER = new AtomicInteger(0);
 
-	private static final UserMapper USER_MAPPER = new UserMapper(); 
+	private static final UserMapper USER_MAPPER = new UserMapper();
 
-	private static final Double FAILURE_RATIO = Optional.ofNullable(System.getenv("FAILURE_RATIO")).map(Double::parseDouble).orElseThrow();
-	private static final Integer MIN_LATENCY = Optional.ofNullable(System.getenv("MIN_LATENCY")).map(Integer::parseInt).orElseThrow();
-	private static final Integer MAX_LATENCY = Optional.ofNullable(System.getenv("MAX_LATENCY")).map(Integer::parseInt).orElseThrow();
+	private static final Double FAILURE_RATIO = Optional.ofNullable(System.getenv("FAILURE_RATIO"))
+			.map(Double::parseDouble).orElseThrow();
+	private static final Double LATENCY_RATIO = Optional.ofNullable(System.getenv("LATENCY_RATIO"))
+			.map(Double::parseDouble).orElseThrow();
+	private static final Integer MIN_LATENCY = Optional.ofNullable(System.getenv("MIN_LATENCY")).map(Integer::parseInt)
+			.orElseThrow();
+	private static final Integer MAX_LATENCY = Optional.ofNullable(System.getenv("MAX_LATENCY")).map(Integer::parseInt)
+			.orElseThrow();
 
 	@WithSpan
 	private Optional<User> getUserFromDatabase(final int id) {
 		logger.info("getting user {} from database", id);
-		return jdbcTemplate.query("select firstname, surname from persons where id=?", USER_MAPPER, id).stream().findFirst();
+		return jdbcTemplate.query("select firstname, surname from persons where id=?", USER_MAPPER, id).stream()
+				.findFirst();
 	}
 
 	@WithSpan
@@ -71,8 +77,10 @@ public record Controllers(@Autowired JdbcTemplate jdbcTemplate) {
 	}
 
 	@WithSpan
-	private static void callSlowDependency(final int latency) throws InterruptedException {
-		Thread.sleep(latency);
+	private static void callSlowDependency(final int counter, final int latency) throws InterruptedException {
+		if (isEnabled(counter, LATENCY_RATIO)) {
+			Thread.sleep(latency);
+		}
 	}
 
 	@GetMapping(path = "/user")
@@ -80,13 +88,17 @@ public record Controllers(@Autowired JdbcTemplate jdbcTemplate) {
 		final var counter = COUNTER.getAndIncrement();
 		final var timing = getRandom(MIN_LATENCY, MAX_LATENCY);
 
-		callSlowDependency(timing);
+		callSlowDependency(counter, timing);
 		logger.info("/user has been called!");
-		if (counter % (1 / FAILURE_RATIO) == 0) {
+		if (isEnabled(counter, FAILURE_RATIO)) {
 			return getFailedUserFromDatabase(id);
 		}
 
 		return getUserFromDatabase(id).orElseThrow(ResourceNotFoundException::new);
+	}
+
+	private static boolean isEnabled(final int counter, final double ratio) {
+		return counter % (1 / ratio) == 0;
 	}
 
 	@PostMapping(path = "/user")
