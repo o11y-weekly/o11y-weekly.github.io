@@ -8,7 +8,7 @@ LGTM are a GrafanaLabs products initials and a joke for Loki, Grafana, Tempo and
 
 [slides of the demo](./slides/index.html)
 
-<iframe src="https://www.youtube.com/embed/1kgAzLYeKGY?si=dsrZowTsOmSJ1tsj" title="OpenTelemetry LGTM demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/wf6pPtyTSj4?si=ah7DXmtIBknR1thI" title="OpenTelemetry LGTM demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## Introduction
 Reference: https://o11y-weekly.github.io/2023-11-30_What_is_OpenTelemetry/
