@@ -1,0 +1,13 @@
+processors:
+  resource/loki:
+    attributes:
+      - action: upsert
+        key: service.instance.id # loki does not accept host.name (https://github.com/grafana/loki/issues/11786)
+        from_attribute: host.name
+
+service:
+  pipelines:
+    logs/gateway:
+      receivers: [otlp/gateway]
+      processors: [resource/loki]
+      exporters: [otlphttp/gateway/loki]

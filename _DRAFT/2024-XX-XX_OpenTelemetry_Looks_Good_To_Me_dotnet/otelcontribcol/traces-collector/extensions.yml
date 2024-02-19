@@ -1,0 +1,7 @@
+extensions:
+  health_check:
+  pprof:
+  zpages:
+# extensions are not merged and should be declared at only one place
+service:
+  extensions: [health_check, pprof, zpages]
