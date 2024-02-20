@@ -2,19 +2,20 @@ receivers:
   otlp:
     protocols:
       http:
+      grpc:
 
 exporters:
-  logging:
+  debug:
     verbosity: detailed
 
 service:
   pipelines:
     traces:
       receivers: [otlp]
-      exporters: [logging]
+      exporters: [debug]
     metrics:
       receivers: [otlp]
-      exporters: [logging]
+      exporters: [debug]
     logs:
       receivers: [otlp]
-      exporters: [logging]
+      exporters: [debug]
