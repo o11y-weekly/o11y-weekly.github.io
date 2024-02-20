@@ -3488,14 +3488,14 @@
       {
         "current": {
           "selected": false,
-          "text": "client",
-          "value": "client"
+          "text": "demo/client",
+          "value": "demo/client"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(jvm_info,service_name)",
+        "definition": "label_values(target_info,job)",
         "hide": 1,
         "includeAll": false,
         "label": "Service Name",
@@ -3504,7 +3504,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(jvm_info,service_name)",
+          "query": "label_values(target_info,job)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3516,14 +3516,14 @@
       {
         "current": {
           "selected": false,
-          "text": "dev",
-          "value": "dev"
+          "text": "Development",
+          "value": "Development"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(jvm_info{service_name=\"$service_name\"},deployment_environment)",
+        "definition": "label_values(target_info{job=\"$service_name\"},deployment_environment)",
         "hide": 1,
         "includeAll": false,
         "label": "Deployment Environment",
@@ -3532,7 +3532,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(jvm_info{service_name=\"$service_name\"},deployment_environment)",
+          "query": "label_values(target_info{job=\"$service_name\"},deployment_environment)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3544,14 +3544,14 @@
       {
         "current": {
           "selected": false,
-          "text": "0.0.1-SNAPSHOT",
-          "value": "0.0.1-SNAPSHOT"
+          "text": "1.0.0.0",
+          "value": "1.0.0.0"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(jvm_info{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
+        "definition": "label_values(target_info{job=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
         "hide": 1,
         "includeAll": false,
         "label": "Service version",
@@ -3560,7 +3560,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(jvm_info{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
+          "query": "label_values(target_info{job=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3634,62 +3634,6 @@
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${prom_ds}"
-        },
-        "definition": "label_values(jvm_memory_used{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},id)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "JVM Memory used",
-        "multi": true,
-        "name": "jvm_memory_used_id",
-        "options": [],
-        "query": {
-          "qryType": 1,
-          "query": "label_values(jvm_memory_used{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},id)",
-          "refId": "PrometheusVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${prom_ds}"
-        },
-        "definition": "label_values(jvm_buffer_memory_used{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},id)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "JVM Buffer Memory used",
-        "multi": true,
-        "name": "jvm_buffer_memory_used_id",
-        "options": [],
-        "query": {
-          "qryType": 1,
-          "query": "label_values(jvm_buffer_memory_used{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},id)",
-          "refId": "PrometheusVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
       }
     ]
   },
@@ -3699,8 +3643,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "OpenTelemetry JVM Micrometer",
-  "uid": "otel-jvm-micrometer",
+  "title": "OpenTelemetry dotnet webapi",
+  "uid": "otel-dotnet-micrometer",
   "version": 1,
   "weekStart": ""
 }

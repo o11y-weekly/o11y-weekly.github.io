@@ -4,11 +4,9 @@
 
 Security, scalling and so on will not be introduced and GrafanaCloud offers the best experience and a no brainer solution to start with.
 
-<iframe src="https://www.youtube.com/embed/wf6pPtyTSj4?si=ah7DXmtIBknR1thI" title="OpenTelemetry LGTM demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
 ## Architecture
 
-This demo includes 2 java services (service and client) and a postgres database to use webserver and jdbc instrumentations.
+TODO: This demo includes 2 java services (service and client) and a postgres database to use webserver and jdbc instrumentations.
 
 [OpenTelemetry Collector Contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib) has been used as a [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) and [Agent](https://opentelemetry.io/docs/collector/deployment/agent/)
 
@@ -19,7 +17,7 @@ This demo includes 2 java services (service and client) and a postgres database 
 ### Run the docker compose
 ```bash
 git clone git@github.com:o11y-weekly/o11y-weekly.github.io.git
-cd 2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/
+TODO cd 2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/
 ./up.sh
 ```
 ### Run Grafana
@@ -31,8 +29,9 @@ Open Grafana: http://localhost:3000
 
 ## Grafana Dashboards
 
-### Java
+### dotnet
 
+TODO:
 2 Java dashboards are available:
 - [OpenTelemetry JVM Micrometer](https://grafana.com/grafana/dashboards/20352-opentelemetry-jvm-micrometer/)
 
@@ -46,7 +45,7 @@ Open Grafana: http://localhost:3000
 
 ## Deep Dive
 
-### Java Instrumentation setup
+### Dotnet Instrumentation setup
 
 #### Automatic instrumentation
 Reference : [Automatic instrumentation](../../2023-11-30_What_is_OpenTelemetry/README.md#automatic)
@@ -57,40 +56,13 @@ Reference : [Manual instrumentation](../../2023-11-30_What_is_OpenTelemetry/READ
 
 #### Setup Metrics instrumentation and exporter
 
-Micrometer combined with the otlp registry has been used to push metrics with OTLP to mimir:
+Reference: 
+- https://learn.microsoft.com/en-us/dotnet/core/diagnostics/built-in-metrics-aspnetcore
+- https://grafana.com/docs/opentelemetry/instrumentation/dotnet/manual-instrumentation/
 
-[Client pom micrometer otlp dependency](./client/pom.xml)
-```xml
-<dependency>
-    <groupId>io.micrometer</groupId>
-    <artifactId>micrometer-registry-otlp</artifactId>
-</dependency>
-```
-
-[Client application.yml](./client/src/main/resources/application.yml)
-```yaml
-management:
-  otlp:      
-    metrics:
-      export:
-        enabled: true
-        step: 10s
-        url: http://mimir:9009/otlp/v1/metrics
-        # url: https://prometheus-prod-24-prod-eu-west-2.grafana.net/otlp/v1/metrics
-        # headers:
-        #   Authorization: Basic ####
-
-  metrics:
-    tags:
-      deployment.environment: '${deployment.environment}'
-      host.name: '${host.name}'
-      service:
-        name: '${service.name}'
-        namespace: '${service.namespace}'
-        version: '@project.version@'
-    distribution:
-      percentiles:
-        all: 0.5, 0.95, 0.99
+```bash
+dotnet add package OpenTelemetry.Extensions.Hosting
+dotnet add package OpenTelemetry.Instrumentation.AspNetCore
 ```
 
 #### Logs
