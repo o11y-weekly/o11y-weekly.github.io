@@ -14,7 +14,7 @@ processors:
   batch/traces-loadbalancer:
 
 service:
-  pipelines:    
+  pipelines:
     traces/gateway:
       receivers: [otlp/gateway]
       processors: [batch/traces-loadbalancer]

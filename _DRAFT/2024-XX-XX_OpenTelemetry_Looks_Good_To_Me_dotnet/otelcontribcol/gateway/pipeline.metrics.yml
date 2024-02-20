@@ -1,0 +1,18 @@
+processors:
+  batch/metrics:
+  transform/metrics/dotnet:
+    metric_statements:
+      - context: datapoint
+        statements:
+          - set(attributes["service.name"], resource.attributes["service.name"])
+          - set(attributes["service.namespace"], resource.attributes["service.namespace"])
+          - set(attributes["service.version"], resource.attributes["service.version"])
+          - set(attributes["deployment.environment"], resource.attributes["deployment.environment"])
+          - set(attributes["host.name"], resource.attributes["host.name"])
+
+service:
+  pipelines:
+    metrics/gateway-agent:
+      receivers: [otlp/gateway]
+      processors: [transform/metrics/dotnet, batch/metrics]
+      exporters: [otlphttp/gateway/mimir, debug]

@@ -1,13 +1,13 @@
 receivers:
   # otelcontribcol metrics + host metrics
-  prometheus/gateway:
+  prometheus/gateway-agent:
     config:
       scrape_configs:
         - job_name: otelcol-contrib/gateway
           scrape_interval: 10s
           static_configs:
             - targets: [0.0.0.0:8888]
-  hostmetrics/gateway:
+  hostmetrics/gateway-agent:
     collection_interval: 10s
     scrapers:
       cpu:
@@ -42,8 +42,8 @@ receivers:
             enabled: true
 
 processors:
-  batch/gateway:
-  attributes/gateway:
+  batch/gateway-agent:
+  attributes/gateway-agent:
     actions:
       - key: service.namespace
         action: upsert
@@ -55,7 +55,7 @@ processors:
     detectors: ["system"]
     system:
       hostname_sources: ["os"]
-  transform:
+  transform/gateway-agent:
     metric_statements:
       - context: datapoint
         statements:
@@ -68,7 +68,6 @@ processors:
           - set(attributes["process.parent_pid"], resource.attributes["process.parent_pid"])
           - set(attributes["process.pid"], resource.attributes["process.pid"])
 
-
 service:
   telemetry:
     metrics:
@@ -77,7 +76,7 @@ service:
       level: info
 
   pipelines:
-    metrics/gateway:
-      receivers: [prometheus/gateway, hostmetrics/gateway]
-      processors: [attributes/gateway, resourcedetection/system, transform, batch/gateway]
+    metrics/gateway-agent:
+      receivers: [prometheus/gateway-agent, hostmetrics/gateway-agent]
+      processors: [attributes/gateway-agent, resourcedetection/system, transform/gateway-agent, batch/gateway-agent]
       exporters: [otlphttp/gateway/mimir]
