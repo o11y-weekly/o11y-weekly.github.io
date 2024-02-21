@@ -34,6 +34,10 @@ builder
         .AddAspNetCoreInstrumentation()
         .AddRuntimeInstrumentation()
         .AddOtlpExporter()
+    )
+    .WithTracing(tracing => tracing
+        .AddAspNetCoreInstrumentation()
+        .AddOtlpExporter()
     );
 
 var app = builder.Build();
