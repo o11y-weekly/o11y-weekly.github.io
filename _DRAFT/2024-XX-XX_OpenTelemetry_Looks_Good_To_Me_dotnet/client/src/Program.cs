@@ -1,3 +1,6 @@
+using System.Collections.Concurrent;
+using System.Net;
+using System.Net.Sockets;
 using Microsoft.AspNetCore.Mvc;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
@@ -17,8 +20,11 @@ builder.Services
     .AddHealthChecks();
 
 builder
-.Logging.AddOpenTelemetry(logging => 
-    logging.AddOtlpExporter())
+.Logging.AddOpenTelemetry(logging =>
+    {
+        logging.IncludeFormattedMessage = true;
+        logging.AddOtlpExporter();
+    })
 .Services
     .AddOpenTelemetry()
     .ConfigureResource(resource => resource.AddService(
@@ -54,32 +60,37 @@ app.MapHealthChecks("/healthz");
 
 app.UseHttpsRedirection();
 
-var random = new Random();
+var RANDOM = new Random();
 
-app.MapGet("/randomuser", async (ILogger<Program> logger) => {
-    var delay = random.Next(1, 10_000);
-    logger.LogInformation("delaying for {delay}ms", delay);
-    await Task.Delay(delay);
-    logger.LogWarning("random user not found");
-    return Results.NotFound();
-})
-.WithName("GetRandomUser")
-.WithOpenApi();
-
-app.MapGet("/user", async (ILogger<Program> logger, [FromQuery(Name = "id")] int id) => {
+var getUser = async (ILogger<Program> logger, int id) =>
+{
     logger.LogInformation("calling GetUser {id}", id);
     var user = await ServiceClient.GetUser(id);
-    if (user == null) {
+    if (user == null)
+    {
         logger.LogWarning("user {id} not found", id);
         return Results.NotFound();
     }
     var ts = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     return Results.Ok($"User: {user.Name} {user.Surname} {ts}");
+};
+
+app.MapGet("/randomuser", async (ILogger<Program> logger) =>
+{
+    return await getUser(logger, RANDOM.Next(1000, 1500));
+})
+.WithName("GetRandomUser")
+.WithOpenApi();
+
+app.MapGet("/user", async (ILogger<Program> logger, [FromQuery(Name = "id")] int id) =>
+{
+    return await getUser(logger, id);
 })
 .WithName("GetUser")
 .WithOpenApi();
 
-app.MapPost("/user", async (ILogger<Program> logger, [FromBody] User user) => {
+app.MapPost("/user", async (ILogger<Program> logger, [FromBody] User user) =>
+{
     logger.LogInformation("adding user name: {}", user.Name);
     return await ServiceClient.CreateUser(user);
 })
@@ -88,20 +99,50 @@ app.MapPost("/user", async (ILogger<Program> logger, [FromBody] User user) => {
 
 app.Run();
 
-static class ServiceClient {
-    private static readonly HttpClient httpClient = new();
+static class ServiceClient
+{
+    private static readonly HttpClient httpClient = HttpClient();
 
-    public static async Task<User?> GetUser(int id) {
-        return await httpClient.GetFromJsonAsync<User>($"http://service:8080/user?id={id}");
+    /// <summary>
+    /// https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/http/httpclient-guidelines
+    /// </summary>
+    /// <returns></returns>
+    private static HttpClient HttpClient()
+    {
+        var handler = new SocketsHttpHandler
+        {
+            PooledConnectionLifetime = TimeSpan.FromMinutes(15)
+
+        };
+
+        return new HttpClient(handler);
     }
 
-    public static async Task<IResult> CreateUser(User user) {
+    public static async Task<User?> GetUser(int id)
+    {
+        using var response = await httpClient.GetAsync($"http://service:8080/user?id={id}");
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<User>();
+        }
+
+        if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            return null;
+        }
+        var content = await response.Content.ReadAsStringAsync();
+        throw new ApplicationException($"internal server error: {content}");
+    }
+
+    public static async Task<IResult> CreateUser(User user)
+    {
         var response = await httpClient.PostAsJsonAsync("http://service:8080/user", user);
         response.EnsureSuccessStatusCode();
         return Results.Created();
     }
 
 }
-record User(string Name, string Surname){
+record User(string Name, string Surname)
+{
 
 }

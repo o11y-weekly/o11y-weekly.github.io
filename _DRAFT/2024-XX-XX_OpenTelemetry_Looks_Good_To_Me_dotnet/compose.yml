@@ -15,6 +15,29 @@ services:
     depends_on:
       - mimir
       - loki
+      - otelcontribcol-traces-loadbalancer
+  otelcontribcol-traces-loadbalancer:
+    image: otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL}
+    command: "--config /etc/otelcol-contrib/exporters.yml --config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.traces.yml"
+    volumes:
+      - ./otelcontribcol/traces-loadbalancer/:/etc/otelcol-contrib/:ro
+    networks:
+      - bridge
+    depends_on:
+      - mimir
+      - otelcontribcol-traces-collector
+  otelcontribcol-traces-collector:
+    image: otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL}
+    command: "--config /etc/otelcol-contrib/exporters.yml --config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.traces.yml"
+    volumes:
+      - ./otelcontribcol/traces-collector/:/etc/otelcol-contrib/:ro
+    networks:
+      - bridge
+    depends_on:
+      - mimir
+      - tempo
+    deploy:
+      replicas: 2
 
   curl:
     image: curlimages/curl:8.5.0
@@ -28,6 +51,16 @@ services:
     deploy:
       replicas: 1
 
+  db:
+    image: postgres:16.1-alpine3.19
+    volumes:
+      - ./postgres/initdb.d:/docker-entrypoint-initdb.d:ro
+    environment:
+      - POSTGRES_DB=persons
+      - POSTGRES_PASSWORD=ReallyBadPassword
+    networks:
+      - bridge
+
   client:
     build: 
       context: ./client
@@ -35,16 +68,18 @@ services:
     environment:
       - SERVICE_NAME=client
       - OTEL_TRACES_SAMPLER=parentbased_traceidratio
-      - OTEL_TRACES_SAMPLER_ARG=0.1 # demo parameter
+      - OTEL_TRACES_SAMPLER_ARG=1 # demo parameter
       - OTEL_RESOURCE_ATTRIBUTES=service.namespace=demo,deployment.environment=dev
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
-      - OTEL_METRIC_EXPORT_INTERVAL=1000
+      - OTEL_METRIC_EXPORT_INTERVAL=10000
     networks:
       - bridge
     depends_on:
       - service
       - otelcontribcol-gateway
+    deploy:
+      replicas: 1
 
   service:
     build: 
@@ -56,11 +91,20 @@ services:
       - OTEL_RESOURCE_ATTRIBUTES=service.namespace=demo,deployment.environment=dev
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
-      - OTEL_METRIC_EXPORT_INTERVAL=1000
+      - OTEL_METRIC_EXPORT_INTERVAL=10000
+      - FAILURE_RATIO=0.1 # demo parameter
+      - LATENCY_RATIO=1 # demo parameter
+      - MIN_LATENCY=0 #ms
+      - MAX_LATENCY=100 #ms
     networks:
       - bridge
     depends_on:
       - otelcontribcol-gateway
+      - db
+    deploy:
+      # https://github.com/dotnet/runtime/issues/68967
+      # https://www.meziantou.net/round-robin-dns-support-in-dotnet-httpclient.htm
+      replicas: 1
 
   loki:
     image: grafana/loki@sha256:c59b9e928dffd375920b972e936c81e93bf14114c5229fae56a07cc47b15b475 #main with otlp support https://github.com/grafana/loki/pull/10727
