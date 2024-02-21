@@ -23,6 +23,7 @@ services:
     environment:
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
+      - OTEL_METRIC_EXPORT_INTERVAL=1000
     networks:
       - bridge
 

@@ -31,9 +31,9 @@ builder
         .AddRuntimeInstrumentation()
         .AddOtlpExporter((exporterOptions, metricReaderOptions) =>
             {
-                metricReaderOptions.PeriodicExportingMetricReaderOptions.ExportIntervalMilliseconds = 1000;
-                exporterOptions.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
-                exporterOptions.Endpoint = new Uri("http://otelcontribcol-gateway:4317");
+                // metricReaderOptions.PeriodicExportingMetricReaderOptions.ExportIntervalMilliseconds = 1000;
+                // exporterOptions.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+                // exporterOptions.Endpoint = new Uri("http://otelcontribcol-gateway:4317");
                 // exporterOptions.Endpoint = new Uri("http://localhost:4317");
             }
         )
