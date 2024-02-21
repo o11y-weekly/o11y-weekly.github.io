@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -39,6 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapHealthChecks("/healthz");
 
 app.UseHttpsRedirection();
 
