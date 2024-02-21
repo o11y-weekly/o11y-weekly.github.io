@@ -3488,14 +3488,14 @@
       {
         "current": {
           "selected": false,
-          "text": "demo/client",
-          "value": "demo/client"
+          "text": "client",
+          "value": "client"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(target_info,job)",
+        "definition": "label_values(process_runtime_dotnet_gc_duration,service_name)",
         "hide": 1,
         "includeAll": false,
         "label": "Service Name",
@@ -3504,7 +3504,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(target_info,job)",
+          "query": "label_values(process_runtime_dotnet_gc_duration,service_name)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3516,14 +3516,14 @@
       {
         "current": {
           "selected": false,
-          "text": "Development",
-          "value": "Development"
+          "text": "dev",
+          "value": "dev"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(target_info{job=\"$service_name\"},deployment_environment)",
+        "definition": "label_values(process_runtime_dotnet_gc_duration{service_name=\"$service_name\"},deployment_environment)",
         "hide": 1,
         "includeAll": false,
         "label": "Deployment Environment",
@@ -3532,7 +3532,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(target_info{job=\"$service_name\"},deployment_environment)",
+          "query": "label_values(process_runtime_dotnet_gc_duration{service_name=\"$service_name\"},deployment_environment)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3544,14 +3544,14 @@
       {
         "current": {
           "selected": false,
-          "text": "1.0.0.0",
-          "value": "1.0.0.0"
+          "text": "1.0.0",
+          "value": "1.0.0"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(target_info{job=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
+        "definition": "label_values(process_runtime_dotnet_gc_duration{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
         "hide": 1,
         "includeAll": false,
         "label": "Service version",
@@ -3560,7 +3560,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(target_info{job=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
+          "query": "label_values(process_runtime_dotnet_gc_duration{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
