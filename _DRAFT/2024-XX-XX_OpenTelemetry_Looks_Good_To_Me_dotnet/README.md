@@ -59,6 +59,8 @@ Reference : [Manual instrumentation](../../2023-11-30_What_is_OpenTelemetry/READ
 Reference: 
 - https://learn.microsoft.com/en-us/dotnet/core/diagnostics/built-in-metrics-aspnetcore
 - https://grafana.com/docs/opentelemetry/instrumentation/dotnet/manual-instrumentation/
+- https://learn.microsoft.com/en-us/dotnet/core/diagnostics/diagnostic-health-checks
+- https://learn.microsoft.com/en-us/dotnet/core/diagnostics/built-in-metrics
 
 ```bash
 dotnet add package OpenTelemetry.Extensions.Hosting
