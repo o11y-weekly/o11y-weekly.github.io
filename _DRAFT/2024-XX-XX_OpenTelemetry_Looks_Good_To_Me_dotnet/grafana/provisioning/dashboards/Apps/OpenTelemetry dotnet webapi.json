@@ -413,7 +413,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "./d/otel-dotnet-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "./d/otel-dotnet-webapi-per-instance/opentelemetry-dotnet-webapi-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -569,7 +569,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "./d/otel-dotnet-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "./d/otel-dotnet-webapi-per-instance/opentelemetry-dotnet-webapi-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
             },
             {
               "targetBlank": true,
@@ -692,7 +692,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "./d/otel-dotnet-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "./d/otel-dotnet-webapi-per-instance/opentelemetry-dotnet-webapi-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
             },
             {
               "targetBlank": true,
@@ -1028,7 +1028,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
-  "uid": "otel-dotnet-micrometer",
+  "uid": "otel-dotnet-webapi",
   "version": 1,
   "weekStart": ""
 }

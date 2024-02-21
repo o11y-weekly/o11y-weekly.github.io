@@ -34,12 +34,33 @@ services:
       dockerfile: ../dotnet.Dockerfile
     environment:
       - SERVICE_NAME=client
+      - OTEL_TRACES_SAMPLER=parentbased_traceidratio
+      - OTEL_TRACES_SAMPLER_ARG=0.1 # demo parameter
       - OTEL_RESOURCE_ATTRIBUTES=service.namespace=demo,deployment.environment=dev
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
       - OTEL_METRIC_EXPORT_INTERVAL=1000
     networks:
       - bridge
+    depends_on:
+      - service
+      - otelcontribcol-gateway
+
+  service:
+    build: 
+      context: ./service
+      dockerfile: ../dotnet.Dockerfile
+    environment:
+      - SERVICE_NAME=service
+      - OTEL_TRACES_SAMPLER=parentbased_always_on
+      - OTEL_RESOURCE_ATTRIBUTES=service.namespace=demo,deployment.environment=dev
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
+      - OTEL_METRIC_EXPORT_INTERVAL=1000
+    networks:
+      - bridge
+    depends_on:
+      - otelcontribcol-gateway
 
   loki:
     image: grafana/loki@sha256:c59b9e928dffd375920b972e936c81e93bf14114c5229fae56a07cc47b15b475 #main with otlp support https://github.com/grafana/loki/pull/10727

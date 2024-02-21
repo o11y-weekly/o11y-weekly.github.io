@@ -58,7 +58,7 @@ var random = new Random();
 
 app.MapGet("/randomuser", async (ILogger<Program> logger) => {
     var delay = random.Next(1, 10_000);
-    logger.LogInformation("delaying for {delay}ms", delay);
+    logger.LogInformation($"delaying for {delay}ms");
     await Task.Delay(delay);
     logger.LogWarning("random user not found");
     return Results.NotFound();
@@ -66,24 +66,18 @@ app.MapGet("/randomuser", async (ILogger<Program> logger) => {
 .WithName("GetRandomUser")
 .WithOpenApi();
 
-app.MapGet("/user", async (ILogger<Program> logger, [FromQuery(Name = "id")] int id) => {
-    logger.LogInformation("calling GetUser {id}", id);
-    var user = await ServiceClient.GetUser(id);
-    if (user == null) {
-        logger.LogWarning("user {id} not found", id);
-        return Results.NotFound();
-    }
-    var ts = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-    return Results.Ok($"User: {user.Name} {user.Surname} {ts}");
+app.MapGet("/user", (ILogger<Program> logger, [FromQuery(Name = "id")] int id) => {
+    logger.LogInformation($"user has been called for user id {id}");
+    return Results.Ok(new User("hello", "world"));
 })
-.WithName("GetUser")
+.WithName("GetUserById")
 .WithOpenApi();
 
 app.MapPost("/user", (ILogger<Program> logger, [FromBody] User user) => {
     if (string.IsNullOrWhiteSpace(user.Name)){
         throw new ArgumentNullException("user.Name is null or empty");
     }
-    logger.LogInformation("adding user name: {}", user.Name);
+    logger.LogInformation($"adding user name: {user.Name}");
     return Results.Created();
 })
 .WithName("CreateUser")
@@ -91,14 +85,6 @@ app.MapPost("/user", (ILogger<Program> logger, [FromBody] User user) => {
 
 app.Run();
 
-static class ServiceClient {
-    private static readonly HttpClient httpClient = new();
-
-    public static async Task<User?> GetUser(int id) {
-        return await httpClient.GetFromJsonAsync<User>($"http://service:8080/user?id={id}");
-    }
-
-}
 record User(string Name, string Surname){
 
 }
