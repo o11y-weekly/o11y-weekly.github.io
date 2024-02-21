@@ -247,9 +247,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (http_response_status_code) (rate(http_server_request_duration_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
           "instant": false,
-          "legendFormat": "{{status}}",
+          "legendFormat": "{{http_response_status_code}}",
           "range": true,
           "refId": "A"
         }
