@@ -714,7 +714,7 @@
               }
             ]
           },
-          "unit": "ms",
+          "unit": "s",
           "unitScale": true
         },
         "overrides": [
@@ -796,9 +796,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name,status,uri,method) (rate(http_server_requests_sum{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n    /\r\n    sum by (host_name,status,uri,method) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name,url_scheme,http_response_status_code,http_route,http_request_method) (rate(http_server_request_duration_sum{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n    /\r\n    sum by (host_name,url_scheme,http_response_status_code,http_route,http_request_method) (rate(http_server_request_duration_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
           "instant": false,
-          "legendFormat": "{{method}} {{host_name}}{{uri}}: {{status}}",
+          "legendFormat": "{{http_request_method}} {{url_scheme}}://{{host_name}}{{http_route}}: {{http_response_status_code}}",
           "range": true,
           "refId": "A"
         }
@@ -875,8 +875,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -985,8 +984,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1095,8 +1093,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1206,8 +1203,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
