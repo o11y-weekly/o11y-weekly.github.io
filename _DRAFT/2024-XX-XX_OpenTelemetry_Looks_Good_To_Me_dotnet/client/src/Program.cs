@@ -79,12 +79,9 @@ app.MapGet("/user", async (ILogger<Program> logger, [FromQuery(Name = "id")] int
 .WithName("GetUser")
 .WithOpenApi();
 
-app.MapPost("/user", (ILogger<Program> logger, [FromBody] User user) => {
-    if (string.IsNullOrWhiteSpace(user.Name)){
-        throw new ArgumentNullException("user.Name is null or empty");
-    }
+app.MapPost("/user", async (ILogger<Program> logger, [FromBody] User user) => {
     logger.LogInformation("adding user name: {}", user.Name);
-    return Results.Created();
+    return await ServiceClient.CreateUser(user);
 })
 .WithName("CreateUser")
 .WithOpenApi();
@@ -96,6 +93,12 @@ static class ServiceClient {
 
     public static async Task<User?> GetUser(int id) {
         return await httpClient.GetFromJsonAsync<User>($"http://service:8080/user?id={id}");
+    }
+
+    public static async Task<IResult> CreateUser(User user) {
+        var response = await httpClient.PostAsJsonAsync("http://service:8080/user", user);
+        response.EnsureSuccessStatusCode();
+        return Results.Created();
     }
 
 }
