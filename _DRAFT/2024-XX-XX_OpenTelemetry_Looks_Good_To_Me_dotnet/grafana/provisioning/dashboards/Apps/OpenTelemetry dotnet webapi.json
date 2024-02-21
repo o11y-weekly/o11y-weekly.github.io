@@ -264,20 +264,16 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "scaleDistribution": {
+              "type": "linear"
+            }
           },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "ms",
           "unitScale": true
         },
         "overrides": []
@@ -292,22 +288,41 @@
       "id": 65,
       "links": [],
       "options": {
-        "displayMode": "lcd",
-        "maxVizHeight": 300,
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "namePlacement": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
+        "calculate": false,
+        "cellGap": 1,
+        "cellValues": {
+          "unit": "reqps"
         },
-        "showUnfilled": true,
-        "sizing": "auto",
-        "valueMode": "color"
+        "color": {
+          "exponent": 0.5,
+          "fill": "dark-orange",
+          "mode": "scheme",
+          "reverse": true,
+          "scale": "exponential",
+          "scheme": "Oranges",
+          "steps": 64
+        },
+        "exemplars": {
+          "color": "rgba(255,0,255,0.7)"
+        },
+        "filterValues": {
+          "le": 1e-9
+        },
+        "legend": {
+          "show": true
+        },
+        "rowsFrame": {
+          "layout": "auto"
+        },
+        "tooltip": {
+          "mode": "single",
+          "showColorScale": false,
+          "yHistogram": false
+        },
+        "yAxis": {
+          "axisPlacement": "left",
+          "reverse": false
+        }
       },
       "pluginVersion": "10.3.1",
       "targets": [
@@ -318,17 +333,26 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg(http_server_requests{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}) by (quantile)",
-          "format": "time_series",
-          "instant": true,
+          "expr": "sum(rate(http_server_request_duration_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[$__rate_interval])) by (le)",
+          "format": "heatmap",
+          "instant": false,
           "intervalFactor": 1,
           "legendFormat": "__auto",
-          "range": false,
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "Response time",
-      "type": "bargauge"
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(.*)",
+            "renamePattern": "$1s"
+          }
+        }
+      ],
+      "type": "heatmap"
     },
     {
       "collapsed": false,
@@ -3645,6 +3669,6 @@
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-micrometer",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
