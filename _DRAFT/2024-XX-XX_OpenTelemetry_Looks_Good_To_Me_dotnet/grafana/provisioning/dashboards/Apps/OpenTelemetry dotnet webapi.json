@@ -1029,6 +1029,6 @@
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-micrometer",
-  "version": 13,
+  "version": 1,
   "weekStart": ""
 }

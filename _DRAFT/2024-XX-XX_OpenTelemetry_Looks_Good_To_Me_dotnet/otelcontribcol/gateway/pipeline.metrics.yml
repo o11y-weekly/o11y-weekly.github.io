@@ -15,4 +15,4 @@ service:
     metrics/gateway:
       receivers: [otlp/gateway]
       processors: [transform/metrics/dotnet, batch/metrics]
-      exporters: [otlphttp/gateway/mimir, debug]
+      exporters: [otlphttp/gateway/mimir]
