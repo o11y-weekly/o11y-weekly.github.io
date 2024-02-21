@@ -2,8 +2,6 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-Environment.SetEnvironmentVariable("OTEL_RESOURCE_ATTRIBUTES", "additional.resources.attribute1=1, additional.resources.attribute2=2");
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,32 +14,20 @@ builder
     .AddOpenTelemetry()
     .WithMetrics(opts => opts
         .ConfigureResource(resource => resource.AddService(
-            serviceNamespace: "demo",
-            serviceName: builder.Environment.ApplicationName,
-            serviceVersion: System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version?.ToString(),
-            serviceInstanceId: Environment.MachineName
+            serviceName: Environment.GetEnvironmentVariable("SERVICE_NAME") ?? builder.Environment.ApplicationName,
+            serviceVersion: System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) // SemVer
             )
         .AddAttributes(new Dictionary<string, object>
             {
-                { "deployment.environment", builder.Environment.EnvironmentName },
                 { "host.name", Environment.MachineName }
             })
         )
         .AddAspNetCoreInstrumentation()
         .AddRuntimeInstrumentation()
-        .AddOtlpExporter((exporterOptions, metricReaderOptions) =>
-            {
-                // metricReaderOptions.PeriodicExportingMetricReaderOptions.ExportIntervalMilliseconds = 1000;
-                // exporterOptions.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
-                // exporterOptions.Endpoint = new Uri("http://otelcontribcol-gateway:4317");
-                // exporterOptions.Endpoint = new Uri("http://localhost:4317");
-            }
-        )
+        .AddOtlpExporter()
     );
 
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

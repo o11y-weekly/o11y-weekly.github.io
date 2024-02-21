@@ -21,6 +21,8 @@ services:
       context: ./client
       dockerfile: ../dotnet.Dockerfile
     environment:
+      - SERVICE_NAME=client
+      - OTEL_RESOURCE_ATTRIBUTES=service.namespace=demo,deployment.environment=dev
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
       - OTEL_METRIC_EXPORT_INTERVAL=1000
