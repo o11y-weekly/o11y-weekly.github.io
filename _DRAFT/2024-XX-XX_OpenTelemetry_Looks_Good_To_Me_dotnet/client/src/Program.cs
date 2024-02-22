@@ -39,6 +39,7 @@ builder
     .WithMetrics(opts => opts
         .AddAspNetCoreInstrumentation()
         .AddRuntimeInstrumentation()
+        .AddProcessInstrumentation()
         .AddOtlpExporter()
     )
     .WithTracing(tracing => tracing
