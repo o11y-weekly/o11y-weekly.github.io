@@ -39,6 +39,7 @@ builder
     .WithMetrics(opts => opts
         .AddAspNetCoreInstrumentation()
         .AddRuntimeInstrumentation()
+        .AddHttpClientInstrumentation()
         .AddProcessInstrumentation()
         .AddOtlpExporter()
     )
