@@ -289,7 +289,7 @@
       "id": 65,
       "links": [],
       "options": {
-        "calculate": false,
+        "calculate": true,
         "cellGap": 1,
         "cellValues": {
           "unit": "reqps"
@@ -513,7 +513,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name,http_request_method,http_route,url_scheme,http_response_status_code) (rate(http_server_request_duration_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name,http_request_method,http_route,url_scheme,http_response_status_code) (rate(http_server_request_duration_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
           "instant": false,
           "legendFormat": "{{http_request_method}} {{url_scheme}}://{{host_name}}{{http_route}}: {{http_response_status_code}}",
           "range": true,
@@ -797,14 +797,14 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name,url_scheme,http_response_status_code,http_route,http_request_method) (rate(http_server_request_duration_sum{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n    /\r\n    sum by (host_name,url_scheme,http_response_status_code,http_route,http_request_method) (rate(http_server_request_duration_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
+          "expr": "topk($top, \r\n    histogram_quantile(0.95, \r\n        sum(rate(http_server_request_duration_bucket{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])) by (le, http_request_method, url_scheme, host_name, http_route, http_response_status_code)\r\n    )\r\n)",
           "instant": false,
           "legendFormat": "{{http_request_method}} {{url_scheme}}://{{host_name}}{{http_route}}: {{http_response_status_code}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Http Server requests Durations",
+      "title": "Http Server requests Durations (p95)",
       "type": "timeseries"
     },
     {
@@ -869,7 +869,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -972,7 +973,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1132,7 +1134,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
