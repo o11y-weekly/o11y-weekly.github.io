@@ -499,7 +499,9 @@
           ],
           "displayMode": "table",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
         },
         "tooltip": {
           "mode": "single",
@@ -619,7 +621,9 @@
           ],
           "displayMode": "table",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
         },
         "tooltip": {
           "mode": "single",
@@ -783,7 +787,9 @@
           ],
           "displayMode": "table",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
         },
         "tooltip": {
           "mode": "single",
@@ -819,7 +825,7 @@
       },
       "id": 69,
       "panels": [],
-      "title": "aspnetcore",
+      "title": "HTTP Server",
       "type": "row"
     },
     {
@@ -902,7 +908,9 @@
           ],
           "displayMode": "table",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
         },
         "tooltip": {
           "mode": "single",
@@ -1037,7 +1045,9 @@
           ],
           "displayMode": "table",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
         },
         "tooltip": {
           "mode": "single",
@@ -1136,7 +1146,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1180,9 +1191,9 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "kestrel_active_connections{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}",
+          "expr": "max_over_time(kestrel_active_connections{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__interval])",
           "instant": false,
-          "legendFormat": "",
+          "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
@@ -1198,6 +1209,183 @@
         "x": 0,
         "y": 42
       },
+      "id": 74,
+      "panels": [],
+      "title": "HTTP Client",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "./d/otel-dotnet-webapi-per-instance/opentelemetry-dotnet-webapi-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+            },
+            {
+              "targetBlank": true,
+              "title": "traces >= 100ms",
+              "url": "./explore?schemaVersion=1&panes=%7B%22BVT%22:%7B%22datasource%22:%22tempo%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22datasource%22:%7B%22type%22:%22tempo%22,%22uid%22:%22tempo%22%7D,%22queryType%22:%22traceqlSearch%22,%22limit%22:20,%22tableType%22:%22traces%22,%22filters%22:%5B%7B%22id%22:%22service-name%22,%22tag%22:%22service.name%22,%22operator%22:%22%3D%22,%22scope%22:%22resource%22,%22value%22:%5B%22${service_name}%22%5D,%22valueType%22:%22string%22%7D,%7B%22id%22:%22status%22,%22tag%22:%22status%22,%22scope%22:%22intrinsic%22,%22operator%22:%22%3D%22,%22value%22:%5B%5D,%22valueType%22:%22keyword%22%7D,%7B%22id%22:%22c4370964%22,%22operator%22:%22%3D%22,%22scope%22:%22span%22%7D,%7B%22id%22:%22min-duration%22,%22tag%22:%22duration%22,%22operator%22:%22%3E%3D%22,%22valueType%22:%22duration%22,%22value%22:%22100ms%22%7D%5D%7D%5D,%22range%22:%7B%22from%22:%22${__from}%22,%22to%22:%22${__to}%22%7D%7D%7D&orgId=1"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*5..$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*4..$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*[1-3]..$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 43
+      },
+      "id": 76,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeat": "percentile",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk($top, \r\n    histogram_quantile(${percentile:value}, \r\n        sum(rate(http_client_request_duration_bucket{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])) by (le, http_request_method, url_scheme, http_route, http_response_status_code,server_address,server_port,network_protocol_version)\r\n    )\r\n)",
+          "instant": false,
+          "legendFormat": "{{network_protocol_version}} {{http_request_method}} {{url_scheme}}://{{server_address}}:{{server_port}}: {{http_response_status_code}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Http Client requests Durations ($percentile)",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 51
+      },
       "id": 67,
       "panels": [],
       "title": "Logs",
@@ -1212,7 +1400,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 52
       },
       "id": 68,
       "options": {
@@ -1405,7 +1593,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "p95",
             "p50"
@@ -1439,13 +1627,13 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-webapi",
-  "version": 5,
+  "version": 8,
   "weekStart": ""
 }
