@@ -49,126 +49,12 @@
   "liveNow": false,
   "panels": [
     {
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 69,
-      "title": "aspnetcore",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${prom_ds}"
-      },
-      "description": "https://learn.microsoft.com/en-us/dotnet/core/diagnostics/built-in-metrics-aspnetcore#metric-httpserveractive_requests",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "dark-blue",
-            "mode": "shades"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unitScale": true
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 1
-      },
-      "id": 70,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "mean",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "mimir"
-          },
-          "editorMode": "code",
-          "expr": "sum by (host_name, http_request_method, url_scheme) (rate(http_server_active_requests{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
-          "instant": false,
-          "legendFormat": "{{http_request_method}} {{url_scheme}}://{{host_name}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "In-flight HTTP requests",
-      "type": "timeseries"
-    },
-    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 0
       },
       "id": 10,
       "panels": [],
@@ -204,7 +90,7 @@
         "h": 7,
         "w": 3,
         "x": 0,
-        "y": 10
+        "y": 1
       },
       "id": 9,
       "options": {
@@ -334,7 +220,7 @@
         "h": 7,
         "w": 9,
         "x": 3,
-        "y": 10
+        "y": 1
       },
       "id": 66,
       "options": {
@@ -397,7 +283,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 10
+        "y": 1
       },
       "hideTimeOverride": false,
       "id": 65,
@@ -475,7 +361,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 8
       },
       "id": 3,
       "panels": [],
@@ -600,7 +486,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 18
+        "y": 9
       },
       "id": 8,
       "options": {
@@ -720,7 +606,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 18
+        "y": 9
       },
       "id": 7,
       "options": {
@@ -884,7 +770,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 18
+        "y": 9
       },
       "id": 14,
       "options": {
@@ -919,6 +805,282 @@
         }
       ],
       "title": "Http Server requests Durations",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 69,
+      "panels": [],
+      "title": "aspnetcore",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "description": "https://learn.microsoft.com/en-us/dotnet/core/diagnostics/built-in-metrics-aspnetcore#metric-httpserveractive_requests",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-blue",
+            "mode": "shades"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unitScale": true
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 70,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "sum by (host_name, http_request_method, url_scheme) (rate(http_server_active_requests{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
+          "instant": false,
+          "legendFormat": "{{http_request_method}} {{url_scheme}}://{{host_name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "In-flight HTTP requests",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "description": "https://learn.microsoft.com/en-us/dotnet/core/diagnostics/built-in-metrics-aspnetcore#metric-aspnetcoreroutingmatch_attempts",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "shades"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/failure/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "shades"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/fallback route/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "shades"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 71,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "sum by (host_name,http_route,aspnetcore_routing_is_fallback) (rate(aspnetcore_routing_match_attempts{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", aspnetcore_routing_match_status!=\"success\" }[$__rate_interval]))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}{{http_route}} failure (fallback:{{aspnetcore_routing_is_fallback}})",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "sum by (host_name,http_route) (rate(aspnetcore_routing_match_attempts{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", aspnetcore_routing_match_status=\"success\", aspnetcore_routing_is_fallback=\"true\" }[$__rate_interval]))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}{{http_route}} fallback route",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "sum by (host_name,http_route) (rate(aspnetcore_routing_match_attempts{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", aspnetcore_routing_match_status=\"success\", aspnetcore_routing_is_fallback=\"false\" }[$__rate_interval]))",
+          "instant": false,
+          "legendFormat": "{{host_name}}{{http_route}} success",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "Routing match attempts",
       "type": "timeseries"
     },
     {
