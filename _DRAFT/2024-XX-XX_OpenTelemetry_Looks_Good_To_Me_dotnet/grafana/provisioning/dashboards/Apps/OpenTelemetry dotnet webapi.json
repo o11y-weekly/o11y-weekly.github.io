@@ -869,8 +869,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -973,8 +972,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1134,8 +1132,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1244,10 +1241,10 @@
   "tags": [
     "loki",
     "mimir",
-    "spring",
-    "micrometer",
     "otlp",
-    "opentelemetry"
+    "opentelemetry",
+    "asp.net",
+    "dotnet"
   ],
   "templating": {
     "list": [
@@ -1287,7 +1284,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "client",
           "value": "client"
         },
