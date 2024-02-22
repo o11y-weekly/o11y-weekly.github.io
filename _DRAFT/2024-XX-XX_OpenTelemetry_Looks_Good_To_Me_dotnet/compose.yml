@@ -40,7 +40,7 @@ services:
       replicas: 2
 
   curl:
-    image: curlimages/curl:8.5.0
+    image: curlimages/curl:8.6.0
     networks:
       - bridge
     entrypoint: sh -c "watch -n 0.1 -d -- /script/curl.sh 2>&1 > /dev/null"
@@ -52,7 +52,7 @@ services:
       replicas: 1
 
   db:
-    image: postgres:16.1-alpine3.19
+    image: postgres:16.2-alpine3.19
     volumes:
       - ./postgres/initdb.d:/docker-entrypoint-initdb.d:ro
     environment:
@@ -104,6 +104,7 @@ services:
     deploy:
       # https://github.com/dotnet/runtime/issues/68967
       # https://www.meziantou.net/round-robin-dns-support-in-dotnet-httpclient.htm
+      # https://learn.microsoft.com/en-us/aspnet/core/grpc/loadbalancing?view=aspnetcore-8.0#configure-grpc-client-side-load-balancing
       replicas: 1
 
   loki:
@@ -133,7 +134,7 @@ services:
       - bridge
 
   grafana:
-    image: grafana/grafana-oss:10.3.1
+    image: grafana/grafana-oss:10.3.3
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
