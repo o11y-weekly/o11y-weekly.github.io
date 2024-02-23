@@ -1193,7 +1193,7 @@
           "editorMode": "code",
           "expr": "max_over_time(kestrel_active_connections{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__interval])",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "{{network_type}} {{network_transport}} {{server_address}}:{{server_port}}",
           "range": true,
           "refId": "A"
         }
@@ -1297,7 +1297,7 @@
           "editorMode": "code",
           "expr": "max_over_time(kestrel_queued_connections{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__interval])",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "{{network_type}} {{network_transport}} {{server_address}}:{{server_port}}",
           "range": true,
           "refId": "A"
         }
@@ -1531,8 +1531,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1647,8 +1646,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1850,7 +1848,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "client",
           "value": "client"
         },
@@ -2008,6 +2006,6 @@
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-webapi",
-  "version": 4,
+  "version": 6,
   "weekStart": ""
 }
