@@ -1487,6 +1487,110 @@
         "type": "prometheus",
         "uid": "${prom_ds}"
       },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-blue",
+            "mode": "shades"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short",
+          "unitScale": true
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 51
+      },
+      "id": 84,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "max_over_time(http_client_open_connections{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__interval])",
+          "instant": false,
+          "legendFormat": "{{server_address}}:{{server_port}} {{url_scheme}}{{network_protocol_version}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Open connections",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1605,7 +1709,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 51
+        "y": 59
       },
       "id": 76,
       "options": {
@@ -1652,7 +1756,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 59
+        "y": 67
       },
       "id": 67,
       "panels": [],
@@ -1668,7 +1772,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 60
+        "y": 68
       },
       "id": 68,
       "options": {
@@ -1745,8 +1849,8 @@
       {
         "current": {
           "selected": true,
-          "text": "service",
-          "value": "service"
+          "text": "client",
+          "value": "client"
         },
         "datasource": {
           "type": "prometheus",
@@ -1861,7 +1965,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "p95",
             "p50"
@@ -1902,6 +2006,6 @@
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-webapi",
-  "version": 2,
+  "version": 4,
   "weekStart": ""
 }
