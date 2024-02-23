@@ -566,7 +566,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.http_response_status_code} Error ${__field.labels.http_request_method} ${__field.labels.http_route} traces",
-              "url": "/explore?schemaVersion=1&panes=%7B%22BVT%22:%7B%22datasource%22:%22tempo%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22datasource%22:%7B%22type%22:%22tempo%22,%22uid%22:%22tempo%22%7D,%22queryType%22:%22traceqlSearch%22,%22limit%22:20,%22tableType%22:%22traces%22,%22filters%22:%5B%7B%22id%22:%22service-name%22,%22tag%22:%22service.name%22,%22operator%22:%22%3D%22,%22scope%22:%22resource%22,%22value%22:%5B%22${service_name}%22%5D,%22valueType%22:%22string%22%7D,%7B%22id%22:%22status%22,%22tag%22:%22status%22,%22scope%22:%22intrinsic%22,%22operator%22:%22%3D%22,%22value%22:%5B%22error%22%5D,%22valueType%22:%22keyword%22%7D,%7B%22id%22:%22span-name%22,%22tag%22:%22name%22,%22operator%22:%22%3D%22,%22scope%22:%22span%22,%22value%22:%5B%22${__field.labels.http_request_method}%20${__field.labels.http_route}%22%5D,%22valueType%22:%22string%22%7D,%7B%22id%22:%223a5a1be8%22,%22operator%22:%22%3D%22,%22scope%22:%22span%22,%22tag%22:%22http.response.status_code%22,%22value%22:%5B%22${__field.labels.http_response_status_code}%22%5D,%22valueType%22:%22int%22%7D%5D%7D%5D,%22range%22:%7B%22from%22:%22${__from}%22,%22to%22:%22${__to}%22%7D%7D%7D&orgId=1"
+              "url": "/explore?schemaVersion=1&panes=%7B%22BVT%22:%7B%22datasource%22:%22tempo%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22datasource%22:%7B%22type%22:%22tempo%22,%22uid%22:%22tempo%22%7D,%22queryType%22:%22traceqlSearch%22,%22limit%22:20,%22tableType%22:%22traces%22,%22filters%22:%5B%7B%22id%22:%22service-name%22,%22tag%22:%22service.name%22,%22operator%22:%22%3D%22,%22scope%22:%22resource%22,%22value%22:%5B%22${service_name}%22%5D,%22valueType%22:%22string%22%7D,%7B%22id%22:%22status%22,%22tag%22:%22status%22,%22scope%22:%22intrinsic%22,%22operator%22:%22%3D%22,%22value%22:%5B%5D,%22valueType%22:%22keyword%22%7D,%7B%22id%22:%22span-name%22,%22tag%22:%22name%22,%22operator%22:%22%3D%22,%22scope%22:%22span%22,%22value%22:%5B%22${__field.labels.http_request_method}%20${__field.labels.http_route}%22%5D,%22valueType%22:%22string%22%7D,%7B%22id%22:%223a5a1be8%22,%22operator%22:%22%3D%22,%22scope%22:%22span%22,%22tag%22:%22http.response.status_code%22,%22value%22:%5B%22${__field.labels.http_response_status_code}%22%5D,%22valueType%22:%22int%22%7D%5D%7D%5D,%22range%22:%7B%22from%22:%22${__from}%22,%22to%22:%22${__to}%22%7D%7D%7D&orgId=1"
             }
           ],
           "mappings": [],
@@ -1141,7 +1141,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1244,7 +1245,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1357,7 +1359,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1523,7 +1526,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1638,7 +1642,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1957,7 +1962,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "p95",
             "p50"
@@ -1998,6 +2003,6 @@
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-webapi",
-  "version": 11,
+  "version": 1,
   "weekStart": ""
 }
