@@ -877,8 +877,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -983,8 +982,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1146,8 +1144,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1250,8 +1247,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1364,8 +1360,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1541,8 +1536,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1744,9 +1738,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "service",
-          "value": "service"
+          "selected": true,
+          "text": "client",
+          "value": "client"
         },
         "datasource": {
           "type": "prometheus",
@@ -1861,7 +1855,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "p95",
             "p50"
@@ -1895,13 +1889,13 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-webapi",
-  "version": 14,
+  "version": 1,
   "weekStart": ""
 }
