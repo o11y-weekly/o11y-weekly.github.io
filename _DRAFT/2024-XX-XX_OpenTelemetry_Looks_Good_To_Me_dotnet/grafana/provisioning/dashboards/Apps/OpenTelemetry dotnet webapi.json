@@ -1596,7 +1596,7 @@
           "editorMode": "code",
           "expr": "max_over_time(http_client_open_connections{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__interval])",
           "instant": false,
-          "legendFormat": "{{server_address}}:{{server_port}} {{url_scheme}}{{network_protocol_version}}",
+          "legendFormat": "{{http_connection_state}} {{server_address}}:{{server_port}} {{url_scheme}}{{network_protocol_version}}",
           "range": true,
           "refId": "A"
         }
@@ -1866,7 +1866,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "client",
           "value": "client"
         },
@@ -2024,6 +2024,6 @@
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-webapi",
-  "version": 8,
+  "version": 9,
   "weekStart": ""
 }
