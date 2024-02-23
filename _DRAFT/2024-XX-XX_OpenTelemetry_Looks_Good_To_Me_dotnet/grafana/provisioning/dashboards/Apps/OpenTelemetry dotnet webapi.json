@@ -638,11 +638,11 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by(host_name, url_scheme, http_request_method, http_route, http_response_status_code) (rate(http_server_request_duration_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", http_response_status_code!~\"[1-3]..\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by(host_name, url_scheme, http_request_method, http_route, http_response_status_code, error_type) (rate(http_server_request_duration_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", http_response_status_code!~\"[1-3]..\"}[1m]))\r\n)",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "{{http_request_method}} {{url_scheme}}://{{host_name}}{{http_route}}: {{http_response_status_code}}",
+          "legendFormat": "{{http_request_method}} {{url_scheme}}://{{host_name}}{{http_route}}: {{http_response_status_code}} {{error_type}}",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -877,7 +877,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -982,7 +983,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1144,7 +1146,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1247,7 +1250,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1360,7 +1364,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1536,7 +1541,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1739,8 +1745,8 @@
       {
         "current": {
           "selected": true,
-          "text": "client",
-          "value": "client"
+          "text": "service",
+          "value": "service"
         },
         "datasource": {
           "type": "prometheus",
@@ -1896,6 +1902,6 @@
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-webapi",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
