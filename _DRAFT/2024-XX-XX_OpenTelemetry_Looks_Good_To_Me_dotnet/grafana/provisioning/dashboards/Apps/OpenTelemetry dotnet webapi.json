@@ -1760,7 +1760,7 @@
           "editorMode": "code",
           "expr": "topk($top, \r\n    histogram_quantile(${percentile:value}, \r\n        sum(rate(http_client_request_duration_bucket{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])) by (le, http_request_method, url_scheme, http_route, http_response_status_code,server_address,server_port,network_protocol_version)\r\n    )\r\n)",
           "instant": false,
-          "legendFormat": "{{network_protocol_version}} {{http_request_method}} {{url_scheme}}://{{server_address}}:{{server_port}}: {{http_response_status_code}}",
+          "legendFormat": "{{url_scheme}}/{{network_protocol_version}} {{server_address}}:{{server_port}} {{http_request_method}}: {{http_response_status_code}}",
           "range": true,
           "refId": "A"
         }
@@ -1866,7 +1866,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "client",
           "value": "client"
         },
@@ -2024,6 +2024,6 @@
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-webapi",
-  "version": 9,
+  "version": 10,
   "weekStart": ""
 }
