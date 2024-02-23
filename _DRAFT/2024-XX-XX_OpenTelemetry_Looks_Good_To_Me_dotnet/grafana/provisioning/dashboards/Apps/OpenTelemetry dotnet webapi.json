@@ -1441,7 +1441,7 @@
           ],
           "displayMode": "table",
           "placement": "bottom",
-          "showLegend": false,
+          "showLegend": true,
           "sortBy": "Max",
           "sortDesc": true
         },
@@ -1459,9 +1459,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk($top, \r\n    histogram_quantile(${percentile:value}, \r\n        sum(rate(kestrel_connection_duration_bucket{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])) by (le,network_protocol_name,network_protocol_version,network_transport,network_type,server_address,server_port,)\r\n    )\r\n)",
+          "expr": "topk($top, \r\n    histogram_quantile(${percentile:value}, \r\n        sum(rate(kestrel_connection_duration_bucket{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])) by (le,network_protocol_name,network_protocol_version,network_transport,network_type,server_address,server_port)\r\n    )\r\n)",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "{{network_type}} {{network_transport}}/{{network_protocol_name}}{{network_protocol_version}} {{server_address}}:{{server_port}}",
           "range": true,
           "refId": "A"
         }
@@ -1531,7 +1531,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
