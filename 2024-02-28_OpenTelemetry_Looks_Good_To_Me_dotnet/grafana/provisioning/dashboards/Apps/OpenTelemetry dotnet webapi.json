@@ -43,7 +43,7 @@
       "title": "github",
       "tooltip": "",
       "type": "link",
-      "url": "https://github.com/cboudereau/grafana-dashboards/tree/main/opentelemetry/java/springboot"
+      "url": "https://github.com/cboudereau/grafana-dashboards/tree/main/opentelemetry/dotnet/webapi"
     }
   ],
   "liveNow": false,
