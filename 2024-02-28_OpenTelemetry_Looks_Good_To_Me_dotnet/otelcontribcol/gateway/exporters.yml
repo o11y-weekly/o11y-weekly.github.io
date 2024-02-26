@@ -1,0 +1,7 @@
+exporters:
+  debug:
+    verbosity: detailed
+  otlphttp/gateway/loki:
+    endpoint: http://loki:3100/otlp 
+  otlphttp/gateway/mimir:
+    endpoint: http://mimir:9009/otlp

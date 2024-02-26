@@ -1,0 +1,68 @@
+exporters:
+  otlphttp/tempo:
+    endpoint: http://tempo:4318/
+
+receivers:
+  otlp/traces-collector:
+    protocols:
+      grpc:
+
+processors:
+  batch/tempo:
+  tail_sampling/probabilistic:
+    policies:
+      [
+        {
+          # apply probabilistic sampling
+          name: probabilistic-policy,
+          type: probabilistic,
+          probabilistic: { sampling_percentage: 100 },
+        },
+      ]
+  tail_sampling/latency-error:
+    decision_wait: 10s
+    policies:
+      [
+        # skip traces where latencies are < 100ms
+        {
+          name: latency-policy,
+          type: latency,
+          latency: {threshold_ms: 100}
+        },
+        # keep only error traces by skipping 4XX errors
+        {
+          name: error-policy,
+          type: and,
+          and:
+            {
+              and_sub_policy:
+                [
+                  {
+                    name: status_code-error-policy,
+                    type: status_code,
+                    status_code: {status_codes: [ERROR]}
+                  },
+                  # exclude false positive like bad requests or not found
+                  {
+                    name: http-status-code-error-policy,
+                    type: string_attribute,
+                    string_attribute:
+                      {
+                        key: error.type,
+                        values: [4..],
+                        enabled_regex_matching: true,
+                        invert_match: true,
+                      },
+                  },
+                ]
+            }
+        }
+      ]
+
+service:
+  pipelines:
+    traces/collector:
+      receivers: [otlp/traces-collector]
+      # [ordering processors](https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/README.md#ordering-processors)
+      processors: [tail_sampling/latency-error, tail_sampling/probabilistic, batch/tempo]
+      exporters: [otlphttp/tempo]
