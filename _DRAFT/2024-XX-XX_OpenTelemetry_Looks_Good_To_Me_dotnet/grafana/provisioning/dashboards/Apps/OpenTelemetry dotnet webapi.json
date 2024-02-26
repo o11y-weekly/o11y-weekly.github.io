@@ -18,7 +18,7 @@
   "description": "OpenTelemetry .Net (dotnet) ASP.NET using RED and USE method",
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": 20568,
+  "gnetId": 20352,
   "graphTooltip": 0,
   "links": [
     {
@@ -43,7 +43,7 @@
       "title": "github",
       "tooltip": "",
       "type": "link",
-      "url": "https://github.com/cboudereau/grafana-dashboards/tree/main/opentelemetry/dotnet/webapi"
+      "url": "https://github.com/cboudereau/grafana-dashboards/tree/main/opentelemetry/java/springboot"
     }
   ],
   "liveNow": false,
@@ -1700,7 +1700,7 @@
           "editorMode": "code",
           "expr": "max_over_time(process_threads{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
           "instant": false,
-          "legendFormat": "Memory Usage",
+          "legendFormat": "Process Threads",
           "range": true,
           "refId": "A"
         }
@@ -2594,7 +2594,7 @@
           "editorMode": "code",
           "expr": "max_over_time(process_runtime_dotnet_thread_pool_threads_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
           "instant": false,
-          "legendFormat": "Memory Usage",
+          "legendFormat": "Thead Pool Threads",
           "range": true,
           "refId": "A"
         }
@@ -2664,7 +2664,7 @@
           "editorMode": "code",
           "expr": "max_over_time(process_runtime_dotnet_thread_pool_queue_length{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
           "instant": false,
-          "legendFormat": "Memory Usage",
+          "legendFormat": "Thread Pool Queue Length",
           "range": true,
           "refId": "A"
         }
@@ -3019,7 +3019,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "Mimir",
           "value": "mimir"
         },
@@ -3029,6 +3029,7 @@
         "name": "prom_ds",
         "options": [],
         "query": "prometheus",
+        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -3036,7 +3037,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "Loki",
           "value": "loki"
         },
@@ -3046,6 +3047,7 @@
         "name": "loki_ds",
         "options": [],
         "query": "loki",
+        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -3053,9 +3055,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "client",
-          "value": "client"
+          "selected": true,
+          "text": "service",
+          "value": "service"
         },
         "datasource": {
           "type": "prometheus",
@@ -3170,7 +3172,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "p95",
             "p50"
@@ -3204,13 +3206,13 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-webapi",
-  "version": 8,
+  "version": 1,
   "weekStart": ""
 }
