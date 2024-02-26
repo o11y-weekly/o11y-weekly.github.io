@@ -9,9 +9,6 @@ services:
       - ./otelcontribcol/gateway/:/etc/otelcol-contrib/:ro
     networks:
       - bridge
-    ports:
-      - 4317:4317
-      - 4318:4318
     depends_on:
       - mimir
       - loki
