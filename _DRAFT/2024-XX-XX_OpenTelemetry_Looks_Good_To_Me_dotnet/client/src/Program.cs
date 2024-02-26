@@ -111,13 +111,7 @@ static class ServiceClient
     /// <returns></returns>
     private static HttpClient HttpClient()
     {
-        var handler = new SocketsHttpHandler
-        {
-            PooledConnectionLifetime = TimeSpan.FromMinutes(15)
-
-        };
-
-        return new HttpClient(handler);
+        return new HttpClient();
     }
 
     public static async Task<User?> GetUser(int id)
@@ -128,7 +122,7 @@ static class ServiceClient
             return await response.Content.ReadFromJsonAsync<User>();
         }
 
-        if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+        if (response.StatusCode == HttpStatusCode.NotFound)
         {
             return null;
         }
@@ -138,7 +132,7 @@ static class ServiceClient
 
     public static async Task<IResult> CreateUser(User user)
     {
-        var response = await httpClient.PostAsJsonAsync("http://service:8080/user", user);
+        using var response = await httpClient.PostAsJsonAsync("http://service:8080/user", user);
         response.EnsureSuccessStatusCode();
         return Results.Created();
     }

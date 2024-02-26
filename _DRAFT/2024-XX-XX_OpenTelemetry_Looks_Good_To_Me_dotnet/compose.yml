@@ -80,6 +80,9 @@ services:
       - otelcontribcol-gateway
     deploy:
       replicas: 1
+      resources:
+        limits:
+          memory: 300M
 
   service:
     build: 
@@ -106,6 +109,10 @@ services:
       # https://www.meziantou.net/round-robin-dns-support-in-dotnet-httpclient.htm
       # https://learn.microsoft.com/en-us/aspnet/core/grpc/loadbalancing?view=aspnetcore-8.0#configure-grpc-client-side-load-balancing
       replicas: 1
+      resources:
+        limits:
+          memory: 300M
+
 
   loki:
     image: grafana/loki@sha256:c59b9e928dffd375920b972e936c81e93bf14114c5229fae56a07cc47b15b475 #main with otlp support https://github.com/grafana/loki/pull/10727
