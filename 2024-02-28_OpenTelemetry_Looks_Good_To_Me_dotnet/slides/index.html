@@ -18,15 +18,30 @@
                   ![Looks Good To Me](./lgtm.png)
                 </textarea>
             </section>
-            <section data-markdown>
-              <textarea data-template>
+            <section>
+              <section data-markdown>
+                <textarea data-template>
                   ### OpenTelemetry
                   ![2023-11-30 #7 What is OpenTelemetry ?](o11y-weekly-otel-post-qrcode.gif)
                   - OTLP protocol: gRPC/HTTP protobuf services
                   - Semantic Conventions: attributes and resources
                   - Instrumentations
                   - Collectors / Exporters: SDK and agent
-              </textarea>
+                </textarea>
+              </section>
+              <section data-markdown>
+                <textarea data-template>
+                  ### dotnet dependencies
+                  ```bash
+                  dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol
+dotnet add package OpenTelemetry.Instrumentation.AspNetCore
+dotnet add package OpenTelemetry.Instrumentation.Http
+dotnet add package OpenTelemetry.Instrumentation.Runtime
+dotnet add package System.Diagnostics.DiagnosticSource
+dotnet add package OpenTelemetry.Instrumentation.Process --version 0.5.0-beta.4
+                  ```
+                </textarea>
+              </section>
             </section>
             <section data-markdown>
                 <textarea data-template>
@@ -35,151 +50,41 @@
                     ![Architecture](./docker-compose.png)
                 </textarea>
             </section>
-            <section data-markdown>
+            <section>
+              <section data-markdown>
                 <textarea data-template>
-                    ### OpenTelemetry Logs with Loki
-                    ![Loki](./loki.svg)
+                  ### OpenTelemetry Logs with Loki
+                  ![Loki](./loki.svg)
                 </textarea>
-            </section>
-            <section>
-                <section data-markdown>
-                    <textarea data-template>
-                        ### OTEL Collector Agent mode
-                        - Java Logback File Appender
-                        - OpenTelemetry Collector Contrib Agent
-
-                        ![loki otel agent](./loki-agent.png)
-                    </textarea>
-                </section>
-                <section data-markdown>
-                    <textarea data-template>
-                        ### Java Logback File Appender 
-                        ```xml
-                        <?xml version="1.0" encoding="UTF-8"?>
-                        <configuration>
-                            <property resource="application.yml" />
-                            <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-                                <file>log/${SERVICE_NAME}.log</file>
-                                <append>true</append>
-                                <encoder>
-                                    <pattern>
-                                        timestamp=%d{yyyy/MM/dd HH:mm:ss.SSSSSSSSS}\t
-                                        service.version=${service.version}\t
-                                        traceId=%X{trace_id}\t
-                                        spanId=%X{span_id}\t
-                                        message=%msg%n</pattern>
-                                </encoder>
-                            </appender>
-                            <root level="INFO">
-                                <appender-ref ref="FILE" />
-                            </root>
-                        </configuration>
-                        ```
-                    </textarea>
-                </section>
-                <section data-markdown>
-                    <textarea data-template>
-                        ### OTEL Loki Pipeline
-```yaml
-exporters:
-  loki:
-    endpoint: http://loki:3100/loki/api/v1/push
-    default_labels_enabled:
-      level: true
-receivers:
-  filelog/app:
-    include: [ /app/log/*.log ]
-    storage: file_storage/app
-    multiline:
-      line_start_pattern: timestamp=
-    resource:
-      service.name: ${env:SERVICE_NAME}
-      service.namespace: ${env:SERVICE_NAMESPACE}
-      host.name: ${env:HOSTNAME}
-      deployment.environment: ${env:DEPLOYMENT_ENVIRONMENT}
-processors:
-  batch/app:
-  resource/app/loki:
-    attributes:
-      - action: insert
-        key: loki.resource.labels
-        value: service.name, service.namespace, service.version, host.name, deployment.environment, service.instance.id
-      - action: insert
-        key: loki.format
-        value: raw
-service:
-  pipelines:
-    logs/app:
-      receivers: [filelog/app]
-      processors: [batch/app, resource/app/loki]
-      exporters: [loki]
-```
-                    </textarea>
-                </section>
-            </section>
-            <section>
-                <section data-markdown>
-                    <textarea data-template>
-                        ### Java Agent / OTLP mode
-                        - Logback OpenTelemetry Appender
-                        - OpenTelemetry Java Agent
-                        ![loki OTLP](loki-otlp.png)
-                    </textarea>
-                </section>
-                <section data-markdown>
-                    <textarea data-template>
-                        ### Maven Dependency
-```xml
-<dependency>
-    <groupId>io.opentelemetry.instrumentation</groupId>
-    <artifactId>opentelemetry-logback-appender-1.0</artifactId>
-    <version>2.0.0-alpha</version>
-</dependency>
-```
-                    </textarea>
-                </section>
-
-                <section data-markdown>
-                    <textarea data-template>
-                        ### Logback OTEL Configuration
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-    <appender name="OpenTelemetry" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
-    </appender>
-    <root level="INFO">
-        <appender-ref ref="OpenTelemetry"/>
-    </root>
-</configuration>
-```
-                    </textarea>
-                </section>
-                <section data-markdown>
-                    <textarea data-template>
-                        ### OpenTelemetry Java Agent
-                        ![java agent OTEL](./java-agent-otel.qrcode.gif)
-```ini
-command=java
-    -javaagent:/app/opentelemetry-javaagent.jar
-    -Dservice.name=%(ENV_SERVICE_NAME)s
-    -Dservice.namespace=%(ENV_SERVICE_NAMESPACE)s
-    -Dhost.name=%(host_node_name)s
-    -Ddeployment.environment=%(ENV_DEPLOYMENT_ENVIRONMENT)s
-    -Dotel.resource.attributes=service.name=%(ENV_SERVICE_NAME)s,service.namespace=%(ENV_SERVICE_NAMESPACE)s,deployment.environment=%(ENV_DEPLOYMENT_ENVIRONMENT)s,host.name=%(host_node_name)s
-    -jar /app/main.jar 
-    --spring.application.name=%(ENV_SERVICE_NAME)s 
-```
-                    </textarea>
-                </section>
+              </section>
+              <section data-markdown>
+                <textarea data-template>
+                  ```csharp
+builder
+.Logging.AddOpenTelemetry(logging =>
+    {
+        logging.IncludeFormattedMessage = true;
+        logging.AddOtlpExporter();
+    }
+)
+                  ```
+                </textarea>
+              </section>
             </section>
 
             <section>
                 <section data-markdown>
                     <textarea data-template>
                     ### Metrics with OTLP Mimir ![Mimir](./mimir.svg)
-                    ![OTLP JVM QR code](./otlp-jvm-qrcode.gif)
-                    ![Java metrics](./java-metrics.png)
+                    ![OTLP dotnet QR code](./otlp-dotnet-qrcode.gif)
+                    ![dotnet metrics](./dotnet-metrics.png)
                     </textarea>
+                </section>
+                <section data-markdown>
+                  <textarea data-template>
+                  ### Overview
+                  ![Overview](./metrics-stats.png)
+                  </textarea>
                 </section>
                 <section data-markdown>
                   <textarea data-template>
@@ -195,47 +100,54 @@ command=java
                 </section>
                 <section data-markdown>
                   <textarea data-template>
-                  ### JVM Metrics
-                  ![JVM Metrics](./metrics-jvm-utilization.png)
+                  ### Dotnet HTTP Server Metrics
+                  ![Dotnet HTTP Server Metrics](./metrics-dotnet-http-server.png)
+                  </textarea>
+                </section>
+                <section data-markdown>
+                  <textarea data-template>
+                  ### Dotnet Process Metrics
+                  ![Dotnet Process Metrics](./metrics-dotnet-process.png)
+                  </textarea>
+                </section>
+                <section data-markdown>
+                  <textarea data-template>
+                  ### Dotnet Runtime Metrics
+                  ![Dotnet Runtime Metrics](./metrics-dotnet-runtime.png)
+                  </textarea>
+                </section>
+                <section data-markdown>
+                  <textarea data-template>
+                  ### Dotnet HTTP Client Metrics
+                  ![Dotnet HTTP Client Metrics](./metrics-dotnet-http-client.png)
                   </textarea>
                 </section>
                 <section data-markdown>
                     <textarea data-template>
-                    ### OTLP Micrometer registry
+                    ### Metrics setup
 
-```xml
-<dependency>
-    <groupId>io.micrometer</groupId>
-    <artifactId>micrometer-registry-otlp</artifactId>
-</dependency>
-```
-                    </textarea>
-                </section>
-                <section data-markdown>
-                    <textarea data-template>
-                    ### Configuration
-```yaml
-management:
-  otlp:      
-    metrics:
-      export:
-        enabled: true
-        step: 10s
-        url: http://mimir:9009/otlp/v1/metrics
-
-  metrics:
-    tags:
-      deployment.environment: '${deployment.environment}'
-      host.name: '${host.name}'
-      service:
-        name: '${service.name}'
-        namespace: '${service.namespace}'
-        version: '@project.version@'
-    distribution:
-      percentiles:
-        all: 0.5, 0.95, 0.99
-```
-                    </textarea>
+                    ```csharp
+                    builder
+                    .Services
+                        .AddOpenTelemetry()
+                        .ConfigureResource(resource => resource.AddService(
+                                serviceName: SERVICE_NAME,
+                                serviceVersion: System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) // SemVer
+                                )
+                            .AddAttributes(new Dictionary<string, object>
+                                {
+                                    { "host.name", Environment.MachineName }
+                                })
+                            )
+                        .WithMetrics(opts => opts
+                            .AddAspNetCoreInstrumentation()
+                            .AddRuntimeInstrumentation()
+                            .AddHttpClientInstrumentation()
+                            .AddProcessInstrumentation()
+                            .AddOtlpExporter()
+                        );
+                    ```
+                  </textarea>
                 </section>
             </section>
 
@@ -269,13 +181,11 @@ management:
 ```yaml
 environment:
 - SERVICE_NAME=client
-- SERVICE_NAMESPACE=demo
-- DEPLOYMENT_ENVIRONMENT=dev
 - OTEL_TRACES_SAMPLER=parentbased_traceidratio
 - OTEL_TRACES_SAMPLER_ARG=0.1
-- OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
-- OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
-- OTEL_METRICS_EXPORTER=none
+- OTEL_RESOURCE_ATTRIBUTES=service.namespace=demo,deployment.environment=dev
+- OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+- OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
 ```
                     </textarea>
                 </section>
