@@ -6,7 +6,7 @@ Security, scalling and so on will not be introduced and GrafanaCloud offers the 
 
 ## Architecture
 
-TODO: This demo includes 2 java services (service and client) and a postgres database to use webserver and jdbc instrumentations.
+This demo includes 2 dotnet webapi applications (service and client) and a postgres database to use webserver and custom dotnet instrumentations.
 
 [OpenTelemetry Collector Contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib) has been used as a [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) and [Agent](https://opentelemetry.io/docs/collector/deployment/agent/)
 
@@ -31,11 +31,8 @@ Open Grafana: http://localhost:3000
 
 ### dotnet
 
-TODO:
-2 Java dashboards are available:
-- [OpenTelemetry JVM Micrometer](https://grafana.com/grafana/dashboards/20352-opentelemetry-jvm-micrometer/)
-
-- [OpenTelemetry JVM Micrometer per instance](https://grafana.com/grafana/dashboards/20353-opentelemetry-jvm-micrometer-per-instance/)
+TODO
+- [OpenTelemetry dotnet webapi](https://grafana.com/grafana/dashboards/20568-opentelemetry-dotnet-webapi/)
 
 ### OpenTelemetry Collector Monitoring
 
