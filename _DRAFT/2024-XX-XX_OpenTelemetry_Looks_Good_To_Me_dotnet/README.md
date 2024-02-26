@@ -43,6 +43,8 @@ TODO
 ## Deep Dive
 
 ### Dotnet Instrumentation setup
+References: 
+- [OTEL dotnet setup](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main?tab=readme-ov-file#getting-started)
 
 #### Automatic instrumentation
 Reference : [Automatic instrumentation](../../2023-11-30_What_is_OpenTelemetry/README.md#automatic)
@@ -50,17 +52,14 @@ Reference : [Automatic instrumentation](../../2023-11-30_What_is_OpenTelemetry/R
 #### Manual instrumentation
 Reference : [Manual instrumentation](../../2023-11-30_What_is_OpenTelemetry/README.md#manual)
 
-
 #### Setup Metrics instrumentation and exporter
 
 References: 
 - [Built-in metrics](https://learn.microsoft.com/en-us/dotnet/core/diagnostics/built-in-metrics)
 - [Quick setup from Grafana](https://grafana.com/docs/opentelemetry/instrumentation/dotnet/manual-instrumentation/)
-- [OTEL dotnet setup](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main?tab=readme-ov-file#getting-started)
-- [Add custom traces](https://opentelemetry.io/docs/languages/net/automatic/custom/)
 - [Dotnet ASP.NET healthcheck](https://learn.microsoft.com/en-us/dotnet/core/diagnostics/diagnostic-health-checks)
 
-Note that the process instrumentation is still in beta.
+⚠️Note that the process instrumentation is still in beta.
 
 ```bash
 dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol
@@ -71,66 +70,105 @@ dotnet add package System.Diagnostics.DiagnosticSource
 dotnet add package OpenTelemetry.Instrumentation.Process --version 0.5.0-beta.4
 ```
 
-#### Logs
-2 different methods has been used to send logs to LOKI.
-
-Scrapping the file is a conventional and standard method to seng logs with a agent and used in the [service application](./service/) while [pushing logs to a gateway] is quite new and used in the [client application](./client/).
-
-##### File Log
-
-In the [service application](./service/), Logback has been used to write the logs into a file log.
-
-[Logback service configuration](./service/src/main/resources/logback.xml)
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-    <property resource="application.yml" />
-
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>log/${SERVICE_NAME}.log</file>
-        <append>true</append>
-        <encoder>
-            <pattern>timestamp=%d{yyyy/MM/dd HH:mm:ss.SSSSSSSSS}\tservice.version=${service.version}\tmessage=%msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <root level="INFO">
-        <appender-ref ref="FILE" />
-    </root>
-</configuration>
+```csharp
+builder
+.Services
+    .AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService(
+            serviceName: SERVICE_NAME,
+            serviceVersion: System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) // SemVer
+            )
+        .AddAttributes(new Dictionary<string, object>
+            {
+                { "host.name", Environment.MachineName }
+            })
+        )
+    .WithMetrics(opts => opts
+        .AddAspNetCoreInstrumentation()
+        .AddRuntimeInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddProcessInstrumentation()
+        .AddOtlpExporter()
+    );
 ```
 
-OpenTelemetry Collector contrib reads the file and forward logs to LOKI using the LOKI api.
+#### Logs
+No file logger has been used in this setup but it is also possible to use otelcontrib-col has log scrapper to forward file log contents to telemetry backend.
 
+The OTLP log exporter has been used during this setup.
 
-##### Java Agent exporter
-
-In the [client application](./client/) the Java agent sends log with OpenTelemetry embedded exporters.
-
-Java agent command line ([app command line](./client/supervisor.d/app.ini)) :
-```ini
-[program:app]
-command=java
-    -javaagent:/app/opentelemetry-javaagent.jar
-    -Dservice.name=%(ENV_SERVICE_NAME)s
-    -Dservice.namespace=%(ENV_SERVICE_NAMESPACE)s
-    -Dhost.name=%(host_node_name)s
-    -Ddeployment.environment=%(ENV_DEPLOYMENT_ENVIRONMENT)s
-    -Dotel.resource.attributes=service.name=%(ENV_SERVICE_NAME)s,service.namespace=%(ENV_SERVICE_NAMESPACE)s,deployment.environment=%(ENV_DEPLOYMENT_ENVIRONMENT)s,host.name=%(host_node_name)s
-    -jar /app/main.jar 
-    --spring.application.name=%(ENV_SERVICE_NAME)s 
+```csharp
+builder
+.Logging.AddOpenTelemetry(logging =>
+    {
+        logging.IncludeFormattedMessage = true;
+        logging.AddOtlpExporter();
+    }
+)
 ```
 
 #### Traces
-WithSpan attribute
+References: 
+- [Add custom traces](https://opentelemetry.io/docs/languages/net/automatic/custom/)
 
-##### Java Agent
+```csharp
+builder
+.Services
+    .AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService(
+            serviceName: SERVICE_NAME,
+            serviceVersion: System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) // SemVer
+            )
+        .AddAttributes(new Dictionary<string, object>
+            {
+                { "host.name", Environment.MachineName }
+            })
+        )
+    .WithTracing(tracing => tracing
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddNpgsql()
+        .AddSource(SERVICE_NAME)
+        .AddOtlpExporter()
+    );
+```
+
+##### Custom traces
+```csharp
+builder
+.Services
+    .AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService(
+            serviceName: SERVICE_NAME,
+            serviceVersion: System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) // SemVer
+            )
+        .AddAttributes(new Dictionary<string, object>
+            {
+                { "host.name", Environment.MachineName }
+            })
+        )
+    .WithTracing(tracing => tracing
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddNpgsql()
+        .AddSource("test") // register activity source "test"
+        .AddOtlpExporter()
+    );
+
+var REGISTERED_ACTIVITY = new ActivitySource("test"); // declare activity "test"
+var callSlowDependency = async (int counter, int delay) =>
+{
+    //start an activity "test" for "callSlowDependency"
+    using var activity = REGISTERED_ACTIVITY.StartActivity("callSlowDependency");
+    if (isEnabled(counter, LATENCY_RATIO))
+    {
+        activity?.SetTag("delay", delay);
+        await Task.Delay(delay);
+    }
+};
+```
 
 ### OpenTelemetry Collector
-
-#### Agent
-- [Agent Configuration](./otelcontribcol/agent/)
 
 #### Gateway
 - [Gateway Configuration](./otelcontribcol/gateway/)
@@ -180,77 +218,6 @@ processors:
             }
         }
       ]
-```
-
-## OpenTelemetry Collector Contrib setup
-
-### Metrics
-- Instrumentation: micrometer with otlp registry
-- Collector: No Collector
-
-### Logs
-#### Agent mode
-Inside the service container, supervisord is used to run the agent like a kubernetes sidecar.
-
-- Instrumentation: manual with logback and a file log
-- Collector: [OpenTelemetry Collector Contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib/)
- [Agent](https://opentelemetry.io/docs/collector/deployment/agent/) which scrape the log file and send logs to loki.
-
-OpenTelemetry Collector Agent [configuration](./otelcontribcol/agent/pipeline.app.yaml)
-```yaml
-receivers:
-  filelog/app:
-    include: [ /app/log/*.log ]
-    storage: file_storage/app
-    multiline:
-      line_start_pattern: timestamp=
-    resource:
-      service.name: ${env:SERVICE_NAME}
-      service.namespace: ${env:SERVICE_NAMESPACE}
-      host.name: ${env:HOSTNAME}
-      deployment.environment: ${env:DEPLOYMENT_ENVIRONMENT}
-
-processors:
-  batch/app:
-  resource/app/loki:
-    attributes:
-      - action: insert
-        key: loki.resource.labels
-        value: service.name, service.namespace, service.version, host.name, deployment.environment, service.instance.id
-      - action: insert
-        key: loki.format
-        value: raw
-
-service:
-  pipelines:
-    logs/app:
-      receivers: [filelog/app]
-      processors: [batch/app, resource/app/loki]
-      exporters: [loki]
-```
-
-#### No Collector mode
-Inside the client app.
-- Instrumentation: [OpenTelemetry Java Agent](https://github.com/open-telemetry/opentelemetry-java-instrumentation)
-- Collector: [OpenTelemetry Collector Contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib/)
- [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) which sends otlp logs to loki
-
-Gateway [configuration](./otelcontribcol/gateway/pipeline.logs.yml) to collect logs.
-
-```yaml
-processors:
-  resource/loki:
-    attributes:
-      - action: upsert
-        key: service.instance.id # loki does not accept host.name (https://github.com/grafana/loki/issues/11786)
-        from_attribute: host.name
-
-service:
-  pipelines:
-    logs/gateway:
-      receivers: [otlp/gateway]
-      processors: [resource/loki]
-      exporters: [otlphttp/gateway/loki]
 ```
 
 ## OpenTelemetry Collector Contrib Monitoring
