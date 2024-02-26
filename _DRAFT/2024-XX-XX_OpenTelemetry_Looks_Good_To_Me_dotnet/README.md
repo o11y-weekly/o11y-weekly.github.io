@@ -59,11 +59,17 @@ Reference:
 - https://learn.microsoft.com/en-us/dotnet/core/diagnostics/diagnostic-health-checks
 - https://learn.microsoft.com/en-us/dotnet/core/diagnostics/built-in-metrics
 - https://github.com/open-telemetry/opentelemetry-dotnet/tree/main?tab=readme-ov-file#getting-started
-- Add custome traces : https://opentelemetry.io/docs/languages/net/automatic/custom/
+- Add custom traces : https://opentelemetry.io/docs/languages/net/automatic/custom/
+
+Note that the process instrumentation is still in beta.
 
 ```bash
-dotnet add package OpenTelemetry.Extensions.Hosting
+dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol
 dotnet add package OpenTelemetry.Instrumentation.AspNetCore
+dotnet add package OpenTelemetry.Instrumentation.Http
+dotnet add package OpenTelemetry.Instrumentation.Runtime
+dotnet add package System.Diagnostics.DiagnosticSource
+dotnet add package OpenTelemetry.Instrumentation.Process --version 0.5.0-beta.4
 ```
 
 #### Logs
