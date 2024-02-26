@@ -1865,13 +1865,6 @@
           {
             "matcher": {
               "id": "byName",
-              "options": ""
-            },
-            "properties": []
-          },
-          {
-            "matcher": {
-              "id": "byName",
               "options": "GC Commited Memory Size"
             },
             "properties": [
@@ -1935,6 +1928,7 @@
           },
           "editorMode": "code",
           "expr": "max_over_time(process_runtime_dotnet_gc_committed_memory_size{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
+          "hide": false,
           "instant": false,
           "legendFormat": "GC Commited Memory Size",
           "range": true,
@@ -1959,7 +1953,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "max_over_time(process_runtime_dotnet_gc_allocations_size{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
+          "expr": "rate(process_runtime_dotnet_gc_allocations_size{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
           "hide": false,
           "instant": false,
           "legendFormat": "GC Allocation Size",
@@ -2820,8 +2814,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2936,8 +2929,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3290,13 +3282,13 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-webapi",
-  "version": 1,
+  "version": 8,
   "weekStart": ""
 }
