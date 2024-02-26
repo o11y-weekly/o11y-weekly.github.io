@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using OpenTelemetry.Logs;
@@ -6,6 +7,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
+var SERVICE_NAME = Environment.GetEnvironmentVariable("SERVICE_NAME") ?? builder.Environment.ApplicationName;
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -27,7 +29,7 @@ builder
 .Services
     .AddOpenTelemetry()
     .ConfigureResource(resource => resource.AddService(
-            serviceName: Environment.GetEnvironmentVariable("SERVICE_NAME") ?? builder.Environment.ApplicationName,
+            serviceName: SERVICE_NAME,
             serviceVersion: System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) // SemVer
             )
         .AddAttributes(new Dictionary<string, object>
@@ -46,6 +48,7 @@ builder
         .AddAspNetCoreInstrumentation()
         .AddHttpClientInstrumentation()
         .AddNpgsql()
+        .AddSource(SERVICE_NAME)
         .AddOtlpExporter()
     );
 
@@ -71,12 +74,15 @@ var MAX_LATENCY = int.Parse(Environment.GetEnvironmentVariable("MAX_LATENCY") ??
 var LATENCY_RATIO = double.Parse(Environment.GetEnvironmentVariable("LATENCY_RATIO") ?? "0");
 var FAILURE_RATIO = double.Parse(Environment.GetEnvironmentVariable("FAILURE_RATIO") ?? "0");
 
-var isEnabled = (int counter, double ratio) => counter % (1 / ratio) == 0;
+var REGISTERED_ACTIVITY = new ActivitySource(SERVICE_NAME);
 
+var isEnabled = (int counter, double ratio) => counter % (1 / ratio) == 0;
 var callSlowDependency = async (int counter, int delay) =>
 {
+    using var activity = REGISTERED_ACTIVITY.StartActivity("callSlowDependency");
     if (isEnabled(counter, LATENCY_RATIO))
     {
+        activity?.SetTag("delay", delay);
         await Task.Delay(delay);
     }
 };

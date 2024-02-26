@@ -62,6 +62,7 @@ Reference:
 - https://learn.microsoft.com/en-us/dotnet/core/diagnostics/diagnostic-health-checks
 - https://learn.microsoft.com/en-us/dotnet/core/diagnostics/built-in-metrics
 - https://github.com/open-telemetry/opentelemetry-dotnet/tree/main?tab=readme-ov-file#getting-started
+- Add custome traces : https://opentelemetry.io/docs/languages/net/automatic/custom/
 
 ```bash
 dotnet add package OpenTelemetry.Extensions.Hosting
