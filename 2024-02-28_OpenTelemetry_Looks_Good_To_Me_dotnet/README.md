@@ -2,6 +2,8 @@
 
 This post has been adapted for dotnet from the [previous java post](../2024-01-31_OpenTelemetry_Looks_Good_To_Me/README.md). A new dashboard is available for specific dotnet instrumentation: [OpenTelemetry dotnet webapi](https://grafana.com/grafana/dashboards/20568-opentelemetry-dotnet-webapi/).
 
+OpenTelemetry Collector Contrib configuration is the same as java since, both java and dotnet are using the same OTLP specification. This is a good things for SRE supporting multiple stacks and languages since the gateway configuration is common.
+
 ## Disclaimer
 ⚠️This demo is not a grafana labs production ready demo and used as local dev hands on and demo only.
 
@@ -20,7 +22,7 @@ This demo includes 2 dotnet webapi applications (service and client) and a postg
 ### Run the docker compose
 ```bash
 git clone git@github.com:o11y-weekly/o11y-weekly.github.io.git
-cd 2024-02-28_OpenTelemetry_Looks_Good_To_Me/demo/
+cd o11y-weekly.github.io/2024-02-28_OpenTelemetry_Looks_Good_To_Me_dotnet/
 ./up.sh
 ```
 ### Run Grafana
@@ -28,13 +30,13 @@ Open Grafana: http://localhost:3000
 
 2 folders:
 - App: contains app dashboards
-- OpenTelemetry Collector Contrib: Agent and Gateway monitoring
+- OpenTelemetry Collector Contrib: Gateway monitoring
 
 ## Grafana Dashboards
 
 ### dotnet
 
-TODO
+An OpenTelemetry dotnet webapi dashboard has been created during this post and availble at grafana dashboards:
 - [OpenTelemetry dotnet webapi](https://grafana.com/grafana/dashboards/20568-opentelemetry-dotnet-webapi/)
 
 ### OpenTelemetry Collector Monitoring
@@ -54,6 +56,15 @@ Reference : [Automatic instrumentation](../../2023-11-30_What_is_OpenTelemetry/R
 
 #### Manual instrumentation
 Reference : [Manual instrumentation](../../2023-11-30_What_is_OpenTelemetry/README.md#manual)
+
+```bash
+dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol
+dotnet add package OpenTelemetry.Instrumentation.AspNetCore
+dotnet add package OpenTelemetry.Instrumentation.Http
+dotnet add package OpenTelemetry.Instrumentation.Runtime
+dotnet add package System.Diagnostics.DiagnosticSource
+dotnet add package OpenTelemetry.Instrumentation.Process --version 0.5.0-beta.4
+```
 
 #### Setup Metrics instrumentation and exporter
 
@@ -111,8 +122,6 @@ builder
 ```
 
 #### Traces
-References: 
-- [Add custom traces](https://opentelemetry.io/docs/languages/net/automatic/custom/)
 
 ```csharp
 builder
@@ -137,6 +146,9 @@ builder
 ```
 
 ##### Custom traces
+References: 
+- [Add custom traces](https://opentelemetry.io/docs/languages/net/automatic/custom/)
+
 ```csharp
 builder
 .Services
