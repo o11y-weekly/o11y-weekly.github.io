@@ -1,5 +1,7 @@
 # OpenTelemetry Looks Good To Me for dotnet
 
+This post has been adapted for dotnet from the [previous java post](../2024-01-31_OpenTelemetry_Looks_Good_To_Me/README.md). A new dashboard is available for specific dotnet instrumentation: [OpenTelemetry dotnet webapi](https://grafana.com/grafana/dashboards/20568-opentelemetry-dotnet-webapi/).
+
 ## Disclaimer
 ⚠️This demo is not a grafana labs production ready demo and used as local dev hands on and demo only.
 
@@ -9,7 +11,7 @@ Security, scalling and so on will not be introduced and GrafanaCloud offers the 
 
 This demo includes 2 dotnet webapi applications (service and client) and a postgres database to use webserver and custom dotnet instrumentations.
 
-[OpenTelemetry Collector Contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib) has been used as a [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/) and [Agent](https://opentelemetry.io/docs/collector/deployment/agent/)
+[OpenTelemetry Collector Contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib) has been used as a [Gateway](https://opentelemetry.io/docs/collector/deployment/gateway/)
 
 ![docker compose services](./docker-compose.png)
 
@@ -18,7 +20,7 @@ This demo includes 2 dotnet webapi applications (service and client) and a postg
 ### Run the docker compose
 ```bash
 git clone git@github.com:o11y-weekly/o11y-weekly.github.io.git
-TODO cd 2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/
+cd 2024-02-28_OpenTelemetry_Looks_Good_To_Me/demo/
 ./up.sh
 ```
 ### Run Grafana
