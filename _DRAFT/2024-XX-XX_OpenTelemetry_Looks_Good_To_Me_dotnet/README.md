@@ -53,13 +53,12 @@ Reference : [Manual instrumentation](../../2023-11-30_What_is_OpenTelemetry/READ
 
 #### Setup Metrics instrumentation and exporter
 
-Reference: 
-- https://learn.microsoft.com/en-us/dotnet/core/diagnostics/built-in-metrics-aspnetcore
-- https://grafana.com/docs/opentelemetry/instrumentation/dotnet/manual-instrumentation/
-- https://learn.microsoft.com/en-us/dotnet/core/diagnostics/diagnostic-health-checks
-- https://learn.microsoft.com/en-us/dotnet/core/diagnostics/built-in-metrics
-- https://github.com/open-telemetry/opentelemetry-dotnet/tree/main?tab=readme-ov-file#getting-started
-- Add custom traces : https://opentelemetry.io/docs/languages/net/automatic/custom/
+References: 
+- [Built-in metrics](https://learn.microsoft.com/en-us/dotnet/core/diagnostics/built-in-metrics)
+- [Quick setup from Grafana](https://grafana.com/docs/opentelemetry/instrumentation/dotnet/manual-instrumentation/)
+- [OTEL dotnet setup](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main?tab=readme-ov-file#getting-started)
+- [Add custom traces](https://opentelemetry.io/docs/languages/net/automatic/custom/)
+- [Dotnet ASP.NET healthcheck](https://learn.microsoft.com/en-us/dotnet/core/diagnostics/diagnostic-health-checks)
 
 Note that the process instrumentation is still in beta.
 
