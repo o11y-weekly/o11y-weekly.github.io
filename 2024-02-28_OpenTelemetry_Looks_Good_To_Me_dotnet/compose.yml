@@ -65,7 +65,7 @@ services:
     environment:
       - SERVICE_NAME=client
       - OTEL_TRACES_SAMPLER=parentbased_traceidratio
-      - OTEL_TRACES_SAMPLER_ARG=1 # demo parameter
+      - OTEL_TRACES_SAMPLER_ARG=0.1 # demo parameter
       - OTEL_RESOURCE_ATTRIBUTES=service.namespace=demo,deployment.environment=dev
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
