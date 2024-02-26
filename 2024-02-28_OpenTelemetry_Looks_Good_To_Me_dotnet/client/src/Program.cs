@@ -1,6 +1,4 @@
-using System.Collections.Concurrent;
 using System.Net;
-using System.Net.Sockets;
 using Microsoft.AspNetCore.Mvc;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
