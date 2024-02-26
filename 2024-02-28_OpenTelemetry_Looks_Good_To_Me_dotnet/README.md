@@ -1,4 +1,4 @@
-# OpenTelemetry Looks Good To Me for dotnet
+# 2024-02-28 #10 OpenTelemetry Looks Good To Me for dotnet
 
 This post has been adapted for dotnet from the [previous java post](../2024-01-31_OpenTelemetry_Looks_Good_To_Me/README.md). A new dashboard is available for specific dotnet instrumentation: [OpenTelemetry dotnet webapi](https://grafana.com/grafana/dashboards/20568-opentelemetry-dotnet-webapi/).
 
