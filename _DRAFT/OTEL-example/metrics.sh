@@ -1,5 +1,5 @@
 #! /bin/sh
-curl -X POST -H 'Content-Type: application/json' -i localhost:4318/v1/metrics \
+curl -v -X POST -H 'Content-Type: application/json' http://localhost:4318/v1/metrics \
   -d "{
   \"resourceMetrics\": [{
     \"resource\": {
@@ -7,6 +7,12 @@ curl -X POST -H 'Content-Type: application/json' -i localhost:4318/v1/metrics \
         \"key\": \"service.name\",
         \"value\": {
           \"stringValue\": \"hello-world\"
+        }
+      },
+      {
+        \"key\": \"hello\",
+        \"value\": {
+          \"stringValue\": \"world\"
         }
       }],
       \"droppedAttributesCount\": 0
@@ -19,7 +25,12 @@ curl -X POST -H 'Content-Type: application/json' -i localhost:4318/v1/metrics \
           \"aggregationTemporality\": 2,
           \"dataPoints\": [{
             \"asDouble\": 1,
-            \"attributes\": [],
+            \"attributes\": [{
+                \"key\": \"hello-dp\",
+                \"value\": {
+                \"stringValue\": \"world\"
+                }
+            }],
             \"startTimeUnixNano\": $(date +%s%N),
             \"timeUnixNano\": $(date +%s%N)
           }],
