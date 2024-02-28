@@ -107,7 +107,7 @@ builder
 ```
 
 #### Logs
-No file logger has been used in this setup but it is also possible to use otelcontrib-col has log scrapper to forward file log contents to telemetry backend.
+No file logger has been used in this setup but it is also possible to use otelcontrib-col as log scrapper to forward file log contents to telemetry backend.
 
 The OTLP log exporter has been used during this setup.
 
