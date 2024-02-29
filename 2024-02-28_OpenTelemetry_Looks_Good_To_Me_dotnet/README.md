@@ -1,6 +1,6 @@
 # 2024-02-28 #10 OpenTelemetry Looks Good To Me for dotnet
 
-This post has been adapted for dotnet from the [previous java post](../2024-01-31_OpenTelemetry_Looks_Good_To_Me/README.md). A new dashboard is available for specific dotnet instrumentation: [OpenTelemetry dotnet webapi](https://grafana.com/grafana/dashboards/20568-opentelemetry-dotnet-webapi/).
+This post has been adapted for dotnet from the [previous java post](../2024-01-31_OpenTelemetry_Looks_Good_To_Me/). A new dashboard is available for specific dotnet instrumentation: [OpenTelemetry dotnet webapi](https://grafana.com/grafana/dashboards/20568-opentelemetry-dotnet-webapi/).
 
 OpenTelemetry Collector Contrib configuration is the same as java since, both java and dotnet are using the same OTLP specification. This is a good things for SRE supporting multiple stacks and languages since the gateway configuration is common.
 
@@ -52,10 +52,10 @@ References:
 - [OTEL dotnet setup](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main?tab=readme-ov-file#getting-started)
 
 #### Automatic instrumentation
-Reference : [Automatic instrumentation](../../2023-11-30_What_is_OpenTelemetry/README.md#automatic)
+Reference : [Automatic instrumentation](../../2023-11-30_What_is_OpenTelemetry/#automatic)
 
 #### Manual instrumentation
-Reference : [Manual instrumentation](../../2023-11-30_What_is_OpenTelemetry/README.md#manual)
+Reference : [Manual instrumentation](../../2023-11-30_What_is_OpenTelemetry/#manual)
 
 ```bash
 dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol
