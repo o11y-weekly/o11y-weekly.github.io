@@ -57,7 +57,9 @@
                           }
                         ],
                         "timeUnixNano": "1544712660300000000", 
-                        "asInt": 3
+                        "asInt": 3,
+                        "traceId": "5B8EFFF798038103D269B633813FC60C",
+                        "spanId": "EEE19B7EC3C1B174"
                       }
                     ]
                   }
