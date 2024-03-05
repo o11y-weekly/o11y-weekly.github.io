@@ -118,7 +118,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "min(process_uptime{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
+          "expr": "min(process_uptime{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"})",
           "instant": false,
           "legendFormat": "min",
           "range": true,
@@ -130,7 +130,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "max(process_uptime{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})",
+          "expr": "max(process_uptime{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"})",
           "hide": false,
           "instant": false,
           "legendFormat": "max",
@@ -247,7 +247,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))\r\n)",
           "instant": false,
           "legendFormat": "{{status}}",
           "range": true,
@@ -318,7 +318,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg(http_server_requests{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}) by (quantile)",
+          "expr": "avg(http_server_requests{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}) by (quantile)",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -389,7 +389,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
             }
           ],
           "mappings": [],
@@ -488,7 +488,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name,method,uri,status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name,method,uri,status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))\r\n)",
           "instant": false,
           "legendFormat": "{{method}} {{host_name}}{{uri}}: {{status}}",
           "range": true,
@@ -545,7 +545,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
             },
             {
               "targetBlank": true,
@@ -609,7 +609,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by(host_name, method, uri, status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", status!~\"[1-3]..\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by(host_name, method, uri, status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", status!~\"[1-3]..\"}[$__rate_interval]))\r\n)",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -668,7 +668,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
             },
             {
               "targetBlank": true,
@@ -772,14 +772,14 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name,status,uri,method) (rate(http_server_requests_sum{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n    /\r\n    sum by (host_name,status,uri,method) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name,status,uri,method) (rate(http_server_requests{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", quantile=\"${quantile:value}\"}[$__rate_interval]))\r\n)",
           "instant": false,
           "legendFormat": "{{method}} {{host_name}}{{uri}}: {{status}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Http Server requests Durations",
+      "title": "Http Server requests Durations (${quantile:text})",
       "type": "timeseries"
     },
     {
@@ -843,7 +843,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
             }
           ],
           "mappings": [],
@@ -859,7 +859,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -894,7 +895,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    system_cpu_usage{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n    * 100 \r\n    > ${saturation:value}\r\n)",
+          "expr": "topk(${top}, \r\n    system_cpu_usage{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n    * 100 \r\n    > ${saturation:value}\r\n)",
           "instant": false,
           "legendFormat": "{{host_name}}.cpu.usage",
           "range": true,
@@ -951,7 +952,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
             }
           ],
           "mappings": [],
@@ -967,7 +968,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -1002,7 +1004,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})\r\n    * 100 /\r\n    sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"}) \r\n    > ${saturation:value}\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"heap\"})\r\n    * 100 /\r\n    sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"heap\"}) \r\n    > ${saturation:value}\r\n)",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1059,7 +1061,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
             }
           ],
           "mappings": [],
@@ -1075,7 +1077,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -1110,7 +1113,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})\r\n    * 100 / \r\n    sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"}) \r\n    > ${saturation:value}\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"nonheap\"})\r\n    * 100 / \r\n    sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"nonheap\"}) \r\n    > ${saturation:value}\r\n)",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1168,7 +1171,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
             }
           ],
           "mappings": [],
@@ -1184,7 +1187,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -1219,7 +1223,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    process_files_open{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"} \r\n    / \r\n    process_files_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"} \r\n    > ${saturation:value}\r\n)",
+          "expr": "topk(${top}, \r\n    process_files_open{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"} \r\n    / \r\n    process_files_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"} \r\n    > ${saturation:value}\r\n)",
           "instant": false,
           "legendFormat": "{{host_name}}",
           "range": true,
@@ -1230,7 +1234,7 @@
       "type": "timeseries"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1238,2205 +1242,2217 @@
         "y": 26
       },
       "id": 5,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "bytes"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.max$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 0,
-            "y": 27
-          },
-          "id": 17,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"})\r\n)",
-              "instant": false,
-              "legendFormat": "{{host_name}}.used",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, sum by (host_name) (jvm_memory_committed{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}))",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}.committed",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}))",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}.max",
-              "range": true,
-              "refId": "C"
-            }
-          ],
-          "title": "JVM Memory",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "percent"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 8,
-            "y": 27
-          },
-          "id": 12,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"})*100/sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"heap\"}))",
-              "instant": false,
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Heap used",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "percent"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 16,
-            "y": 27
-          },
-          "id": 15,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"})*100/sum by(host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", area=\"nonheap\"}))",
-              "instant": false,
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Non-Heap used",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "description": "The \"recent cpu usage\" of the system the application is running in",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "percentunit"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.max$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 0,
-            "y": 35
-          },
-          "id": 18,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    system_cpu_usage{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
-              "instant": false,
-              "legendFormat": "{{host_name}}.system.cpu.usage",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "System CPU Usage",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.max$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 8,
-            "y": 35
-          },
-          "id": 16,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    tomcat_threads_busy{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
-              "instant": false,
-              "legendFormat": "{{host_name}}.tomcat.busy",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    tomcat_threads_current{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}.tomcat.current",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    tomcat_threads_config_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}.tomcat.max",
-              "range": true,
-              "refId": "C"
-            }
-          ],
-          "title": "Webserver Threads",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "description": "https://en.wikipedia.org/wiki/Load_(computing)\n\nFrom micrometer:\n\"The sum of the number of runnable entities queued to available processors and the number of runnable entities running on the available processors averaged over a period of time\"",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "percentunit"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.max$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 16,
-            "y": 35
-          },
-          "id": 20,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    system_load_average_1m{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n    /\r\n    system_cpu_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}.load.1m",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "System load",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "description": "jvm_threads_live_threads: The current number of live threads including both daemon and non-daemon threads\n\njvm_threads_daemon_threads: The current number of live daemon threads\n\njvm_threads_peak_threads: The peak live thread count since the Java virtual machine started or peak was reset",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.max$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 0,
-            "y": 43
-          },
-          "id": 21,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    jvm_threads_live{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}.lived",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    jvm_threads_daemon{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}.daemon",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    jvm_threads_peak{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}.peak",
-              "range": true,
-              "refId": "C"
-            }
-          ],
-          "title": "JVM Threads",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.max$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 8,
-            "y": 43
-          },
-          "id": 22,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top},\r\n    jvm_threads_states{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}.{{state}}",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    jvm_threads_daemon{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}.daemon",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    jvm_threads_peak{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}.peak",
-              "range": true,
-              "refId": "C"
-            }
-          ],
-          "title": "JVM Threads States",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "description": "process_files_open_files: The open file descriptor count\n\nprocess_files_max_files: The maximum file descriptor count",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "percentunit"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.max$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 16,
-            "y": 43
-          },
-          "id": 24,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    process_files_open{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"} \r\n    / \r\n    process_files_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "File Descriptors",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "description": "logback_events_total: Number of log events that were enabled by the effective log level",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "ops"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.error$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.info$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-green",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.warn$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-orange",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.debug$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-blue",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.trace$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "light-blue",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 0,
-            "y": 51
-          },
-          "id": 23,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, rate(logback_events{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}.{{level}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Logback events",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "description": "jvm_classes_loaded: The number of classes that are currently loaded in the Java virtual machine",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.max$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 8,
-            "y": 51
-          },
-          "id": 64,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    jvm_classes_loaded{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}\r\n)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Classes loaded",
-          "type": "timeseries"
-        }
-      ],
+      "panels": [],
       "title": "Utilization",
       "type": "row"
     },
     {
-      "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 27
+      },
+      "id": 17,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"})\r\n)",
+          "instant": false,
+          "legendFormat": "{{host_name}}.used",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, sum by (host_name) (jvm_memory_committed{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}.committed",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}.max",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "JVM Memory",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent",
+          "unitScale": true
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 27
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"heap\"}) * 100\r\n    /\r\n    sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"heap\"})\r\n)",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Heap used",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent",
+          "unitScale": true
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 27
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"nonheap\"}) * 100\r\n    /\r\n    sum by(host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"nonheap\"})\r\n)",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Non-Heap used",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "description": "The \"recent cpu usage\" of the system the application is running in",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 35
+      },
+      "id": 18,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    system_cpu_usage{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n)",
+          "instant": false,
+          "legendFormat": "{{host_name}}.system.cpu.usage",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "System CPU Usage",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 35
+      },
+      "id": 16,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    tomcat_threads_busy{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n)",
+          "instant": false,
+          "legendFormat": "{{host_name}}.tomcat.busy",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    tomcat_threads_current{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}.tomcat.current",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    tomcat_threads_config_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}.tomcat.max",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "Webserver Threads",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "description": "https://en.wikipedia.org/wiki/Load_(computing)\n\nFrom micrometer:\n\"The sum of the number of runnable entities queued to available processors and the number of runnable entities running on the available processors averaged over a period of time\"",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 35
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    system_load_average_1m{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n    /\r\n    system_cpu_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}.load.1m",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "System load",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "description": "jvm_threads_live_threads: The current number of live threads including both daemon and non-daemon threads\n\njvm_threads_daemon_threads: The current number of live daemon threads\n\njvm_threads_peak_threads: The peak live thread count since the Java virtual machine started or peak was reset",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 43
+      },
+      "id": 21,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    jvm_threads_live{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}.lived",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    jvm_threads_daemon{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}.daemon",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    jvm_threads_peak{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}.peak",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "JVM Threads",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 43
+      },
+      "id": 22,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top},\r\n    jvm_threads_states{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}.{{state}}",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    jvm_threads_daemon{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}.daemon",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    jvm_threads_peak{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}.peak",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "JVM Threads States",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "description": "process_files_open_files: The open file descriptor count\n\nprocess_files_max_files: The maximum file descriptor count",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 43
+      },
+      "id": 24,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    process_files_open{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"} \r\n    / \r\n    process_files_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "File Descriptors",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "description": "logback_events_total: Number of log events that were enabled by the effective log level",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.error$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.info$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.warn$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.debug$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.trace$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 51
+      },
+      "id": 23,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, rate(logback_events{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}.{{level}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Logback events",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "description": "jvm_classes_loaded: The number of classes that are currently loaded in the Java virtual machine",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 51
+      },
+      "id": 64,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    jvm_classes_loaded{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}\r\n)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Classes loaded",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 59
       },
       "id": 35,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "ops"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.max$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 0,
-            "y": 28
-          },
-          "id": 43,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": false
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "repeatDirection": "h",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    rate(jvm_gc_pause_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n)",
-              "instant": false,
-              "legendFormat": "{{host_name}} / {{cause}} / {{gc}} / {{action}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Collections rate",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "bars",
-                "fillOpacity": 100,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 0,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "normal"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.max$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 8,
-            "y": 28
-          },
-          "id": 45,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": false
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "repeatDirection": "h",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    rate(jvm_gc_pause_sum{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n    /\r\n    rate(jvm_gc_pause_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n)",
-              "instant": false,
-              "legendFormat": "{{host_name}} / {{cause}} / {{gc}} / {{action}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Pause duration",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "binBps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 16,
-            "y": 28
-          },
-          "id": 44,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "repeatDirection": "h",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    rate(jvm_gc_memory_allocated{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n)",
-              "instant": false,
-              "legendFormat": "{{host_name}}.allocated",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, \r\n    rate(jvm_gc_memory_promoted{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m])\r\n)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{host_name}}.promoted",
-              "range": true,
-              "refId": "B"
-            }
-          ],
-          "title": "GC Allocation rates",
-          "type": "timeseries"
-        }
-      ],
+      "panels": [],
       "title": "JVM Garbage Collection",
       "type": "row"
     },
     {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 28
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
       },
-      "id": 27,
-      "panels": [
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 60
+      },
+      "id": 43,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeatDirection": "h",
+      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "${prom_ds}"
           },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "bytes"
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    rate(jvm_gc_pause_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])\r\n)",
+          "instant": false,
+          "legendFormat": "{{host_name}} / {{cause}} / {{gc}} / {{action}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Collections rate",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
             },
-            "overrides": [
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 0,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
               {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.max$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           },
-          "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 0,
-            "y": 29
-          },
-          "id": 26,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
+          "unit": "ms",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
             },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 60
+      },
+      "id": 45,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    rate(jvm_gc_pause{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", quantile=\"${quantile:value}\"}[$__rate_interval])\r\n)",
+          "instant": false,
+          "legendFormat": "{{host_name}} / {{cause}} / {{gc}} / {{action}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Pause duration (${quantile:text})",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
             }
           },
-          "repeat": "jvm_memory_used_id",
-          "repeatDirection": "h",
-          "targets": [
+          "links": [
             {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", id=\"${jvm_memory_used_id}\"})",
-              "instant": false,
-              "legendFormat": "{{host_name}}.{{area}}",
-              "range": true,
-              "refId": "A"
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
             }
           ],
-          "title": "JVM Memory (${jvm_memory_used_id})",
-          "type": "timeseries"
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "binBps",
+          "unitScale": true
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 60
+      },
+      "id": 44,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    rate(jvm_gc_memory_allocated{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])\r\n)",
+          "instant": false,
+          "legendFormat": "{{host_name}}.allocated",
+          "range": true,
+          "refId": "A"
         },
         {
           "datasource": {
             "type": "prometheus",
             "uid": "${prom_ds}"
           },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [
-                {
-                  "targetBlank": true,
-                  "title": "${__field.labels.host_name} details",
-                  "url": "./d/otel-jvm-micrometer-per-instance/opentelemetry-jvm-micrometer-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "bytes"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/\\.max$/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 0,
-            "y": 45
-          },
-          "id": 53,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "min",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "repeat": "jvm_buffer_memory_used_id",
-          "repeatDirection": "h",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${prom_ds}"
-              },
-              "editorMode": "code",
-              "expr": "topk(${top}, jvm_buffer_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", id=\"${jvm_buffer_memory_used_id}\"})",
-              "instant": false,
-              "legendFormat": "{{host_name}}.{{id}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "JVM Buffer Memory (${jvm_buffer_memory_used_id})",
-          "type": "timeseries"
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    rate(jvm_gc_memory_promoted{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])\r\n)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{host_name}}.promoted",
+          "range": true,
+          "refId": "B"
         }
       ],
-      "title": "JVM Memory",
-      "type": "row"
+      "title": "GC Allocation rates",
+      "type": "timeseries"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 68
+      },
+      "id": 27,
+      "panels": [],
+      "title": "JVM Memory",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 69
+      },
+      "id": 26,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeat": "jvm_memory_used_id",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", id=\"${jvm_memory_used_id}\"})",
+          "instant": false,
+          "legendFormat": "{{host_name}}.{{area}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "JVM Memory (${jvm_memory_used_id})",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?from=${__from}&to=${__to}&${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\.max$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 85
+      },
+      "id": 53,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeat": "jvm_buffer_memory_used_id",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, jvm_buffer_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", id=\"${jvm_buffer_memory_used_id}\"})",
+          "instant": false,
+          "legendFormat": "{{host_name}}.{{id}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "JVM Buffer Memory (${jvm_buffer_memory_used_id})",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 93
       },
       "id": 67,
-      "panels": [
+      "panels": [],
+      "title": "Logs",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${loki_ds}"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 94
+      },
+      "id": 68,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": true,
+        "showCommonLabels": true,
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [
         {
           "datasource": {
             "type": "loki",
             "uid": "${loki_ds}"
           },
-          "gridPos": {
-            "h": 6,
-            "w": 24,
-            "x": 0,
-            "y": 62
-          },
-          "id": 68,
-          "options": {
-            "dedupStrategy": "none",
-            "enableLogDetails": true,
-            "prettifyLogMessage": true,
-            "showCommonLabels": true,
-            "showLabels": false,
-            "showTime": true,
-            "sortOrder": "Descending",
-            "wrapLogMessage": true
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "loki",
-                "uid": "${loki_ds}"
-              },
-              "editorMode": "builder",
-              "expr": "{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"} |= ``",
-              "queryType": "range",
-              "refId": "A"
-            }
-          ],
-          "type": "logs"
+          "editorMode": "builder",
+          "expr": "{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_instance_id=~\"$host_name\"} |= ``",
+          "queryType": "range",
+          "refId": "A"
         }
       ],
-      "title": "Logs",
-      "type": "row"
+      "type": "logs"
     }
   ],
   "refresh": "5s",
@@ -3570,6 +3586,35 @@
         "type": "query"
       },
       {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "1ed0c16bf21e",
+          "value": "1ed0c16bf21e"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "mimir"
+        },
+        "definition": "label_values(jvm_info{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\"},host_name)",
+        "hide": 1,
+        "includeAll": true,
+        "label": "Host Name",
+        "multi": false,
+        "name": "host_name",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(jvm_info{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\"},host_name)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
         "current": {
           "selected": false,
           "text": "10",
@@ -3598,6 +3643,38 @@
           }
         ],
         "query": "1, 5, 10",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "p95",
+          "value": "0.95"
+        },
+        "hide": 1,
+        "includeAll": false,
+        "multi": false,
+        "name": "quantile",
+        "options": [
+          {
+            "selected": false,
+            "text": "p50",
+            "value": "0.5"
+          },
+          {
+            "selected": true,
+            "text": "p95",
+            "value": "0.95"
+          },
+          {
+            "selected": false,
+            "text": "p99",
+            "value": "0.99"
+          }
+        ],
+        "query": "p50 : 0.5, p95 : 0.95, p99 : 0.99",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
@@ -3638,8 +3715,12 @@
       {
         "current": {
           "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "type": "prometheus",
@@ -3666,8 +3747,12 @@
       {
         "current": {
           "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "type": "prometheus",
@@ -3701,6 +3786,6 @@
   "timezone": "",
   "title": "OpenTelemetry JVM Micrometer",
   "uid": "otel-jvm-micrometer",
-  "version": 1,
+  "version": 14,
   "weekStart": ""
 }

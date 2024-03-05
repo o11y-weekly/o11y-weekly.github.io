@@ -130,9 +130,8 @@ Grafana Labs push really hard to integrate PromQL like query models inside their
 ## Dashboard templates
 What a nightmare to monitor same kind of application but with different ways and tools. At some point, when using micro services at scale, it becomes important to have the same approach for the same problems. Building dashboard templates increase the productivity and the Grafana Labs dashboard is a good place to share them.
 
-Along the [demo](./demo/README.md), 3 dashboards have been published to Grafana Labs dashboard:
+Along the [demo](./demo/README.md), 2 dashboards have been published to Grafana Labs dashboard:
 - https://grafana.com/grafana/dashboards/20352-opentelemetry-jvm-micrometer/
-- https://grafana.com/grafana/dashboards/20353-opentelemetry-jvm-micrometer-per-instance/
 - https://grafana.com/grafana/dashboards/20376-opentelemetry-collector-hostmetrics-node-exporter/
 
 [Those dashboard are provisionned](./demo/grafana/provisioning/dashboards/) in the [demo](./demo/README.md).
