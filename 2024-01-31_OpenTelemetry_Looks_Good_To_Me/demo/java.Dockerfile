@@ -46,7 +46,11 @@ WORKDIR /app
 RUN mkdir -p /app/log /app/logstate/app /app/logstate/agent
 
 ADD --chown=1000:1000 https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/${OTEL_JAVA_AGENT_VERSION}/opentelemetry-javaagent.jar ./opentelemetry-javaagent.jar
+ADD --chown=1000:1000 https://github.com/glowroot/glowroot/releases/download/v0.14.0/glowroot-0.14.0-dist.zip ./glowroot-javaagent.zip
 
+RUN unzip ./glowroot-javaagent.zip && rm ./glowroot-javaagent.zip
+
+COPY --chown=1000:1000 ./glowroot/admin.json /app/glowroot/admin.json
 COPY --chown=1000:1000 --from=otelcontribcol /otelcol-contrib /app/otelcol-contrib
 
 COPY --chown=1000:1000 ./supervisord.conf /app/supervisord.conf
