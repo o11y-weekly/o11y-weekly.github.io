@@ -1,5 +1,16 @@
 # dotnet debug
 
+## dotnet monitor
+### install
+```bash
+dotnet tool install -g dotnet-monitor
+```
+
+### start
+```bash
+dotnet monitor collect -u http://0.0.0.0::52323 --metricUrls http://0.0.0.0:52325 --no-auth
+```
+
 ## dotnet trace
 
 ### install
