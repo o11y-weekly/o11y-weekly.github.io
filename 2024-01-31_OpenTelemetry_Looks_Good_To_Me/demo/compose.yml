@@ -57,6 +57,9 @@ services:
         - OTEL_CONTRIB_COL=${OTEL_CONTRIB_COL}
     deploy:
       replicas: 2
+      resources:
+        limits:
+          memory: 300M
     volumes:
       - ./otelcontribcol/agent/:/etc/otelcol-contrib/:ro
     networks:
@@ -90,6 +93,9 @@ services:
         - OTEL_CONTRIB_COL=${OTEL_CONTRIB_COL}
     deploy:
       replicas: 1
+      resources:
+        limits:
+          memory: 300M
     networks:
       - bridge
     environment:
