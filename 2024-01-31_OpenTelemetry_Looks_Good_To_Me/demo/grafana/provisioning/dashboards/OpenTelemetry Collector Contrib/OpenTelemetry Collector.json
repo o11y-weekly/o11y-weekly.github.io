@@ -3398,8 +3398,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3799,9 +3798,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "otelcol-contrib/traces-collector",
-          "value": "otelcol-contrib/traces-collector"
+          "selected": true,
+          "text": "otelcol-contrib/gateway",
+          "value": "otelcol-contrib/gateway"
         },
         "datasource": {
           "type": "prometheus",
