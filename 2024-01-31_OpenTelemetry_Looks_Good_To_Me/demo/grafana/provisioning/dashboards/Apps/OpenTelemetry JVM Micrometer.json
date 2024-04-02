@@ -3589,8 +3589,8 @@
         "allValue": ".*",
         "current": {
           "selected": false,
-          "text": "1ed0c16bf21e",
-          "value": "1ed0c16bf21e"
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "prometheus",
@@ -3714,7 +3714,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -3746,7 +3746,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -3779,13 +3779,13 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "OpenTelemetry JVM Micrometer",
   "uid": "otel-jvm-micrometer",
-  "version": 14,
+  "version": 15,
   "weekStart": ""
 }

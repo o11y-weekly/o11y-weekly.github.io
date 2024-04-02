@@ -3959,9 +3959,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "agent",
-          "value": "agent"
+          "selected": true,
+          "text": "gateway",
+          "value": "gateway"
         },
         "datasource": {
           "type": "prometheus",
@@ -3991,8 +3991,8 @@
       {
         "current": {
           "selected": false,
-          "text": "05db3e28f21b",
-          "value": "05db3e28f21b"
+          "text": "4cb0938b15f2",
+          "value": "4cb0938b15f2"
         },
         "datasource": {
           "type": "prometheus",
@@ -4043,7 +4043,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {

@@ -3798,7 +3798,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "otelcol-contrib/gateway",
           "value": "otelcol-contrib/gateway"
         },
@@ -4059,7 +4059,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
