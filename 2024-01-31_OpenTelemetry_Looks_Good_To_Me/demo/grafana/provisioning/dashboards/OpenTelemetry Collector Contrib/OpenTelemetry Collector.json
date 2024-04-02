@@ -31,6 +31,355 @@
   "panels": [
     {
       "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 59,
+      "panels": [],
+      "title": "Signal Flows",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "reqps",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ratio"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "id": 67,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(otelcol_receiver_accepted_spans{ receiver=\"otlp/gateway\"}[$__rate_interval]))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "accepted",
+          "range": true,
+          "refId": "accepted"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(otelcol_exporter_sent_spans{ exporter=\"otlphttp/tempo\"}[$__rate_interval]))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "sent",
+          "range": true,
+          "refId": "sent"
+        },
+        {
+          "datasource": {
+            "name": "Expression",
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "$sent / $accepted * 100",
+          "hide": false,
+          "refId": "ratio",
+          "type": "math"
+        }
+      ],
+      "title": "Spans Receiver / Exporter",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
+      "description": "Receivers -> Processor(s) -> Exporters (Node Graph panel is beta, so this panel may not show data correctly).",
+      "gridPos": {
+        "h": 12,
+        "w": 18,
+        "x": 6,
+        "y": 1
+      },
+      "id": 58,
+      "options": {
+        "nodes": {
+          "mainStatUnit": "flops"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "# receivers\nlabel_replace(\n  label_join(\n    label_join(\n      sum(${metric:value}(\n        otelcol_receiver_accepted_spans${suffix}{job=\"$job\"}[$__rate_interval])\n      ) by (receiver)\n      , \"id\", \"-rcv-\", \"transport\", \"receiver\"\n    )\n    , \"title\", \"\", \"transport\", \"receiver\"\n  )\n  , \"icon\", \"arrow-to-right\", \"\", \"\"\n)\n\n# dummy processor\nor\nlabel_replace(\n  label_replace(\n    label_replace(\n      (sum(rate(otelcol_process_uptime${suffix}{job=\"$job\"}[$__interval])))\n      , \"id\", \"processor\", \"\", \"\"\n    )\n    , \"title\", \"Processor(s)\", \"\", \"\"\n  )\n  , \"icon\", \"arrow-random\", \"\", \"\"\n)\n\n# exporters\nor\nlabel_replace(\n  label_join(\n    label_join(\n      sum(${metric:value}(\n        otelcol_exporter_sent_spans${suffix}{job=\"$job\"}[$__rate_interval])\n      ) by (exporter)\n      , \"id\", \"-exp-\", \"transport\", \"exporter\"\n    )\n    , \"title\", \"\", \"transport\", \"exporter\"\n  )\n  , \"icon\", \"arrow-from-right\", \"\", \"\"\n)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "nodes"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "# receivers -> processor\r\nlabel_join(\r\n    label_replace(\r\n        label_join(\r\n            (sum(rate(otelcol_receiver_accepted_spans${suffix}{job=\"$job\"}[$__interval])) by (receiver))\r\n            ,\"source\", \"-rcv-\", \"transport\", \"receiver\"\r\n        )\r\n        ,\"target\", \"processor\", \"\", \"\"\r\n    )\r\n    , \"id\", \"-\", \"source\", \"target\"\r\n)\r\n\r\n# processor -> exporters\r\nor\r\nlabel_join(\r\n    label_replace(\r\n        label_join(\r\n            (sum(rate(otelcol_exporter_sent_spans${suffix}{job=\"$job\"}[$__interval])) by (exporter))\r\n            , \"target\", \"-exp-\", \"transport\", \"exporter\"\r\n        )\r\n        , \"source\", \"processor\", \"\", \"\"\r\n    )\r\n    , \"id\", \"-\", \"source\", \"target\"\r\n)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "edges"
+        }
+      ],
+      "title": "Spans Flow",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "Value",
+            "renamePattern": "mainstat"
+          }
+        },
+        {
+          "disabled": true,
+          "id": "calculateField",
+          "options": {
+            "alias": "secondarystat",
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "mainstat"
+              ],
+              "reducer": "sum"
+            }
+          }
+        }
+      ],
+      "type": "nodeGraph"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
+      "description": "Receivers -> Processor(s) -> Exporters (Node Graph panel is beta, so this panel may not show data correctly).",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "id": 60,
+      "options": {
+        "nodes": {
+          "mainStatUnit": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "# receivers\nlabel_replace(\n  label_join(\n    label_join(\n      (sum(\n        ${metric:value}(otelcol_receiver_accepted_metric_points${suffix}{job=\"$job\"}[$__rate_interval])\n      ) by (receiver))\n      , \"id\", \"-rcv-\", \"transport\", \"receiver\"\n    )\n    , \"title\", \"\", \"transport\", \"receiver\"\n  )\n  , \"icon\", \"arrow-to-right\", \"\", \"\"\n)\n\n# dummy processor\nor\nlabel_replace(\n  label_replace(\n    label_replace(\n      (sum(rate(otelcol_process_uptime${suffix}{job=\"$job\"}[$__interval])))\n      , \"id\", \"processor\", \"\", \"\"\n    )\n    , \"title\", \"Processor(s)\", \"\", \"\"\n  )\n  , \"icon\", \"arrow-random\", \"\", \"\"\n)\n\n# exporters\nor\nlabel_replace(\n  label_join(\n    label_join(\n      (sum(\n        ${metric:value}(otelcol_exporter_sent_metric_points${suffix}{job=\"$job\"}[$__rate_interval])\n      ) by (exporter))\n      , \"id\", \"-exp-\", \"transport\", \"exporter\"\n    )\n    , \"title\", \"\", \"transport\", \"exporter\"\n  )\n  , \"icon\", \"arrow-from-right\", \"\", \"\"\n)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "nodes"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "# receivers -> processor\r\nlabel_join(\r\n    label_replace(\r\n        label_join(\r\n            (sum(rate(otelcol_receiver_accepted_metric_points${suffix}{job=\"$job\"}[$__interval])) by (receiver))\r\n            , \"source\", \"-rcv-\", \"transport\", \"receiver\"\r\n        )\r\n        , \"target\", \"processor\", \"\", \"\"\r\n    )\r\n    , \"id\", \"-\", \"source\", \"target\"\r\n)\r\n\r\n# processor -> exporters\r\nor \r\nlabel_join(\r\n    label_replace(\r\n        label_join(\r\n            (sum(rate(otelcol_exporter_sent_metric_points${suffix}{job=\"$job\"}[$__interval])) by (exporter))\r\n            , \"target\", \"-exp-\", \"transport\", \"exporter\"\r\n        )\r\n        , \"source\", \"processor\", \"\", \"\"\r\n    )\r\n    , \"id\", \"-\", \"source\", \"target\"\r\n)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "edges"
+        }
+      ],
+      "title": "Metric Points Flow",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "Value",
+            "renamePattern": "mainstat"
+          }
+        },
+        {
+          "disabled": true,
+          "id": "calculateField",
+          "options": {
+            "alias": "secondarystat",
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "Value #nodes"
+              ],
+              "reducer": "sum"
+            }
+          }
+        }
+      ],
+      "type": "nodeGraph"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
+      "description": "Receivers -> Processor(s) -> Exporters (Node Graph panel is beta, so this panel may not show data correctly).",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "id": 61,
+      "options": {
+        "nodes": {
+          "mainStatUnit": "flops"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "# receivers\nlabel_replace(\n  label_join(\n    label_join(\n      sum(${metric:value}(\n        otelcol_receiver_accepted_log_records${suffix}{job=\"$job\"}[$__rate_interval])\n      ) by (receiver)\n      , \"id\", \"-rcv-\", \"transport\", \"receiver\"\n    )\n    , \"title\", \"\", \"transport\", \"receiver\"\n  )\n  , \"icon\", \"arrow-to-right\", \"\", \"\"\n)\n\n# dummy processor\nor\nlabel_replace(\n  label_replace(\n    label_replace(\n      (sum(rate(otelcol_process_uptime${suffix}{job=\"$job\"}[$__interval])))\n      , \"id\", \"processor\", \"\", \"\"\n    )\n    , \"title\", \"Processor(s)\", \"\", \"\"\n  )\n  , \"icon\", \"arrow-random\", \"\", \"\"\n)\n\n# exporters\nor\nlabel_replace(\n  label_join(\n    label_join(\n      sum(${metric:value}(\n        otelcol_exporter_sent_log_records${suffix}{job=\"$job\"}[$__rate_interval])\n      ) by (exporter)\n      , \"id\", \"-exp-\", \"transport\", \"exporter\"\n    )\n    , \"title\", \"\", \"transport\", \"exporter\"\n  )\n  , \"icon\", \"arrow-from-right\", \"\", \"\"\n)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "nodes"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "# receivers -> processor\r\nlabel_join(\r\n    label_replace(\r\n        label_join(\r\n            (sum(rate(otelcol_receiver_accepted_log_records${suffix}{job=\"$job\"}[$__interval])) by (receiver))\r\n            , \"source\", \"-rcv-\", \"transport\", \"receiver\"\r\n        )\r\n        , \"target\", \"processor\", \"\", \"\"\r\n    )\r\n    , \"id\", \"-edg-\", \"source\", \"target\"\r\n)\r\n\r\n# processor -> exporters\r\nor \r\nlabel_join(\r\n    label_replace(\r\n        label_join(\r\n            (sum(rate(otelcol_exporter_sent_log_records${suffix}{job=\"$job\"}[$__interval])) by (exporter))\r\n            ,\"target\",\"-exp-\",\"transport\",\"exporter\"\r\n        )\r\n        ,\"source\",\"processor\",\"\",\"\"\r\n    )\r\n    ,\"id\",\"-edg-\",\"source\",\"target\"\r\n)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "edges"
+        }
+      ],
+      "title": "Log Records Flow",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "Value",
+            "renamePattern": "mainstat"
+          }
+        },
+        {
+          "disabled": true,
+          "id": "calculateField",
+          "options": {
+            "alias": "secondarystat",
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "mainstat"
+              ],
+              "reducer": "sum"
+            }
+          }
+        }
+      ],
+      "type": "nodeGraph"
+    },
+    {
+      "collapsed": false,
       "datasource": {
         "type": "prometheus",
         "uid": "$datasource"
@@ -39,7 +388,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 22
       },
       "id": 23,
       "panels": [],
@@ -143,7 +492,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 1
+        "y": 23
       },
       "id": 28,
       "interval": "$minstep",
@@ -289,7 +638,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 1
+        "y": 23
       },
       "id": 32,
       "interval": "$minstep",
@@ -435,7 +784,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 1
+        "y": 23
       },
       "id": 47,
       "interval": "$minstep",
@@ -503,7 +852,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 31
       },
       "id": 34,
       "panels": [],
@@ -626,7 +975,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 10
+        "y": 32
       },
       "id": 35,
       "interval": "$minstep",
@@ -807,7 +1156,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 10
+        "y": 32
       },
       "id": 50,
       "interval": "$minstep",
@@ -988,7 +1337,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 10
+        "y": 32
       },
       "id": 51,
       "interval": "$minstep",
@@ -1089,7 +1438,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 18
+        "y": 40
       },
       "id": 49,
       "interval": "$minstep",
@@ -1201,7 +1550,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1249,7 +1599,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 18
+        "y": 40
       },
       "id": 36,
       "interval": "$minstep",
@@ -1358,7 +1708,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1406,7 +1757,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 18
+        "y": 40
       },
       "id": 56,
       "interval": "$minstep",
@@ -1475,7 +1826,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 48
       },
       "id": 25,
       "panels": [],
@@ -1541,7 +1892,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1578,7 +1930,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 27
+        "y": 49
       },
       "id": 37,
       "interval": "$minstep",
@@ -1702,7 +2054,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1739,7 +2092,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 27
+        "y": 49
       },
       "id": 38,
       "interval": "$minstep",
@@ -1863,7 +2216,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1900,7 +2254,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 27
+        "y": 49
       },
       "id": 48,
       "interval": "$minstep",
@@ -2023,7 +2377,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2040,7 +2395,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 36
+        "y": 58
       },
       "id": 10,
       "links": [],
@@ -2130,7 +2485,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2147,7 +2503,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 36
+        "y": 58
       },
       "id": 55,
       "links": [],
@@ -2198,7 +2554,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 45
+        "y": 67
       },
       "id": 21,
       "panels": [],
@@ -2264,7 +2620,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2351,7 +2708,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 46
+        "y": 68
       },
       "id": 40,
       "interval": "$minstep",
@@ -2475,7 +2832,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2562,7 +2920,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 46
+        "y": 68
       },
       "id": 52,
       "interval": "$minstep",
@@ -2686,7 +3044,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2773,7 +3132,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 46
+        "y": 68
       },
       "id": 53,
       "interval": "$minstep",
@@ -2897,7 +3256,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2980,7 +3340,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 55
+        "y": 77
       },
       "id": 39,
       "interval": "$minstep",
@@ -3105,7 +3465,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3122,7 +3483,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 55
+        "y": 77
       },
       "id": 41,
       "interval": "$minstep",
@@ -3215,7 +3576,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3232,7 +3594,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 55
+        "y": 77
       },
       "id": 54,
       "interval": "$minstep",
@@ -3300,7 +3662,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3317,7 +3680,7 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 64
+        "y": 86
       },
       "id": 57,
       "interval": "$minstep",
@@ -3369,354 +3732,6 @@
         }
       ],
       "type": "table"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 69
-      },
-      "id": 59,
-      "panels": [],
-      "title": "Signal Flows",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "$datasource"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "reqps",
-          "unitScale": true
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "ratio"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "percent"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 6,
-        "x": 0,
-        "y": 70
-      },
-      "id": 67,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "10.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "mimir"
-          },
-          "editorMode": "code",
-          "expr": "sum(rate(otelcol_receiver_accepted_spans{ receiver=\"otlp/gateway\"}[$__rate_interval]))",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "accepted",
-          "range": true,
-          "refId": "accepted"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "editorMode": "code",
-          "expr": "sum(rate(otelcol_exporter_sent_spans{ exporter=\"otlphttp/tempo\"}[$__rate_interval]))",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "sent",
-          "range": true,
-          "refId": "sent"
-        },
-        {
-          "datasource": {
-            "name": "Expression",
-            "type": "__expr__",
-            "uid": "__expr__"
-          },
-          "expression": "$sent / $accepted * 100",
-          "hide": false,
-          "refId": "ratio",
-          "type": "math"
-        }
-      ],
-      "title": "Spans Receiver / Exporter",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "$datasource"
-      },
-      "description": "Receivers -> Processor(s) -> Exporters (Node Graph panel is beta, so this panel may not show data correctly).",
-      "gridPos": {
-        "h": 12,
-        "w": 18,
-        "x": 6,
-        "y": 70
-      },
-      "id": 58,
-      "options": {
-        "nodes": {
-          "mainStatUnit": "flops"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "# receivers\nlabel_replace(\n  label_join(\n    label_join(\n      sum(${metric:value}(\n        otelcol_receiver_accepted_spans${suffix}{job=\"$job\"}[$__rate_interval])\n      ) by (receiver)\n      , \"id\", \"-rcv-\", \"transport\", \"receiver\"\n    )\n    , \"title\", \"\", \"transport\", \"receiver\"\n  )\n  , \"icon\", \"arrow-to-right\", \"\", \"\"\n)\n\n# dummy processor\nor\nlabel_replace(\n  label_replace(\n    label_replace(\n      (sum(rate(otelcol_process_uptime${suffix}{job=\"$job\"}[$__interval])))\n      , \"id\", \"processor\", \"\", \"\"\n    )\n    , \"title\", \"Processor(s)\", \"\", \"\"\n  )\n  , \"icon\", \"arrow-random\", \"\", \"\"\n)\n\n# exporters\nor\nlabel_replace(\n  label_join(\n    label_join(\n      sum(${metric:value}(\n        otelcol_exporter_sent_spans${suffix}{job=\"$job\"}[$__rate_interval])\n      ) by (exporter)\n      , \"id\", \"-exp-\", \"transport\", \"exporter\"\n    )\n    , \"title\", \"\", \"transport\", \"exporter\"\n  )\n  , \"icon\", \"arrow-from-right\", \"\", \"\"\n)",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "nodes"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "# receivers -> processor\r\nlabel_join(\r\n    label_replace(\r\n        label_join(\r\n            (sum(rate(otelcol_receiver_accepted_spans${suffix}{job=\"$job\"}[$__interval])) by (receiver))\r\n            ,\"source\", \"-rcv-\", \"transport\", \"receiver\"\r\n        )\r\n        ,\"target\", \"processor\", \"\", \"\"\r\n    )\r\n    , \"id\", \"-\", \"source\", \"target\"\r\n)\r\n\r\n# processor -> exporters\r\nor\r\nlabel_join(\r\n    label_replace(\r\n        label_join(\r\n            (sum(rate(otelcol_exporter_sent_spans${suffix}{job=\"$job\"}[$__interval])) by (exporter))\r\n            , \"target\", \"-exp-\", \"transport\", \"exporter\"\r\n        )\r\n        , \"source\", \"processor\", \"\", \"\"\r\n    )\r\n    , \"id\", \"-\", \"source\", \"target\"\r\n)",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "edges"
-        }
-      ],
-      "title": "Spans Flow",
-      "transformations": [
-        {
-          "id": "renameByRegex",
-          "options": {
-            "regex": "Value",
-            "renamePattern": "mainstat"
-          }
-        },
-        {
-          "disabled": true,
-          "id": "calculateField",
-          "options": {
-            "alias": "secondarystat",
-            "mode": "reduceRow",
-            "reduce": {
-              "include": [
-                "mainstat"
-              ],
-              "reducer": "sum"
-            }
-          }
-        }
-      ],
-      "type": "nodeGraph"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "$datasource"
-      },
-      "description": "Receivers -> Processor(s) -> Exporters (Node Graph panel is beta, so this panel may not show data correctly).",
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 82
-      },
-      "id": 60,
-      "options": {
-        "nodes": {
-          "mainStatUnit": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "# receivers\nlabel_replace(\n  label_join(\n    label_join(\n      (sum(\n        ${metric:value}(otelcol_receiver_accepted_metric_points${suffix}{job=\"$job\"}[$__rate_interval])\n      ) by (receiver))\n      , \"id\", \"-rcv-\", \"transport\", \"receiver\"\n    )\n    , \"title\", \"\", \"transport\", \"receiver\"\n  )\n  , \"icon\", \"arrow-to-right\", \"\", \"\"\n)\n\n# dummy processor\nor\nlabel_replace(\n  label_replace(\n    label_replace(\n      (sum(rate(otelcol_process_uptime${suffix}{job=\"$job\"}[$__interval])))\n      , \"id\", \"processor\", \"\", \"\"\n    )\n    , \"title\", \"Processor(s)\", \"\", \"\"\n  )\n  , \"icon\", \"arrow-random\", \"\", \"\"\n)\n\n# exporters\nor\nlabel_replace(\n  label_join(\n    label_join(\n      (sum(\n        ${metric:value}(otelcol_exporter_sent_metric_points${suffix}{job=\"$job\"}[$__rate_interval])\n      ) by (exporter))\n      , \"id\", \"-exp-\", \"transport\", \"exporter\"\n    )\n    , \"title\", \"\", \"transport\", \"exporter\"\n  )\n  , \"icon\", \"arrow-from-right\", \"\", \"\"\n)",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "nodes"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "# receivers -> processor\r\nlabel_join(\r\n    label_replace(\r\n        label_join(\r\n            (sum(rate(otelcol_receiver_accepted_metric_points${suffix}{job=\"$job\"}[$__interval])) by (receiver))\r\n            , \"source\", \"-rcv-\", \"transport\", \"receiver\"\r\n        )\r\n        , \"target\", \"processor\", \"\", \"\"\r\n    )\r\n    , \"id\", \"-\", \"source\", \"target\"\r\n)\r\n\r\n# processor -> exporters\r\nor \r\nlabel_join(\r\n    label_replace(\r\n        label_join(\r\n            (sum(rate(otelcol_exporter_sent_metric_points${suffix}{job=\"$job\"}[$__interval])) by (exporter))\r\n            , \"target\", \"-exp-\", \"transport\", \"exporter\"\r\n        )\r\n        , \"source\", \"processor\", \"\", \"\"\r\n    )\r\n    , \"id\", \"-\", \"source\", \"target\"\r\n)",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "edges"
-        }
-      ],
-      "title": "Metric Points Flow",
-      "transformations": [
-        {
-          "id": "renameByRegex",
-          "options": {
-            "regex": "Value",
-            "renamePattern": "mainstat"
-          }
-        },
-        {
-          "disabled": true,
-          "id": "calculateField",
-          "options": {
-            "alias": "secondarystat",
-            "mode": "reduceRow",
-            "reduce": {
-              "include": [
-                "Value #nodes"
-              ],
-              "reducer": "sum"
-            }
-          }
-        }
-      ],
-      "type": "nodeGraph"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "$datasource"
-      },
-      "description": "Receivers -> Processor(s) -> Exporters (Node Graph panel is beta, so this panel may not show data correctly).",
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 82
-      },
-      "id": 61,
-      "options": {
-        "nodes": {
-          "mainStatUnit": "flops"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "# receivers\nlabel_replace(\n  label_join(\n    label_join(\n      sum(${metric:value}(\n        otelcol_receiver_accepted_log_records${suffix}{job=\"$job\"}[$__rate_interval])\n      ) by (receiver)\n      , \"id\", \"-rcv-\", \"transport\", \"receiver\"\n    )\n    , \"title\", \"\", \"transport\", \"receiver\"\n  )\n  , \"icon\", \"arrow-to-right\", \"\", \"\"\n)\n\n# dummy processor\nor\nlabel_replace(\n  label_replace(\n    label_replace(\n      (sum(rate(otelcol_process_uptime${suffix}{job=\"$job\"}[$__interval])))\n      , \"id\", \"processor\", \"\", \"\"\n    )\n    , \"title\", \"Processor(s)\", \"\", \"\"\n  )\n  , \"icon\", \"arrow-random\", \"\", \"\"\n)\n\n# exporters\nor\nlabel_replace(\n  label_join(\n    label_join(\n      sum(${metric:value}(\n        otelcol_exporter_sent_log_records${suffix}{job=\"$job\"}[$__rate_interval])\n      ) by (exporter)\n      , \"id\", \"-exp-\", \"transport\", \"exporter\"\n    )\n    , \"title\", \"\", \"transport\", \"exporter\"\n  )\n  , \"icon\", \"arrow-from-right\", \"\", \"\"\n)",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "nodes"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "# receivers -> processor\r\nlabel_join(\r\n    label_replace(\r\n        label_join(\r\n            (sum(rate(otelcol_receiver_accepted_log_records${suffix}{job=\"$job\"}[$__interval])) by (receiver))\r\n            , \"source\", \"-rcv-\", \"transport\", \"receiver\"\r\n        )\r\n        , \"target\", \"processor\", \"\", \"\"\r\n    )\r\n    , \"id\", \"-edg-\", \"source\", \"target\"\r\n)\r\n\r\n# processor -> exporters\r\nor \r\nlabel_join(\r\n    label_replace(\r\n        label_join(\r\n            (sum(rate(otelcol_exporter_sent_log_records${suffix}{job=\"$job\"}[$__interval])) by (exporter))\r\n            ,\"target\",\"-exp-\",\"transport\",\"exporter\"\r\n        )\r\n        ,\"source\",\"processor\",\"\",\"\"\r\n    )\r\n    ,\"id\",\"-edg-\",\"source\",\"target\"\r\n)",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "edges"
-        }
-      ],
-      "title": "Log Records Flow",
-      "transformations": [
-        {
-          "id": "renameByRegex",
-          "options": {
-            "regex": "Value",
-            "renamePattern": "mainstat"
-          }
-        },
-        {
-          "disabled": true,
-          "id": "calculateField",
-          "options": {
-            "alias": "secondarystat",
-            "mode": "reduceRow",
-            "reduce": {
-              "include": [
-                "mainstat"
-              ],
-              "reducer": "sum"
-            }
-          }
-        }
-      ],
-      "type": "nodeGraph"
     },
     {
       "collapsed": false,
