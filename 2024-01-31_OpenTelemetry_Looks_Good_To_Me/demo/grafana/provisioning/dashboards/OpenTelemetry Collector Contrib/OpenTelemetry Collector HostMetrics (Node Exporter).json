@@ -452,15 +452,15 @@
               },
               {
                 "color": "rgba(237, 129, 40, 0.89)",
-                "value": 10
+                "value": 10000000
               },
               {
                 "color": "rgba(245, 54, 54, 0.9)",
-                "value": 25
+                "value": 25000000
               }
             ]
           },
-          "unit": "percent",
+          "unit": "bytes",
           "unitScale": true
         },
         "overrides": []
@@ -3991,8 +3991,8 @@
       {
         "current": {
           "selected": false,
-          "text": "4cb0938b15f2",
-          "value": "4cb0938b15f2"
+          "text": "11cc77d224d1",
+          "value": "11cc77d224d1"
         },
         "datasource": {
           "type": "prometheus",
