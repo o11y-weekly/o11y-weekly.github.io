@@ -2,7 +2,8 @@ exporters:
   otlphttp/mimir:
     endpoint: http://localhost:9009/otlp
   debug:
-    verbosity: detailed
+    # verbosity: detailed
+    verbosity: basic
 
 receivers:
   # otelcontribcol metrics + host metrics
@@ -90,4 +91,5 @@ service:
     metrics/agent:
       receivers: [prometheus/agent, hostmetrics/agent]
       processors: [attributes/agent, resourcedetection/system, transform, batch/agent]
-      exporters: [otlphttp/mimir]
+      # exporters: [otlphttp/mimir]
+      exporters: [debug]
