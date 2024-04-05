@@ -3959,7 +3959,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "gateway",
           "value": "gateway"
         },
@@ -3991,8 +3991,8 @@
       {
         "current": {
           "selected": false,
-          "text": "11cc77d224d1",
-          "value": "11cc77d224d1"
+          "text": "60bac43247b3",
+          "value": "60bac43247b3"
         },
         "datasource": {
           "type": "prometheus",
@@ -4043,7 +4043,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
