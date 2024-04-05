@@ -68,8 +68,8 @@ services:
       - SERVICE_NAME=service
       - SERVICE_NAMESPACE=demo
       - DEPLOYMENT_ENVIRONMENT=dev
-      - FAILURE_RATIO=0.1 # demo parameter
-      - LATENCY_RATIO=1 # demo parameter
+      - FAILURE_RATIO=0.0000000001 # demo parameter
+      - LATENCY_RATIO=0.0000001 # demo parameter
       - MIN_LATENCY=0 #ms
       - MAX_LATENCY=100 #ms
       - OTEL_TRACES_SAMPLER=parentbased_always_on
@@ -103,7 +103,7 @@ services:
       - SERVICE_NAMESPACE=demo
       - DEPLOYMENT_ENVIRONMENT=dev
       - OTEL_TRACES_SAMPLER=parentbased_traceidratio
-      - OTEL_TRACES_SAMPLER_ARG=0.1 # demo parameter
+      - OTEL_TRACES_SAMPLER_ARG=1 # demo parameter
       - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
       - OTEL_METRICS_EXPORTER=none
