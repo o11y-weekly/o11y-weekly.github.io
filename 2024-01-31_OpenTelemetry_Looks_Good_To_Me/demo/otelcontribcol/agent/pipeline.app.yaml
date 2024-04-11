@@ -43,4 +43,4 @@ service:
     logs/app:
       receivers: [filelog/app]
       processors: [batch/app]
-      exporters: [otlphttp/gateway/loki, debug]
+      exporters: [otlphttp/loki, debug]
