@@ -4,27 +4,43 @@ receivers:
     storage: file_storage/app
     multiline:
       line_start_pattern: timestamp=
+    operators:
+      - type: key_value_parser
+        delimiter: "="
+        pair_delimiter: "\t"
+      - type: move
+        from: attributes["service.version"]
+        to: resource["service.version"]
+      - type: move
+        from: attributes.message
+        to: body
+      - type: time_parser
+        parse_from: attributes.timestamp
+        layout_type: strptime
+        layout: "%Y-%m-%dT%H:%M:%S.%LZ" #2024-04-11T12:39:13.402Z
+      - type: remove
+        field: attributes.timestamp
+      - type: trace_parser
+        trace_id:
+          parse_from: attributes.traceId
+        span_id:
+          parse_from: attributes.spanId
+      - type: remove
+        field: attributes.traceId
+      - type: remove
+        field: attributes.spanId
     resource:
       service.name: ${env:SERVICE_NAME}
       service.namespace: ${env:SERVICE_NAMESPACE}
       host.name: ${env:HOSTNAME}
       deployment.environment: ${env:DEPLOYMENT_ENVIRONMENT}
-      service.instance.id: ${env:HOSTNAME} # loki does not accept host.name (https://github.com/grafana/loki/issues/11786)
 
 processors:
   batch/app:
-  resource/app/loki:
-    attributes:
-      - action: insert
-        key: loki.resource.labels
-        value: service.name, service.namespace, service.version, host.name, deployment.environment, service.instance.id
-      - action: insert
-        key: loki.format
-        value: raw
 
 service:
   pipelines:
     logs/app:
       receivers: [filelog/app]
-      processors: [batch/app, resource/app/loki]
-      exporters: [loki]
+      processors: [batch/app]
+      exporters: [otlphttp/gateway/loki, debug]

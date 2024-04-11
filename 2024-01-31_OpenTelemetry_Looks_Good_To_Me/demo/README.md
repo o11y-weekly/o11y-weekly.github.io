@@ -226,6 +226,31 @@ receivers:
     storage: file_storage/app
     multiline:
       line_start_pattern: timestamp=
+    operators:
+      - type: key_value_parser
+        delimiter: "="
+        pair_delimiter: "\t"
+      - type: move
+        from: attributes["service.version"]
+        to: resource["service.version"]
+      - type: move
+        from: attributes.message
+        to: body
+      - type: time_parser
+        parse_from: attributes.timestamp
+        layout_type: strptime
+        layout: "%Y-%m-%dT%H:%M:%S.%LZ" #2024-04-11T12:39:13.402Z
+      - type: remove
+        field: attributes.timestamp
+      - type: trace_parser
+        trace_id:
+          parse_from: attributes.traceId
+        span_id:
+          parse_from: attributes.spanId
+      - type: remove
+        field: attributes.traceId
+      - type: remove
+        field: attributes.spanId
     resource:
       service.name: ${env:SERVICE_NAME}
       service.namespace: ${env:SERVICE_NAMESPACE}
@@ -234,21 +259,13 @@ receivers:
 
 processors:
   batch/app:
-  resource/app/loki:
-    attributes:
-      - action: insert
-        key: loki.resource.labels
-        value: service.name, service.namespace, service.version, host.name, deployment.environment, service.instance.id
-      - action: insert
-        key: loki.format
-        value: raw
 
 service:
   pipelines:
     logs/app:
       receivers: [filelog/app]
-      processors: [batch/app, resource/app/loki]
-      exporters: [loki]
+      processors: [batch/app]
+      exporters: [otlphttp/gateway/loki, debug]
 ```
 
 #### No Collector mode
@@ -261,19 +278,13 @@ Gateway [configuration](./otelcontribcol/gateway/pipeline.logs.yml) to collect l
 
 ```yaml
 processors:
-  resource/loki:
-    attributes:
-      - action: upsert
-        key: service.instance.id # loki does not accept host.name (https://github.com/grafana/loki/issues/11786)
-        from_attribute: host.name
-
+  batch/loki:
 service:
   pipelines:
     logs/gateway:
       receivers: [otlp/gateway]
-      processors: [resource/loki]
-      exporters: [otlphttp/gateway/loki]
-```
+      processors: [batch/loki]
+      exporters: [otlphttp/gateway/loki]```
 
 ## OpenTelemetry Collector Contrib Monitoring
 

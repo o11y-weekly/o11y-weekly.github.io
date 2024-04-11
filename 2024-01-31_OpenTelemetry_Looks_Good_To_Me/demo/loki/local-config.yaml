@@ -5,7 +5,19 @@ server:
   http_listen_port: 3100
 
 # otlp config: https://github.com/grafana/loki/blob/main/docs/sources/send-data/otel/_index.md
+# distributor config: https://grafana.com/docs/loki/latest/configure/#distributor
 # PR: https://github.com/grafana/loki/pull/10727
+distributor:
+  otlp_config:
+    # List of default otlp resource attributes to be picked as index labels
+    # CLI flag: -distributor.otlp.default_resource_attributes_as_index_labels
+    default_resource_attributes_as_index_labels: 
+      - service.name
+      - service.namespace
+      - service.version
+      - host.name
+      - deployment.environment
+
 limits_config:
   allow_structured_metadata: true
 
@@ -21,12 +33,19 @@ common:
     kvstore:
       store: inmemory
 
+query_range:
+  results_cache:
+    cache:
+      embedded_cache:
+        enabled: true
+        max_size_mb: 100
+
 schema_config:
   configs:
     - from: 2020-10-24
-      store: boltdb-shipper
+      store: tsdb
       object_store: filesystem
-      schema: v11
+      schema: v13
       index:
         prefix: index_
         period: 24h
@@ -40,9 +59,9 @@ ruler:
 # Statistics help us better understand how Loki is used, and they show us performance
 # levels for most users. This helps us prioritize features and documentation.
 # For more information on what's sent, look at
-# https://github.com/grafana/loki/blob/main/pkg/usagestats/stats.go
+# https://github.com/grafana/loki/blob/main/pkg/analytics/stats.go
 # Refer to the buildReport method to see what goes into a report.
 #
 # If you would like to disable reporting, uncomment the following lines:
 analytics:
- reporting_enabled: false
+  reporting_enabled: false
