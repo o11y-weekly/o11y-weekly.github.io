@@ -33,10 +33,8 @@ Open Grafana: http://localhost:3000
 
 ### Java
 
-2 Java dashboards are available:
+1 Java dashboards are available:
 - [OpenTelemetry JVM Micrometer](https://grafana.com/grafana/dashboards/20352-opentelemetry-jvm-micrometer/)
-
-- [OpenTelemetry JVM Micrometer per instance](https://grafana.com/grafana/dashboards/20353-opentelemetry-jvm-micrometer-per-instance/)
 
 ### OpenTelemetry Collector Monitoring
 
@@ -89,8 +87,9 @@ management:
         namespace: '${service.namespace}'
         version: '@project.version@'
     distribution:
-      percentiles:
-        all: 0.5, 0.95, 0.99
+      slo:
+        http: 5, 10, 25, 50, 75, 100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000
+        jvm: 5, 10, 25, 50, 75, 100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000
 ```
 
 #### Logs
@@ -109,15 +108,22 @@ In the [service application](./service/), Logback has been used to write the log
 <configuration>
     <property resource="application.yml" />
 
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>log/${SERVICE_NAME}.log</file>
         <append>true</append>
         <encoder>
-            <pattern>timestamp=%d{yyyy/MM/dd HH:mm:ss.SSSSSSSSS}\tservice.version=${service.version}\tmessage=%msg%n</pattern>
+            <pattern>timestamp=%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}\tservice.version=${service.version}\ttraceId=%X{trace_id}\tspanId=%X{span_id}\tmessage=%msg%n</pattern>
         </encoder>
     </appender>
 
     <root level="INFO">
+        <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE" />
     </root>
 </configuration>
