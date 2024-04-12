@@ -29,8 +29,12 @@ management:
     # https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/metrics/sdk.md#explicit-bucket-histogram-aggregation
     # https://docs.micrometer.io/micrometer/reference/implementations/otlp.html
     distribution:
-      percentiles:
-        all: 0.5, 0.95, 0.99
+      # percentiles-histogram:
+      #   all: true
+      # https://opentelemetry.io/docs/specs/semconv/http/http-metrics/#metric-httpserverrequestduration
+      slo:
+        http: 5, 10, 25, 50, 75, 100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000
+        jvm: 5, 10, 25, 50, 75, 100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000
       
   endpoints:
     web:

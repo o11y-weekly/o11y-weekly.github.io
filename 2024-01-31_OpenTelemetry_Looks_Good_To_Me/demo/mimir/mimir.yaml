@@ -2,6 +2,7 @@
 # https://github.com/grafana/mimir/tree/main/docs/sources/mimir/tutorials/play-with-grafana-mimir
 # Do not use this configuration in production.
 # It is for demonstration purposes only.
+# otel_metric_suffixes_enabled: https://grafana.com/docs/enterprise-metrics/latest/config/reference/#limits
 multitenancy_enabled: false
 usage_stats:
   enabled: false

@@ -118,7 +118,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "min(process_uptime{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"})",
+          "expr": "min(process_uptime_milliseconds{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"})",
           "instant": false,
           "legendFormat": "min",
           "range": true,
@@ -130,7 +130,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "max(process_uptime{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"})",
+          "expr": "max(process_uptime_milliseconds{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"})",
           "hide": false,
           "instant": false,
           "legendFormat": "max",
@@ -247,7 +247,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))\r\n)",
+          "expr": "sum by (status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))",
           "instant": false,
           "legendFormat": "{{status}}",
           "range": true,
@@ -264,20 +264,16 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "scaleDistribution": {
+              "type": "linear"
+            }
           },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "ms",
           "unitScale": true
         },
         "overrides": []
@@ -292,22 +288,39 @@
       "id": 65,
       "links": [],
       "options": {
-        "displayMode": "lcd",
-        "maxVizHeight": 300,
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "namePlacement": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
+        "calculate": false,
+        "cellGap": 1,
+        "color": {
+          "exponent": 0.5,
+          "fill": "dark-orange",
+          "mode": "scheme",
+          "reverse": false,
+          "scale": "exponential",
+          "scheme": "Blues",
+          "steps": 64
         },
-        "showUnfilled": true,
-        "sizing": "auto",
-        "valueMode": "color"
+        "exemplars": {
+          "color": "rgba(255,0,255,0.7)"
+        },
+        "filterValues": {
+          "le": 1e-9
+        },
+        "legend": {
+          "show": true
+        },
+        "rowsFrame": {
+          "layout": "auto"
+        },
+        "tooltip": {
+          "mode": "single",
+          "showColorScale": false,
+          "yHistogram": false
+        },
+        "yAxis": {
+          "axisPlacement": "left",
+          "reverse": false,
+          "unit": "ms"
+        }
       },
       "pluginVersion": "10.3.1",
       "targets": [
@@ -318,17 +331,17 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg(http_server_requests{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}) by (quantile)",
-          "format": "time_series",
-          "instant": true,
+          "expr": "sum(rate(http_server_requests_milliseconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])) by (le)",
+          "format": "heatmap",
+          "instant": false,
           "intervalFactor": 1,
           "legendFormat": "__auto",
-          "range": false,
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "Response time",
-      "type": "bargauge"
+      "type": "heatmap"
     },
     {
       "collapsed": false,
@@ -459,7 +472,7 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 8,
+        "w": 12,
         "x": 0,
         "y": 9
       },
@@ -488,7 +501,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name,method,uri,status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name,method,uri,status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))\r\n)",
           "instant": false,
           "legendFormat": "{{method}} {{host_name}}{{uri}}: {{status}}",
           "range": true,
@@ -579,8 +592,8 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 8,
-        "x": 8,
+        "w": 12,
+        "x": 12,
         "y": 9
       },
       "id": 7,
@@ -609,7 +622,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by(host_name, method, uri, status) (rate(http_server_requests_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", status!~\"[1-3]..\"}[$__rate_interval]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by(host_name, method, uri, status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", status!~\"[1-3]..\"}[$__rate_interval]))\r\n)",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -743,9 +756,9 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 8,
-        "x": 16,
-        "y": 9
+        "w": 12,
+        "x": 0,
+        "y": 17
       },
       "id": 14,
       "options": {
@@ -765,6 +778,8 @@
           "sort": "none"
         }
       },
+      "repeat": "quantile",
+      "repeatDirection": "h",
       "targets": [
         {
           "datasource": {
@@ -772,7 +787,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name,status,uri,method) (rate(http_server_requests{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", quantile=\"${quantile:value}\"}[$__rate_interval]))\r\n)",
+          "expr": "topk(${top}, \r\n    histogram_quantile(${quantile:value}, sum by (le,host_name,status,uri,method) (rate(http_server_requests_milliseconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])))\r\n)",
           "instant": false,
           "legendFormat": "{{method}} {{host_name}}{{uri}}: {{status}}",
           "range": true,
@@ -788,7 +803,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 25
       },
       "id": 67,
       "panels": [],
@@ -804,7 +819,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 26
       },
       "id": 68,
       "options": {
@@ -837,7 +852,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 32
       },
       "id": 6,
       "panels": [],
@@ -918,7 +933,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 25
+        "y": 33
       },
       "id": 13,
       "options": {
@@ -1028,7 +1043,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 25
+        "y": 33
       },
       "id": 11,
       "options": {
@@ -1055,7 +1070,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"heap\"})\r\n    * 100 /\r\n    sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"heap\"}) \r\n    > ${saturation:value}\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used_bytes{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"heap\"})\r\n    * 100 /\r\n    sum by (host_name) (jvm_memory_max_bytes{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"heap\"}) \r\n    > ${saturation:value}\r\n)",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1138,7 +1153,7 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 25
+        "y": 33
       },
       "id": 19,
       "options": {
@@ -1165,7 +1180,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"nonheap\"})\r\n    * 100 / \r\n    sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"nonheap\"}) \r\n    > ${saturation:value}\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used_bytes{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"nonheap\"})\r\n    * 100 / \r\n    sum by (host_name) (jvm_memory_max_bytes{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"nonheap\"}) \r\n    > ${saturation:value}\r\n)",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1249,7 +1264,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 25
+        "y": 33
       },
       "id": 25,
       "options": {
@@ -1292,7 +1307,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 41
       },
       "id": 5,
       "panels": [],
@@ -1387,7 +1402,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 34
+        "y": 42
       },
       "id": 17,
       "options": {
@@ -1414,7 +1429,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"})\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used_bytes{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"})\r\n)",
           "instant": false,
           "legendFormat": "{{host_name}}.used",
           "range": true,
@@ -1426,7 +1441,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, sum by (host_name) (jvm_memory_committed{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}))",
+          "expr": "topk(${top}, sum by (host_name) (jvm_memory_committed_bytes{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}))",
           "hide": false,
           "instant": false,
           "legendFormat": "{{host_name}}.committed",
@@ -1439,7 +1454,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}))",
+          "expr": "topk(${top}, sum by (host_name) (jvm_memory_max_bytes{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}))",
           "hide": false,
           "instant": false,
           "legendFormat": "{{host_name}}.max",
@@ -1522,7 +1537,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 34
+        "y": 42
       },
       "id": 12,
       "options": {
@@ -1549,7 +1564,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"heap\"}) * 100\r\n    /\r\n    sum by (host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"heap\"})\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used_bytes{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"heap\"}) * 100\r\n    /\r\n    sum by (host_name) (jvm_memory_max_bytes{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"heap\"})\r\n)",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1631,7 +1646,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 34
+        "y": 42
       },
       "id": 15,
       "options": {
@@ -1658,7 +1673,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"nonheap\"}) * 100\r\n    /\r\n    sum by(host_name) (jvm_memory_max{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"nonheap\"})\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name) (jvm_memory_used_bytes{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"nonheap\"}) * 100\r\n    /\r\n    sum by(host_name) (jvm_memory_max_bytes{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", area=\"nonheap\"})\r\n)",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1757,7 +1772,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 42
+        "y": 50
       },
       "id": 18,
       "options": {
@@ -1882,7 +1897,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 42
+        "y": 50
       },
       "id": 16,
       "options": {
@@ -2034,7 +2049,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 42
+        "y": 50
       },
       "id": 20,
       "options": {
@@ -2161,7 +2176,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 50
+        "y": 58
       },
       "id": 21,
       "options": {
@@ -2314,7 +2329,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 50
+        "y": 58
       },
       "id": 22,
       "options": {
@@ -2467,7 +2482,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 50
+        "y": 58
       },
       "id": 24,
       "options": {
@@ -2654,7 +2669,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 58
+        "y": 66
       },
       "id": 23,
       "options": {
@@ -2681,7 +2696,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, rate(logback_events{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))",
+          "expr": "topk(${top}, rate(logback_events_total{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))",
           "hide": false,
           "instant": false,
           "legendFormat": "{{host_name}}.{{level}}",
@@ -2781,7 +2796,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 58
+        "y": 66
       },
       "id": 64,
       "options": {
@@ -2825,7 +2840,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 66
+        "y": 74
       },
       "id": 35,
       "panels": [],
@@ -2920,7 +2935,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 67
+        "y": 75
       },
       "id": 43,
       "options": {
@@ -2948,7 +2963,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    rate(jvm_gc_pause_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])\r\n)",
+          "expr": "topk(${top}, \r\n    rate(jvm_gc_pause_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])\r\n)",
           "instant": false,
           "legendFormat": "{{host_name}} / {{cause}} / {{gc}} / {{action}}",
           "range": true,
@@ -2965,39 +2980,14 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
           "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 100,
-            "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 0,
-            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
             }
           },
           "links": [
@@ -3007,65 +2997,53 @@
               "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
             }
           ],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "ms",
           "unitScale": true
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": "/\\.max$/"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 67
+        "y": 75
       },
       "id": 45,
       "options": {
+        "calculate": false,
+        "cellGap": 1,
+        "color": {
+          "exponent": 0.5,
+          "fill": "dark-orange",
+          "mode": "scheme",
+          "reverse": false,
+          "scale": "exponential",
+          "scheme": "Blues",
+          "steps": 64
+        },
+        "exemplars": {
+          "color": "rgba(255,0,255,0.7)"
+        },
+        "filterValues": {
+          "le": 1e-9
+        },
         "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "mean",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": false
+          "show": true
+        },
+        "rowsFrame": {
+          "layout": "auto"
         },
         "tooltip": {
           "mode": "single",
-          "sort": "none"
+          "showColorScale": false,
+          "yHistogram": false
+        },
+        "yAxis": {
+          "axisPlacement": "left",
+          "reverse": false,
+          "unit": "ms"
         }
       },
+      "pluginVersion": "10.3.1",
       "repeatDirection": "h",
       "targets": [
         {
@@ -3074,15 +3052,17 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    rate(jvm_gc_pause{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", quantile=\"${quantile:value}\"}[$__rate_interval])\r\n)",
+          "exemplar": false,
+          "expr": "sum by (le) (rate(jvm_gc_pause_milliseconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))",
+          "format": "heatmap",
           "instant": false,
           "legendFormat": "{{host_name}} / {{cause}} / {{gc}} / {{action}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Pause duration (${quantile:text})",
-      "type": "timeseries"
+      "title": "Pause duration",
+      "type": "heatmap"
     },
     {
       "datasource": {
@@ -3156,7 +3136,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 67
+        "y": 75
       },
       "id": 44,
       "options": {
@@ -3184,7 +3164,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    rate(jvm_gc_memory_allocated{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])\r\n)",
+          "expr": "topk(${top}, \r\n    rate(jvm_gc_memory_allocated_bytes_total{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])\r\n)",
           "instant": false,
           "legendFormat": "{{host_name}}.allocated",
           "range": true,
@@ -3196,7 +3176,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    rate(jvm_gc_memory_promoted{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])\r\n)",
+          "expr": "topk(${top}, \r\n    rate(jvm_gc_memory_promoted_bytes_total{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])\r\n)",
           "hide": false,
           "instant": false,
           "legendFormat": "{{host_name}}.promoted",
@@ -3213,7 +3193,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 75
+        "y": 83
       },
       "id": 27,
       "panels": [],
@@ -3308,7 +3288,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 76
+        "y": 84
       },
       "id": 26,
       "options": {
@@ -3337,7 +3317,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, jvm_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", id=\"${jvm_memory_used_id}\"})",
+          "expr": "topk(${top}, jvm_memory_used_bytes{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", id=\"${jvm_memory_used_id}\"})",
           "instant": false,
           "legendFormat": "{{host_name}}.{{area}}",
           "range": true,
@@ -3401,8 +3381,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3435,7 +3414,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 92
+        "y": 100
       },
       "id": 53,
       "options": {
@@ -3464,7 +3443,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, jvm_buffer_memory_used{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", id=\"${jvm_buffer_memory_used_id}\"})",
+          "expr": "topk(${top}, jvm_buffer_memory_used_bytes{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", id=\"${jvm_buffer_memory_used_id}\"})",
           "instant": false,
           "legendFormat": "{{host_name}}.{{id}}",
           "range": true,
@@ -3669,17 +3648,23 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "p95",
-          "value": "0.95"
+          "selected": true,
+          "text": [
+            "p95",
+            "p50"
+          ],
+          "value": [
+            "0.95",
+            "0.5"
+          ]
         },
         "hide": 1,
         "includeAll": false,
-        "multi": false,
+        "multi": true,
         "name": "quantile",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "p50",
             "value": "0.5"
           },
@@ -3734,7 +3719,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -3746,7 +3731,7 @@
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(jvm_memory_used{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},id)",
+        "definition": "label_values(jvm_memory_used_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},id)",
         "hide": 0,
         "includeAll": true,
         "label": "JVM Memory used",
@@ -3755,7 +3740,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(jvm_memory_used{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},id)",
+          "query": "label_values(jvm_memory_used_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},id)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3766,7 +3751,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -3778,7 +3763,7 @@
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(jvm_buffer_memory_used{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},id)",
+        "definition": "label_values(jvm_buffer_memory_used_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},id)",
         "hide": 0,
         "includeAll": true,
         "label": "JVM Buffer Memory used",
@@ -3787,7 +3772,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(jvm_buffer_memory_used{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},id)",
+          "query": "label_values(jvm_buffer_memory_used_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},id)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3799,7 +3784,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
