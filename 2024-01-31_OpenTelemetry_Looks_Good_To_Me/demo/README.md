@@ -108,12 +108,6 @@ In the [service application](./service/), Logback has been used to write the log
 <configuration>
     <property resource="application.yml" />
 
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
-
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>log/${SERVICE_NAME}.log</file>
         <append>true</append>
@@ -123,7 +117,6 @@ In the [service application](./service/), Logback has been used to write the log
     </appender>
 
     <root level="INFO">
-        <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE" />
     </root>
 </configuration>
