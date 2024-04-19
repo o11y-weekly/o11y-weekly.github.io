@@ -1,5 +1,6 @@
 apiVersion: 1
 
+# https://github.com/grafana/grafana/blob/1ea7dc92508ca51dfb29f54883a2a487f6441395/packages/grafana-o11y-ds-frontend/src/TraceToLogs/TraceToLogsSettings.tsx#L31
 datasources:
   - name: Tempo
     type: tempo
@@ -10,13 +11,10 @@ datasources:
       httpMethod: GET
       tracesToLogs:
         datasourceUid: 'loki'
-        tags: ['application', 'host']
-        mappedTags: [{ key: 'application', value: 'service' }]
-        mapTagNamesEnabled: false
-        spanStartTimeShift: '1h'
-        spanEndTimeShift: '1h'
-        filterByTraceID: true
-        filterBySpanID: true
+        filterByTraceID: false
+        filterBySpanID: false
+        customQuery: true
+        query: '{${__tags}} | trace_id="${__trace.traceId}" | span_id="${__span.spanId}"'
       serviceMap:
         datasourceUid: 'mimir'
       search:
