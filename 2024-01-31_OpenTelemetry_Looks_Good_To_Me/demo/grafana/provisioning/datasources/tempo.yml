@@ -1,6 +1,7 @@
 apiVersion: 1
 
 # https://github.com/grafana/grafana/blob/1ea7dc92508ca51dfb29f54883a2a487f6441395/packages/grafana-o11y-ds-frontend/src/TraceToLogs/TraceToLogsSettings.tsx#L31
+# https://grafana.com/docs/grafana/latest/datasources/tempo/configure-tempo-data-source/#custom-query-variables
 datasources:
   - name: Tempo
     type: tempo
@@ -8,13 +9,10 @@ datasources:
     access: proxy
     url: http://tempo:3200
     jsonData:
-      httpMethod: GET
-      tracesToLogs:
+      tracesToLogsV2:
         datasourceUid: 'loki'
-        filterByTraceID: false
-        filterBySpanID: false
         customQuery: true
-        query: '{${__tags}} | trace_id="${__trace.traceId}" | span_id="${__span.spanId}"'
+        query: '{$${__tags}} | trace_id="$${__trace.traceId}" | span_id="$${__span.spanId}"'
       serviceMap:
         datasourceUid: 'mimir'
       search:
