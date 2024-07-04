@@ -6,6 +6,12 @@
 dotnet tool install -g dotnet-monitor
 ```
 
+### configure CORS
+Reference: https://github.com/dotnet/diagnostics/pull/1377
+```bash
+$env:DotnetMonitor_CorsConfiguration__AllowedOrigins='https://dotnet-monitor-ui.dev'
+```
+
 ### start
 ```bash
 dotnet monitor collect -u http://0.0.0.0::52323 --metricUrls http://0.0.0.0:52325 --no-auth
