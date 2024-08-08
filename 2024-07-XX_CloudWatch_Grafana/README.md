@@ -12,13 +12,13 @@ Let's introduce Grafana as an observability front end used with CloudWatch as a 
 
 As mentioned, Grafana does only one thing: an observability front end which is compatible with lots of Observability Backends.
 
-It is quite common to use multiple AWS account per project and having a 360 degree observability from development to production for any applications is important as a company.
+It is quite common to use multiple AWS accounts per project and having a 360 degree observability from development to production for any application is important as a company.
 
-Grafana can be configured to use multiple CloudWatch datasources from multiple account which ease the 360 degree observability as a company.
+Grafana can be configured to use multiple CloudWatch datasources from multiple accounts which ease the 360 degree observability as a company.
 
-Grafana contributed to the CloudWatch datasource where dashboards example can be found directly on the [grafana repository](https://github.com/grafana/grafana/tree/main/public/app/plugins/datasource/cloudwatch/dashboards) which are also available when adding the cloudwatch datasource as below:
+Grafana contributed to the CloudWatch datasource where dashboard examples can be found directly on the [grafana repository](https://github.com/grafana/grafana/tree/main/public/app/plugins/datasource/cloudwatch/dashboards) which are also available when adding the cloudwatch datasource as below:
 
-![Grafana Dashboards example for CloudWatch](./CloudWatchDashboardExamples.png)
+![Grafana Dashboard examples for CloudWatch](./CloudWatchDashboardExamples.png)
 
 While the quicksetup is really useful, here are the best practices to properly use the CloudWatch Logs and Metrics API in Grafana.
 
@@ -38,18 +38,18 @@ fields @timestamp, @message
 ```
 ### Best Practices
 #### Setup datasource variable
-Switching CloudWatch datasource (1 datasource per account) should be easy and Grafana dashboards can be configured to support multiple datasouce.
+Switching CloudWatch datasources (1 datasource per account) should be easy and Grafana dashboards can be configured to support multiple datasouces.
 
-A datasource template variable should be configured and used in all Grafana CloudWatch query
+A datasource template variable should be configured and used in all Grafana CloudWatch queries
 
 ##### Configure the variable
 ![Datasource Variable](./DatasourceVariable.png)
 
 ##### Use the datasource variable in query
-![Using datasource variable in query](./DatasourceInQuery.png)
+![Using datasource variable in queries](./DatasourceInQuery.png)
 
 #### Setup region variable
-If aws resources are deployed in multiple region, dashboard should be configurable to switch from one region to another like for the datasource.
+If aws resources are deployed in multiple regions, dashboards should be configurable to switch from one region to another like for the datasources.
 
 ##### Configure the variable
 ![Region Variable](./RegionVariable.png)
@@ -58,9 +58,9 @@ If aws resources are deployed in multiple region, dashboard should be configurab
 ![Using region variable in query](./RegionInQuery.png)
 
 #### Log groups template
-As mentioned before, creating dashboards supporting multiple aws account is an important feature to support 360 degree observability and monitoring.
+As mentioned before, creating dashboards supporting multiple aws accounts is an important feature to support 360 degree observability and monitoring.
 
-From CloudWatch point of view, applications are sending logs to CloudWatch which are organized in log groups which can be different from an account to another.
+From CloudWatch point of view, applications are sending logs to CloudWatch which are organized in log groups and can be different between accounts.
 
 ![Switching CloudWatch DataSource updates log groups selection](./ApiGateway-log-group-selection.png)
 
@@ -83,7 +83,7 @@ To do so, Grafana Logs should use a template variable to choose the right log gr
 ![Log group template variable](./LogGroup-TemplateVariable.png)
 
 ##### Use Log group variable in vizualisation query
-In the grafana log vizualisation, in datasource, select log groups
+In the grafana log vizualisation, then datasource, select log groups
 ![Log group selection](./LogGroup-TemplateVariable-Selection.png)
 
 ## CloudWatch Metrics
@@ -114,7 +114,7 @@ Reference:
 
 This is the latest API available which is compatible with SQL and requires less knowledge about quering CloudWatch metrics.
 
-Pay Attention that this API has know limits: [Metrics Insights limits](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-metrics-insights-limits.html)
+Pay Attention that this API has known limits: [Metrics Insights limits](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-metrics-insights-limits.html)
 
 ### Pros / Cons
 | API | Pros | Cons |
@@ -129,9 +129,9 @@ Reference: [AWS Billing Alarm](https://docs.aws.amazon.com/AmazonCloudWatch/late
 
 The CloudWatch US East (N. Virginia) Region host a special namespace where Billing can be observed.
 
-Bringing such dashboards can helps teams to support the "You Build It, You Run It and You Pay for it".
+Bringing such dashboards can help teams to support the "You Build It, You Run It and You Pay for it".
 
-A [grafana dashboard](https://grafana.com/grafana/dashboards/20288-aws-multi-account-billing/) is available to quickly setup the Grafana instance by provisionning the Billing dashboard.
+An [AWS Billing Grafana Dashboard](https://grafana.com/grafana/dashboards/20288-aws-multi-account-billing/) is available to quickly setup the Grafana instance by provisionning the Billing dashboard.
 
 ## Grafana Dashboards
 Here are dashboards using the best pratices for observability to monitor AWS resources:
