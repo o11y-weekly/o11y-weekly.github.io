@@ -20,6 +20,7 @@ import jakarta.persistence.Table;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -77,10 +78,11 @@ public record Controllers(@Autowired JdbcTemplate jdbcTemplate, @Autowired UserR
 	}
 
 	private Optional<User> getUserFromHibernate(final int id) {
-		// FIXME: Why findById does not add metrics ? => SingleIdPlanLoader has stats bool to false while the findAll not.
+		// FIXME: Why findById does not add metrics (JdbcSelectExecutorStandardImpl.class L218 stats boolean) ? => SingleIdPlanLoader has stats bool to false while the findAll* not.
 		// final var user = userRepository.findById((long) id);
-		final var user = userRepository.findAll().stream().filter(x -> x.id.equals((long)id)).findFirst();
-		return user.map(x -> new User(x.firstname, x.surname));
+		final var user = userRepository.findAllById(List.of((long)id));
+		// final var user = userRepository.findAll().stream().filter(x -> x.id.equals((long)id)).findFirst();
+		return user.stream().map(x -> new User(x.firstname, x.surname)).findFirst();
 	}
 
 	@WithSpan
