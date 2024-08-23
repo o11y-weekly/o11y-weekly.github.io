@@ -8,13 +8,23 @@ server:
 
 service.version: '@project.version@'
 
+debug: true
+
 spring:
   datasource:
     show-sql: true
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://db:5432/persons
+    # url: jdbc:postgresql://db:5432/persons
+    url: jdbc:postgresql://localhost:5432/persons
     username: postgres
     password: ReallyBadPassword
+  jpa:
+    hibernate:
+      default_schema: ""
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      "[hibernate.generate_statistics]": true
 
 management:
   otlp:      
@@ -22,7 +32,8 @@ management:
       export:
         enabled: true
         step: 10s
-        url: http://mimir:9009/otlp/v1/metrics
+        # url: http://otelcontribcol-gateway:4318/v1/metrics
+        url: http://localhost:4318/v1/metrics
         # url: https://prometheus-prod-24-prod-eu-west-2.grafana.net/otlp/v1/metrics
         # headers:
         #   Authorization: Basic ####

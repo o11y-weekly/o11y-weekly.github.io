@@ -4,7 +4,7 @@ name: otel-lgtm
 services:
   otelcontribcol-gateway:
     image: otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL}
-    command: "--config /etc/otelcol-contrib/exporters.yml --config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/receivers.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.logs.yml --config /etc/otelcol-contrib/pipeline.traces.yml"
+    command: "--config /etc/otelcol-contrib/exporters.yml --config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/receivers.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.logs.yml --config /etc/otelcol-contrib/pipeline.metrics.yml --config /etc/otelcol-contrib/pipeline.traces.yml"
     volumes:
       - ./otelcontribcol/gateway/:/etc/otelcol-contrib/:ro
     networks:

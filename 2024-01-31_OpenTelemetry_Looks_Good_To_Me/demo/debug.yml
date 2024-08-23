@@ -1,0 +1,72 @@
+# keep version only for graphviz
+version: '3.8'
+name: otel-lgtm
+services:
+  otelcontribcol-gateway:
+    image: otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL}
+    command: "--config /etc/otelcol-contrib/exporters.yml --config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/receivers.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.logs.yml --config /etc/otelcol-contrib/pipeline.metrics.yml --config /etc/otelcol-contrib/pipeline.traces.yml"
+    volumes:
+      - ./otelcontribcol/gateway/:/etc/otelcol-contrib/:ro
+    networks:
+      - bridge
+    depends_on:
+      - mimir
+      - loki
+    ports:
+      - 4317:4317
+      - 4318:4318
+  db:
+    image: postgres:16.1-alpine3.19
+    volumes:
+      - ./postgres/initdb.d:/docker-entrypoint-initdb.d:ro
+    environment:
+      - POSTGRES_DB=persons
+      - POSTGRES_PASSWORD=ReallyBadPassword
+    networks:
+      - bridge
+    ports:
+      - 5432:5432
+
+  loki:
+    image: grafana/loki:3.0.0
+    command: -config.file=/etc/loki/local-config.yaml -validation.reject-old-samples=false -query-scheduler.max-outstanding-requests-per-tenant=2048 -querier.max-outstanding-requests-per-tenant=2048
+    volumes:
+      - ./loki/:/etc/loki/:ro
+    networks:
+      - bridge
+
+  mimir:
+    image: grafana/mimir:2.11.0
+    volumes:
+      - ./mimir/mimir.yaml:/etc/mimir.yaml
+    command: --config.file=/etc/mimir.yaml -distributor.otel-metric-suffixes-enabled # otel_metric_suffixes_enabled: https://grafana.com/docs/enterprise-metrics/latest/config/reference/#limits
+    networks:
+      - bridge
+
+  tempo:
+    image: grafana/tempo:2.3.1
+    volumes:
+      - ./tempo/tempo-local.yaml:/etc/tempo.yaml:ro
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    networks:
+      - bridge
+
+  grafana:
+    image: grafana/grafana-oss:10.4.1
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    ports:
+      - 3000:3000
+    networks:
+      - bridge
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./grafana/provisioning/:/etc/grafana/provisioning/:ro
+    depends_on:
+      - mimir
+      - loki
+      - tempo
+
+networks:
+  bridge:

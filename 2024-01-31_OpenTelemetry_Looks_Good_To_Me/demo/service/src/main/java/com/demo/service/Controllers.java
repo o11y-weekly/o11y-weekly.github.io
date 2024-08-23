@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.opentelemetry.instrumentation.annotations.WithSpan;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,8 +28,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-public record Controllers(@Autowired JdbcTemplate jdbcTemplate) {
+public record Controllers(@Autowired JdbcTemplate jdbcTemplate, @Autowired UserRepository userRepository) {
 	private static record User(String name, String surname) {
+	}
+	@Entity(name="persons")
+	static class UserRecord {
+		@Id
+		@GeneratedValue
+		private Long id;
+
+		private String firstname;
+
+		private String surname;
 	}
 
 	private static class UserMapper implements RowMapper<User> {
@@ -46,19 +61,26 @@ public record Controllers(@Autowired JdbcTemplate jdbcTemplate) {
 	private static final UserMapper USER_MAPPER = new UserMapper();
 
 	private static final Double FAILURE_RATIO = Optional.ofNullable(System.getenv("FAILURE_RATIO"))
-			.map(Double::parseDouble).orElseThrow();
+			.map(Double::parseDouble).orElse(0.);
 	private static final Double LATENCY_RATIO = Optional.ofNullable(System.getenv("LATENCY_RATIO"))
-			.map(Double::parseDouble).orElseThrow();
+			.map(Double::parseDouble).orElse(0.);
 	private static final Integer MIN_LATENCY = Optional.ofNullable(System.getenv("MIN_LATENCY")).map(Integer::parseInt)
-			.orElseThrow();
+			.orElse(0);
 	private static final Integer MAX_LATENCY = Optional.ofNullable(System.getenv("MAX_LATENCY")).map(Integer::parseInt)
-			.orElseThrow();
+			.orElse(0);
 
 	@WithSpan
 	private Optional<User> getUserFromDatabase(final int id) {
 		logger.info("getting user {} from database", id);
 		return jdbcTemplate.query("select firstname, surname from persons where id=?", USER_MAPPER, id).stream()
 				.findFirst();
+	}
+
+	private Optional<User> getUserFromHibernate(final int id) {
+		// FIXME: Why findById does not add metrics ? => SingleIdPlanLoader has stats bool to false while the findAll not.
+		// final var user = userRepository.findById((long) id);
+		final var user = userRepository.findAll().stream().filter(x -> x.id.equals((long)id)).findFirst();
+		return user.map(x -> new User(x.firstname, x.surname));
 	}
 
 	@WithSpan
@@ -94,7 +116,7 @@ public record Controllers(@Autowired JdbcTemplate jdbcTemplate) {
 			return getFailedUserFromDatabase(id);
 		}
 
-		return getUserFromDatabase(id).orElseThrow(ResourceNotFoundException::new);
+		return getUserFromHibernate(id).orElseThrow(ResourceNotFoundException::new);
 	}
 
 	private static boolean isEnabled(final int counter, final double ratio) {
