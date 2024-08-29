@@ -122,7 +122,7 @@ services:
     image: grafana/mimir:2.11.0
     volumes:
       - ./mimir/mimir.yaml:/etc/mimir.yaml
-    command: --config.file=/etc/mimir.yaml
+    command: --config.file=/etc/mimir.yaml -distributor.otel-metric-suffixes-enabled # otel_metric_suffixes_enabled: https://grafana.com/docs/enterprise-metrics/latest/config/reference/#limits
     networks:
       - bridge
 
