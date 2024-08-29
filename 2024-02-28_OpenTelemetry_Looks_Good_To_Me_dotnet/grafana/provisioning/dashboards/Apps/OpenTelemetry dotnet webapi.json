@@ -167,7 +167,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (http_response_status_code) (rate(http_server_request_duration_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (http_response_status_code) (rate(http_server_request_duration_seconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
           "instant": false,
           "legendFormat": "{{http_response_status_code}}",
           "range": true,
@@ -254,7 +254,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(rate(http_server_request_duration_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[$__rate_interval])) by (le)",
+          "expr": "sum(rate(http_server_request_duration_seconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[$__rate_interval])) by (le)",
           "format": "heatmap",
           "instant": false,
           "intervalFactor": 1,
@@ -429,7 +429,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name,http_request_method,http_route,url_scheme,http_response_status_code) (rate(http_server_request_duration_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name,http_request_method,http_route,url_scheme,http_response_status_code) (rate(http_server_request_duration_seconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
           "instant": false,
           "legendFormat": "{{http_request_method}} {{url_scheme}}://{{host_name}}{{http_route}}: {{http_response_status_code}}",
           "range": true,
@@ -558,7 +558,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by(host_name, url_scheme, http_request_method, http_route, http_response_status_code, error_type) (rate(http_server_request_duration_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", http_response_status_code!~\"[1-3]..\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by(host_name, url_scheme, http_request_method, http_route, http_response_status_code, error_type) (rate(http_server_request_duration_seconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", http_response_status_code!~\"[1-3]..\"}[1m]))\r\n)",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -720,7 +720,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk($top, \r\n    histogram_quantile(${percentile:value}, \r\n        sum(rate(http_server_request_duration_bucket{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])) by (le, http_request_method, url_scheme, host_name, http_route, http_response_status_code)\r\n    )\r\n)",
+          "expr": "topk($top, \r\n    histogram_quantile(${percentile:value}, \r\n        sum(rate(http_server_request_duration_seconds_bucket{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])) by (le, http_request_method, url_scheme, host_name, http_route, http_response_status_code)\r\n    )\r\n)",
           "instant": false,
           "legendFormat": "{{http_request_method}} {{url_scheme}}://{{host_name}}{{http_route}}: {{http_response_status_code}}",
           "range": true,
@@ -976,7 +976,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum by (host_name,http_route,aspnetcore_routing_is_fallback) (rate(aspnetcore_routing_match_attempts{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", aspnetcore_routing_match_status!=\"success\" }[$__rate_interval]))",
+          "expr": "sum by (host_name,http_route,aspnetcore_routing_is_fallback) (rate(aspnetcore_routing_match_attempts_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", aspnetcore_routing_match_status!=\"success\" }[$__rate_interval]))",
           "hide": false,
           "instant": false,
           "legendFormat": "{{host_name}}{{http_route}} failure (fallback:{{aspnetcore_routing_is_fallback}})",
@@ -1374,7 +1374,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk($top, \r\n    histogram_quantile(${percentile:value}, \r\n        sum(rate(kestrel_connection_duration_bucket{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])) by (le,network_protocol_name,network_protocol_version,network_transport,network_type,server_address,server_port)\r\n    )\r\n)",
+          "expr": "topk($top, \r\n    histogram_quantile(${percentile:value}, \r\n        sum(rate(kestrel_connection_duration_seconds_bucket{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])) by (le,network_protocol_name,network_protocol_version,network_transport,network_type,server_address,server_port)\r\n    )\r\n)",
           "instant": false,
           "legendFormat": "{{network_type}} {{network_transport}}/{{network_protocol_name}}{{network_protocol_version}} {{server_address}}:{{server_port}}",
           "range": true,
@@ -1523,7 +1523,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "rate(process_cpu_time{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
+          "expr": "rate(process_cpu_time_seconds_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
           "instant": false,
           "legendFormat": "{{state}}",
           "range": true,
@@ -1628,7 +1628,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "max_over_time(process_memory_usage{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
+          "expr": "max_over_time(process_memory_usage_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
           "instant": false,
           "legendFormat": "Memory Usage",
           "range": true,
@@ -1847,7 +1847,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "max_over_time(process_runtime_dotnet_gc_committed_memory_size{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
+          "expr": "max_over_time(process_runtime_dotnet_gc_committed_memory_size_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
           "hide": false,
           "instant": false,
           "legendFormat": "GC Commited Memory Size",
@@ -2055,7 +2055,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "max_over_time(process_runtime_dotnet_gc_heap_size{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
+          "expr": "max_over_time(process_runtime_dotnet_gc_heap_size_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
           "instant": false,
           "legendFormat": "{{generation}}",
           "range": true,
@@ -2236,7 +2236,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "max_over_time(process_runtime_dotnet_gc_heap_fragmentation_size{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
+          "expr": "max_over_time(process_runtime_dotnet_gc_heap_fragmentation_size_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
           "instant": false,
           "legendFormat": "{{generation}}",
           "range": true,
@@ -2417,7 +2417,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "rate(process_runtime_dotnet_gc_collections_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
+          "expr": "rate(process_runtime_dotnet_gc_collections_count_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
           "instant": false,
           "legendFormat": "{{generation}}",
           "range": true,
@@ -2522,7 +2522,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "rate(process_runtime_dotnet_exceptions_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
+          "expr": "rate(process_runtime_dotnet_exceptions_count_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])",
           "instant": false,
           "legendFormat": "Exceptions",
           "range": true,
@@ -2945,7 +2945,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk($top, \r\n    histogram_quantile(${percentile:value}, \r\n        sum(rate(http_client_request_duration_bucket{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])) by (le, http_request_method, url_scheme, http_route, http_response_status_code,server_address,server_port,network_protocol_version)\r\n    )\r\n)",
+          "expr": "topk($top, \r\n    histogram_quantile(${percentile:value}, \r\n        sum(rate(http_client_request_duration_seconds_bucket{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])) by (le, http_request_method, url_scheme, http_route, http_response_status_code,server_address,server_port,network_protocol_version)\r\n    )\r\n)",
           "instant": false,
           "legendFormat": "{{url_scheme}}/{{network_protocol_version}} {{server_address}}:{{server_port}} {{http_request_method}}: {{http_response_status_code}}",
           "range": true,
@@ -3063,7 +3063,7 @@
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(process_runtime_dotnet_gc_duration,service_name)",
+        "definition": "label_values(process_runtime_dotnet_gc_duration_nanoseconds_total,service_name)",
         "hide": 1,
         "includeAll": false,
         "label": "Service Name",
@@ -3072,7 +3072,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(process_runtime_dotnet_gc_duration,service_name)",
+          "query": "label_values(process_runtime_dotnet_gc_duration_nanoseconds_total,service_name)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3091,7 +3091,7 @@
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(process_runtime_dotnet_gc_duration{service_name=\"$service_name\"},deployment_environment)",
+        "definition": "label_values(process_runtime_dotnet_gc_duration_nanoseconds_total{service_name=\"$service_name\"},deployment_environment)",
         "hide": 1,
         "includeAll": false,
         "label": "Deployment Environment",
@@ -3100,7 +3100,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(process_runtime_dotnet_gc_duration{service_name=\"$service_name\"},deployment_environment)",
+          "query": "label_values(process_runtime_dotnet_gc_duration_nanoseconds_total{service_name=\"$service_name\"},deployment_environment)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3119,7 +3119,7 @@
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(process_runtime_dotnet_gc_duration{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
+        "definition": "label_values(process_runtime_dotnet_gc_duration_nanoseconds_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
         "hide": 1,
         "includeAll": false,
         "label": "Service version",
@@ -3128,7 +3128,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(process_runtime_dotnet_gc_duration{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
+          "query": "label_values(process_runtime_dotnet_gc_duration_nanoseconds_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3213,6 +3213,6 @@
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-webapi",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }
