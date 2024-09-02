@@ -1,0 +1,123 @@
+receivers:
+  # otelcontribcol metrics + host metrics
+  prometheus/agent:
+    config:
+      scrape_configs:
+        - job_name: otelcol-contrib/agent
+          scrape_interval: 10s
+          static_configs:
+            - targets: [0.0.0.0:8888]
+  hostmetrics/agent:
+    collection_interval: 10s
+    scrapers:
+      cpu:
+        metrics:
+          system.cpu.logical.count:
+            enabled: true
+      memory:
+        metrics:
+          system.memory.utilization:
+            enabled: true
+          system.memory.limit:
+            enabled: true
+      load:
+      disk:
+      filesystem:
+        metrics:
+          system.filesystem.utilization:
+            enabled: true
+      network:
+      paging:
+      processes:
+      process:
+        mute_process_user_error: true
+        metrics:
+          process.cpu.utilization:
+            enabled: true
+          process.memory.utilization:
+            enabled: true
+          process.threads:
+            enabled: true
+          process.paging.faults:
+            enabled: true
+
+  filelog/agent:
+    include: [ /app/otelcol.log.json ]
+    storage: file_storage/agent
+    attributes:
+      service.name: otelcol-contrib/agent
+      service.namespace: agent
+    operators:
+      - type: json_parser
+    #     parse_from:	body
+    #     parse_to: attributes
+        severity: 
+          parse_from: attributes.level
+        timestamp:
+          parse_from: attributes.ts
+          layout_type: epoch
+          layout: 's.ns'
+      - type: remove
+        field: body
+
+processors:
+  batch/agent:
+  resource/agent:
+    attributes:
+      - action: upsert
+        key: service.namespace
+        value: agent
+      - key: service.name
+        action: upsert
+        value: otelcol-contrib/agent
+  attributes/agent:
+    actions:
+      - key: service.namespace
+        action: upsert
+        value: agent
+      - key: service.name
+        action: upsert
+        value: otelcol-contrib/agent
+  resourcedetection/system:
+    detectors: ["system"]
+    system:
+      hostname_sources: ["os"]
+  transform:
+    metric_statements:
+      - context: datapoint
+        statements:
+          - set(attributes["host.name"], resource.attributes["host.name"])
+          - set(attributes["process.command"], resource.attributes["process.command"])
+          - set(attributes["process.command_line"], resource.attributes["process.command_line"])
+          - set(attributes["process.executable.name"], resource.attributes["process.executable.name"])
+          - set(attributes["process.executable.path"], resource.attributes["process.executable.path"])
+          - set(attributes["process.owner"], resource.attributes["process.owner"])
+          - set(attributes["process.parent_pid"], resource.attributes["process.parent_pid"])
+          - set(attributes["process.pid"], resource.attributes["process.pid"])
+  attributes/agent/loki:
+    actions:
+      - action: insert
+        key: loki.attribute.labels
+        value: service.name, service.namespace, service.version, deployment.environment, host.name
+
+service:
+  telemetry:
+    metrics:
+      level: detailed
+    logs:
+      level: info
+      encoding: json
+      output_paths: ["otelcol.log.json"]
+      # output_paths: ["stdout", "otelcol.log.json"]
+      # error_output_paths: ["stderr", "otelcol.error.log.json"]
+
+  pipelines:
+    metrics/agent:
+      receivers: [prometheus/agent, hostmetrics/agent]
+      processors: [attributes/agent, resourcedetection/system, transform, batch/agent]
+      exporters: [otlphttp/mimir]
+
+    logs/agent:
+      receivers: [filelog/agent]
+      processors: [batch/agent, resource/agent, attributes/agent/loki]
+      exporters: [loki]

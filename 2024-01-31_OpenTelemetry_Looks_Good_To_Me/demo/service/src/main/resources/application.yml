@@ -1,0 +1,54 @@
+server:
+  port: 8080
+  # required for grafana jvm dashboard
+  # https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.2-Release-Notes#tomcats-mbean-registry
+  tomcat:
+    mbeanregistry:
+      enabled: true
+
+service.version: '@project.version@'
+
+spring:
+  datasource:
+    show-sql: true
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://db:5432/persons
+    username: postgres
+    password: ReallyBadPassword
+
+management:
+  otlp:      
+    metrics:
+      export:
+        enabled: true
+        step: 10s
+        url: http://mimir:9009/otlp/v1/metrics
+        # url: https://prometheus-prod-24-prod-eu-west-2.grafana.net/otlp/v1/metrics
+        # headers:
+        #   Authorization: Basic ####
+
+  metrics:
+    tags:
+      deployment.environment: '${deployment.environment}'
+      host.name: '${host.name}'
+      service:
+        name: '${service.name}'
+        namespace: '${service.namespace}'
+        version: '@project.version@'
+    # https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/metrics/sdk.md#explicit-bucket-histogram-aggregation
+    # https://docs.micrometer.io/micrometer/reference/implementations/otlp.html
+    distribution:
+      # percentiles-histogram:
+      #   all: true
+      # https://opentelemetry.io/docs/specs/semconv/http/http-metrics/#metric-httpserverrequestduration
+      slo:
+        http: 5, 10, 25, 50, 75, 100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000
+        jvm: 5, 10, 25, 50, 75, 100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000
+      
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+    jmx:
+      exposure:
+        include: '*'

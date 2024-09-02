@@ -1,0 +1,46 @@
+receivers:
+  filelog/app:
+    include: [ /app/log/*.log ]
+    storage: file_storage/app
+    multiline:
+      line_start_pattern: timestamp=
+    operators:
+      - type: key_value_parser
+        delimiter: "="
+        pair_delimiter: "\t"
+      - type: move
+        from: attributes["service.version"]
+        to: resource["service.version"]
+      - type: move
+        from: attributes.message
+        to: body
+      - type: time_parser
+        parse_from: attributes.timestamp
+        layout_type: strptime
+        layout: "%Y-%m-%dT%H:%M:%S.%LZ" #2024-04-11T12:39:13.402Z
+      - type: remove
+        field: attributes.timestamp
+      - type: trace_parser
+        trace_id:
+          parse_from: attributes.traceId
+        span_id:
+          parse_from: attributes.spanId
+      - type: remove
+        field: attributes.traceId
+      - type: remove
+        field: attributes.spanId
+    resource:
+      service.name: ${env:SERVICE_NAME}
+      service.namespace: ${env:SERVICE_NAMESPACE}
+      host.name: ${env:HOSTNAME}
+      deployment.environment: ${env:DEPLOYMENT_ENVIRONMENT}
+
+processors:
+  batch/app:
+
+service:
+  pipelines:
+    logs/app:
+      receivers: [filelog/app]
+      processors: [batch/app]
+      exporters: [otlphttp/loki, debug]

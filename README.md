@@ -5,10 +5,11 @@ Here is the latest news / feedbacks about observability.
 After [Graphite](./2023-12-07_Meet_Graphite/README.md), this week, let's [Meet Prometheus](./2023-12-14_Meet_Prometheus/README.md) and better understand its trade-offs ?
 
 # Last Post
-[2023-12-14 #9 Meet Prometheus](./2023-12-14_Meet_Prometheus/README.md)
+[2024-02-28 #10 OpenTelemetry Looks Good To Me for dotnet](./2024-02-28_OpenTelemetry_Looks_Good_To_Me_dotnet/README.md)
 
 ## Archives
-- [2023-11-30 #8 Meet Graphite](./2023-12-07_Meet_Graphite/README.md)
+- [2024-01-31 #9 OpenTelemetry Looks Good To Me](./2024-01-31_OpenTelemetry_Looks_Good_To_Me/README.md)
+- [2023-12-07 #8 Meet Graphite](./2023-12-07_Meet_Graphite/README.md)
 - [2023-11-30 #7 What is OpenTelemetry ?](./2023-11-30_What_is_OpenTelemetry/README.md)
 - [2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/README.md)
 - [2023-11-16 #5 Meet Vector](./2023-11-16_Meet_Vector/README.md)
@@ -18,5 +19,7 @@ After [Graphite](./2023-12-07_Meet_Graphite/README.md), this week, let's [Meet P
 - [2023-10-11 #1 Savings dilemma](./2023-10-11_Savings_dilemma/README.md)
 
 ## Demos
+- [2024-02-28 #10 OpenTelemetry Looks Good To Me for dotnet](./2024-02-28_OpenTelemetry_Looks_Good_To_Me_dotnet/README.md)
+- [2024-01-31 #9 OpenTelemetry Looks Good To Me](./2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/)
 - [2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/demo/)
 - [2023-11-09 Graphite/Prometheus/Mimir/VictoriaMetrics/OpenTelemetry Collector Config](./2023-11-09_Monotonicity/demo/)

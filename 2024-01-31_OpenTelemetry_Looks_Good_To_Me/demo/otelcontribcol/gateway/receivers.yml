@@ -1,0 +1,5 @@
+receivers:
+  otlp/gateway:
+    protocols:
+      http:
+      grpc:

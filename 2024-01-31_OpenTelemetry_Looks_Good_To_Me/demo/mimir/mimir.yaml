@@ -1,0 +1,49 @@
+# https://grafana.com/docs/mimir/latest/operators-guide/get-started/#start-grafana-mimir
+# https://github.com/grafana/mimir/tree/main/docs/sources/mimir/tutorials/play-with-grafana-mimir
+# Do not use this configuration in production.
+# It is for demonstration purposes only.
+# otel_metric_suffixes_enabled: https://grafana.com/docs/enterprise-metrics/latest/config/reference/#limits
+multitenancy_enabled: false
+usage_stats:
+  enabled: false
+
+blocks_storage:
+  backend: filesystem
+  bucket_store:
+    sync_dir: /tmp/mimir/tsdb-sync
+  filesystem:
+    dir: /tmp/mimir/data/tsdb
+  tsdb:
+    dir: /tmp/mimir/tsdb
+
+compactor:
+  data_dir: /tmp/mimir/compactor
+  sharding_ring:
+    kvstore:
+      store: memberlist
+
+distributor:
+  ring:
+    instance_addr: 0.0.0.0
+    kvstore:
+      store: memberlist
+
+ingester:
+  ring:
+    instance_addr: 0.0.0.0
+    kvstore:
+      store: memberlist
+    replication_factor: 1
+
+ruler_storage:
+  backend: filesystem
+  filesystem:
+    dir: /tmp/mimir/rules
+
+server:
+  http_listen_port: 9009
+  log_level: info
+
+store_gateway:
+  sharding_ring:
+    replication_factor: 1

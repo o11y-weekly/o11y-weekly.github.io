@@ -1,0 +1,171 @@
+# keep version only for graphviz
+version: '3.8'
+name: otel-lgtm
+services:
+  otelcontribcol-gateway:
+    image: otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL}
+    command: "--config /etc/otelcol-contrib/exporters.yml --config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/receivers.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.logs.yml --config /etc/otelcol-contrib/pipeline.traces.yml"
+    volumes:
+      - ./otelcontribcol/gateway/:/etc/otelcol-contrib/:ro
+    networks:
+      - bridge
+    depends_on:
+      - mimir
+      - loki
+      - otelcontribcol-traces-loadbalancer
+  otelcontribcol-traces-loadbalancer:
+    image: otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL}
+    command: "--config /etc/otelcol-contrib/exporters.yml --config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.traces.yml"
+    volumes:
+      - ./otelcontribcol/traces-loadbalancer/:/etc/otelcol-contrib/:ro
+    networks:
+      - bridge
+    depends_on:
+      - mimir
+      - otelcontribcol-traces-collector
+  otelcontribcol-traces-collector:
+    image: otel/opentelemetry-collector-contrib:${OTEL_CONTRIB_COL}
+    command: "--config /etc/otelcol-contrib/exporters.yml --config /etc/otelcol-contrib/extensions.yml --config /etc/otelcol-contrib/pipeline.agent.yml --config /etc/otelcol-contrib/pipeline.traces.yml"
+    volumes:
+      - ./otelcontribcol/traces-collector/:/etc/otelcol-contrib/:ro
+    networks:
+      - bridge
+    depends_on:
+      - mimir
+      - tempo
+    deploy:
+      replicas: 2
+
+  db:
+    image: postgres:16.1-alpine3.19
+    volumes:
+      - ./postgres/initdb.d:/docker-entrypoint-initdb.d:ro
+    environment:
+      - POSTGRES_DB=persons
+      - POSTGRES_PASSWORD=ReallyBadPassword
+    networks:
+      - bridge
+
+  service:
+    build:
+      context: ./service
+      dockerfile: ../java.Dockerfile
+      args:
+        - JDK_IMAGE=${JDK_IMAGE}
+        - DISTRO=${DISTRO}
+        - OTEL_JAVA_AGENT_VERSION=${OTEL_JAVA_AGENT_VERSION}
+        - OTEL_CONTRIB_COL=${OTEL_CONTRIB_COL}
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          memory: 300M
+    volumes:
+      - ./otelcontribcol/agent/:/etc/otelcol-contrib/:ro
+    networks:
+      - bridge
+    environment:
+      - SERVICE_NAME=service
+      - SERVICE_NAMESPACE=demo
+      - DEPLOYMENT_ENVIRONMENT=dev
+      - FAILURE_RATIO=0.1 # demo parameter
+      - LATENCY_RATIO=1 # demo parameter
+      - MIN_LATENCY=0 #ms
+      - MAX_LATENCY=100 #ms
+      - OTEL_TRACES_SAMPLER=parentbased_always_on
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
+      - OTEL_LOGS_EXPORTER=none
+      - OTEL_METRICS_EXPORTER=none
+    depends_on:
+      - db
+      - otelcontribcol-gateway
+      - mimir
+
+  client:
+    build:
+      context: ./client
+      dockerfile: ../java.Dockerfile
+      args:
+        - JDK_IMAGE=${JDK_IMAGE}
+        - DISTRO=${DISTRO}
+        - OTEL_JAVA_AGENT_VERSION=${OTEL_JAVA_AGENT_VERSION}
+        - OTEL_CONTRIB_COL=${OTEL_CONTRIB_COL}
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 300M
+    networks:
+      - bridge
+    environment:
+      - SERVICE_NAME=client
+      - SERVICE_NAMESPACE=demo
+      - DEPLOYMENT_ENVIRONMENT=dev
+      - OTEL_TRACES_SAMPLER=parentbased_traceidratio
+      - OTEL_TRACES_SAMPLER_ARG=0.1 # demo parameter
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
+      - OTEL_METRICS_EXPORTER=none
+    ports:
+      - 4000:4000
+    depends_on:
+      - service
+      - otelcontribcol-gateway
+      - mimir
+
+  curl:
+    image: curlimages/curl:8.5.0
+    networks:
+      - bridge
+    entrypoint: sh -c "watch -n 0.1 -d -- /script/curl.sh 2>&1 > /dev/null"
+    volumes:
+      - ./curl:/script:ro
+    depends_on:
+      - client
+    deploy:
+      replicas: 1
+
+  loki:
+    image: grafana/loki:3.0.0
+    command: -config.file=/etc/loki/local-config.yaml -validation.reject-old-samples=false -query-scheduler.max-outstanding-requests-per-tenant=2048 -querier.max-outstanding-requests-per-tenant=2048
+    volumes:
+      - ./loki/:/etc/loki/:ro
+    networks:
+      - bridge
+
+  mimir:
+    image: grafana/mimir:2.11.0
+    volumes:
+      - ./mimir/mimir.yaml:/etc/mimir.yaml
+    command: --config.file=/etc/mimir.yaml -distributor.otel-metric-suffixes-enabled # otel_metric_suffixes_enabled: https://grafana.com/docs/enterprise-metrics/latest/config/reference/#limits
+    networks:
+      - bridge
+
+  tempo:
+    image: grafana/tempo:2.3.1
+    volumes:
+      - ./tempo/tempo-local.yaml:/etc/tempo.yaml:ro
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    networks:
+      - bridge
+
+  grafana:
+    image: grafana/grafana-oss:10.4.1
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    ports:
+      - 3000:3000
+    networks:
+      - bridge
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./grafana/provisioning/:/etc/grafana/provisioning/:ro
+    depends_on:
+      - mimir
+      - loki
+      - tempo
+
+networks:
+  bridge:

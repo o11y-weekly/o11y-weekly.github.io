@@ -1,0 +1,8 @@
+processors:
+  batch/loki:
+service:
+  pipelines:
+    logs/gateway:
+      receivers: [otlp/gateway]
+      processors: [batch/loki]
+      exporters: [otlphttp/gateway/loki]
