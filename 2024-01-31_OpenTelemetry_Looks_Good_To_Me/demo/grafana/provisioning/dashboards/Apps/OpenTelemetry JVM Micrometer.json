@@ -81,8 +81,7 @@
               }
             ]
           },
-          "unit": "ms",
-          "unitScale": true
+          "unit": "ms"
         },
         "overrides": []
       },
@@ -110,7 +109,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.3.1",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -165,8 +164,7 @@
               }
             ]
           },
-          "unit": "reqps",
-          "unitScale": true
+          "unit": "reqps"
         },
         "overrides": [
           {
@@ -239,7 +237,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.3.1",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -247,7 +245,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "sum by (status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))",
+          "expr": "sum by (status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", uri=~\"${uri}\"}[$__rate_interval]))",
           "instant": false,
           "legendFormat": "{{status}}",
           "range": true,
@@ -273,8 +271,7 @@
             "scaleDistribution": {
               "type": "linear"
             }
-          },
-          "unitScale": true
+          }
         },
         "overrides": []
       },
@@ -286,7 +283,6 @@
       },
       "hideTimeOverride": false,
       "id": 65,
-      "links": [],
       "options": {
         "calculate": false,
         "cellGap": 1,
@@ -322,7 +318,7 @@
           "unit": "ms"
         }
       },
-      "pluginVersion": "10.3.1",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -331,7 +327,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(rate(http_server_requests_milliseconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])) by (le)",
+          "expr": "sum(rate(http_server_requests_milliseconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", uri=~\"${uri}\"}[$__rate_interval])) by (le)",
           "format": "heatmap",
           "instant": false,
           "intervalFactor": 1,
@@ -419,8 +415,7 @@
               }
             ]
           },
-          "unit": "reqps",
-          "unitScale": true
+          "unit": "reqps"
         },
         "overrides": [
           {
@@ -501,7 +496,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name,method,uri,status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name,method,uri,status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", uri=~\"${uri}\"}[$__rate_interval]))\r\n)",
           "instant": false,
           "legendFormat": "{{method}} {{host_name}}{{uri}}: {{status}}",
           "range": true,
@@ -585,8 +580,7 @@
               }
             ]
           },
-          "unit": "reqps",
-          "unitScale": true
+          "unit": "reqps"
         },
         "overrides": []
       },
@@ -622,7 +616,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by(host_name, method, uri, status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", status!~\"[1-3]..\"}[$__rate_interval]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by(host_name, method, uri, status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", uri=~\"${uri}\", status!~\"[1-3]..\"}[$__rate_interval]))\r\n)",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -703,8 +697,7 @@
               }
             ]
           },
-          "unit": "ms",
-          "unitScale": true
+          "unit": "ms"
         },
         "overrides": [
           {
@@ -787,7 +780,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    histogram_quantile(${quantile:value}, sum by (le,host_name,status,uri,method) (rate(http_server_requests_milliseconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])))\r\n)",
+          "expr": "topk(${top}, \r\n    histogram_quantile(${quantile:value}, sum by (le,host_name,status,uri,method) (rate(http_server_requests_milliseconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", uri=~\"${uri}\"}[$__rate_interval])))\r\n)",
           "instant": false,
           "legendFormat": "{{method}} {{host_name}}{{uri}}: {{status}}",
           "range": true,
@@ -924,8 +917,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1034,8 +1026,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1144,8 +1135,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1255,8 +1245,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1368,8 +1357,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1519,8 +1507,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1628,8 +1615,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1738,8 +1724,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1863,8 +1848,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2015,8 +1999,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2142,8 +2125,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2295,8 +2277,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2448,8 +2429,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2575,8 +2555,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2762,8 +2741,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2901,8 +2879,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3118,8 +3095,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3254,8 +3230,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3503,8 +3478,8 @@
       {
         "current": {
           "selected": false,
-          "text": "client",
-          "value": "client"
+          "text": "service",
+          "value": "service"
         },
         "datasource": {
           "type": "prometheus",
@@ -3615,6 +3590,33 @@
       },
       {
         "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${prom_ds}"
+        },
+        "definition": "label_values(http_server_requests_milliseconds_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\", host_name=~\"$host_name\"},uri)",
+        "hide": 1,
+        "includeAll": true,
+        "multi": false,
+        "name": "uri",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(http_server_requests_milliseconds_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\", host_name=~\"$host_name\"},uri)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
           "selected": false,
           "text": "10",
           "value": "10"
@@ -3650,12 +3652,12 @@
         "current": {
           "selected": true,
           "text": [
-            "p95",
-            "p50"
+            "p50",
+            "p95"
           ],
           "value": [
-            "0.95",
-            "0.5"
+            "0.5",
+            "0.95"
           ]
         },
         "hide": 1,
@@ -3719,7 +3721,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -3751,7 +3753,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -3791,6 +3793,6 @@
   "timezone": "",
   "title": "OpenTelemetry JVM Micrometer",
   "uid": "otel-jvm-micrometer",
-  "version": 1,
+  "version": 4,
   "weekStart": ""
 }
