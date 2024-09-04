@@ -167,7 +167,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (http_response_status_code) (rate(http_server_request_duration_seconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (http_response_status_code) (rate(http_server_request_duration_seconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", http_route=~\"${http_route}\"}[1m]))\r\n)",
           "instant": false,
           "legendFormat": "{{http_response_status_code}}",
           "range": true,
@@ -254,7 +254,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(rate(http_server_request_duration_seconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[$__rate_interval])) by (le)",
+          "expr": "sum(rate(http_server_request_duration_seconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", http_route=~\"${http_route}\"}[$__rate_interval])) by (le)",
           "format": "heatmap",
           "instant": false,
           "intervalFactor": 1,
@@ -429,7 +429,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name,http_request_method,http_route,url_scheme,http_response_status_code) (rate(http_server_request_duration_seconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name,http_request_method,http_route,url_scheme,http_response_status_code) (rate(http_server_request_duration_seconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", http_route=~\"${http_route}\"}[1m]))\r\n)",
           "instant": false,
           "legendFormat": "{{http_request_method}} {{url_scheme}}://{{host_name}}{{http_route}}: {{http_response_status_code}}",
           "range": true,
@@ -558,7 +558,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by(host_name, url_scheme, http_request_method, http_route, http_response_status_code, error_type) (rate(http_server_request_duration_seconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", http_response_status_code!~\"[1-3]..\"}[1m]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by(host_name, url_scheme, http_request_method, http_route, http_response_status_code, error_type) (rate(http_server_request_duration_seconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", http_route=~\"${http_route}\", http_response_status_code!~\"[1-3]..\"}[1m]))\r\n)",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -625,8 +625,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -720,7 +719,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk($top, \r\n    histogram_quantile(${percentile:value}, \r\n        sum(rate(http_server_request_duration_seconds_bucket{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval])) by (le, http_request_method, url_scheme, host_name, http_route, http_response_status_code)\r\n    )\r\n)",
+          "expr": "topk($top, \r\n    histogram_quantile(${percentile:value}, \r\n        sum(rate(http_server_request_duration_seconds_bucket{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", host_name=~\"${host_name}\", http_route=~\"${http_route}\"}[$__rate_interval])) by (le, http_request_method, url_scheme, host_name, http_route, http_response_status_code)\r\n    )\r\n)",
           "instant": false,
           "legendFormat": "{{http_request_method}} {{url_scheme}}://{{host_name}}{{http_route}}: {{http_response_status_code}}",
           "range": true,
@@ -792,8 +791,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -898,8 +896,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1061,8 +1058,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1165,8 +1161,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1279,8 +1274,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1445,8 +1439,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1581,8 +1574,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1653,8 +1645,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1769,8 +1760,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1932,8 +1922,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2113,8 +2102,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2294,8 +2282,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2475,8 +2462,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2547,8 +2533,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2617,8 +2602,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2734,8 +2718,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2850,8 +2833,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3019,7 +3001,7 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "Mimir",
           "value": "mimir"
         },
@@ -3037,7 +3019,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "Loki",
           "value": "loki"
         },
@@ -3055,7 +3037,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "service",
           "value": "service"
         },
@@ -3129,6 +3111,60 @@
         "query": {
           "qryType": 1,
           "query": "label_values(process_runtime_dotnet_gc_duration_nanoseconds_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${prom_ds}"
+        },
+        "definition": "label_values(http_server_request_duration_seconds_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\"},host_name)",
+        "hide": 1,
+        "includeAll": true,
+        "multi": false,
+        "name": "host_name",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(http_server_request_duration_seconds_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\"},host_name)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${prom_ds}"
+        },
+        "definition": "label_values(http_server_request_duration_seconds_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\", host_name=~\"$host_name\"},http_route)",
+        "hide": 1,
+        "includeAll": true,
+        "multi": false,
+        "name": "http_route",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(http_server_request_duration_seconds_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\", host_name=~\"$host_name\"},http_route)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3213,6 +3249,6 @@
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-webapi",
-  "version": 3,
+  "version": 4,
   "weekStart": ""
 }
