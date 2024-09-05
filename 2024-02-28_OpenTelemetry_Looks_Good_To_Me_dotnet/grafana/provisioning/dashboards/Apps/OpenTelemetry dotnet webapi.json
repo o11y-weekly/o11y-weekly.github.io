@@ -1261,7 +1261,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "./d/otel-dotnet-webapi-per-instance/opentelemetry-dotnet-webapi-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "./d/${__dashboard.uid}/${__dashboard}?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
             },
             {
               "targetBlank": true,
@@ -2820,7 +2820,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "./d/otel-dotnet-webapi-per-instance/opentelemetry-dotnet-webapi-per-instance?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "./d/${__dashboard.uid}/${__dashboard}?${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
             },
             {
               "targetBlank": true,
