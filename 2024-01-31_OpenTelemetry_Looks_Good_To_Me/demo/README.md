@@ -384,6 +384,13 @@ service:
       exporters: [otlphttp/gateway/mimir]
 ```
 
+#### No Collector / No Java agent mode
+
+References:
+- https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/instrumentation/logback/logback-appender-1.0/library/src/main/java/io/opentelemetry/instrumentation/logback/appender/v1_0/OpenTelemetryAppender.java
+
+- https://github.com/FWinkler79/spring3-observability/blob/main/spring3-demo-client
+
 ### Pipeline
 
 Detailed metrics are providen from OpenTelemetry Collector which should be activated:
