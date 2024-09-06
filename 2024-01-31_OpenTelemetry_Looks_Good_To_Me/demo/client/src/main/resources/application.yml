@@ -1,3 +1,5 @@
+debug: true
+
 server:
   port: 8080
   # required for grafana jvm dashboard
@@ -7,11 +9,14 @@ server:
       enabled: true
 
 management:
-  # https://docs.micrometer.io/micrometer/reference/implementations/otlp.html
-  otlp:      
+  otlp:
+    logs:
+      enabled: true
+      endpoint: http://otelcontribcol-gateway:4318/v1/logs
+    # https://docs.micrometer.io/micrometer/reference/implementations/otlp.html
     metrics:
       export:
-        enabled: true
+        enabled: false
         step: 10s
         url: http://mimir:9009/otlp/v1/metrics
         # url: https://prometheus-prod-24-prod-eu-west-2.grafana.net/otlp/v1/metrics

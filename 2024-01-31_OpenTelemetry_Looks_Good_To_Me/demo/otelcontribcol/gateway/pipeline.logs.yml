@@ -5,4 +5,4 @@ service:
     logs/gateway:
       receivers: [otlp/gateway]
       processors: [batch/loki]
-      exporters: [otlphttp/gateway/loki]
+      exporters: [otlphttp/gateway/loki, debug]
