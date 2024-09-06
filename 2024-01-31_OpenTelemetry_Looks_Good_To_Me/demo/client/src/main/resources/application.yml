@@ -1,4 +1,4 @@
-debug: true
+# debug: true
 
 server:
   port: 8080
@@ -8,6 +8,9 @@ server:
     mbeanregistry:
       enabled: true
 
+opentelemetry:
+  resource-attributes: "deployment.environment=${deployment.environment},host.name=${host.name},service.name=${service.name},service.namespace=${service.namespace},service.version=@project.version@"
+
 management:
   otlp:
     logs:
@@ -16,7 +19,7 @@ management:
     # https://docs.micrometer.io/micrometer/reference/implementations/otlp.html
     metrics:
       export:
-        enabled: false
+        enabled: true
         step: 10s
         url: http://mimir:9009/otlp/v1/metrics
         # url: https://prometheus-prod-24-prod-eu-west-2.grafana.net/otlp/v1/metrics
