@@ -38,7 +38,7 @@
         <dependency>
             <groupId>io.opentelemetry.instrumentation</groupId>
             <artifactId>opentelemetry-logback-appender-1.0</artifactId>
-            <version>1.26.0-alpha</version>
+            <version>2.7.0-alpha</version>
         </dependency>
 
         <dependency>

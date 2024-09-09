@@ -6,10 +6,11 @@
         </encoder>
     </appender>
 
-    <include resource="opentelemetry-appender.xml" />
+    <appender name="OpenTelemetry" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
+    </appender>
+
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
-        <!-- <appender-ref ref="OpenTelemetry"/> -->
-        <appender-ref ref="OPEN_TELEMETRY" />
+        <appender-ref ref="OpenTelemetry"/>
     </root>
 </configuration>

@@ -106,6 +106,10 @@ services:
       - SERVICE_NAME=client
       - SERVICE_NAMESPACE=demo
       - DEPLOYMENT_ENVIRONMENT=dev
+      - OTEL_TRACES_SAMPLER=parentbased_traceidratio
+      - OTEL_TRACES_SAMPLER_ARG=0.1 # demo parameter
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
     ports:
       - 4000:4000
     depends_on:
