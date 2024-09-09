@@ -14,24 +14,25 @@
  * limitations under the License.
  */
 
- package com.demo.client;
+ package com.demo.client.otel;
 
+ import io.opentelemetry.sdk.logs.SdkLoggerProvider;
+ import io.opentelemetry.sdk.logs.SdkLoggerProviderBuilder;
+ 
  /**
-  * Algorithm used to compress OTLP data.
+  * Callback interface that can be used to customize the {@link SdkLoggerProviderBuilder}
+  * that is used to create the auto-configured {@link SdkLoggerProvider}.
   *
-  * @author Moritz Halbritter
+  * @author Toshiaki Maki
   * @since 3.4.0
   */
- public enum Compression {
+ @FunctionalInterface
+ public interface SdkLoggerProviderBuilderCustomizer {
  
      /**
-      * Gzip compression.
+      * Customize the given {@code builder}.
+      * @param builder the builder to customize
       */
-     GZIP,
- 
-     /**
-      * No compression.
-      */
-     NONE
+     void customize(SdkLoggerProviderBuilder builder);
  
  }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
- package com.demo.client;
+ package com.demo.client.otel;
 
  import java.util.Locale;
  
@@ -72,7 +72,8 @@
  
          @ConditionalOnMissingBean(value = OtlpHttpLogRecordExporter.class,
                  type = "io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter")
-         @ConditionalOnBean(OtlpLoggingConnectionDetails.class)
+        // FIXME: conditional on bean does not work on docker but ok on local devbox..
+        //  @ConditionalOnBean(OtlpLoggingConnectionDetails.class)
          @Bean
          OtlpHttpLogRecordExporter otlpHttpLogRecordExporter(OtlpLoggingProperties properties,
                  OtlpLoggingConnectionDetails connectionDetails) {

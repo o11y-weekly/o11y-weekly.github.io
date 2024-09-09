@@ -6,10 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
+import com.demo.client.otel.OpenTelemetryLoggingAutoConfiguration;
+
 
 @SpringBootApplication
 @EnableFeignClients
-@ConfigurationPropertiesScan("com.demo.client")
+@ConfigurationPropertiesScan("com.demo.client.otel")
 @ImportAutoConfiguration(OpenTelemetryLoggingAutoConfiguration.class)
 public class ClientApplication {
 

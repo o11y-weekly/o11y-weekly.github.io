@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
- package com.demo.client;
+ package com.demo.client.otel;
 
  import io.opentelemetry.api.OpenTelemetry;
  import io.opentelemetry.sdk.logs.LogRecordProcessor;

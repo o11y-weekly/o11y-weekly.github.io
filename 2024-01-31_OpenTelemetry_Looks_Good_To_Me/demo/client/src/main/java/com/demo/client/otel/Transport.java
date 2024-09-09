@@ -14,25 +14,24 @@
  * limitations under the License.
  */
 
- package com.demo.client;
+ package com.demo.client.otel;
 
- import io.opentelemetry.sdk.logs.SdkLoggerProvider;
- import io.opentelemetry.sdk.logs.SdkLoggerProviderBuilder;
- 
  /**
-  * Callback interface that can be used to customize the {@link SdkLoggerProviderBuilder}
-  * that is used to create the auto-configured {@link SdkLoggerProvider}.
+  * Transport used to send OTLP data.
   *
-  * @author Toshiaki Maki
+  * @author Moritz Halbritter
   * @since 3.4.0
   */
- @FunctionalInterface
- public interface SdkLoggerProviderBuilderCustomizer {
+ public enum Transport {
  
      /**
-      * Customize the given {@code builder}.
-      * @param builder the builder to customize
+      * HTTP transport.
       */
-     void customize(SdkLoggerProviderBuilder builder);
+     HTTP,
+ 
+     /**
+      * gRPC transport.
+      */
+     GRPC
  
  }

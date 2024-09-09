@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
- package com.demo.client;
+ package com.demo.client.otel;
 
  import java.time.Duration;
  import java.util.HashMap;

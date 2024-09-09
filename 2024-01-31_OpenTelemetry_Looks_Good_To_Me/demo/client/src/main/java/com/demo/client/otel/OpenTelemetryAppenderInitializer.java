@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
- package com.demo.client;
+ package com.demo.client.otel;
 
  import io.opentelemetry.api.OpenTelemetry;
  import io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender;
@@ -23,7 +23,7 @@
  import org.springframework.stereotype.Component;
  
  @Component
- class OpenTelemetryAppenderInitializer implements InitializingBean {
+class OpenTelemetryAppenderInitializer implements InitializingBean {
  
      private final OpenTelemetry openTelemetry;
  

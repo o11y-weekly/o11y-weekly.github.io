@@ -5,12 +5,20 @@
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>log/${SERVICE_NAME}.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>timestamp=%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}\tservice.version=${service.version}\ttraceId=%X{trace_id}\tspanId=%X{span_id}\tmessage=%msg%n</pattern>
+        </encoder>
+    </appender>
 
     <appender name="OpenTelemetry" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
     </appender>
 
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
         <appender-ref ref="OpenTelemetry"/>
     </root>
 </configuration>

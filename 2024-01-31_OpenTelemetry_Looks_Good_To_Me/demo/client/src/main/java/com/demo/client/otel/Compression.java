@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
- package com.demo.client;
+ package com.demo.client.otel;
 
  /**
-  * Transport used to send OTLP data.
+  * Algorithm used to compress OTLP data.
   *
   * @author Moritz Halbritter
   * @since 3.4.0
   */
- public enum Transport {
+ public enum Compression {
  
      /**
-      * HTTP transport.
+      * Gzip compression.
       */
-     HTTP,
+     GZIP,
  
      /**
-      * gRPC transport.
+      * No compression.
       */
-     GRPC
+     NONE
  
  }
