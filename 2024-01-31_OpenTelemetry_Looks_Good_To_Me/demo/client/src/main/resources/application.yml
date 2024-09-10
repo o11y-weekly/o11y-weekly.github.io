@@ -10,7 +10,7 @@ server:
 
 management:
   opentelemetry:
-    resource-attributes: 
+    resource-attributes: &attributes
       deployment.environment: ${deployment.environment}
       host.name: '${host.name}'
       service.name: '${service.name}'
@@ -33,13 +33,7 @@ management:
         #   Authorization: Basic ####
 
   metrics:
-    tags:
-      deployment.environment: '${deployment.environment}'
-      host.name: '${host.name}'
-      service:
-        name: '${service.name}'
-        namespace: '${service.namespace}'
-        version: '@project.version@'
+    tags: *attributes
     # https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/metrics/sdk.md#explicit-bucket-histogram-aggregation
     # https://docs.micrometer.io/micrometer/reference/implementations/otlp.html
     distribution:
