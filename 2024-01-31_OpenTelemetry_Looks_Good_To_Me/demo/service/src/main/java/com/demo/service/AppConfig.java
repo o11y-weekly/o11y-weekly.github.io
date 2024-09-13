@@ -20,9 +20,9 @@ public class AppConfig {
 	@Bean
 	public MeterFilter truncateFilter() {
 		return MeterFilter.replaceTagValues("query", tagValue -> {
-			final var maxLength = 1024 - 3;
+			final var maxLength = 1024;
 			if (tagValue.length() > maxLength) {
-				return String.format("%s...", tagValue.substring(0, maxLength));
+				return String.format("%s...", tagValue.substring(0, maxLength - 3));
 			}
 			return tagValue;
 		});
