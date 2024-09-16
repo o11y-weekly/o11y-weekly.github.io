@@ -12,7 +12,7 @@ management:
     metrics:
       export:
         enabled: true
-        step: 60s
+        step: 15s
         url: http://mimir:9009/otlp/v1/metrics
         # url: https://prometheus-prod-24-prod-eu-west-2.grafana.net/otlp/v1/metrics
         # headers:

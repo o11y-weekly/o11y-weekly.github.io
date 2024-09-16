@@ -31,7 +31,7 @@ management:
     metrics:
       export:
         enabled: true
-        step: 60s
+        step: 15s
         url: http://mimir:9009/otlp/v1/metrics
         # url: http://otelcontribcol-gateway:4318/v1/metrics
         # url: http://localhost:4318/v1/metrics
