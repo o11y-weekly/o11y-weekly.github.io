@@ -81,8 +81,7 @@
               }
             ]
           },
-          "unit": "ms",
-          "unitScale": true
+          "unit": "ms"
         },
         "overrides": []
       },
@@ -110,7 +109,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.3.1",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -151,6 +150,12 @@
           "color": {
             "mode": "thresholds"
           },
+          "links": [
+            {
+              "title": "view ${__field.labels.status}",
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&${host_name:queryparam}&${uri:queryparam}&var-status=${__field.labels.status}&${__url_time_range}"
+            }
+          ],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -165,8 +170,7 @@
               }
             ]
           },
-          "unit": "reqps",
-          "unitScale": true
+          "unit": "reqps"
         },
         "overrides": [
           {
@@ -239,7 +243,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.3.1",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -247,7 +251,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "sum by (status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))",
+          "expr": "sum by (status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", uri=~\"${uri}\", status=~\"${status}\"}[$__rate_interval]))",
           "instant": false,
           "legendFormat": "{{status}}",
           "range": true,
@@ -273,8 +277,7 @@
             "scaleDistribution": {
               "type": "linear"
             }
-          },
-          "unitScale": true
+          }
         },
         "overrides": []
       },
@@ -286,7 +289,6 @@
       },
       "hideTimeOverride": false,
       "id": 65,
-      "links": [],
       "options": {
         "calculate": false,
         "cellGap": 1,
@@ -322,7 +324,7 @@
           "unit": "ms"
         }
       },
-      "pluginVersion": "10.3.1",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -331,7 +333,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(rate(http_server_requests_milliseconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])) by (le)",
+          "expr": "sum(rate(http_server_requests_milliseconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", uri=~\"${uri}\", status=~\"${status}\"}[$__rate_interval])) by (le)",
           "format": "heatmap",
           "instant": false,
           "intervalFactor": 1,
@@ -401,8 +403,8 @@
           "links": [
             {
               "targetBlank": true,
-              "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "title": "${__field.labels.host_name}${__field.labels.uri}: ${__field.labels.status} details",
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -419,8 +421,7 @@
               }
             ]
           },
-          "unit": "reqps",
-          "unitScale": true
+          "unit": "reqps"
         },
         "overrides": [
           {
@@ -501,7 +502,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by (host_name,method,uri,status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by (host_name,method,uri,status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", uri=~\"${uri}\", status=~\"${status}\"}[$__rate_interval]))\r\n)",
           "instant": false,
           "legendFormat": "{{method}} {{host_name}}{{uri}}: {{status}}",
           "range": true,
@@ -557,8 +558,8 @@
           "links": [
             {
               "targetBlank": true,
-              "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "title": "${__field.labels.host_name}${__field.labels.uri}: ${__field.labels.status} details",
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             },
             {
               "targetBlank": true,
@@ -585,8 +586,7 @@
               }
             ]
           },
-          "unit": "reqps",
-          "unitScale": true
+          "unit": "reqps"
         },
         "overrides": []
       },
@@ -622,7 +622,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    sum by(host_name, method, uri, status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", status!~\"[1-3]..\"}[$__rate_interval]))\r\n)",
+          "expr": "topk(${top}, \r\n    sum by(host_name, method, uri, status) (rate(http_server_requests_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", uri=~\"${uri}\", status!~\"[1-3]..\", status=~\"${status}\"}[$__rate_interval]))\r\n)",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -680,8 +680,8 @@
           "links": [
             {
               "targetBlank": true,
-              "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "title": "${__field.labels.host_name}${__field.labels.uri}: ${__field.labels.status} details",
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             },
             {
               "targetBlank": true,
@@ -703,8 +703,7 @@
               }
             ]
           },
-          "unit": "ms",
-          "unitScale": true
+          "unit": "ms"
         },
         "overrides": [
           {
@@ -787,7 +786,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "topk(${top}, \r\n    histogram_quantile(${quantile:value}, sum by (le,host_name,status,uri,method) (rate(http_server_requests_milliseconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval])))\r\n)",
+          "expr": "topk(${top}, \r\n    histogram_quantile(${quantile:value}, sum by (le,host_name,status,uri,method) (rate(http_server_requests_milliseconds_bucket{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\", uri=~\"${uri}\", status=~\"${status}\"}[$__rate_interval])))\r\n)",
           "instant": false,
           "legendFormat": "{{method}} {{host_name}}{{uri}}: {{status}}",
           "range": true,
@@ -804,55 +803,6 @@
         "w": 24,
         "x": 0,
         "y": 25
-      },
-      "id": 67,
-      "panels": [],
-      "title": "Logs",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "${loki_ds}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 24,
-        "x": 0,
-        "y": 26
-      },
-      "id": 68,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": true,
-        "showCommonLabels": true,
-        "showLabels": false,
-        "showTime": true,
-        "sortOrder": "Descending",
-        "wrapLogMessage": true
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "${loki_ds}"
-          },
-          "editorMode": "builder",
-          "expr": "{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", host_name=~\"$host_name\", service_version=\"$service_version\"}",
-          "queryType": "range",
-          "refId": "A"
-        }
-      ],
-      "type": "logs"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 32
       },
       "id": 6,
       "panels": [],
@@ -907,7 +857,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -924,8 +874,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -933,7 +882,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 33
+        "y": 26
       },
       "id": 13,
       "options": {
@@ -1017,7 +966,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -1034,8 +983,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1043,7 +991,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 33
+        "y": 26
       },
       "id": 11,
       "options": {
@@ -1127,7 +1075,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -1144,8 +1092,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1153,7 +1100,7 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 33
+        "y": 26
       },
       "id": 19,
       "options": {
@@ -1238,7 +1185,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -1255,8 +1202,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1264,7 +1210,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 33
+        "y": 26
       },
       "id": 25,
       "options": {
@@ -1307,7 +1253,452 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 41
+        "y": 34
+      },
+      "id": 78,
+      "panels": [],
+      "title": "Hibernate",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 35
+      },
+      "id": 77,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    sum by (host_name,query) (rate(hibernate_query_execution_total_milliseconds_count{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))\r\n)",
+          "instant": false,
+          "legendFormat": "{{host_name}}: {{query}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "SQL Queries Rates",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+            },
+            {
+              "targetBlank": true,
+              "title": "traces >= 100ms",
+              "url": "./explore?schemaVersion=1&panes=%7B%22BVT%22:%7B%22datasource%22:%22tempo%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22datasource%22:%7B%22type%22:%22tempo%22,%22uid%22:%22tempo%22%7D,%22queryType%22:%22traceqlSearch%22,%22limit%22:20,%22tableType%22:%22traces%22,%22filters%22:%5B%7B%22id%22:%22service-name%22,%22tag%22:%22service.name%22,%22operator%22:%22%3D%22,%22scope%22:%22resource%22,%22value%22:%5B%22${service_name}%22%5D,%22valueType%22:%22string%22%7D,%7B%22id%22:%22status%22,%22tag%22:%22status%22,%22scope%22:%22intrinsic%22,%22operator%22:%22%3D%22,%22value%22:%5B%5D,%22valueType%22:%22keyword%22%7D,%7B%22id%22:%22c4370964%22,%22operator%22:%22%3D%22,%22scope%22:%22span%22%7D,%7B%22id%22:%22min-duration%22,%22tag%22:%22duration%22,%22operator%22:%22%3E%3D%22,%22valueType%22:%22duration%22,%22value%22:%22100ms%22%7D%5D%7D%5D,%22range%22:%7B%22from%22:%22${__from}%22,%22to%22:%22${__to}%22%7D%7D%7D&orgId=1"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*5..$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*4..$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*[1-3]..$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 43
+      },
+      "id": 109,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    sum by (host_name,query) (rate(hibernate_query_execution_max_milliseconds{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))\r\n)",
+          "instant": false,
+          "legendFormat": "{{host_name}}: {{query}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "SQL Queries Durations (max)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prom_ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "${__field.labels.host_name} details",
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+            },
+            {
+              "targetBlank": true,
+              "title": "traces >= 100ms",
+              "url": "./explore?schemaVersion=1&panes=%7B%22BVT%22:%7B%22datasource%22:%22tempo%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22datasource%22:%7B%22type%22:%22tempo%22,%22uid%22:%22tempo%22%7D,%22queryType%22:%22traceqlSearch%22,%22limit%22:20,%22tableType%22:%22traces%22,%22filters%22:%5B%7B%22id%22:%22service-name%22,%22tag%22:%22service.name%22,%22operator%22:%22%3D%22,%22scope%22:%22resource%22,%22value%22:%5B%22${service_name}%22%5D,%22valueType%22:%22string%22%7D,%7B%22id%22:%22status%22,%22tag%22:%22status%22,%22scope%22:%22intrinsic%22,%22operator%22:%22%3D%22,%22value%22:%5B%5D,%22valueType%22:%22keyword%22%7D,%7B%22id%22:%22c4370964%22,%22operator%22:%22%3D%22,%22scope%22:%22span%22%7D,%7B%22id%22:%22min-duration%22,%22tag%22:%22duration%22,%22operator%22:%22%3E%3D%22,%22valueType%22:%22duration%22,%22value%22:%22100ms%22%7D%5D%7D%5D,%22range%22:%7B%22from%22:%22${__from}%22,%22to%22:%22${__to}%22%7D%7D%7D&orgId=1"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*5..$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*4..$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*[1-3]..$/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 43
+      },
+      "id": 121,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prom_ds}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top}, \r\n    sum by (host_name,query) (rate(hibernate_query_execution_min_milliseconds{service_name=\"${service_name}\", service_version=\"${service_version}\", deployment_environment=\"${deployment_environment}\", host_name=~\"${host_name}\"}[$__rate_interval]))\r\n)",
+          "instant": false,
+          "legendFormat": "{{host_name}}: {{query}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "SQL Queries Durations (min)",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 51
       },
       "id": 5,
       "panels": [],
@@ -1360,7 +1751,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -1377,8 +1768,7 @@
               }
             ]
           },
-          "unit": "bytes",
-          "unitScale": true
+          "unit": "bytes"
         },
         "overrides": [
           {
@@ -1402,7 +1792,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 42
+        "y": 52
       },
       "id": 17,
       "options": {
@@ -1511,7 +1901,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -1528,8 +1918,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1537,7 +1926,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 42
+        "y": 52
       },
       "id": 12,
       "options": {
@@ -1620,7 +2009,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -1637,8 +2026,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1646,7 +2034,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 42
+        "y": 52
       },
       "id": 15,
       "options": {
@@ -1730,7 +2118,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -1738,8 +2126,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1772,7 +2159,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 50
+        "y": 60
       },
       "id": 18,
       "options": {
@@ -1855,7 +2242,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -1863,8 +2250,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1897,7 +2283,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 50
+        "y": 60
       },
       "id": 16,
       "options": {
@@ -2007,7 +2393,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -2015,8 +2401,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2049,7 +2434,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 50
+        "y": 60
       },
       "id": 20,
       "options": {
@@ -2134,7 +2519,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -2142,8 +2527,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2176,7 +2560,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 58
+        "y": 68
       },
       "id": 21,
       "options": {
@@ -2287,7 +2671,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -2295,8 +2679,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2329,7 +2712,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 58
+        "y": 68
       },
       "id": 22,
       "options": {
@@ -2440,7 +2823,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -2448,8 +2831,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2482,7 +2864,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 58
+        "y": 68
       },
       "id": 24,
       "options": {
@@ -2567,7 +2949,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -2575,8 +2957,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2669,7 +3050,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 66
+        "y": 76
       },
       "id": 23,
       "options": {
@@ -2754,7 +3135,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -2762,8 +3143,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2796,7 +3176,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 66
+        "y": 76
       },
       "id": 64,
       "options": {
@@ -2840,7 +3220,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 74
+        "y": 84
       },
       "id": 35,
       "panels": [],
@@ -2893,7 +3273,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -2901,8 +3281,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2935,7 +3314,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 75
+        "y": 85
       },
       "id": 43,
       "options": {
@@ -2994,7 +3373,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "unitScale": true
@@ -3005,7 +3384,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 75
+        "y": 85
       },
       "id": 45,
       "options": {
@@ -3110,7 +3489,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -3118,8 +3497,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3136,7 +3514,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 75
+        "y": 85
       },
       "id": 44,
       "options": {
@@ -3193,7 +3571,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 83
+        "y": 93
       },
       "id": 27,
       "panels": [],
@@ -3246,7 +3624,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -3254,8 +3632,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3288,7 +3665,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 84
+        "y": 94
       },
       "id": 26,
       "options": {
@@ -3373,7 +3750,7 @@
             {
               "targetBlank": true,
               "title": "${__field.labels.host_name} details",
-              "url": "/d/otel-jvm-micrometer/opentelemetry-jvm-micrometer?${prom_ds:queryparam}&${loki_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&${__url_time_range}"
+              "url": "/d/${__dashboard.uid}/${__dashboard}?${prom_ds:queryparam}&${service_name:queryparam}&${deployment_environment:queryparam}&${service_version:queryparam}&${top:queryparam}&${saturation:queryparam}&${jvm_memory_used_id:queryparam}&${jvm_buffer_memory_used_id:queryparam}&var-host_name=${__field.labels.host_name}&var-uri=${__field.labels.uri}&var-status=${__field.labels.status}&${__url_time_range}"
             }
           ],
           "mappings": [],
@@ -3414,7 +3791,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 100
+        "y": 110
       },
       "id": 53,
       "options": {
@@ -3502,9 +3879,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "client",
-          "value": "client"
+          "selected": true,
+          "text": "service",
+          "value": "service"
         },
         "datasource": {
           "type": "prometheus",
@@ -3593,7 +3970,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "mimir"
+          "uid": "${prom_ds}"
         },
         "definition": "label_values(jvm_info{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\"},host_name)",
         "hide": 1,
@@ -3605,6 +3982,60 @@
         "query": {
           "qryType": 1,
           "query": "label_values(jvm_info{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\"},host_name)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${prom_ds}"
+        },
+        "definition": "label_values(http_server_requests_milliseconds_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\", host_name=~\"$host_name\"},uri)",
+        "hide": 1,
+        "includeAll": true,
+        "multi": false,
+        "name": "uri",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(http_server_requests_milliseconds_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\", host_name=~\"$host_name\"},uri)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${prom_ds}"
+        },
+        "definition": "label_values(http_server_requests_milliseconds_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\", host_name=~\"$host_name\", uri=~\"$uri\"},status)",
+        "hide": 1,
+        "includeAll": true,
+        "multi": false,
+        "name": "status",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(http_server_requests_milliseconds_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\", host_name=~\"$host_name\", uri=~\"$uri\"},status)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3650,12 +4081,12 @@
         "current": {
           "selected": true,
           "text": [
-            "p95",
-            "p50"
+            "p50",
+            "p95"
           ],
           "value": [
-            "0.95",
-            "0.5"
+            "0.5",
+            "0.95"
           ]
         },
         "hide": 1,
@@ -3719,7 +4150,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -3751,7 +4182,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],

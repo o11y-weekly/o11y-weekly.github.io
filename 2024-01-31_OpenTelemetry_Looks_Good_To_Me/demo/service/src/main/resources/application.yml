@@ -8,7 +8,7 @@ server:
 
 service.version: '@project.version@'
 
-debug: true
+debug: false
 
 spring:
   datasource:
@@ -25,6 +25,13 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       "[hibernate.generate_statistics]": true
+
+logging:
+  level:
+    org.hibernate.SQL: debug # debug: enable metrics, warn: disable metrics
+    org.hibernate.stat: debug
+    org.hibernate.orm.jdbc.bind: debug
+    org.hibernate.engine.internal.StatisticalLoggingSessionEventListener: off
 
 management:
   otlp:      
