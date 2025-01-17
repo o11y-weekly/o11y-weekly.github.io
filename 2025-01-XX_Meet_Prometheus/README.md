@@ -33,6 +33,7 @@ Prometheus has been created for monitoring and alerting only. It is the second p
 The data model combined with PromQL solve the problem of querying multi-dimensional data.
 
 Prometheus is focused on reliability at edge and uses a HTTP pull model to avoid loosing telemetry during an outage.
+[A previous post about monotonicity trade-offs illustrate the problem during an outage](../2023-11-09_Monotonicity/README.md#cumulative-vs-delta)
 
 It can also support [pushing time series](https://prometheus.io/docs/instrumenting/pushing/) for short lived time jobs like batch on function as a service but with [limited use case](https://prometheus.io/docs/practices/pushing/).
 
