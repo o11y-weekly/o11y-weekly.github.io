@@ -20,6 +20,6 @@ After [Graphite](./2023-12-07_Meet_Graphite/README.md), this week, let's [Meet P
 
 ## Demos
 - [2024-02-28 #10 OpenTelemetry Looks Good To Me for dotnet](./2024-02-28_OpenTelemetry_Looks_Good_To_Me_dotnet/README.md)
-- [2024-01-31 #9 OpenTelemetry Looks Good To Me](./2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/)
-- [2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/demo/)
-- [2023-11-09 Graphite/Prometheus/Mimir/VictoriaMetrics/OpenTelemetry Collector Config](./2023-11-09_Monotonicity/demo/)
+- [2024-01-31 #9 OpenTelemetry Looks Good To Me](./2024-01-31_OpenTelemetry_Looks_Good_To_Me/demo/README.md)
+- [2023-11-23 #6 Vector in action](./2023-11-23_Vector_in_action/README.md)
+- [2023-11-09 Graphite/Prometheus/Mimir/VictoriaMetrics/OpenTelemetry Collector Config](./2023-11-09_Monotonicity/demo/README.md)
