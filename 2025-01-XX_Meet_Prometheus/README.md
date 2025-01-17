@@ -61,7 +61,7 @@ View the `up` metric which is automatically added by prometheus to [monitor](htt
 An example of prometheus configuration is also available to scrape itself: [prometheus.yml](./prometheus/prometheus.yml)
 ```yaml
 global:
-  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  scrape_interval: 15s # By default, scrape targets every 15 seconds.
 
   external_labels:
     monitor: 'prometheus-monitor'
@@ -96,6 +96,8 @@ Mimir
 ## Query Language
 PromQL
 https://grafana.com/blog/2021/05/13/how-to-correlate-graphite-metrics-and-loki-logs/
+
+https://promlabs.com/promql-cheat-sheet/
 
 ## AlertManager
 
