@@ -17,15 +17,15 @@ Reference:
 - https://developers.soundcloud.com/blog/prometheus-monitoring-at-soundcloud
 - [Graphite queries](../2023-12-07_Meet_Graphite/README.md#query-language)
 
-When the software become complex, telemetry can impact the metrics backend due to its limitations. When those limitations become important, new trade-offs and tools are created but does not cover all the previous use case. 
+When the software becomes complex, telemetry can impact the metrics backend due to its limitations. When those limitations become important, new trade-offs and tools are created but do not cover all the previous use cases. 
 
-Complex software requires a metric backend which support high dimension cardinality and as mentioned inside SoundCloud's [initial blog post](https://developers.soundcloud.com/blog/prometheus-monitoring-at-soundcloud) multi-dimensional queries is really important to understand the performance issue.
+Complex software requires a metric backend which supports high dimension cardinality and as mentioned inside SoundCloud's [initial blog post](https://developers.soundcloud.com/blog/prometheus-monitoring-at-soundcloud) multi-dimensional queries is really important to understand the performance or error issues.
 
-While [Graphite](../2023-12-07_Meet_Graphite/README.md) can support long metrics storage with true [monotonicity](../2023-12-07_Meet_Graphite/README.md#telemetry-temporality) and is suitable to monitor business and tech metrics with few dimensions, [Prometheus](https://prometheus.io) can support high cardinality metrics and queries easier.
+While [Graphite](../2023-12-07_Meet_Graphite/README.md) can support long storage for monotonic counters metrics with true [monotonicity](../2023-12-07_Meet_Graphite/README.md#telemetry-temporality) and is suitable to monitor business and tech metrics with few dimensions, [Prometheus](https://prometheus.io) can support high cardinality metrics and queries easier.
 
-Prometheus is really easy to add dimension on metrics without breaking all the queries since dimensions are multi-dimensional as opposed to [Graphite queries](../2023-12-07_Meet_Graphite/README.md#query-language).
+Prometheus is really easy when adding dimensions on existing metrics without breaking all the queries since dimensions are multi-dimensional as opposed to [Graphite queries](../2023-12-07_Meet_Graphite/README.md#query-language).
 
-Prometheus is less impacted than Graphite to support aggregation over a or more dimensions.
+Prometheus is less impacted than Graphite to support aggregation over a or more dimensions in terms of performance (ie: rate of all dimensions of a metric).
 
 ## What is Prometheus ?
 Prometheus has been created for monitoring and alerting only. It is the second project [incubated by the CNCF in 2016 after Kubernetes](https://prometheus.io/docs/introduction/overview/) and has been popular since [it has been used by Docker](https://developers.soundcloud.com/blog/prometheus-monitoring-at-soundcloud).
@@ -87,8 +87,10 @@ Service discovery, ...
 
 ## Exporters
 
-## Storage
+## Backends
 Cortex: https://grafana.com/blog/2020/08/20/cortex-the-scalable-prometheus-project-has-advanced-to-incubation-within-cncf/, thanos, ...
+
+Mimir
 
 ## Query Language
 PromQL
