@@ -66,8 +66,7 @@
               }
             ]
           },
-          "unit": "reqps",
-          "unitScale": true
+          "unit": "reqps"
         },
         "overrides": [
           {
@@ -107,7 +106,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.3.1",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -115,7 +114,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum(rate(otelcol_receiver_accepted_spans{ receiver=\"otlp/gateway\"}[$__rate_interval]))",
+          "expr": "sum(rate(otelcol_receiver_accepted_spans${suffix}{ receiver=\"otlp/gateway\"}[$__rate_interval]))",
           "hide": false,
           "instant": false,
           "legendFormat": "accepted",
@@ -128,7 +127,7 @@
             "uid": "$datasource"
           },
           "editorMode": "code",
-          "expr": "sum(rate(otelcol_exporter_sent_spans{ exporter=\"otlphttp/tempo\"}[$__rate_interval]))",
+          "expr": "sum(rate(otelcol_exporter_sent_spans${suffix}{ exporter=\"otlphttp/tempo\"}[$__rate_interval]))",
           "hide": false,
           "instant": false,
           "legendFormat": "sent",
@@ -164,6 +163,7 @@
       },
       "id": 58,
       "options": {
+        "edges": {},
         "nodes": {
           "mainStatUnit": "flops"
         }
@@ -240,6 +240,7 @@
       },
       "id": 60,
       "options": {
+        "edges": {},
         "nodes": {
           "mainStatUnit": "none"
         }
@@ -316,6 +317,7 @@
       },
       "id": 61,
       "options": {
+        "edges": {},
         "nodes": {
           "mainStatUnit": "flops"
         }
@@ -463,8 +465,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": [
           {
@@ -496,7 +497,6 @@
       },
       "id": 28,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -522,7 +522,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(${metric:value}(otelcol_receiver_accepted_spans${suffix}{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
+          "expr": "sum(${metric:value}(otelcol_processor_incoming_items${suffix}{processor=~\"$processor\",job=\"$job\",otel_signal=\"traces\"}[$__rate_interval])) by (processor $grouping)",
           "format": "time_series",
           "interval": "$minstep",
           "intervalFactor": 1,
@@ -609,8 +609,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": [
           {
@@ -642,7 +641,6 @@
       },
       "id": 32,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -668,7 +666,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(${metric:value}(otelcol_receiver_accepted_metric_points${suffix}{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
+          "expr": "sum(${metric:value}(otelcol_processor_incoming_items${suffix}{processor=~\"$processor\",job=\"$job\",otel_signal=\"metrics\"}[$__rate_interval])) by (processor $grouping)",
           "format": "time_series",
           "interval": "$minstep",
           "intervalFactor": 1,
@@ -755,8 +753,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": [
           {
@@ -788,7 +785,6 @@
       },
       "id": 47,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -814,7 +810,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(${metric:value}(otelcol_receiver_accepted_log_records${suffix}{receiver=~\"$receiver\",job=\"$job\"}[$__rate_interval])) by (receiver $grouping)",
+          "expr": "sum(${metric:value}(otelcol_processor_incoming_items${suffix}{processor=~\"$processor\",job=\"$job\",otel_signal=\"logs\"}[$__rate_interval])) by (processor $grouping)",
           "format": "time_series",
           "interval": "$minstep",
           "intervalFactor": 1,
@@ -927,8 +923,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": [
           {
@@ -979,7 +974,6 @@
       },
       "id": 35,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -1005,7 +999,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(${metric:value}(otelcol_processor_accepted_spans${suffix}{processor=~\"$processor\",job=\"$job\"}[$__rate_interval])) by (processor $grouping)",
+          "expr": "sum(${metric:value}(otelcol_processor_incoming_items${suffix}{processor=~\"$processor\",job=\"$job\"}[$__rate_interval])) by (processor $grouping)",
           "format": "time_series",
           "interval": "$minstep",
           "intervalFactor": 1,
@@ -1108,8 +1102,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": [
           {
@@ -1160,7 +1153,6 @@
       },
       "id": 50,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -1186,7 +1178,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(${metric:value}(otelcol_processor_accepted_metric_points${suffix}{processor=~\"$processor\",job=\"$job\"}[$__rate_interval])) by (processor $grouping)",
+          "expr": "sum(${metric:value}(otelcol_processor_incoming_items${suffix}{processor=~\"$processor\",job=\"$job\"}[$__rate_interval])) by (processor $grouping)",
           "format": "time_series",
           "interval": "$minstep",
           "intervalFactor": 1,
@@ -1289,8 +1281,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": [
           {
@@ -1341,7 +1332,6 @@
       },
       "id": 51,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -1367,7 +1357,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(${metric:value}(otelcol_processor_accepted_log_records${suffix}{processor=~\"$processor\",job=\"$job\"}[$__rate_interval])) by (processor $grouping)",
+          "expr": "sum(${metric:value}(otelcol_processor_incoming_items${suffix}{processor=~\"$processor\",job=\"$job\"}[$__rate_interval])) by (processor $grouping)",
           "format": "time_series",
           "interval": "$minstep",
           "intervalFactor": 1,
@@ -1429,8 +1419,7 @@
               "type": "linear"
             }
           },
-          "links": [],
-          "unitScale": true
+          "links": []
         },
         "overrides": []
       },
@@ -1442,7 +1431,6 @@
       },
       "id": 49,
       "interval": "$minstep",
-      "links": [],
       "maxDataPoints": 50,
       "options": {
         "calculate": false,
@@ -1478,7 +1466,7 @@
           "reverse": false
         }
       },
-      "pluginVersion": "10.3.1",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -1559,8 +1547,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": [
           {
@@ -1603,7 +1590,6 @@
       },
       "id": 36,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -1717,8 +1703,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": [
           {
@@ -1761,7 +1746,6 @@
       },
       "id": 56,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -1892,8 +1876,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1934,7 +1917,6 @@
       },
       "id": 37,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -2054,8 +2036,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2096,7 +2077,6 @@
       },
       "id": 38,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -2216,8 +2196,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2258,7 +2237,6 @@
       },
       "id": 48,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -2377,8 +2355,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2398,7 +2375,6 @@
         "y": 58
       },
       "id": 10,
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -2485,8 +2461,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2506,7 +2481,6 @@
         "y": 58
       },
       "id": 55,
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -2620,8 +2594,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2712,7 +2685,6 @@
       },
       "id": 40,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -2832,8 +2804,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2924,7 +2895,6 @@
       },
       "id": 52,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -3044,8 +3014,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3136,7 +3105,6 @@
       },
       "id": 53,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -3256,8 +3224,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3344,7 +3311,6 @@
       },
       "id": 39,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -3465,8 +3431,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3487,7 +3452,6 @@
       },
       "id": 41,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -3576,8 +3540,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3598,7 +3561,6 @@
       },
       "id": 54,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -3662,8 +3624,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3684,7 +3645,6 @@
       },
       "id": 57,
       "interval": "$minstep",
-      "links": [],
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -3760,7 +3720,6 @@
         "y": 92
       },
       "id": 45,
-      "links": [],
       "options": {
         "code": {
           "language": "plaintext",
@@ -3814,8 +3773,8 @@
       {
         "current": {
           "selected": false,
-          "text": "otelcol-contrib/gateway",
-          "value": "otelcol-contrib/gateway"
+          "text": "otelcol-contrib",
+          "value": "otelcol-contrib"
         },
         "datasource": {
           "type": "prometheus",
@@ -4043,10 +4002,9 @@
       },
       {
         "current": {
-          "isNone": true,
           "selected": false,
-          "text": "None",
-          "value": ""
+          "text": "_total",
+          "value": "_total"
         },
         "datasource": {
           "type": "prometheus",
@@ -4105,6 +4063,6 @@
   "timezone": "utc",
   "title": "OpenTelemetry Collector",
   "uid": "BKf2sowmj",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }
