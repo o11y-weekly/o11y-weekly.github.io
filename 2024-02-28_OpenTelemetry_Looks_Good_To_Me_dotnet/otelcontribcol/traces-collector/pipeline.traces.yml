@@ -19,7 +19,7 @@ processors:
           # apply probabilistic sampling
           name: probabilistic-policy,
           type: probabilistic,
-          probabilistic: { sampling_percentage: 100 },
+          probabilistic: { sampling_percentage: 10 },
         },
       ]
   tail_sampling/latency-error:
