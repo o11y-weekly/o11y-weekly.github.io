@@ -64,11 +64,12 @@ services:
       dockerfile: ../dotnet.Dockerfile
     environment:
       - SERVICE_NAME=client
-      - OTEL_TRACES_SAMPLER=parentbased_traceidratio
-      - OTEL_TRACES_SAMPLER_ARG=0.1 # demo parameter
+      # - OTEL_TRACES_SAMPLER=parentbased_traceidratio
+      # - OTEL_TRACES_SAMPLER_ARG=0.1 # demo parameter
       - OTEL_RESOURCE_ATTRIBUTES=service.namespace=demo,deployment.environment=dev
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
+      - OTEL_EXPORTER_OTLP_INSECURE=true
       - OTEL_METRIC_EXPORT_INTERVAL=10000
     networks:
       - bridge
@@ -87,10 +88,11 @@ services:
       dockerfile: ../dotnet.Dockerfile
     environment:
       - SERVICE_NAME=service
-      - OTEL_TRACES_SAMPLER=parentbased_always_on
+      # - OTEL_TRACES_SAMPLER=parentbased_always_on
       - OTEL_RESOURCE_ATTRIBUTES=service.namespace=demo,deployment.environment=dev
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
+      - OTEL_EXPORTER_OTLP_INSECURE=true
       - OTEL_METRIC_EXPORT_INTERVAL=10000
       - FAILURE_RATIO=0.1 # demo parameter
       - LATENCY_RATIO=1 # demo parameter
