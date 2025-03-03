@@ -1,9 +1,8 @@
 exporters:
   otlphttp/tempo:
     endpoint: http://tempo:4318/
-  # otlphttp/servicegraph/mimir:
-  #   endpoint: http://mimir:9009/otlp
-  #   namespace: servicegraph
+  otlphttp/servicegraph/mimir:
+    endpoint: http://mimir:9009/otlp
 
 receivers:
   otlp/traces-collector:
@@ -63,17 +62,17 @@ processors:
         }
       ]
 
-# connectors:
-#   servicegraph:
-#     dimensions:
-#       - db.system
-#       - messaging.system
-#     virtual_node_peer_attributes:
-#       - db.name
-#       - db.system
-#       - messaging.system
-#       - peer.service
-#     virtual_node_extra_label: true
+connectors:
+  servicegraph:
+    dimensions:
+      - db.system
+      - messaging.system
+    virtual_node_peer_attributes:
+      - db.name
+      - db.system
+      - messaging.system
+      - peer.service
+    virtual_node_extra_label: true
 
 service:
   pipelines:
@@ -82,9 +81,9 @@ service:
       # [ordering processors](https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/README.md#ordering-processors)
       processors: [tail_sampling/latency-error, tail_sampling/probabilistic, batch/tempo]
       exporters: [otlphttp/tempo]
-    # traces/servicegraph:
-    #   receivers: [otlp/traces-collector]
-    #   exporters: [servicegraph]
-    # metrics/servicegraph:
-    #   receivers: [servicegraph]
-    #   exporters: [otlphttp/servicegraph/mimir]
+    traces/servicegraph:
+      receivers: [otlp/traces-collector]
+      exporters: [servicegraph]
+    metrics/servicegraph:
+      receivers: [servicegraph]
+      exporters: [otlphttp/servicegraph/mimir]
