@@ -72,7 +72,7 @@ services:
       - LATENCY_RATIO=1 # demo parameter
       - MIN_LATENCY=0 #ms
       - MAX_LATENCY=100 #ms
-      - OTEL_TRACES_SAMPLER=parentbased_always_on
+      # - OTEL_TRACES_SAMPLER=parentbased_always_on
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4317
       - OTEL_LOGS_EXPORTER=none
@@ -102,8 +102,8 @@ services:
       - SERVICE_NAME=client
       - SERVICE_NAMESPACE=demo
       - DEPLOYMENT_ENVIRONMENT=dev
-      - OTEL_TRACES_SAMPLER=parentbased_traceidratio
-      - OTEL_TRACES_SAMPLER_ARG=0.1 # demo parameter
+      # - OTEL_TRACES_SAMPLER=parentbased_traceidratio
+      # - OTEL_TRACES_SAMPLER_ARG=0.1 # demo parameter
       - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otelcontribcol-gateway:4318
       - OTEL_METRICS_EXPORTER=none
