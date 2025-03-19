@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   otelcontribcol:
-    image: otel/opentelemetry-collector-contrib:0.92.0
+    image: otel/opentelemetry-collector-contrib:0.122.0
     command: "--config /etc/otelcol-contrib/config.yml"
     volumes:
       - ./otelcontribcol/:/etc/otelcol-contrib/:ro
@@ -26,7 +26,7 @@ services:
     image: curlimages/curl:8.5.0
     command: "-X POST -H 'Content-Type: application/json' -d @/otlpjson/metrics.json -i otelcontribcol:4318/v1/metrics"
     volumes:
-      - ./otlpjson/metrics.json:/otlpjson/metrics.json:ro
+      - ./otlpjson/metrics.histogram.json:/otlpjson/metrics.json:ro
     depends_on:
       - otelcontribcol
     networks:
