@@ -26,7 +26,7 @@ services:
     image: curlimages/curl:8.5.0
     command: "-X POST -H 'Content-Type: application/json' -d @/otlpjson/metrics.json -i otelcontribcol:4318/v1/metrics"
     volumes:
-      - ./otlpjson/metrics.all.json:/otlpjson/metrics.json:ro
+      - ./otlpjson/metrics.json:/otlpjson/metrics.json:ro
     depends_on:
       - otelcontribcol
     networks:
