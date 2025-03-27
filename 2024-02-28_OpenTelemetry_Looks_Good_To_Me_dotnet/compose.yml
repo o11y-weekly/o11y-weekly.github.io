@@ -61,7 +61,7 @@ services:
   client:
     build: 
       context: ./client
-      dockerfile: ../dotnet.Dockerfile
+      dockerfile: ../dotnet.debug.Dockerfile
     environment:
       - SERVICE_NAME=client
       # - OTEL_TRACES_SAMPLER=parentbased_traceidratio
@@ -85,7 +85,7 @@ services:
   service:
     build: 
       context: ./service
-      dockerfile: ../dotnet.Dockerfile
+      dockerfile: ../dotnet.debug.Dockerfile
     environment:
       - SERVICE_NAME=service
       # - OTEL_TRACES_SAMPLER=parentbased_always_on

@@ -1,10 +1,13 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-COPY ./src /src
 WORKDIR /src
-RUN dotnet build -c Release -o /app/build
+COPY ./src/*.csproj /src
+RUN dotnet restore --runtime linux-x64 -p:PublishReadyToRun=true
+
+COPY ./src /src/
+RUN dotnet build -c Release -o /app/build --no-restore
 
 FROM build AS publish
-RUN dotnet publish \
+RUN dotnet publish --no-restore \
             --configuration Release \ 
             --runtime linux-x64 \
             --self-contained \ 
