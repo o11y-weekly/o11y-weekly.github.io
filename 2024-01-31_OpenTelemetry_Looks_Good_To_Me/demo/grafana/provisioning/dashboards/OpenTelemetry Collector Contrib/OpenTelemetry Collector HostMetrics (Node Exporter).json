@@ -138,7 +138,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "(sum by(host_name) (irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state!=\"idle\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))) * 100",
+          "expr": "(sum by(host_name) (irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state!=\"idle\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))) * 100",
           "hide": false,
           "instant": true,
           "intervalFactor": 1,
@@ -497,7 +497,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "system_paging_usage{ host_name=\"${host}\", service_namespace=\"$service_namespace\", state=\"used\" }",
+          "expr": "system_paging_usage_bytes{ host_name=\"${host}\", service_namespace=\"$service_namespace\", state=\"used\" }",
           "instant": true,
           "intervalFactor": 1,
           "range": false,
@@ -587,7 +587,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max(system_filesystem_utilization{host_name=\"${host}\", service_namespace=\"${service_namespace}\"})",
+          "expr": "max(system_filesystem_utilization_ratio{host_name=\"${host}\", service_namespace=\"${service_namespace}\"})",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
@@ -936,7 +936,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "system_memory_limit{host_name=\"${host}\", service_namespace=\"${service_namespace}\"}",
+          "expr": "system_memory_limit_bytes{host_name=\"${host}\", service_namespace=\"${service_namespace}\"}",
           "instant": true,
           "intervalFactor": 1,
           "legendFormat": "__auto",
@@ -1023,7 +1023,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(system_paging_usage{host_name=\"${host}\", service_namespace=\"${service_namespace}\"})",
+          "expr": "sum(system_paging_usage_bytes{host_name=\"${host}\", service_namespace=\"${service_namespace}\"})",
           "instant": true,
           "intervalFactor": 1,
           "legendFormat": "__auto",
@@ -1245,7 +1245,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum by(host_name) (irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"system\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
+          "expr": "sum by(host_name) (irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"system\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1260,7 +1260,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum by(host_name) (irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"user\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
+          "expr": "sum by(host_name) (irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"user\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1275,7 +1275,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum by(host_name) (irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"wait\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
+          "expr": "sum by(host_name) (irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"wait\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1290,7 +1290,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum by(host_name) (irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=~\".*irq\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
+          "expr": "sum by(host_name) (irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=~\".*irq\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1305,7 +1305,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum by(host_name) (irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state!~\".*irq\", state!=\"idle\", state!=\"user\", state!=\"wait\", state!=\"system\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
+          "expr": "sum by(host_name) (irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state!~\".*irq\", state!=\"idle\", state!=\"user\", state!=\"wait\", state!=\"system\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1320,7 +1320,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum by(host_name) (irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"idle\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
+          "expr": "sum by(host_name) (irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"idle\"}[$__rate_interval])) / on(host_name) group_left sum by (host_name)((irate(system_cpu_time_seconds_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}[$__rate_interval])))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1794,7 +1794,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "system_memory_limit{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}",
+          "expr": "system_memory_limit_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1809,7 +1809,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "system_memory_usage{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"free\"}",
+          "expr": "system_memory_usage_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=\"free\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -1824,7 +1824,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum(system_memory_usage{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=~\"cached|buffered\"})",
+          "expr": "sum(system_memory_usage_bytes{host_name=\"${host}\",service_namespace=\"${service_namespace}\", state=~\"cached|buffered\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "RAM Cache + Buffer",
@@ -1838,7 +1838,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "sum(system_paging_usage{host_name=\"$host\", service_namespace=\"${service_namespace}\", state=\"used\"})",
+          "expr": "sum(system_paging_usage_bytes{host_name=\"$host\", service_namespace=\"${service_namespace}\", state=\"used\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Swap Used",
@@ -2299,7 +2299,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "rate(system_network_io{host_name=\"${host}\", service_namespace=\"${service_namespace}\", direction=\"receive\"}[$__interval])",
+          "expr": "rate(system_network_io_bytes_total{host_name=\"${host}\", service_namespace=\"${service_namespace}\", direction=\"receive\"}[$__interval])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{device}}",
@@ -2313,7 +2313,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "rate(system_network_io{host_name=\"${host}\", service_namespace=\"${service_namespace}\", direction=\"transmit\"}[$__interval])",
+          "expr": "rate(system_network_io_bytes_total{host_name=\"${host}\", service_namespace=\"${service_namespace}\", direction=\"transmit\"}[$__interval])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "trans {{device}} ",
@@ -2749,7 +2749,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "irate(system_disk_operations{host_name=\"${host}\",service_namespace=\"${service_namespace}\", direction=\"read\"}[$__rate_interval])",
+          "expr": "irate(system_disk_operations_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", direction=\"read\"}[$__rate_interval])",
           "intervalFactor": 4,
           "legendFormat": "{{device}} - Reads completed",
           "range": true,
@@ -2762,7 +2762,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "irate(system_disk_operations{host_name=\"${host}\",service_namespace=\"${service_namespace}\", direction=\"write\"}[$__rate_interval])",
+          "expr": "irate(system_disk_operations_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", direction=\"write\"}[$__rate_interval])",
           "hide": false,
           "intervalFactor": 1,
           "legendFormat": "{{device}} - Writes completed",
@@ -2985,7 +2985,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "irate(system_disk_io{host_name=\"${host}\",service_namespace=\"${service_namespace}\", direction=\"read\"}[$__rate_interval])",
+          "expr": "irate(system_disk_io_bytes_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", direction=\"read\"}[$__rate_interval])",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -3000,7 +3000,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "irate(system_disk_io{host_name=\"${host}\",service_namespace=\"${service_namespace}\", direction=\"write\"}[$__rate_interval])",
+          "expr": "irate(system_disk_io_bytes_total{host_name=\"${host}\",service_namespace=\"${service_namespace}\", direction=\"write\"}[$__rate_interval])",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -3106,7 +3106,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "system_filesystem_utilization{host_name=\"${host}\",service_namespace=\"${service_namespace}\",device!~'rootfs'}",
+          "expr": "system_filesystem_utilization_ratio{host_name=\"${host}\",service_namespace=\"${service_namespace}\",device!~'rootfs'}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{mountpoint}}",
@@ -3364,7 +3364,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "process_cpu_utilization{ host_name=\"${host}\", service_namespace=\"${service_namespace}\"}",
+          "expr": "process_cpu_utilization_ratio{ host_name=\"${host}\", service_namespace=\"${service_namespace}\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -3775,7 +3775,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "process_memory_usage{host_name=\"${host}\", service_namespace=\"${service_namespace}\"}",
+          "expr": "process_memory_usage_bytes{host_name=\"${host}\", service_namespace=\"${service_namespace}\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -3914,7 +3914,7 @@
             "uid": "mimir"
           },
           "editorMode": "code",
-          "expr": "rate(process_disk_io{ host_name=\"${host}\", service_namespace=\"${service_namespace}\" }[$__interval])",
+          "expr": "rate(process_disk_io_bytes_total{ host_name=\"${host}\", service_namespace=\"${service_namespace}\" }[$__interval])",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -3967,7 +3967,7 @@
           "type": "prometheus",
           "uid": "mimir"
         },
-        "definition": "label_values(system_cpu_time,service_namespace)",
+        "definition": "label_values(system_cpu_time_seconds_total,service_namespace)",
         "hide": 0,
         "includeAll": false,
         "label": "Service Namespace",
@@ -3976,7 +3976,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(system_cpu_time,service_namespace)",
+          "query": "label_values(system_cpu_time_seconds_total,service_namespace)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3998,7 +3998,7 @@
           "type": "prometheus",
           "uid": "mimir"
         },
-        "definition": "label_values(system_cpu_time{service_namespace=\"$service_namespace\"},host_name)",
+        "definition": "label_values(system_cpu_time_seconds_total{service_namespace=\"$service_namespace\"},host_name)",
         "hide": 0,
         "includeAll": false,
         "label": "Host",
@@ -4007,7 +4007,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(system_cpu_time{service_namespace=\"$service_namespace\"},host_name)",
+          "query": "label_values(system_cpu_time_seconds_total{service_namespace=\"$service_namespace\"},host_name)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
