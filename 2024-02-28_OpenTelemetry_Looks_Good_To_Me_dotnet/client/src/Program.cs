@@ -39,7 +39,10 @@ builder
         .AddRuntimeInstrumentation()
         .AddHttpClientInstrumentation()
         .AddProcessInstrumentation()
+        .AddMeter("custom.*")
+        .AddView("custom.*", new ExplicitBucketHistogramConfiguration { Boundaries = [0.0, 0.00025, 0.0005, 0.00075, 0.001, 0.0025, 0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1] })
         .AddOtlpExporter()
+        .AddConsoleExporter()
     )
     .WithTracing(tracing => tracing
         .AddAspNetCoreInstrumentation()
@@ -62,17 +65,33 @@ app.UseHttpsRedirection();
 
 var RANDOM = new Random();
 
+var METER = new System.Diagnostics.Metrics.Meter("custom.service", version: "1.0.0", tags:[new KeyValuePair<string, object?>("hello", "world")]);
+
+var HISTO = METER.CreateHistogram<double>("custom.http.duration", "s", "custom http duration histogram", tags:[new KeyValuePair<string, object?>("tag.histo", "tag.histo.value")]);
+
 var getUser = async (ILogger<Program> logger, int id) =>
 {
-    logger.LogInformation("calling GetUser {id}", id);
-    var user = await ServiceClient.GetUser(id);
-    if (user == null)
+    var sw = System.Diagnostics.Stopwatch.StartNew();
+    try
     {
-        logger.LogWarning("user {id} not found", id);
-        return Results.NotFound();
+        logger.LogInformation("calling GetUser '{Id}'", id);
+
+        logger.LogInformation("calling GetUser {Id}", id);
+
+        logger.LogInformation("calling GetUser {id}", id);
+        var user = await ServiceClient.GetUser(id);
+        if (user == null)
+        {
+            logger.LogWarning("user {id} not found", id);
+            return Results.NotFound();
+        }
+        var ts = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        return Results.Ok($"User: {user.Name} {user.Surname} {ts}");
     }
-    var ts = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-    return Results.Ok($"User: {user.Name} {user.Surname} {ts}");
+    finally
+    {
+        HISTO.Record(sw.Elapsed.TotalSeconds, KeyValuePair.Create<string, object?>("queue.url", "queue url"));
+    }
 };
 
 app.MapGet("/randomuser", async (ILogger<Program> logger) =>
