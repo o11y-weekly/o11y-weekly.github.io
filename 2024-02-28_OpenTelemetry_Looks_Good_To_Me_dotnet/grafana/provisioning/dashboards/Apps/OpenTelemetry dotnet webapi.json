@@ -815,7 +815,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -920,7 +921,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1082,7 +1084,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1185,7 +1188,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1298,7 +1302,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1463,7 +1468,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1598,7 +1604,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1669,7 +1676,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1713,7 +1721,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "max(max_over_time(process_threads{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
+          "expr": "max(max_over_time(process_thread_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
           "instant": false,
           "legendFormat": "Process Threads",
           "range": true,
@@ -1784,7 +1792,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1861,10 +1870,10 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "max(max_over_time(process_runtime_dotnet_gc_committed_memory_size_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
+          "expr": "sum(rate(dotnet_gc_heap_allocated_bytes_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
           "hide": false,
           "instant": false,
-          "legendFormat": "GC Commited Memory Size",
+          "legendFormat": "GC Allocation Size",
           "range": true,
           "refId": "A"
         },
@@ -1874,25 +1883,12 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "max(max_over_time(process_runtime_dotnet_gc_objects_size{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
+          "expr": "sum(rate(dotnet_gc_last_collection_memory_committed_size_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
           "hide": false,
           "instant": false,
-          "legendFormat": "GC Objects size",
+          "legendFormat": "GC Memory Committed Size",
           "range": true,
           "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${prom_ds}"
-          },
-          "editorMode": "code",
-          "expr": "sum(rate(process_runtime_dotnet_gc_allocations_size{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "GC Allocation Size",
-          "range": true,
-          "refId": "C"
         }
       ],
       "title": "GC Memory Usage",
@@ -1946,7 +1942,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2068,9 +2065,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "max by (generation) (max_over_time(process_runtime_dotnet_gc_heap_size_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
+          "expr": "max by (gc_heap_generation) (max_over_time(dotnet_gc_last_collection_heap_size_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
           "instant": false,
-          "legendFormat": "{{generation}}",
+          "legendFormat": "{{gc_heap_generation}}",
           "range": true,
           "refId": "A"
         }
@@ -2126,7 +2123,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2248,9 +2246,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "max by (generation) (max_over_time(process_runtime_dotnet_gc_heap_fragmentation_size_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
+          "expr": "max by (gc_heap_generation) (max_over_time(dotnet_gc_last_collection_heap_fragmentation_size_bytes{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
           "instant": false,
-          "legendFormat": "{{generation}}",
+          "legendFormat": "{{gc_heap_generation}}",
           "range": true,
           "refId": "A"
         }
@@ -2306,7 +2304,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2428,9 +2427,9 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "sum by (generation) (rate(process_runtime_dotnet_gc_collections_count_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
+          "expr": "sum by (gc_heap_generation) (rate(dotnet_gc_collections_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
           "instant": false,
-          "legendFormat": "{{generation}}",
+          "legendFormat": "{{gc_heap_generation}}",
           "range": true,
           "refId": "A"
         }
@@ -2486,7 +2485,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2532,7 +2532,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "sum(rate(process_runtime_dotnet_exceptions_count_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
+          "expr": "sum(rate(dotnet_exceptions_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
           "instant": false,
           "legendFormat": "Exceptions",
           "range": true,
@@ -2557,7 +2557,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2601,7 +2602,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "max(max_over_time(process_runtime_dotnet_thread_pool_threads_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
+          "expr": "max(max_over_time(dotnet_thread_pool_thread_count_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
           "instant": false,
           "legendFormat": "Thead Pool Threads",
           "range": true,
@@ -2626,7 +2627,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2670,7 +2672,7 @@
             "uid": "${prom_ds}"
           },
           "editorMode": "code",
-          "expr": "max(max_over_time(process_runtime_dotnet_thread_pool_queue_length{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
+          "expr": "max(max_over_time(dotnet_thread_pool_queue_length_total{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"}[$__rate_interval]))",
           "instant": false,
           "legendFormat": "Thread Pool Queue Length",
           "range": true,
@@ -3069,7 +3071,7 @@
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(process_runtime_dotnet_assemblies_count,service_name)",
+        "definition": "label_values(dotnet_process_cpu_count,service_name)",
         "hide": 1,
         "includeAll": false,
         "label": "Service Name",
@@ -3078,7 +3080,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(process_runtime_dotnet_assemblies_count,service_name)",
+          "query": "label_values(dotnet_process_cpu_count,service_name)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3097,7 +3099,7 @@
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(process_runtime_dotnet_assemblies_count{service_name=\"$service_name\"},deployment_environment)",
+        "definition": "label_values(dotnet_process_cpu_count{service_name=\"$service_name\"},deployment_environment)",
         "hide": 1,
         "includeAll": false,
         "label": "Deployment Environment",
@@ -3106,7 +3108,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(process_runtime_dotnet_assemblies_count{service_name=\"$service_name\"},deployment_environment)",
+          "query": "label_values(dotnet_process_cpu_count{service_name=\"$service_name\"},deployment_environment)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3125,7 +3127,7 @@
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(process_runtime_dotnet_assemblies_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
+        "definition": "label_values(dotnet_process_cpu_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
         "hide": 1,
         "includeAll": false,
         "label": "Service version",
@@ -3134,7 +3136,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(process_runtime_dotnet_assemblies_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
+          "query": "label_values(dotnet_process_cpu_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\"},service_version)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3154,7 +3156,7 @@
           "type": "prometheus",
           "uid": "${prom_ds}"
         },
-        "definition": "label_values(http_server_request_duration_seconds_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\"},host_name)",
+        "definition": "label_values(dotnet_process_cpu_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\"},host_name)",
         "hide": 1,
         "includeAll": true,
         "multi": false,
@@ -3162,7 +3164,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(http_server_request_duration_seconds_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\"},host_name)",
+          "query": "label_values(dotnet_process_cpu_count{service_name=\"$service_name\", deployment_environment=\"$deployment_environment\", service_version=\"$service_version\"},host_name)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -3303,6 +3305,6 @@
   "timezone": "",
   "title": "OpenTelemetry dotnet webapi",
   "uid": "otel-dotnet-webapi",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }

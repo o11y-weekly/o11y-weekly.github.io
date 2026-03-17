@@ -99,14 +99,24 @@ app.MapGet("/randomuser", async (ILogger<Program> logger) =>
     return await getUser(logger, RANDOM.Next(1000, 1500));
 })
 .WithName("GetRandomUser")
-.WithOpenApi();
+.AddOpenApiOperationTransformer((operation, context, ct) =>
+{
+    operation.Summary = "Gets random users by id";
+    operation.Description = "Returns a user or not found";
+    return Task.CompletedTask;
+});
 
 app.MapGet("/user", async (ILogger<Program> logger, [FromQuery(Name = "id")] int id) =>
 {
     return await getUser(logger, id);
 })
 .WithName("GetUser")
-.WithOpenApi();
+.AddOpenApiOperationTransformer((operation, context, ct) =>
+{
+    operation.Summary = "Gets user by id";
+    operation.Description = "Returns a user or not found";
+    return Task.CompletedTask;
+});
 
 app.MapPost("/user", async (ILogger<Program> logger, [FromBody] User user) =>
 {
@@ -114,7 +124,12 @@ app.MapPost("/user", async (ILogger<Program> logger, [FromBody] User user) =>
     return await ServiceClient.CreateUser(user);
 })
 .WithName("CreateUser")
-.WithOpenApi();
+.AddOpenApiOperationTransformer((operation, context, ct) =>
+{
+    operation.Summary = "Create a user with the given body";
+    operation.Description = "Returns 201 created";
+    return Task.CompletedTask;
+});
 
 app.Run();
 

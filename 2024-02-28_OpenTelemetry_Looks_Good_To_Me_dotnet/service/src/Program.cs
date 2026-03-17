@@ -113,7 +113,12 @@ app.MapGet("/user", async (ILogger<Program> logger, [FromQuery(Name = "id")] int
     return Results.Ok(user);
 })
 .WithName("GetUserById")
-.WithOpenApi();
+.AddOpenApiOperationTransformer((operation, context, ct) =>
+    {
+        operation.Summary = "Gets user by id";
+        operation.Description = "Returns a user or not found";
+        return Task.CompletedTask;
+    });
 
 app.MapPost("/user", async (ILogger<Program> logger, [FromBody] User user) =>
 {
@@ -126,7 +131,12 @@ app.MapPost("/user", async (ILogger<Program> logger, [FromBody] User user) =>
     return Results.Created();
 })
 .WithName("CreateUser")
-.WithOpenApi();
+.AddOpenApiOperationTransformer((operation, context, ct) =>
+{
+    operation.Summary = "Create a user with the given body";
+    operation.Description = "Returns 201 created";
+    return Task.CompletedTask;
+});
 
 app.Run();
 

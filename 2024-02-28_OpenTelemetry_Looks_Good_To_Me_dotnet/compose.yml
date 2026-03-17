@@ -57,6 +57,14 @@ services:
       - POSTGRES_PASSWORD=ReallyBadPassword
     networks:
       - bridge
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 2s
+      timeout: 60s
+      retries: 5
+      start_period: 5s
 
   client:
     build: 
@@ -101,8 +109,11 @@ services:
     networks:
       - bridge
     depends_on:
-      - otelcontribcol-gateway
-      - db
+      db:
+        condition: service_healthy
+      otelcontribcol-gateway:
+        condition: service_started
+
     deploy:
       # https://github.com/dotnet/runtime/issues/68967
       # https://www.meziantou.net/round-robin-dns-support-in-dotnet-httpclient.htm
